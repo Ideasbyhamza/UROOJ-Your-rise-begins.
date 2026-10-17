@@ -156,7 +156,7 @@ body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divid
 </section>
 <section class="view" id="view-muhasabah">
 <div class="section-head"><div><div class="eyebrow">Pause · Notice · Renew</div><h1>Zikr And Muhasaba</h1><p>Meet yourself honestly, and choose your next step with mercy.</p></div></div>
-<div class="card sanctuary-card"><div class="card-title"><h3>Digital Tasbeeh</h3><span class="solar">Dhikr counter</span></div><h2 id="tasbeehModeTitle" style="font:600 18px 'Cinzel',serif;color:var(--green);margin:12px 0 0">Dhikr</h2><p class="muted" id="tasbeehWord" style="white-space:pre-line;margin:8px 0">SubhanAllah</p><p class="muted">Tasbeeh-e-Fatima · 100 counts total. The circle counts down and shows the dhikr for the current part.</p><button aria-label="Increment tasbeeh counter" class="tasbeeh-orb" id="tasbeehTap"><strong id="tasbeehNumber">100</strong><small id="tasbeehCurrentDhikr" style="font-size:11px;line-height:1.35;letter-spacing:.2px;color:#fffaf0;padding:0 14px;text-transform:none">SubhanAllah</small><span id="tasbeehLabel">remaining · tap to count</span></button><p class="muted" style="margin:10px 0 0">33 SubhanAllah · 33 Alhamdulillah · 34 Allahu Akbar</p><p class="muted" id="lapText" style="margin:13px 0 18px">0 counts in this round</p><div class="btn-row" style="justify-content:center"><button class="btn secondary" id="undoCount">↶ Undo</button><button class="btn ghost" id="resetCounter">Reset counter</button></div></div>
+<div class="card sanctuary-card"><div class="card-title"><h3>Digital Tasbeeh</h3><span class="solar">Dhikr counter</span></div><div class="field" style="text-align:left;margin:14px 0 8px"><label for="dhikrPresetSelect">AUTHENTIC DHIKR PRESETS · ARABIC + SOURCE</label><select id="dhikrPresetSelect"><option value="fatima">Tasbeeh-e-Fatima · 100</option><option value="subhanallah">سُبْحَانَ اللَّهِ · SubhanAllah</option><option value="alhamdulillah">الْحَمْدُ لِلَّهِ · Alhamdulillah</option><option value="allahuakbar">اللَّهُ أَكْبَرُ · Allahu Akbar</option><option value="tahlil">لَا إِلَٰهَ إِلَّا اللَّهُ · La ilaha illallah</option><option value="istighfar">أَسْتَغْفِرُ اللَّهَ · Astaghfirullah</option><option value="baqi">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ · SubhanAllahi wa bihamdihi</option><option value="hawqala">لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ · La hawla wa la quwwata illa billah</option><option value="salawat">اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ · Salawat</option></select></div><p id="dhikrPresetSource" class="muted" style="margin:6px 0 12px;text-align:left">Tasbeeh after prayer: 33 SubhanAllah, 33 Alhamdulillah, 34 Allahu Akbar. Sahih al-Bukhari 843; Sahih Muslim 595.</p><h2 id="tasbeehModeTitle" style="font:600 18px 'Cinzel',serif;color:var(--green);margin:12px 0 0">Dhikr</h2><p class="muted" id="tasbeehWord" style="white-space:pre-line;margin:8px 0">SubhanAllah</p><p class="muted">Tasbeeh-e-Fatima · 100 counts total. The circle counts down and shows the dhikr for the current part.</p><button aria-label="Increment tasbeeh counter" class="tasbeeh-orb" id="tasbeehTap"><strong id="tasbeehNumber">100</strong><small id="tasbeehCurrentDhikr" style="font-size:11px;line-height:1.35;letter-spacing:.2px;color:#fffaf0;padding:0 14px;text-transform:none">SubhanAllah</small><span id="tasbeehLabel">remaining · tap to count</span></button><p class="muted" style="margin:10px 0 0">33 SubhanAllah · 33 Alhamdulillah · 34 Allahu Akbar</p><p class="muted" id="lapText" style="margin:13px 0 18px">0 counts in this round</p><div class="btn-row" style="justify-content:center"><button class="btn secondary" id="undoCount">↶ Undo</button><button class="btn ghost" id="resetCounter">Reset counter</button></div></div>
 <div class="card"><div class="card-title"><h3>Good experiences</h3><span class="solar">Today’s story</span></div><p class="muted">Record a meaningful moment, lesson, or experience from today. Today’s entries appear here; previous days move automatically to your history in Settings.</p><form id="goodExperienceForm"><div class="field"><label for="goodExperienceNote">UPLOAD A MEANINGFUL STORY</label><textarea id="goodExperienceNote" maxlength="2000" placeholder="Write about a meaningful experience, what happened, or what you learned. Keep other people’s private details confidential." required=""></textarea></div><button class="btn" type="submit">Save today’s story</button><div class="save-note" id="goodExperienceStatus">Saved privately on this device.</div></form><div class="save-note">Saved stories are available in Settings → Good experiences history.</div></div>
 <div class="card"><div class="card-title"><h3>Evening reflection</h3><span class="journal-date" id="journalDate"></span></div><form id="journalForm">
 <div class="field"><label for="gratitude1">01 · ONE THING I'M GRATEFUL FOR</label><textarea id="gratitude1" maxlength="800" placeholder="A blessing, a person, a moment…"></textarea></div>
@@ -365,12 +365,56 @@ $('#prayerTracker')?.addEventListener('change',handleActivityChange);$('#habitTr
 $('#addCustomActivity')?.addEventListener('click',()=>{const name=$('#customActivityName').value.trim();if(!name){toast('Enter an activity name first.');return}if((state.customActivities||[]).some(x=>x.name.toLowerCase()===name.toLowerCase())){toast('That activity already exists.');return}const id='custom_'+Date.now().toString(36);state.customActivities.push({id,name,options:['Not recorded','Done','Partly done','Not done']});$('#customActivityName').value='';persist();renderTracker();renderStats();toast('Activity added')});
 $('#customActivitySettingsList')?.addEventListener('click',e=>{const b=e.target.closest('[data-custom-delete]');if(!b)return;const id=b.dataset.customDelete;if(!confirm('Remove this custom activity from your tracker? Past logs for it will no longer appear in graphs.'))return;state.customActivities=state.customActivities.filter(x=>x.id!==id);Object.values(state.activityLog).forEach(day=>delete day[id]);persist();renderTracker();renderStats();toast('Activity removed')});
 const quotes=[
-['“You miss 100% of the shots you don’t take.”','Wayne Gretzky · Athlete (quoted verbatim)'],
-['“It always seems impossible until it’s done.”','Nelson Mandela · Leader and scholar (quoted verbatim)'],
-['“We are what we repeatedly do.”','Will Durant · Philosopher and historian (short quotation)'],
-['“Indeed, Allah will not change the condition of a people until they change what is in themselves.”','Qur’an 13:11 · English translation; wording varies by translation'],
-['“So remember Me; I will remember you.”','Qur’an 2:152 · English translation; wording varies by translation'],
-['“And that there is not for man except that [good] for which he strives.”','Qur’an 53:39 · English translation; wording varies by translation']
+['“It always seems impossible until it’s done.”','Nelson Mandela · commonly attributed'],
+['“You miss 100% of the shots you don’t take.”','Wayne Gretzky · hockey player'],
+['“The secret of getting ahead is getting started.”','Mark Twain · commonly attributed'],
+['“Well done is better than well said.”','Benjamin Franklin'],
+['“It does not matter how slowly you go as long as you do not stop.”','Confucius · commonly attributed'],
+['“The journey of a thousand miles begins with one step.”','Lao Tzu · translation varies'],
+['“Knowing yourself is the beginning of all wisdom.”','Aristotle · commonly attributed'],
+['“We are what we repeatedly do.”','Will Durant, summarising Aristotle'],
+['“He who has a why to live can bear almost any how.”','Friedrich Nietzsche · translation varies'],
+['“No man is free who is not master of himself.”','Epictetus · commonly attributed'],
+['“First say to yourself what you would be; and then do what you have to do.”','Epictetus · paraphrase'],
+['“Waste no more time arguing what a good person should be. Be one.”','Marcus Aurelius · paraphrase of Meditations'],
+['“The happiness of your life depends upon the quality of your thoughts.”','Marcus Aurelius · translation varies'],
+['“It is not that we have a short time to live, but that we waste much of it.”','Seneca · paraphrase'],
+['“Luck is what happens when preparation meets opportunity.”','Often attributed to Seneca'],
+['“The unexamined life is not worth living.”','Socrates · as recorded by Plato'],
+['“Courage is knowing what not to fear.”','Plato · commonly attributed'],
+['“Turn your wounds into wisdom.”','Oprah Winfrey'],
+['“If you can dream it, you can do it.”','Often attributed to Walt Disney'],
+['“Whether you think you can or you think you can’t, you’re right.”','Often attributed to Henry Ford'],
+['“Believe you can and you’re halfway there.”','Theodore Roosevelt · commonly attributed'],
+['“Do what you can, with what you have, where you are.”','Theodore Roosevelt'],
+['“Nothing will work unless you do.”','Maya Angelou · commonly attributed'],
+['“Try to be a rainbow in someone’s cloud.”','Maya Angelou'],
+['“You must do the thing you think you cannot do.”','Eleanor Roosevelt'],
+['“The future depends on what you do today.”','Often attributed to Mahatma Gandhi'],
+['“Live as if you were to die tomorrow. Learn as if you were to live forever.”','Often attributed to Mahatma Gandhi'],
+['“In the middle of difficulty lies opportunity.”','Often attributed to Albert Einstein'],
+['“Life is like riding a bicycle. To keep your balance, you must keep moving.”','Albert Einstein'],
+['“Great things are done by a series of small things brought together.”','Vincent van Gogh · translation varies'],
+['“I have not failed. I’ve just found 10,000 ways that won’t work.”','Often attributed to Thomas Edison'],
+['“Genius is one percent inspiration and ninety-nine percent perspiration.”','Thomas Edison'],
+['“If opportunity doesn’t knock, build a door.”','Often attributed to Milton Berle'],
+['“The only way out is through.”','Robert Frost · commonly attributed'],
+['“A person who never made a mistake never tried anything new.”','Often attributed to Albert Einstein'],
+['“It is never too late to be what you might have been.”','Often attributed to George Eliot'],
+['“Act as if what you do makes a difference. It does.”','William James'],
+['“The mind is everything. What you think you become.”','Often attributed to Buddha; attribution uncertain'],
+['“Nothing is particularly hard if you divide it into small jobs.”','Henry Ford · commonly attributed'],
+['“Small deeds done are better than great deeds planned.”','Peter Marshall · commonly attributed'],
+['“The best way to predict the future is to create it.”','Often attributed to Peter Drucker'],
+['“Simplicity boils down to two steps: identify the essential, eliminate the rest.”','Leo Babauta · paraphrase'],
+['“Discipline is choosing between what you want now and what you want most.”','Common modern maxim; author uncertain'],
+['“You are never too old to set another goal or to dream a new dream.”','C. S. Lewis · commonly attributed'],
+['“The only limit to our realization of tomorrow will be our doubts of today.”','Franklin D. Roosevelt'],
+['“It is during our darkest moments that we must focus to see the light.”','Aristotle Onassis · commonly attributed'],
+['“What we think, we become.”','Commonly attributed to Buddha; wording and attribution vary'],
+['“A year from now you may wish you had started today.”','Often attributed to Karen Lamb'],
+['“Make each day your masterpiece.”','John Wooden'],
+['“Perseverance is not a long race; it is many short races one after another.”','Walter Elliot · commonly attributed']
 ];
 function renderQuote(){const q=quotes[state.quoteIndex%quotes.length];$('#quoteText').textContent=q[0];$('#quoteSource').textContent='— '+q[1];$('#quoteDots').innerHTML=quotes.map((_,i)=>`<i class="${i===state.quoteIndex?'on':''}"></i>`).join('')}
 $('#nextQuote').addEventListener('click',()=>{state.quoteIndex=(state.quoteIndex+1)%quotes.length;persist();renderQuote()});
@@ -453,6 +497,18 @@ $('#journalForm').addEventListener('submit',e=>{e.preventDefault();const entry=g
 $('#clearJournal').addEventListener('click',()=>{if(!confirm("Clear today's reflection form? This does not delete a previously saved entry."))return;journalFields.forEach(id=>$('#'+id).value='');$('#journalStatus').textContent='Form cleared. Saved entry, if any, is unchanged.'});
 function renderJournals(){const entries=Object.entries(state.journals).sort((a,b)=>b[0].localeCompare(a[0]));$('#journalTotal').textContent=`${entries.length} saved`;$('#journalList').innerHTML=entries.length?entries.map(([date,v])=>`<article class="journal-entry"><strong>${esc(new Date(date+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',month:'short',day:'numeric',year:'numeric'}))}</strong>${[['Gratitude', [v.gratitude1,v.gratitude2,v.gratitude3].filter(Boolean).join('\n')],['Tomorrow',v.improve],['Intention',v.intention]].filter(x=>x[1]).map(([label,content])=>`<p><b>${label}:</b> ${esc(content)}</p>`).join('')}<small>Saved locally</small> <button class="text-btn" style="color:#9a4b40;float:right" data-journal-delete="${esc(date)}">Delete</button></article>`).join(''):'<div class="empty">Your saved reflections will appear here.</div>'}
 $('#journalList').addEventListener('click',e=>{const b=e.target.closest('[data-journal-delete]');if(!b)return;if(!confirm('Delete this saved reflection permanently from this browser?'))return;delete state.journals[b.dataset.journalDelete];persist();renderJournals();if(b.dataset.journalDelete===todayKey())loadTodayJournal();toast('Reflection deleted')});
+const authenticDhikrPresets={
+fatima:{title:'Tasbeeh-e-Fatima',words:'سُبْحَانَ اللَّهِ · SubhanAllah · 33\\nالْحَمْدُ لِلَّهِ · Alhamdulillah · 33\\nاللَّهُ أَكْبَرُ · Allahu Akbar · 34',target:100,direction:'descending',source:'After prayer: 33 SubhanAllah, 33 Alhamdulillah, 34 Allahu Akbar. Sahih al-Bukhari 843; Sahih Muslim 595.'},
+subhanallah:{title:'SubhanAllah',words:'سُبْحَانَ اللَّهِ\\nSubhanAllah · Glory be to Allah',target:33,direction:'ascending',source:'A well-established form of dhikr; see Sahih Muslim 2137 for SubhanAllah wa bihamdihi wording.'},
+alhamdulillah:{title:'Alhamdulillah',words:'الْحَمْدُ لِلَّهِ\\nAlhamdulillah · All praise belongs to Allah',target:33,direction:'ascending',source:'Tasbeeh after prayer: Sahih al-Bukhari 843; Sahih Muslim 595.'},
+allahuakbar:{title:'Allahu Akbar',words:'اللَّهُ أَكْبَرُ\\nAllahu Akbar · Allah is the Greatest',target:34,direction:'ascending',source:'Tasbeeh after prayer: Sahih al-Bukhari 843; Sahih Muslim 595.'},
+tahlil:{title:'Tahlil',words:'لَا إِلَٰهَ إِلَّا اللَّهُ\\nLa ilaha illallah · There is no deity worthy of worship except Allah',target:100,direction:'ascending',source:'Tahlil is established in authentic narrations, including Sahih al-Bukhari 6403. Counts differ by narration and context.'},
+istighfar:{title:'Istighfar',words:'أَسْتَغْفِرُ اللَّهَ\\nAstaghfirullah · I seek Allah’s forgiveness',target:100,direction:'ascending',source:'The Prophet ﷺ sought forgiveness frequently; Sahih al-Bukhari 6307. This target is a personal counter goal, not a claim of a required count.'},
+baqi:{title:'SubhanAllahi wa bihamdihi',words:'سُبْحَانَ اللَّهِ وَبِحَمْدِهِ\\nSubhanAllahi wa bihamdihi',target:100,direction:'ascending',source:'Sahih al-Bukhari 6405; Sahih Muslim 2691. The narration mentions 100 times in a day.'},
+hawqala:{title:'Hawqala',words:'لَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللَّهِ\\nLa hawla wa la quwwata illa billah',target:33,direction:'ascending',source:'Sahih al-Bukhari 6384; described as a treasure from the treasures of Paradise. The counter target is optional.'},
+salawat:{title:'Salawat',words:'اللَّهُمَّ صَلِّ عَلَىٰ مُحَمَّدٍ\\nAllahumma salli ‘ala Muhammad',target:100,direction:'ascending',source:'Sending blessings upon the Prophet ﷺ is established in Sahih Muslim 408. This wording is a short form; the target is personal.'}
+};
+$('#dhikrPresetSelect')?.addEventListener('change',e=>{const p=authenticDhikrPresets[e.target.value];if(!p)return;state.tasbeeh.title=p.title;state.tasbeeh.words=p.words;state.tasbeeh.target=p.target;state.tasbeeh.direction=p.direction;state.tasbeeh.count=0;state.tasbeeh.rounds=0;state.tasbeeh.activeMode=e.target.value;$('#dhikrPresetSource').textContent=p.source;persist();renderTasbeeh();toast('Dhikr preset selected')});
 function activeDhikr(){return state.tasbeeh}
 function renderDhikrTiles(){const title=$('#dhikrTitleSetting'),words=$('#dhikrWordsSetting'),target=$('#dhikrTargetSetting'),direction=$('#dhikrDirectionSetting'),infinite=$('#dhikrInfiniteSetting');if(title&&document.activeElement!==title)title.value=state.tasbeeh.title||'Dhikr';if(words&&document.activeElement!==words)words.value=state.tasbeeh.words||'Astaghfirullah';if(target&&document.activeElement!==target)target.value=String(Number(state.tasbeeh.target)>0?Number(state.tasbeeh.target):99);if(direction)direction.value=state.tasbeeh.direction==='descending'?'descending':'ascending';if(infinite)infinite.value=Number(state.tasbeeh.target)===0?'infinity':'finite';if(target)target.disabled=!!infinite&&infinite.value==='infinity'}
 function renderTasbeeh(){const m=activeDhikr(),c=Math.max(0,Number(m.count)||0),t=Number(m.target)||0,down=m.direction==='descending'&&t>0,shown=down?Math.max(0,t-c):c;$('#tasbeehModeTitle').textContent=m.title||'Dhikr';$('#tasbeehWord').textContent=m.words||'';$('#tasbeehNumber').textContent=shown;const phrase=$('#tasbeehCurrentDhikr');if(phrase){if((m.title||'')==='Tasbeeh-e-Fatima'&&t===100){phrase.textContent=c<33?'SubhanAllah':c<66?'Alhamdulillah':c<100?'Allahu Akbar':'SubhanAllah'}else{const first=String(m.words||'Dhikr').split(/\n|·/)[0].trim();phrase.textContent=first||'Dhikr'}}$('#tasbeehLabel').textContent=t?(down?`${shown} remaining · tap to count`:`of ${t} · tap to count`):'∞ · tap to count';$('#lapText').textContent=t?`${Number(m.rounds)||0} complete round${Number(m.rounds)===1?'':'s'} · ${c} counted of ${t}`:`${c} total counts · infinity mode`;renderDhikrTiles()}
