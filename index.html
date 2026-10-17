@@ -203,6 +203,7 @@ body.dark #uroojTutorialModal .tour-card{background:var(--white);border-color:va
 <div class="section-head"><div><div class="eyebrow">Personalise your experience</div><h1>Settings</h1><p>Manage your daily schedule, reminders, and personal study tools.</p></div></div>
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div>
 <p class="muted" style="font-size:10px;margin:3px 2px 8px">Tap any option below <span aria-hidden="true" style="color:var(--green);font-size:18px;font-weight:700">›</span> to open it. The arrow turns down when expanded.</p>
+<div class="card" id="tutorialPreferenceCard"><div class="card-title"><h3>App tutorial</h3><span class="solar">Login help</span></div><p class="muted">Choose whether the quick-start guide opens automatically after you enter UROOJ. You can always replay it here.</p><label style="display:flex;align-items:center;gap:10px;font-size:12px;line-height:1.45"><input type="checkbox" id="uroojAutoTutorialSetting" checked style="accent-color:var(--green);width:17px;height:17px;flex:0 0 auto"> Show tutorial automatically after login</label><button class="btn secondary" type="button" id="showTutorialFromSettings" style="margin-top:10px">▶ Show tutorial now</button></div>
 <details class="settings-accordion" id="feedbackHistoryAccordion"><summary><span>Feedback &amp; review history</span><small>→ Send feedback and manage saved entries</small></summary><div class="card" id="appFeedbackCard"><div class="card-title"><h3>Give feedback</h3><span class="solar">Settings only</span></div><p class="muted">Share suggestions, report a glitch, or request a feature. Feedback is saved in this device’s history and sent to the UROOJ maintainer by email when the mail service is connected.</p><form id="appFeedbackForm"><div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden"><label for="appFeedbackWebsite">Leave this field empty</label><input id="appFeedbackWebsite" name="website" tabindex="-1" autocomplete="off"></div><div class="field"><label for="appFeedbackType">FEEDBACK TYPE</label><select id="appFeedbackType"><option>Suggestion</option><option>Bug report / Glitch</option><option>Feature request</option><option>Other</option></select></div><div class="field"><label for="appFeedbackText">YOUR FEEDBACK</label><textarea id="appFeedbackText" maxlength="1500" placeholder="Describe the feedback or glitch…" required></textarea></div><button class="btn" type="submit">Save feedback</button><div class="save-note" id="appFeedbackStatus">Your feedback is saved locally. Email delivery requires the one-time Apps Script connection.</div></form><div class="journal-list" id="savedFeedbackList" style="margin-top:12px"></div></div></details><p class="muted">Sign in with Google from the login screen to back up your data to Google Drive.</p></div>
 <details class="settings-accordion"><summary><span>Edit your daily tasks</span><small>→ Add, rename, reorder or remove tasks</small></summary><div class="card"><div class="card-title"><h3>Edit your daily tasks</h3><span class="solar">Settings only</span></div><p class="muted">Manage your activities here. Tap Edit to change the name, category, status dropdown options, timing, order, and whether the activity is enabled. The Schedule tab is for daily check-ins only.</p><div class="activity-settings-list" id="scheduleSettingsSlots"></div><div class="btn-row"><button class="btn" id="settingsAddSlot">＋ Add Activity</button><button class="btn secondary" id="settingsSaveSchedule">Save schedule</button></div><div class="save-note" id="settingsScheduleStatus">Changes save on this device automatically.</div></div></details>
 <details class="settings-accordion removed-status-options"><summary><span>Status options</span><small>→ Choose labels used in task dropdowns</small></summary><div class="card" id="statusOptionsSettingsCard"><div class="card-title"><h3>Choose your status labels</h3><span class="solar">Up to 8</span></div><p class="muted">These are general fallback labels only. Each task can have its own editable status list in Settings → Edit your daily tasks. For example, Salah uses Takbeer-e-Ula / Jamaat / Ada, while fitness uses Walking / Running / Workout. The combined graph shows every task beside its own current status.</p><div class="card" style="background:var(--sage);margin:10px 0;padding:12px"><strong style="display:block;margin-bottom:6px">Examples to make daily tracking clear</strong><ul class="muted" style="padding-left:18px;margin:0;display:grid;gap:5px"><li><b>Tasbeeh-e-Fatima:</b> 100 total — 33 SubhanAllah, 33 Alhamdulillah, 34 Allahu Akbar.</li><li><b>Qur’an:</b> read your planned pages or verses.</li><li><b>Salah:</b> record honestly whether you prayed, missed it, or had a valid excuse.</li><li><b>Personal habit:</b> mark it partly done if you made some progress.</li></ul></div><div class="field"><label for="globalStatusLabels">YOUR STATUS OPTIONS · ONE PER LINE</label><textarea id="globalStatusLabels" maxlength="320" placeholder="Not recorded
@@ -238,6 +239,7 @@ Not applicable" rows="8"></textarea><p class="muted" style="font-size:10px;margi
     <h2 id="uroojTutorialTitle">Welcome to UROOJ</h2>
     <div class="tour-body" id="uroojTutorialBody">A simple guide to your app.</div>
     <div class="tour-tip" id="uroojTutorialTip"></div>
+     <label class="tour-dont-show" style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:11px;line-height:1.4;color:var(--muted);text-align:left"><input type="checkbox" id="uroojDontShowAgain" style="accent-color:var(--green);width:16px;height:16px;flex:0 0 auto"> Don’t show this tutorial again</label>
     <div class="tour-actions"><button type="button" class="btn ghost" id="uroojTutorialBack">Back</button><button type="button" class="btn" id="uroojTutorialNext">Next</button></div>
   </div>
 </div>
@@ -273,7 +275,7 @@ function clearGoogleAccountCache(){try{localStorage.removeItem(GAUTH_KEY)}catch(
 function setSyncTime(ts){try{localStorage.setItem(SYNC_KEY,String(ts))}catch(e){}}
 function getSyncTime(){try{return Number(localStorage.getItem(SYNC_KEY)||0)}catch(e){return 0}}
 
-const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';
+const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';const UROOJ_AUTO_TOUR_KEY='urooj-auto-tutorial-after-login-v1';
 const UROOJ_TOUR_STEPS=[
  {title:'Welcome to UROOJ',body:'UROOJ helps you build good habits, keep track of your day, and reflect on how things went.\n\nYou do not need to be perfect. Be honest, take small steps, and begin again when needed.',tip:'You can skip this guide now and open it again later from Home → About UROOJ.',view:'today'},
  {title:'Home · Your daily start',body:'Home is your starting point. Today’s Motive gives you one thought to reflect on. This Month · Sunnah Days shows reminders such as Friday and the White Days.',tip:'Hijri dates can differ by location, so confirm dates locally.',view:'today'},
@@ -296,14 +298,17 @@ function renderUroojTour(){
  document.getElementById('uroojTutorialBack').disabled=uroojTourIndex===0;
  document.getElementById('uroojTutorialNext').textContent=uroojTourIndex===UROOJ_TOUR_STEPS.length-1?'Finish':'Next';
 }
+function shouldAutoShowUroojTutorial(){try{return localStorage.getItem(UROOJ_AUTO_TOUR_KEY)!=='off'}catch(e){return true}}
+function syncTutorialPreferenceControls(){const setting=document.getElementById('uroojAutoTutorialSetting');if(setting)setting.checked=shouldAutoShowUroojTutorial()}
 function openUroojTutorial(force){
  const modal=document.getElementById('uroojTutorialModal');if(!modal)return;
- if(!force){try{if(localStorage.getItem(UROOJ_TOUR_KEY)==='done')return}catch(e){}}
- uroojTourIndex=0;renderUroojTour();modal.classList.add('open');document.body.style.overflow='hidden';
+ if(!force&&!shouldAutoShowUroojTutorial())return;
+ uroojTourIndex=0;renderUroojTour();const dont=document.getElementById('uroojDontShowAgain');if(dont)dont.checked=false;modal.classList.add('open');document.body.style.overflow='hidden';
  document.getElementById('uroojTutorialClose')?.focus({preventScroll:true});
 }
 function closeUroojTutorial(done){
  const modal=document.getElementById('uroojTutorialModal');if(!modal)return;
+ const dont=document.getElementById('uroojDontShowAgain');if(dont&&dont.checked){try{localStorage.setItem(UROOJ_AUTO_TOUR_KEY,'off')}catch(e){}syncTutorialPreferenceControls()}
  modal.classList.remove('open');document.body.style.overflow='';
  if(done){try{localStorage.setItem(UROOJ_TOUR_KEY,'done')}catch(e){}}
 }
@@ -321,6 +326,8 @@ function initUroojTutorial(){
  });
  document.getElementById('uroojTutorialClose')?.addEventListener('click',()=>closeUroojTutorial(true));
  document.getElementById('showTutorialAgain')?.addEventListener('click',()=>openUroojTutorial(true));
+ document.getElementById('showTutorialFromSettings')?.addEventListener('click',()=>openUroojTutorial(true));
+ const autoSetting=document.getElementById('uroojAutoTutorialSetting');if(autoSetting){syncTutorialPreferenceControls();autoSetting.addEventListener('change',()=>{try{localStorage.setItem(UROOJ_AUTO_TOUR_KEY,autoSetting.checked?'on':'off')}catch(e){}const dont=document.getElementById('uroojDontShowAgain');if(dont)dont.checked=false;toast(autoSetting.checked?'Tutorial will appear after login.':'Automatic tutorial is turned off. You can replay it from Settings.');});}
  document.getElementById('uroojTutorialModal')?.addEventListener('click',e=>{if(e.target.id==='uroojTutorialModal')closeUroojTutorial(true)});
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('uroojTutorialModal')?.classList.contains('open'))closeUroojTutorial(true)});
 }
