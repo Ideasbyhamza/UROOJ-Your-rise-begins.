@@ -198,8 +198,9 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));queueDriv
 // project, add this page's exact hosted URL under "Authorized JavaScript origins", then paste the
 // Client ID below. The app cannot work with real Google sign-in when opened as a local file.
 const GOOGLE_CLIENT_ID_STORAGE_KEY='urooj-google-client-id-v1';
-let GOOGLE_CLIENT_ID='';
-try{GOOGLE_CLIENT_ID=localStorage.getItem(GOOGLE_CLIENT_ID_STORAGE_KEY)||''}catch(e){}
+const GOOGLE_CLIENT_ID_DEFAULT='516762713528-rcrqdujo8j5oh0jpp2ieuqqlmut8n7sb.apps.googleusercontent.com';
+let GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID_DEFAULT;
+try{GOOGLE_CLIENT_ID=localStorage.getItem(GOOGLE_CLIENT_ID_STORAGE_KEY)||GOOGLE_CLIENT_ID_DEFAULT}catch(e){}
 const DRIVE_FILE_NAME='urooj-data.json';
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file openid email profile';
 const GAUTH_KEY='urooj-google-account-v1';
