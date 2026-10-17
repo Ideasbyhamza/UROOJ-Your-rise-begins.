@@ -1,16 +1,17 @@
 # UROOJ Android wrapper
 
-This project packages the hosted UROOJ web app in a minimal Android WebView shell. It does not bundle the web app's HTML offline and requires internet access.
+Version 1.0.2 bundles the web app HTML inside the APK, so the main app screen no longer depends on GitHub Pages being online to open. The app uses AndroidX WebViewAssetLoader and the HTTPS-like `appassets.androidplatform.net` origin. It does not expose a JavaScript-to-native bridge.
 
-## Build
+## Build and download
 
-A GitHub Actions workflow builds a debug APK and uploads it as an artifact. Open **Actions → Build UROOJ Android APK → latest successful run → Artifacts** to download it.
+GitHub Actions builds and validates the debug APK. Open **Actions → Build UROOJ Android APK → latest successful run → Artifacts** and download `UROOJ-debug-apk-v1.0.2`.
 
-## Verify before release
+## First launch and Google sign-in
 
-1. Confirm `APP_URL` in `app/src/main/java/com/urooj/app/MainActivity.java` points to the actual live GitHub Pages URL.
-2. Install the debug APK and test the app on a real Android phone.
-3. Test Google sign-in and Drive backup. Google may block OAuth inside embedded WebViews; if so, use a supported external-browser OAuth flow or a verified Trusted Web Activity.
-4. Debug APKs are for testing. A Play Store release requires a proper signing key, privacy/data-safety review, and release build configuration.
+- A first-run tutorial walks through Home, Digital Tasbeeh, Today's Task, Zikr & Muhasaba, Challenges, Settings, and backups. It can be replayed from Home → About UROOJ.
+- Google OAuth is intentionally disabled in the bundled app origin. For Google Drive backup, open the hosted website in Chrome and connect Google there. The app remains usable locally without Google.
+- Online content/links may still require internet. The core HTML is bundled so startup is not blocked by GitHub Pages availability.
 
-The app does not expose a JavaScript-to-native bridge. JavaScript is enabled only because the hosted web app requires it. File/content access and cleartext HTTP are disabled.
+## Test before release
+
+Install the debug APK on a real Android phone. Check first launch, tutorial navigation, local save persistence, dark mode, external links, and the no-Google flow. Debug builds are for testing, not Play Store release.
