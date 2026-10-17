@@ -274,20 +274,22 @@ async function driveLoadOrInit(){
  if(existing){
   gDriveFileId=existing.id;
   const remote=await driveDownload(existing.id);
+  // The private Drive JSON is the source of truth after Google sign-in.
+  // Keep a local working cache for rendering and offline resilience, but never
+  // ask the user to resolve a local-vs-Drive conflict.
   if(remote&&remote.state&&typeof remote.state==='object'){
-   const localHasData=Object.keys(state.activityLog||{}).length>0||Object.keys(state.journals||{}).length>0||(state.customChallenges||[]).length>0;
-   const remoteHasData=Object.keys(remote.state.activityLog||{}).length>0||Object.keys(remote.state.journals||{}).length>0||(remote.state.customChallenges||[]).length>0;
-   if(remoteHasData&&!localHasData){state={...defaultState(),...remote.state};localStorage.setItem(KEY,JSON.stringify(state))}
-   else if(remoteHasData&&localHasData){if(confirm('Google Drive already has saved UROOJ progress, and this device also has local data.\n\nPress OK to load the Drive version (replacing what is on this device), or Cancel to keep this device’s data (it will overwrite Drive on next sync).')){state={...defaultState(),...remote.state};localStorage.setItem(KEY,JSON.stringify(state))}}
+   state={...defaultState(),...remote.state};
+   localStorage.setItem(KEY,JSON.stringify(state));
   }
  }else{
+  // First connection: create the single private JSON backup for this app.
   const created=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state});
   gDriveFileId=created.id;
  }
  setSyncTime(Date.now());
 }
 function queueDriveSync(){if(!gAccessToken||!gTokenClient)return;clearTimeout(gSyncTimer);gSyncTimer=setTimeout(doDriveSync,1800)}
-async function doDriveSync(){if(gSyncing||!gAccessToken)return;gSyncing=true;try{const result=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state},gDriveFileId);gDriveFileId=result.id||gDriveFileId;setSyncTime(Date.now());renderAccountStatus();toast('Google Drive backup saved')}catch(e){console.error('Drive sync error',e);renderAccountStatus(true,driveErrorText(e));toast('Drive sync failed — see Google Account details')}finally{gSyncing=false}}
+async function doDriveSync(){if(gSyncing||!gAccessToken)return;gSyncing=true;try{const result=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state},gDriveFileId);gDriveFileId=result.id||gDriveFileId;setSyncTime(Date.now());renderAccountStatus()}catch(e){console.error('Drive sync error',e);renderAccountStatus(true,driveErrorText(e));toast('Drive sync failed — see Google Account details')}finally{gSyncing=false}}
 function signOutGoogle(){if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('Signed out of Google. Your data remains saved on this device.');toast('Signed out of Google. Local data remains on this device.')}
 function renderAccountStatus(syncError,syncMessage){
  const host=document.getElementById('googleAccountCard');if(!host)return;
