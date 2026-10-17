@@ -1,13 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024" role="img" aria-labelledby="title desc">
-<title id="title">UROOJ — Your Rise Begins</title><desc id="desc">A minimal two-colour emblem with a rising moon and mountain horizon, the UROOJ wordmark, and the slogan Your Rise Begins.</desc>
-<rect width="1024" height="1024" rx="176" fill="#123D32"/>
-<rect x="44" y="44" width="936" height="936" rx="144" fill="none" stroke="#D9C17E" stroke-width="10"/>
-<path d="M256 525V410A256 256 0 0 1 768 410V525" fill="none" stroke="#D9C17E" stroke-width="15" stroke-linecap="round"/>
-<circle cx="512" cy="264" r="74" fill="#D9C17E"/>
-<circle cx="546" cy="238" r="68" fill="#123D32"/>
-<path d="M170 566 340 402 446 500 560 372 854 566Z" fill="#D9C17E"/>
-<path d="M170 566H854" stroke="#D9C17E" stroke-width="12" stroke-linecap="round"/>
-<text x="512" y="724" text-anchor="middle" font-family="Georgia,serif" font-weight="700" font-size="122" letter-spacing="3" fill="#D9C17E">UROOJ</text>
-<path d="M304 761H720" stroke="#D9C17E" stroke-width="4" stroke-linecap="round"/>
-<text x="512" y="818" text-anchor="middle" font-family="Georgia,serif" font-size="33" letter-spacing="4" fill="#D9C17E">YOUR RISE BEGINS</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">UROOJ — Your Rise Begins</title>
+<desc id="desc">Minimal two-colour text logo containing only the app name and slogan.</desc>
+<rect width="512" height="512" rx="72" fill="#123D32"/>
+<text x="256" y="245" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="100" letter-spacing="1" fill="#D9C17E">UROOJ</text>
+<text x="256" y="298" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="500" font-size="25" letter-spacing="1.8" fill="#D9C17E">YOUR RISE BEGINS</text>
 </svg>
