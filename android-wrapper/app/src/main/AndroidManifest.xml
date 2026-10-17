@@ -4,7 +4,7 @@
     <application
         android:allowBackup="false"
         android:usesCleartextTraffic="false"
-        android:label="UROOJ by Hamza"
+        android:label="UROOJ (Ideas by Hamza)"
         android:icon="@drawable/ic_urooj_launcher"
         android:roundIcon="@drawable/ic_urooj_launcher"
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
