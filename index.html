@@ -79,7 +79,7 @@ body.dark #jarvisLogin .login-divider{color:#a5b0a9}
 body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divider:after{background:#34423a}
 #jarvisLogin .login-sub{font-size:10px;color:#9a9c93;margin-top:14px;line-height:1.6}
 </style>
-<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
 <body>
 <section id="jarvisLogin" aria-label="Login">
@@ -219,9 +219,15 @@ function initGoogleAuth(){
  const notice=document.getElementById('googleConfigNotice'),btn=document.getElementById('googleSignInBtn');
  if(!googleConfigured()){if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in isn’t set up yet</strong><br>Continue offline, then open Settings → Google Account to save your Google OAuth Client ID. See the setup guide linked there.'}if(btn)btn.disabled=true;return}
  if(location.protocol==='file:'){if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in needs hosting</strong><br>Open this app from a real web address, not a local file, for Google sign-in to work. Use “Continue without Google” for now.'}if(btn)btn.disabled=true;return}
- if(!(window.google&&google.accounts&&google.accounts.oauth2)){setTimeout(initGoogleAuth,300);return}
- if(btn)btn.disabled=false;if(notice)notice.hidden=true;
- try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){console.error('Google auth error',err);setLoginBusy(false);setLoginError('Google sign-in was cancelled or blocked. Please try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID and authorized origin in Google Cloud Console.'}return}
+ if(!(window.google&&google.accounts&&google.accounts.oauth2)){
+  const attempts=(window.__uroojGoogleInitAttempts||0)+1;window.__uroojGoogleInitAttempts=attempts;
+  if(btn)btn.disabled=false;
+  if(notice){notice.hidden=false;notice.innerHTML=attempts<18?'<strong>Loading Google sign-in…</strong><br>If this message stays visible, Google’s sign-in script may be blocked by a browser extension or network setting.':'<strong>Google sign-in did not load</strong><br>Check your internet connection, allow accounts.google.com, then refresh. You can also continue offline and retry from the login screen.';}
+  if(attempts<18)setTimeout(initGoogleAuth,500);
+  return;
+ }
+ window.__uroojGoogleInitAttempts=0;if(btn)btn.disabled=false;if(notice)notice.hidden=true;
+ try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google’s sign-in window was blocked. Allow pop-ups for this site and try again.':type==='popup_closed'?'The Google sign-in window was closed before completing. Please try again.':'Google sign-in was cancelled or blocked. Check pop-up settings and try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID, authorized JavaScript origin, and Google Cloud OAuth settings.'}setLoginError('Google sign-in could not start. Check your Google Cloud OAuth settings.');return}
  const cached=loadGoogleAccountCache();if(cached&&cached.email){gUserInfo=cached;renderAccountStatus()}
 }
 async function handleGoogleToken(resp){
@@ -232,7 +238,12 @@ async function handleGoogleToken(resp){
  try{await driveLoadOrInit();unlockApp();renderAccountStatus();const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';renderViewOnDemand(activeView);toast('Signed in with Google — syncing to Drive')}
  catch(e){console.error('Drive sync failed',e);setLoginError('Signed in, but Google Drive sync failed just now. Continuing — your data is safe on this device and will sync when possible.');unlockApp();renderAccountStatus(true);const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';renderViewOnDemand(activeView)}
 }
-function requestGoogleSignIn(){if(!gTokenClient){setLoginError('Google sign-in is not ready yet. Please wait a moment and try again.');return}setLoginError('');setLoginBusy(true);gTokenClient.requestAccessToken({prompt:'consent'})}
+function requestGoogleSignIn(){
+ if(!gTokenClient&&window.google&&google.accounts&&google.accounts.oauth2){window.__uroojGoogleInitAttempts=0;initGoogleAuth()}
+ if(!gTokenClient){setLoginBusy(false);setLoginError('Google sign-in is not ready. The Google sign-in library may be blocked or still loading. Refresh this page; if it continues, allow pop-ups and access to accounts.google.com, or share a screenshot of this message.');const notice=document.getElementById('googleConfigNotice');if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in is not ready</strong><br>Refresh the page and check that accounts.google.com is allowed by your browser or network.'}return}
+ setLoginError('');setLoginBusy(true);
+ try{gTokenClient.requestAccessToken({prompt:'consent'})}catch(err){console.error('Could not open Google sign-in',err);setLoginBusy(false);setLoginError('Google’s sign-in window could not open. Allow pop-ups for this site and try again. If the problem continues, check the OAuth client’s authorized JavaScript origin.');}
+ }
 function ensureFreshToken(){if(gAccessToken&&Date.now()<gTokenExpiry-60000)return Promise.resolve(gAccessToken);if(!gTokenClient)return Promise.reject(new Error('not signed in'));return new Promise(function(resolve,reject){const prevCb=gTokenClient.callback;gTokenClient.callback=function(resp){gTokenClient.callback=prevCb;if(!resp||resp.error){reject(new Error('token refresh failed'));return}gAccessToken=resp.access_token;gTokenExpiry=Date.now()+((Number(resp.expires_in)||3000)*1000);resolve(gAccessToken)};gTokenClient.requestAccessToken({prompt:''})})}
 async function driveFindFile(){const token=await ensureFreshToken();const q=encodeURIComponent("name='"+DRIVE_FILE_NAME+"' and trashed=false");const res=await fetch('https://www.googleapis.com/drive/v3/files?q='+q+'&spaces=drive&fields=files(id,name,modifiedTime)',{headers:{Authorization:'Bearer '+token}});if(!res.ok)throw new Error('Drive list failed: '+res.status);const data=await res.json();return (data.files&&data.files[0])||null}
 async function driveDownload(fileId){const token=await ensureFreshToken();const res=await fetch('https://www.googleapis.com/drive/v3/files/'+fileId+'?alt=media',{headers:{Authorization:'Bearer '+token}});if(!res.ok)throw new Error('Drive download failed: '+res.status);return res.json()}
