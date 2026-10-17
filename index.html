@@ -196,6 +196,11 @@ input,select,textarea{max-width:100%;min-width:0}
 }
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#view-sanctuary details.settings-accordion.tour-target>summary:after{animation:none}*{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
+
+#view-sanctuary .tour-target-card{position:relative;outline:2px solid var(--gold);outline-offset:3px;box-shadow:0 0 0 5px #c5a05922}
+#view-sanctuary .tour-target-card:before{content:'➜ Google Account';position:absolute;right:12px;top:-8px;z-index:5;padding:3px 8px;border-radius:99px;background:var(--gold);color:#fff;font-size:9px;font-weight:800;line-height:1.2;box-shadow:0 2px 8px #0002}
+@media(prefers-reduced-motion:reduce){#view-sanctuary .tour-target-card:before{animation:none}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -217,29 +222,7 @@ input,select,textarea{max-width:100%;min-width:0}
   <p class="muted" style="font-size:9px;margin-bottom:0">Terms version: 1.0 · 17 October 2026</p>
  </div>
 </section>
-<script>
-(function(){
- const KEY='urooj-terms-consent-v1', VERSION='1.0';
- const panel=document.getElementById('uroojTermsConsent');
- function getRecord(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
- function renderRecord(){const el=document.getElementById('uroojConsentRecordSummary');if(!el)return;const r=getRecord();el.textContent=r&&r.accepted?'Accepted · '+r.consentId+' · '+r.acceptedAt:'Not accepted on this device';}
- function saveRecord(){
-  const now=new Date(), id='UROOJ-'+now.toISOString().replace(/[-:.TZ]/g,'').slice(0,14)+'-'+Math.random().toString(36).slice(2,8).toUpperCase();
-  const record={app:'UROOJ',consentId:id,accepted:true,termsVersion:VERSION,acceptedAt:now.toISOString(),acceptedAtLocal:now.toLocaleString(),storage:'This device only; no central server connected'};
-  try{localStorage.setItem(KEY,JSON.stringify(record));return record}catch(e){document.getElementById('uroojConsentError').textContent='Could not save your consent on this device. Please enable browser storage and try again.';document.getElementById('uroojConsentError').classList.add('show');return null}
- }
- if(panel){const rec=getRecord();if(rec&&rec.accepted&&rec.termsVersion===VERSION)panel.hidden=true;
-  document.getElementById('uroojAcceptTerms').addEventListener('click',function(){const r=saveRecord();if(!r)return;panel.hidden=true;renderRecord();showReceipt(r);});
-  function showReceipt(r){document.getElementById('uroojReceiptId').textContent=r.consentId;document.getElementById('uroojReceiptVersion').textContent=r.termsVersion;document.getElementById('uroojReceiptTime').textContent=r.acceptedAtLocal+' ('+r.acceptedAt+')';document.getElementById('uroojConsentReceipt').hidden=false;}
-  document.getElementById('uroojReceiptExport').addEventListener('click',function(){window.uroojExportConsentRecord&&window.uroojExportConsentRecord();});
-  document.getElementById('uroojReceiptContinue').addEventListener('click',function(){document.getElementById('uroojConsentReceipt').hidden=true;});
-  if(rec&&rec.accepted&&rec.termsVersion===VERSION){panel.hidden=true;}
 
-  document.getElementById('uroojRejectTerms').addEventListener('click',function(){document.getElementById('uroojConsentError').classList.add('show');document.getElementById('uroojConsentError').textContent='Sorry, you can’t use UROOJ unless you accept the Terms & Conditions. You may close this page instead.';});
- }
- document.addEventListener('DOMContentLoaded',renderRecord);window.uroojExportConsentRecord=function(){const r=getRecord();if(!r||!r.accepted){alert('No accepted consent record is saved on this device.');return}const blob=new Blob([JSON.stringify(r,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='urooj-consent-'+r.consentId+'.json';a.click();URL.revokeObjectURL(url)};
-})();
-</script>
 <section id="uroojConsentReceipt" role="dialog" aria-modal="true" aria-labelledby="uroojConsentReceiptTitle" hidden>
  <div class="receipt-card"><div class="eyebrow">Consent saved</div><h2 id="uroojConsentReceiptTitle">Your consent receipt</h2>
  <p style="font-size:11px;line-height:1.55">This receipt records what you accepted. Save a copy if you need proof later.</p>
@@ -251,6 +234,80 @@ input,select,textarea{max-width:100%;min-width:0}
  <p style="font-size:10px;line-height:1.5;margin-top:10px">Proof currently stays in this device’s browser/app storage. It is not sent to Hamza’s email or a central server, and can be lost if app data is cleared. Export the JSON receipt to keep your own copy.</p>
  <div class="receipt-actions"><button class="btn secondary" type="button" id="uroojReceiptExport">Export receipt</button><button class="btn" type="button" id="uroojReceiptContinue">Continue to UROOJ</button></div>
  </div></section>
+<script>
+(function(){
+ 'use strict';
+ const KEY='urooj-terms-consent-v1', VERSION='1.0';
+ const panel=document.getElementById('uroojTermsConsent');
+ function getRecord(){try{return JSON.parse(localStorage.getItem(KEY)||'null')}catch(e){return null}}
+ function renderRecord(){
+  const el=document.getElementById('uroojConsentRecordSummary');
+  if(!el)return;
+  const r=getRecord();
+  el.textContent=r&&r.accepted?'Accepted · '+r.consentId+' · '+(r.acceptedAtLocal||r.acceptedAt):'Not accepted on this device';
+ }
+ function saveRecord(){
+  const now=new Date();
+  const id='UROOJ-'+now.toISOString().replace(/[-:.TZ]/g,'').slice(0,14)+'-'+Math.random().toString(36).slice(2,8).toUpperCase();
+  const record={app:'UROOJ',consentId:id,accepted:true,termsVersion:VERSION,acceptedAt:now.toISOString(),acceptedAtLocal:now.toLocaleString(),storage:'This device only; no central server connected'};
+  try{localStorage.setItem(KEY,JSON.stringify(record));return record}
+  catch(e){
+   const error=document.getElementById('uroojConsentError');
+   if(error){error.textContent='Could not save your consent on this device. Please enable browser storage and try again.';error.classList.add('show')}
+   return null;
+  }
+ }
+ window.uroojExportConsentRecord=function(){
+  const r=getRecord();
+  if(!r||!r.accepted){alert('No accepted consent record is saved on this device.');return}
+  const blob=new Blob([JSON.stringify(r,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');
+  a.href=url;
+  a.download='urooj-consent-'+r.consentId+'.json';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+ };
+ function initConsentUI(){
+  if(!panel)return;
+  const existing=getRecord();
+  panel.hidden=!!(existing&&existing.accepted&&existing.termsVersion===VERSION);
+  const accept=document.getElementById('uroojAcceptTerms');
+  if(accept)accept.addEventListener('click',function(){
+   const r=saveRecord();if(!r)return;
+   panel.hidden=true;
+   renderRecord();
+   const id=document.getElementById('uroojReceiptId');
+   const version=document.getElementById('uroojReceiptVersion');
+   const time=document.getElementById('uroojReceiptTime');
+   const receipt=document.getElementById('uroojConsentReceipt');
+   const status=document.getElementById('uroojReceiptStatus');
+   if(id)id.textContent=r.consentId;
+   if(version)version.textContent=r.termsVersion;
+   if(time)time.textContent=(r.acceptedAtLocal||'')+' ('+r.acceptedAt+')';
+   if(status)status.textContent='Accepted · saved on this device';
+   if(receipt)receipt.hidden=false;
+  });
+  const exportButton=document.getElementById('uroojReceiptExport');
+  if(exportButton)exportButton.addEventListener('click',window.uroojExportConsentRecord);
+  const continueButton=document.getElementById('uroojReceiptContinue');
+  if(continueButton)continueButton.addEventListener('click',function(){
+   const receipt=document.getElementById('uroojConsentReceipt');
+   if(receipt)receipt.hidden=true;
+  });
+  const reject=document.getElementById('uroojRejectTerms');
+  if(reject)reject.addEventListener('click',function(){
+   const error=document.getElementById('uroojConsentError');
+   if(error){error.classList.add('show');error.textContent='Sorry, you can’t use UROOJ unless you accept the Terms & Conditions. You may close this page instead.'}
+  });
+  renderRecord();
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initConsentUI,{once:true});
+ else initConsentUI();
+})();
+</script>
 <section id="jarvisLogin" aria-label="Login">
   <div class="login-card" id="jarvisLoginCard">
     <div class="login-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 48.5H55" stroke="#E4D2A7" stroke-width="2.5" stroke-linecap="round"/><path d="M15 43L25 32L33 38L49 18" stroke="#FFF9E9" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 18H49V28" stroke="#E4D2A7" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="17" r="4" fill="#E4D2A7"/><path d="M16 7V4M16 30V27M6 17H3M29 17H26M8.8 9.8L6.7 7.7M25.3 26.3L23.2 24.2" stroke="#E4D2A7" stroke-width="1.8" stroke-linecap="round"/></svg></div>
@@ -428,15 +485,15 @@ const UROOJ_TOUR_STEPS=[
  {title:'Schedule · Record your day',body:'Use the Schedule tab to record each activity with its own dropdown. The chart and progress figures summarise your entries. “Not recorded” means you have not entered a status yet.',tip:'To add, rename, reorder, change timings, status options or disable an activity, go to Settings → Edit your daily tasks.',view:'schedule'},
  {title:'Muhasabah · Reflect',body:'Use Muhasabah for Qur’an notes, translations/tafsir notes where available, daily reflections and meaningful experiences. Write what you learned and what you want to improve.',tip:'Your entries remain local on this device unless you choose to back them up. Export backups before changing devices or clearing app data.',view:'muhasabah'},
  {title:'Challenges · Build consistency',body:'Create your own challenge with a title, description, start date and duration. Record progress day by day, then review completion or missed days without treating a missed day as failure.',tip:'Open Settings → Make a Challenge to create and manage personal goals.',view:'challenges'},
- {title:'Settings · Edit your daily tasks',body:'Open Settings using the gear icon on the bottom bar. Under “Edit your daily tasks”, tap Edit next to an activity to change its name, category, time, ordering, enabled status and dropdown options. Use Add Activity for a new routine item.',tip:'The arrow on the highlighted row points to the exact setting. Tap the row to expand it; press Next to move to the next setting.',view:'sanctuary',target:'Edit your daily tasks'},
- {title:'Settings · Challenges, dhikr & history',body:'“Make a Challenge” creates a personal target. “Set a Dhikr” edits the counter, preset, words, direction and target. “Good experiences history” lets you review saved stories. “Backup, import & export” downloads or restores your data.',tip:'Follow the ➜ marker to the exact option. The next steps will point to history, backup, feedback and the tutorial controls.',view:'sanctuary',target:'Set a Dhikr'},
- {title:'Settings · Terms & Conditions',body:'Review the Terms & Conditions and check the consent record saved on this device. You can read the full terms or export a copy of the acceptance record.',tip:'The arrow points to Terms & Conditions. Open that row to view the details and export proof of consent.',view:'sanctuary',target:'Terms & Conditions'},
+ {title:'Settings · Google Account',body:'Connect Google to back up your progress to your private Drive file, review sync status, or sign out. Google backup is optional.',tip:'The arrow highlights Google Account. Check your connection and last-sync status here.',view:'sanctuary',targetId:'googleAccountCard'},
+ {title:'Settings · Terms & Conditions',body:'Review the Terms & Conditions and check the consent record saved on this device. Read the full terms or export a copy of the acceptance record.',tip:'The arrow points to Terms & Conditions. Open this row to view the record and export proof of consent.',view:'sanctuary',target:'Terms & Conditions'},
  {title:'Settings · Tutorial / Settings guide',body:'Choose whether the tutorial appears after login, or replay the guided tour. Each Settings step highlights the exact option to open.',tip:'The arrow points to Tutorial / Settings guide. Open this row to change auto-show or replay the guide.',view:'sanctuary',target:'Tutorial / Settings guide'},
- {title:'Settings · Status options',body:'Status options are fallback labels used by task dropdowns. Most activities have their own options under Edit your daily tasks, so change the specific task there when possible.',tip:'The ➜ marker points to Status options. Tap its row to expand and edit the labels.',view:'sanctuary',target:'Status options'},
- {title:'Settings · Good experiences history',body:'Review saved stories and reflections from earlier days. This section lists your saved experiences; entries are stored on this device.',tip:'The ➜ marker points to Good experiences history. Open it to review your entries.',view:'sanctuary',target:'Good experiences history'},
- {title:'Settings · Backup, import & export',body:'Export a JSON backup before clearing app data or changing devices. Import a previous backup to restore saved progress, or export the webpage as an HTML file.',tip:'The ➜ marker points to Backup, import & export. Export regularly and store the file somewhere safe.',view:'sanctuary',target:'Backup, import & export'},
- {title:'Settings · Feedback & review history',body:'Send a suggestion, report a bug or request a feature. Feedback is stored locally; email delivery only works after the feedback mail service is configured.',tip:'The ➜ marker points to Feedback & review history. Open it to submit feedback or review saved items.',view:'sanctuary',target:'Feedback & review history'},
- {title:'Settings · Tutorial / Settings guide',body:'Control whether the tutorial appears after login, or replay the full guide whenever you need help.',tip:'The arrow points to Tutorial / Settings guide. Use “Show tutorial now” to replay it.',view:'sanctuary',target:'Tutorial / Settings guide'},
+ {title:'Settings · Feedback & review history',body:'Send a suggestion, report a bug, request a feature, or review saved feedback. Feedback stays on this device; email requires a configured mail service or your email app.',tip:'The arrow points to Feedback & review history. Open this row to send feedback or review saved entries.',view:'sanctuary',target:'Feedback & review history'},
+ {title:'Settings · Edit your daily tasks',body:'Tap Edit beside an activity to change its name, category, time, order, enabled state and status options. Add Activity creates a new routine item.',tip:'The arrow points to Edit your daily tasks. Open it to customise your routine.',view:'sanctuary',target:'Edit your daily tasks'},
+ {title:'Settings · Make a Challenge',body:'Create a personal challenge with a title, commitment, start date and duration. Your created challenge appears in the Challenges tab.',tip:'The arrow points to Make a Challenge. Open it to create a measurable personal goal.',view:'sanctuary',target:'Make a Challenge'},
+ {title:'Settings · Set a Dhikr',body:'Choose a dhikr preset, edit the words, set a target and select the counting direction for the Digital Tasbeeh.',tip:'The arrow points to Set a Dhikr. Open this row to customise the counter.',view:'sanctuary',target:'Set a Dhikr'},
+ {title:'Settings · Good experiences history',body:'Review meaningful stories and experiences you saved earlier. Entries stay on this device unless included in a backup.',tip:'The arrow points to Good experiences history. Open it to review saved entries.',view:'sanctuary',target:'Good experiences history'},
+ {title:'Settings · Backup, import & export',body:'Export a JSON backup, import a previous UROOJ backup, or download a copy of the webpage. Keep backups in a safe place.',tip:'The arrow points to Backup, import & export. Export before changing devices or restoring data.',view:'sanctuary',target:'Backup, import & export'},
  {title:'You’re ready to begin',body:'That is the essentials. Begin with one small habit today and use the app consistently. You can return to this guide whenever you need a reminder.',tip:'Replay from Settings → App tutorial → Show tutorial now.',view:'today'}
 ];
 let uroojTourIndex=0;
@@ -462,7 +519,7 @@ function openUroojTutorial(force){
 function closeUroojTutorial(done){
  const modal=document.getElementById('uroojTutorialModal');if(!modal)return;
  const dont=document.getElementById('uroojDontShowAgain');if(dont&&dont.checked){try{localStorage.setItem(UROOJ_AUTO_TOUR_KEY,'off');localStorage.setItem(UROOJ_TOUR_KEY,'dont-show-again')}catch(e){}syncTutorialPreferenceControls()}
- modal.classList.remove('open');document.body.style.overflow='';document.querySelectorAll('#view-sanctuary details.settings-accordion.tour-target').forEach(d=>d.classList.remove('tour-target'));
+ modal.classList.remove('open');document.body.style.overflow='';document.querySelectorAll('#view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(d=>{d.classList.remove('tour-target');d.classList.remove('tour-target-card')});
  if(done){try{localStorage.setItem(UROOJ_TOUR_KEY,'done')}catch(e){}}
 }
 function navigateTourView(view){
@@ -470,9 +527,23 @@ function navigateTourView(view){
  if(tab)tab.click();
 }
 function navigateTourStep(step){
- document.querySelectorAll('#view-sanctuary details.settings-accordion.tour-target').forEach(d=>d.classList.remove('tour-target'));
+ document.querySelectorAll('#view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(el=>{el.classList.remove('tour-target');el.classList.remove('tour-target-card')});
  navigateTourView(step.view);
- if(step.view==='sanctuary'&&step.target){requestAnimationFrame(()=>{const rows=[...document.querySelectorAll('#view-sanctuary details.settings-accordion')];const row=rows.find(d=>(d.querySelector('summary span')?.textContent||'').trim()===step.target);if(row){row.open=true;row.classList.add('tour-target');row.scrollIntoView({behavior:'smooth',block:'center'});}})}
+ if(step.view==='sanctuary'&&(step.target||step.targetId)){
+  requestAnimationFrame(()=>{
+   let targetElement=null;
+   if(step.targetId)targetElement=document.getElementById(step.targetId);
+   else{
+    const rows=[...document.querySelectorAll('#view-sanctuary details.settings-accordion')];
+    const row=rows.find(d=>(d.querySelector('summary span')?.textContent||'').trim()===step.target);
+    if(row){row.open=true;row.classList.add('tour-target');targetElement=row}
+   }
+   if(targetElement){
+    if(step.targetId)targetElement.classList.add('tour-target-card');
+    targetElement.scrollIntoView({behavior:'smooth',block:'center'});
+   }
+  });
+ }
 }
 function initUroojTutorial(){
  document.getElementById('uroojTutorialNext')?.addEventListener('click',()=>{
@@ -530,21 +601,38 @@ function driveErrorText(err){const m=String(err&&err.message||err||'');if(/insuf
 async function driveFindFile(){const token=await ensureFreshToken();const q=encodeURIComponent("name='"+DRIVE_FILE_NAME+"' and trashed=false");const res=await fetch('https://www.googleapis.com/drive/v3/files?q='+q+'&spaces=drive&fields=files(id,name,modifiedTime)',{headers:{Authorization:'Bearer '+token}});if(!res.ok)await throwDriveApiError(res,'List Drive files');const data=await res.json();return (data.files&&data.files[0])||null}
 async function driveDownload(fileId){const token=await ensureFreshToken();const res=await fetch('https://www.googleapis.com/drive/v3/files/'+fileId+'?alt=media',{headers:{Authorization:'Bearer '+token}});if(!res.ok)await throwDriveApiError(res,'Download Drive backup');return res.json()}
 async function driveUpload(content,fileId){const token=await ensureFreshToken();const metadata={name:DRIVE_FILE_NAME,mimeType:'application/json'};const boundary='urooj-'+Date.now().toString(36);const body='--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify(metadata)+'\r\n--'+boundary+'\r\nContent-Type: application/json; charset=UTF-8\r\n\r\n'+JSON.stringify(content)+'\r\n--'+boundary+'--\r\n';const url=fileId?('https://www.googleapis.com/upload/drive/v3/files/'+fileId+'?uploadType=multipart&fields=id,name,modifiedTime'):'https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,modifiedTime';const res=await fetch(url,{method:fileId?'PATCH':'POST',headers:{Authorization:'Bearer '+token,'Content-Type':'multipart/related; boundary='+boundary},body:body});if(!res.ok)await throwDriveApiError(res,fileId?'Update Drive backup':'Create Drive backup');return res.json()}
+function stableJsonForConflict(value){
+ if(Array.isArray(value))return '['+value.map(stableJsonForConflict).join(',')+']';
+ if(value&&typeof value==='object')return '{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+stableJsonForConflict(value[key])).join(',')+'}';
+ return JSON.stringify(value);
+}
 async function driveLoadOrInit(){
  const existing=await driveFindFile();
  if(existing){
   gDriveFileId=existing.id;
   gDriveModifiedTime=existing.modifiedTime||null;
   const remote=await driveDownload(existing.id);
-  // The private Drive JSON is the source of truth after Google sign-in.
-  // Keep a local working cache for rendering and offline resilience, but never
-  // ask the user to resolve a local-vs-Drive conflict.
-  if(remote&&remote.state&&typeof remote.state==='object'){
+  if(!remote||!remote.state||typeof remote.state!=='object'){
+   throw new Error('The existing Google Drive backup does not contain valid UROOJ data. Export a local backup and review the Drive file before continuing.');
+  }
+  let localExists=false;
+  try{localExists=!!localStorage.getItem(KEY)}catch(e){}
+  const localDiffers=localExists&&stableJsonForConflict(state)!==stableJsonForConflict(remote.state);
+  if(localDiffers){
+   const useDrive=window.confirm('UROOJ found different progress on this device and in Google Drive.\n\nOK: restore the Google Drive copy and replace this device’s current app data.\nCancel: keep this device’s progress and upload it to Google Drive, replacing the Drive copy.\n\nExport a backup first if you need both copies.');
+   if(useDrive){
+    state={...defaultState(),...remote.state};
+    localStorage.setItem(KEY,JSON.stringify(state));
+   }else{
+    const saved=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state},existing.id);
+    gDriveFileId=saved.id||existing.id;
+    gDriveModifiedTime=saved.modifiedTime||gDriveModifiedTime;
+   }
+  }else{
    state={...defaultState(),...remote.state};
    localStorage.setItem(KEY,JSON.stringify(state));
   }
  }else{
-  // First connection: create the single private JSON backup for this app.
   const created=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state});
   gDriveFileId=created.id;
   gDriveModifiedTime=created.modifiedTime||null;
@@ -588,7 +676,7 @@ function renderAccountStatus(syncError,syncMessage){
   const last=getSyncTime(),lastText=last?new Date(last).toLocaleString():'not yet synced';
   host.innerHTML='<div class="card-title"><h3>Google Account</h3><span class="solar">'+(syncError?'Drive needs attention':gAccessToken?'Google connected':'Signed in')+'</span></div><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'+(gUserInfo.picture?'<img src="'+esc(gUserInfo.picture)+'" alt="" style="width:40px;height:40px;border-radius:50%">':'')+'<div><strong style="display:block;font-size:12px">'+esc(gUserInfo.name||gUserInfo.email)+'</strong><span class="muted">'+esc(gUserInfo.email)+'</span></div></div><p class="muted">'+(syncError?'Drive backup has not succeeded: '+esc(syncMessage||'Reconnect Google Drive and retry.'):'Your progress is backed up to a private file named “'+DRIVE_FILE_NAME+'” in your own Google Drive. Last synced: '+esc(lastText)+'.')+'</p><div class="btn-row"><button class="btn secondary small" id="googleSyncNowBtn" type="button">Sync now</button>'+(syncError?'<button class="btn small" id="googleReconnectBtn" type="button">Reconnect Google Drive</button>':'')+'<button class="btn ghost small" id="googleSignOutBtn" type="button">Sign out</button></div>'+(syncError?'<p class="muted" style="font-size:10px;margin-top:8px">If you did not grant Drive access, reconnect and tick the Drive permission checkbox. If Google reports the API is disabled, enable the Google Drive API in your Cloud project.</p>':'');
  }else{
-  host.innerHTML='<div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div><p class="muted">Connect your Google account to back up your UROOJ progress to a private JSON file in your Google Drive. You can continue using UROOJ without connecting an account; local data stays in this browser on this device.</p><div class="btn-row"><button class="btn" id="connectGoogleFromSettingsBtn" type="button" '+(googleConfigured()?'':'disabled')+'>Connect Google</button></div><p class="muted">Google sign-in is optional. Your journal entries and reflections may be included in the backup if you choose to sync them.</p><p class="muted"><a href="./privacy.html">Privacy Policy</a> · <a href="./terms.html">Terms of Service</a> · <a href="https://github.com/Ideasbyhamza/UROOJ-Your-rise-begins./blob/main/SETUP_GOOGLE_DRIVE.md" target="_blank" rel="noopener">Google Drive setup guide ↗</a></p>';
+  host.innerHTML='<div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div><p class="muted">Connect Google to back up your progress to a private JSON file in your Drive. You can continue without Google; local data stays in this browser on this device.</p><div class="btn-row"><button class="btn" id="connectGoogleFromSettingsBtn" type="button" '+(googleConfigured()?'':'disabled')+'>Connect Google</button></div><p class="muted">Google Drive backup is optional and may include your journals and reflections.</p><details class="compact-expand" style="margin-top:8px"><summary>Google setup options<span>Change Client ID only if needed</span></summary><div class="field"><label for="googleClientIdInput">GOOGLE OAUTH CLIENT ID</label><input id="googleClientIdInput" type="text" autocomplete="off" spellcheck="false" value="'+esc(GOOGLE_CLIENT_ID)+'" placeholder="xxxxx.apps.googleusercontent.com"></div><button class="btn secondary small" id="saveGoogleClientIdBtn" type="button">Save Client ID</button><p class="save-note" id="googleSetupStatus">Leave this unchanged unless your Google OAuth configuration requires another Client ID. Never enter a client secret.</p></details><p class="muted"><a href="./privacy.html">Privacy Policy</a> · <a href="./terms.html">Terms of Service</a> · <a href="https://github.com/Ideasbyhamza/UROOJ-Your-rise-begins./blob/main/SETUP_GOOGLE_DRIVE.md" target="_blank" rel="noopener">Google Drive setup guide ↗</a></p>';
  }
 }
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
@@ -841,7 +929,7 @@ const feedbackKey='urooj_feedback_v1';
 const feedbackEndpoint='PASTE_APPS_SCRIPT_WEB_APP_URL_HERE'; // Replace with the deployed Apps Script Web App URL ending in /exec.
 function renderSavedFeedback(){const host=document.getElementById('savedFeedbackList');if(!host)return;let items=[];try{items=JSON.parse(localStorage.getItem(feedbackKey)||'[]')}catch(e){}host.innerHTML=items.length?items.slice().reverse().map((x,i)=>`<div class="journal-entry"><div class="journal-entry-head"><strong>${esc(x.type)}</strong><span>${esc(x.date)}</span><button type="button" class="text-btn" data-feedback-delete="${esc(x.id)}">Delete</button></div><p>${esc(x.text)}</p></div>`).join(''):'<div class="empty">No saved feedback yet.</div>'}
 document.getElementById('appFeedbackForm')?.addEventListener('submit',async e=>{e.preventDefault();const text=document.getElementById('appFeedbackText').value.trim();if(!text)return;const type=document.getElementById('appFeedbackType').value;const status=document.getElementById('appFeedbackStatus');let items=[];try{items=JSON.parse(localStorage.getItem(feedbackKey)||'[]')}catch(err){}const item={id:'fb_'+Date.now().toString(36),type,text,date:todayKey()};items.push(item);try{localStorage.setItem(feedbackKey,JSON.stringify(items));renderSavedFeedback()}catch(err){status.textContent='Could not save feedback history on this device.';return}
-if(feedbackEndpoint==='PASTE_APPS_SCRIPT_WEB_APP_URL_HERE'){status.textContent='Saved on this device, but email is not connected yet. Deploy the Apps Script and add its /exec URL to feedbackEndpoint in index.html and UROOJ.html.';document.getElementById('appFeedbackText').value='';toast('Feedback saved locally');return}
+if(feedbackEndpoint==='PASTE_APPS_SCRIPT_WEB_APP_URL_HERE'){status.textContent='Feedback saved on this device. Email service is not connected; ';const emailLink=document.createElement('a');emailLink.textContent='open an email draft';emailLink.href='mailto:hamzamadnipersonal@gmail.com?subject='+encodeURIComponent('[UROOJ Feedback] '+type)+'&body='+encodeURIComponent('Date: '+item.date+'\nType: '+type+'\n\nFeedback:\n'+text+'\n');emailLink.style.color='var(--green)';emailLink.style.fontWeight='700';status.appendChild(emailLink);document.getElementById('appFeedbackText').value='';toast('Feedback saved locally');return}
 status.textContent='Sending feedback…';const payload=new URLSearchParams({type,message:text,date:item.date,website:document.getElementById('appFeedbackWebsite')?.value||''});try{await fetch(feedbackEndpoint,{method:'POST',mode:'no-cors',body:payload});document.getElementById('appFeedbackText').value='';status.textContent='Feedback request submitted. The browser cannot verify Gmail delivery; check the configured inbox.';toast('Feedback submitted')}catch(err){status.textContent='Email request could not be sent. Your feedback remains saved locally.';document.getElementById('appFeedbackText').value=''}});
 document.getElementById('savedFeedbackList')?.addEventListener('click',e=>{const b=e.target.closest('[data-feedback-delete]');if(!b)return;let items=[];try{items=JSON.parse(localStorage.getItem(feedbackKey)||'[]')}catch(err){}items=items.filter(x=>x.id!==b.dataset.feedbackDelete);localStorage.setItem(feedbackKey,JSON.stringify(items));renderSavedFeedback()});
 initUroojTutorial();
