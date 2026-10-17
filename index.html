@@ -197,7 +197,9 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));queueDriv
 // To enable Google sign-in: create an OAuth Client ID (type "Web application") in a Google Cloud
 // project, add this page's exact hosted URL under "Authorized JavaScript origins", then paste the
 // Client ID below. The app cannot work with real Google sign-in when opened as a local file.
-const GOOGLE_CLIENT_ID='PASTE_YOUR_GOOGLE_OAUTH_CLIENT_ID_HERE.apps.googleusercontent.com';
+const GOOGLE_CLIENT_ID_STORAGE_KEY='urooj-google-client-id-v1';
+let GOOGLE_CLIENT_ID='';
+try{GOOGLE_CLIENT_ID=localStorage.getItem(GOOGLE_CLIENT_ID_STORAGE_KEY)||''}catch(e){}
 const DRIVE_FILE_NAME='urooj-data.json';
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file openid email profile';
 const GAUTH_KEY='urooj-google-account-v1';
@@ -214,9 +216,10 @@ function setLoginBusy(busy){const b=document.getElementById('googleSignInBtn');i
 function googleConfigured(){return typeof GOOGLE_CLIENT_ID==='string'&&GOOGLE_CLIENT_ID.endsWith('.apps.googleusercontent.com')&&!GOOGLE_CLIENT_ID.startsWith('PASTE_')}
 function initGoogleAuth(){
  const notice=document.getElementById('googleConfigNotice'),btn=document.getElementById('googleSignInBtn');
- if(!googleConfigured()){if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in isn’t set up yet</strong><br>Paste a Google OAuth Client ID into GOOGLE_CLIENT_ID in this page, then reload. Use “Continue without Google” for now.'}if(btn)btn.disabled=true;return}
+ if(!googleConfigured()){if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in isn’t set up yet</strong><br>Continue offline, then open Settings → Google Account to save your Google OAuth Client ID. See the setup guide linked there.'}if(btn)btn.disabled=true;return}
  if(location.protocol==='file:'){if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in needs hosting</strong><br>Open this app from a real web address, not a local file, for Google sign-in to work. Use “Continue without Google” for now.'}if(btn)btn.disabled=true;return}
  if(!(window.google&&google.accounts&&google.accounts.oauth2)){setTimeout(initGoogleAuth,300);return}
+ if(btn)btn.disabled=false;if(notice)notice.hidden=true;
  try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){console.error('Google auth error',err);setLoginBusy(false);setLoginError('Google sign-in was cancelled or blocked. Please try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID and authorized origin in Google Cloud Console.'}return}
  const cached=loadGoogleAccountCache();if(cached&&cached.email){gUserInfo=cached;renderAccountStatus()}
 }
@@ -252,19 +255,19 @@ async function driveLoadOrInit(){
 }
 function queueDriveSync(){if(!gAccessToken||!gTokenClient)return;clearTimeout(gSyncTimer);gSyncTimer=setTimeout(doDriveSync,1800)}
 async function doDriveSync(){if(gSyncing||!gAccessToken)return;gSyncing=true;try{const result=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state},gDriveFileId);gDriveFileId=result.id||gDriveFileId;setSyncTime(Date.now());renderAccountStatus()}catch(e){console.error('Drive sync error',e);renderAccountStatus(true)}finally{gSyncing=false}}
-function signOutGoogle(){if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();toast('Signed out of Google. Your data stays saved on this device.')}
+function signOutGoogle(){if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('Signed out of Google. Your data remains saved on this device.');toast('Signed out of Google. Local data remains on this device.')}
 function renderAccountStatus(syncError){
  const host=document.getElementById('googleAccountCard');if(!host)return;
  if(gUserInfo&&gUserInfo.email){
   const last=getSyncTime(),lastText=last?new Date(last).toLocaleString():'not yet synced';
   host.innerHTML='<div class="card-title"><h3>Google Account</h3><span class="solar">'+(gAccessToken?'Connected':'Signed in')+'</span></div><div style="display:flex;align-items:center;gap:10px;margin-bottom:10px">'+(gUserInfo.picture?'<img src="'+esc(gUserInfo.picture)+'" alt="" style="width:40px;height:40px;border-radius:50%">':'')+'<div><strong style="display:block;font-size:12px">'+esc(gUserInfo.name||gUserInfo.email)+'</strong><span class="muted">'+esc(gUserInfo.email)+'</span></div></div><p class="muted">'+(syncError?'Could not reach Google Drive just now. Your data is safe on this device and will sync when the connection is back.':'Your data backs up to a private file named “'+DRIVE_FILE_NAME+'” in your own Google Drive.')+' Last synced: '+esc(lastText)+'.</p><div class="btn-row"><button class="btn secondary small" id="googleSyncNowBtn" type="button">Sync now</button><button class="btn ghost small" id="googleSignOutBtn" type="button">Sign out</button></div>';
  }else{
-  host.innerHTML='<div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div><p class="muted">Sign in with Google from the login screen to back up your data to Google Drive.</p>';
+  host.innerHTML='<div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div><p class="muted">Connect Google to back up this app’s saved progress to a private JSON file in your Google Drive. Setup requires a Google OAuth Web Client ID for this site.</p><div class="field"><label for="googleClientIdInput">GOOGLE OAUTH CLIENT ID</label><input id="googleClientIdInput" autocomplete="off" spellcheck="false" placeholder="123456789-…apps.googleusercontent.com" value="'+esc(GOOGLE_CLIENT_ID)+'"></div><div class="btn-row"><button class="btn secondary small" id="saveGoogleClientIdBtn" type="button">Save Client ID</button><button class="btn small" id="connectGoogleFromSettingsBtn" type="button" '+(googleConfigured()?'':'disabled')+'>Connect Google</button></div><p class="muted" id="googleSetupStatus">The Client ID is public app configuration. Never paste a client secret here.</p><p class="muted"><a href="https://console.cloud.google.com/apis/credentials" target="_blank" rel="noopener">Open Google Cloud credentials ↗</a> · <a href="https://github.com/Ideasbyhamza/UROOJ-Your-rise-begins./blob/main/SETUP_GOOGLE_DRIVE.md" target="_blank" rel="noopener">Setup guide ↗</a></p>';
  }
 }
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
 document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand('today')});
-document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();toast('Syncing to Google Drive…')}if(e.target.closest('#googleSignOutBtn')){signOutGoogle()}});
+document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();toast('Syncing to Google Drive…');return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
 initGoogleAuth();
 renderAccountStatus();
 /* ---------- end Google Sign-In + Drive sync ---------- */
