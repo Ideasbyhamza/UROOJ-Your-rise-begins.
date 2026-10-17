@@ -33,11 +33,11 @@ jobs:
         run: gradle --no-daemon clean assembleDebug
 
       - name: Name branded APK
-        run: cp android-wrapper/app/build/outputs/apk/debug/app-debug.apk android-wrapper/app/build/outputs/apk/debug/UROOJByIdeasofHamza.apk
+        run: cp android-wrapper/app/build/outputs/apk/debug/app-debug.apk 'android-wrapper/app/build/outputs/apk/debug/UROOJ (Ideasoby Hamza).apk'
 
       - name: Validate APK package and signature
         run: |
-          APK="android-wrapper/app/build/outputs/apk/debug/UROOJByIdeasofHamza.apk"
+          APK="android-wrapper/app/build/outputs/apk/debug/UROOJ (Ideasoby Hamza).apk"
           test -s "$APK"
           "$ANDROID_HOME/build-tools/35.0.0/aapt" dump badging "$APK"
           "$ANDROID_HOME/build-tools/35.0.0/apksigner" verify --verbose "$APK"
@@ -46,7 +46,7 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: UROOJByIdeasofHamza-v1.0.4
-          path: android-wrapper/app/build/outputs/apk/debug/UROOJByIdeasofHamza.apk
+          name: UROOJ-Ideasoby-Hamza-v1.0.5
+          path: android-wrapper/app/build/outputs/apk/debug/UROOJ (Ideasoby Hamza).apk
           if-no-files-found: error
           retention-days: 14
