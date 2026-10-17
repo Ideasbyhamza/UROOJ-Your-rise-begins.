@@ -123,6 +123,14 @@ body.dark #uroojTutorialModal .tour-card{background:var(--white);border-color:va
 #view-sanctuary details.settings-accordion.tour-target>summary{outline:2px solid var(--gold);outline-offset:2px;box-shadow:0 0 0 4px #c5a05922}
 #view-sanctuary details.settings-accordion.tour-target>summary:after{content:'➜';font-size:17px;background:var(--gold);color:#fff;animation:uroojArrowPulse 1s ease-in-out infinite alternate}
 @keyframes uroojArrowPulse{from{transform:translateY(-50%) translateX(0)}to{transform:translateY(-50%) translateX(3px)}}
+
+#uroojConsentReceipt{position:fixed;inset:0;z-index:1000002;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(15,25,20,.76)}
+#uroojConsentReceipt[hidden]{display:none!important}
+#uroojConsentReceipt .receipt-card{width:min(100%,390px);max-height:88dvh;overflow:auto;background:var(--sand,#fdfbf7);color:var(--ink,#2c3539);border-radius:18px;padding:18px;border:1px solid var(--line,#e9e4da);box-shadow:0 20px 60px #0004}
+#uroojConsentReceipt h2{font:600 21px Georgia,serif;color:var(--green,#1b4d3e);margin:0 0 8px}
+#uroojConsentReceipt .receipt-row{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px solid var(--line,#e9e4da);font-size:11px}
+#uroojConsentReceipt .receipt-row strong{max-width:60%;text-align:right;overflow-wrap:anywhere}
+#uroojConsentReceipt .receipt-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -156,12 +164,28 @@ body.dark #uroojTutorialModal .tour-card{background:var(--white);border-color:va
   try{localStorage.setItem(KEY,JSON.stringify(record));return record}catch(e){document.getElementById('uroojConsentError').textContent='Could not save your consent on this device. Please enable browser storage and try again.';document.getElementById('uroojConsentError').classList.add('show');return null}
  }
  if(panel){const rec=getRecord();if(rec&&rec.accepted&&rec.termsVersion===VERSION)panel.hidden=true;
-  document.getElementById('uroojAcceptTerms').addEventListener('click',function(){const r=saveRecord();if(!r)return;panel.hidden=true;renderRecord();});
+  document.getElementById('uroojAcceptTerms').addEventListener('click',function(){const r=saveRecord();if(!r)return;panel.hidden=true;renderRecord();showReceipt(r);});
+  function showReceipt(r){document.getElementById('uroojReceiptId').textContent=r.consentId;document.getElementById('uroojReceiptVersion').textContent=r.termsVersion;document.getElementById('uroojReceiptTime').textContent=r.acceptedAtLocal+' ('+r.acceptedAt+')';document.getElementById('uroojConsentReceipt').hidden=false;}
+  document.getElementById('uroojReceiptExport').addEventListener('click',function(){window.uroojExportConsentRecord&&window.uroojExportConsentRecord();});
+  document.getElementById('uroojReceiptContinue').addEventListener('click',function(){document.getElementById('uroojConsentReceipt').hidden=true;});
+  if(rec&&rec.accepted&&rec.termsVersion===VERSION){panel.hidden=true;}
+
   document.getElementById('uroojRejectTerms').addEventListener('click',function(){document.getElementById('uroojConsentError').classList.add('show');document.getElementById('uroojConsentError').textContent='Sorry, you can’t use UROOJ unless you accept the Terms & Conditions. You may close this page instead.';});
  }
  document.addEventListener('DOMContentLoaded',renderRecord);window.uroojExportConsentRecord=function(){const r=getRecord();if(!r||!r.accepted){alert('No accepted consent record is saved on this device.');return}const blob=new Blob([JSON.stringify(r,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='urooj-consent-'+r.consentId+'.json';a.click();URL.revokeObjectURL(url)};
 })();
 </script>
+<section id="uroojConsentReceipt" role="dialog" aria-modal="true" aria-labelledby="uroojConsentReceiptTitle" hidden>
+ <div class="receipt-card"><div class="eyebrow">Consent saved</div><h2 id="uroojConsentReceiptTitle">Your consent receipt</h2>
+ <p style="font-size:11px;line-height:1.55">This receipt records what you accepted. Save a copy if you need proof later.</p>
+ <div class="receipt-row"><span>Status</span><strong id="uroojReceiptStatus">Accepted</strong></div>
+ <div class="receipt-row"><span>Consent record ID</span><strong id="uroojReceiptId">—</strong></div>
+ <div class="receipt-row"><span>Terms version</span><strong id="uroojReceiptVersion">1.0</strong></div>
+ <div class="receipt-row"><span>Accepted at</span><strong id="uroojReceiptTime">—</strong></div>
+ <div class="receipt-row"><span>What is recorded</span><strong>Acceptance, ID, time, version</strong></div>
+ <p style="font-size:10px;line-height:1.5;margin-top:10px">Proof currently stays in this device’s browser/app storage. It is not sent to Hamza’s email or a central server, and can be lost if app data is cleared. Export the JSON receipt to keep your own copy.</p>
+ <div class="receipt-actions"><button class="btn secondary" type="button" id="uroojReceiptExport">Export receipt</button><button class="btn" type="button" id="uroojReceiptContinue">Continue to UROOJ</button></div>
+ </div></section>
 <section id="jarvisLogin" aria-label="Login">
   <div class="login-card" id="jarvisLoginCard">
     <div class="login-mark" aria-hidden="true"><svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 48.5H55" stroke="#E4D2A7" stroke-width="2.5" stroke-linecap="round"/><path d="M15 43L25 32L33 38L49 18" stroke="#FFF9E9" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M39 18H49V28" stroke="#E4D2A7" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16" cy="17" r="4" fill="#E4D2A7"/><path d="M16 7V4M16 30V27M6 17H3M29 17H26M8.8 9.8L6.7 7.7M25.3 26.3L23.2 24.2" stroke="#E4D2A7" stroke-width="1.8" stroke-linecap="round"/></svg></div>
