@@ -230,7 +230,7 @@ function saveGoogleAccountCache(data){try{localStorage.setItem(GAUTH_KEY,JSON.st
 function clearGoogleAccountCache(){try{localStorage.removeItem(GAUTH_KEY)}catch(e){}}
 function setSyncTime(ts){try{localStorage.setItem(SYNC_KEY,String(ts))}catch(e){}}
 function getSyncTime(){try{return Number(localStorage.getItem(SYNC_KEY)||0)}catch(e){return 0}}
-function unlockApp(){document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none'}
+const APP_SESSION_KEY='urooj-app-session-until-v1';const APP_SESSION_MS=60*60*1000;function unlockApp(){try{localStorage.setItem(APP_SESSION_KEY,String(Date.now()+APP_SESSION_MS))}catch(e){}document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none'}function resumeAppSession(){try{const until=Number(localStorage.getItem(APP_SESSION_KEY)||0);if(until>Date.now()){document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none';return true}localStorage.removeItem(APP_SESSION_KEY)}catch(e){}return false}
 function setLoginError(msg){const el=document.getElementById('jarvisLoginError');if(el)el.textContent=msg||''}
 function setLoginBusy(busy){const b=document.getElementById('googleSignInBtn');if(b){b.disabled=busy;const s=b.querySelector('span');if(s)s.textContent=busy?'Signing in…':'Sign in with Google'}}
 function googleConfigured(){return typeof GOOGLE_CLIENT_ID==='string'&&GOOGLE_CLIENT_ID.endsWith('.apps.googleusercontent.com')&&!GOOGLE_CLIENT_ID.startsWith('PASTE_')}
@@ -320,7 +320,7 @@ function startDrivePolling(){
  if(gDrivePollTimer)clearInterval(gDrivePollTimer);
  gDrivePollTimer=setInterval(checkDriveForChanges,15000);
 }
-function signOutGoogle(){if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('Signed out of Google. Your data remains saved on this device.');toast('Signed out of Google. Local data remains on this device.')}
+function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('Signed out of Google. Your data remains saved on this device.');toast('Signed out of Google. Local data remains on this device.')}
 function renderAccountStatus(syncError,syncMessage){
  const host=document.getElementById('googleAccountCard');if(!host)return;
  if(gUserInfo&&gUserInfo.email){
@@ -333,7 +333,8 @@ function renderAccountStatus(syncError,syncMessage){
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
 document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand('today')});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
-initGoogleAuth();
+resumeAppSession();
+ initGoogleAuth();
 renderAccountStatus();
 /* ---------- end Google Sign-In + Drive sync ---------- */
 let toastTimer;function toast(s){if(/\b(saved|saving|syncing|synced|backed up)\b/i.test(String(s))&&!/\b(could not|failed|failure|error|unavailable)\b/i.test(String(s)))return;const el=$('#toast');el.textContent=s;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2200)}
