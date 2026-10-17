@@ -87,10 +87,16 @@ public class MainActivity extends Activity {
                 return route(Uri.parse(url));
             }
             private boolean route(Uri uri) {
-                String scheme = uri.getScheme() == null ? "" : uri.getScheme();
+                String scheme = uri.getScheme() == null ? "" : uri.getScheme().toLowerCase(java.util.Locale.ROOT);
                 String host = uri.getHost() == null ? "" : uri.getHost();
-                if ("https".equalsIgnoreCase(scheme) && ASSET_HOST.equalsIgnoreCase(host)) return false;
-                try { startActivity(new Intent(Intent.ACTION_VIEW, uri)); } catch (Exception ignored) {}
+                if ("https".equals(scheme) && ASSET_HOST.equalsIgnoreCase(host)) return false;
+                // Only hand ordinary web links and email links to other apps.
+                // Block javascript:, file:, content:, intent:, and arbitrary custom schemes.
+                if (!"https".equals(scheme) && !"http".equals(scheme) && !"mailto".equals(scheme)) return true;
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                    if (intent.resolveActivity(getPackageManager()) != null) startActivity(intent);
+                } catch (Exception ignored) {}
                 return true;
             }
             @Override public void onPageFinished(WebView view, String url) {
