@@ -224,7 +224,7 @@ const DRIVE_FILE_NAME='urooj-data.json';
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file openid email profile';
 const GAUTH_KEY='urooj-google-account-v1';
 const SYNC_KEY='urooj-last-sync-v1';
-let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserInfo=null,gSyncTimer=null,gSyncing=false;
+let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserInfo=null,gSyncTimer=null,gSyncing=false,gSyncAgain=false;
 function loadGoogleAccountCache(){try{return JSON.parse(localStorage.getItem(GAUTH_KEY)||'null')}catch(e){return null}}
 function saveGoogleAccountCache(data){try{localStorage.setItem(GAUTH_KEY,JSON.stringify(data))}catch(e){}}
 function clearGoogleAccountCache(){try{localStorage.removeItem(GAUTH_KEY)}catch(e){}}
@@ -288,8 +288,8 @@ async function driveLoadOrInit(){
  }
  setSyncTime(Date.now());
 }
-function queueDriveSync(){if(!gAccessToken||!gTokenClient)return;clearTimeout(gSyncTimer);gSyncTimer=setTimeout(doDriveSync,1800)}
-async function doDriveSync(){if(gSyncing||!gAccessToken)return;gSyncing=true;try{const result=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state},gDriveFileId);gDriveFileId=result.id||gDriveFileId;setSyncTime(Date.now());renderAccountStatus()}catch(e){console.error('Drive sync error',e);renderAccountStatus(true,driveErrorText(e));toast('Drive sync failed — see Google Account details')}finally{gSyncing=false}}
+function queueDriveSync(){if(!gAccessToken||!gTokenClient)return;clearTimeout(gSyncTimer);gSyncTimer=setTimeout(function(){if(gSyncing){gSyncAgain=true;return}doDriveSync()},1800)}
+async function doDriveSync(){if(!gAccessToken)return;if(gSyncing){gSyncAgain=true;return}gSyncing=true;gSyncAgain=false;try{const result=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state},gDriveFileId);gDriveFileId=result.id||gDriveFileId;setSyncTime(Date.now());renderAccountStatus()}catch(e){console.error('Drive sync error',e);renderAccountStatus(true,driveErrorText(e));toast('Drive sync failed — see Google Account details')}finally{gSyncing=false;if(gSyncAgain){gSyncAgain=false;setTimeout(doDriveSync,200)}}}
 function signOutGoogle(){if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('Signed out of Google. Your data remains saved on this device.');toast('Signed out of Google. Local data remains on this device.')}
 function renderAccountStatus(syncError,syncMessage){
  const host=document.getElementById('googleAccountCard');if(!host)return;
