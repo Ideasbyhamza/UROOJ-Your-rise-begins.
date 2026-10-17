@@ -224,7 +224,7 @@ const DRIVE_FILE_NAME='urooj-data.json';
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file openid email profile';
 const GAUTH_KEY='urooj-google-account-v1';
 const SYNC_KEY='urooj-last-sync-v1';
-let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserInfo=null,gSyncTimer=null,gSyncing=false,gSyncAgain=false,gDrivePollTimer=null,gDriveModifiedTime=null,gLocalDirty=false,gLastLocalEdit=0,gLocalEditVersion=0;
+let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserInfo=null,gSyncTimer=null,gSyncing=false,gSyncAgain=false,gDrivePollTimer=null,gDriveModifiedTime=null,gLocalDirty=false,gLastLocalEdit=0,gLocalEditVersion=0,gSilentAuthAttempt=false;
 function loadGoogleAccountCache(){try{return JSON.parse(localStorage.getItem(GAUTH_KEY)||'null')}catch(e){return null}}
 function saveGoogleAccountCache(data){try{localStorage.setItem(GAUTH_KEY,JSON.stringify(data))}catch(e){}}
 function clearGoogleAccountCache(){try{localStorage.removeItem(GAUTH_KEY)}catch(e){}}
