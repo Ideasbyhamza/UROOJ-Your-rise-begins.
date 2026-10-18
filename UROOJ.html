@@ -725,7 +725,7 @@ function renderAccountStatus(syncError,syncMessage){
  }
 }
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
-document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand('today')});
+document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'challenges')});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
 resumeAppSession();
  initGoogleAuth();
@@ -986,7 +986,7 @@ status.textContent='Sending feedback…';const payload=new URLSearchParams({type
 document.getElementById('savedFeedbackList')?.addEventListener('click',e=>{const b=e.target.closest('[data-feedback-delete]');if(!b)return;let items=[];try{items=JSON.parse(localStorage.getItem(feedbackKey)||'[]')}catch(err){}items=items.filter(x=>x.id!==b.dataset.feedbackDelete);localStorage.setItem(feedbackKey,JSON.stringify(items));renderSavedFeedback()});
 initUroojTutorial();
 renderSavedFeedback();
-setDate();setInterval(setDate,60000);applyTheme();renderViewOnDemand('today');
+setDate();setInterval(setDate,60000);applyTheme();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'challenges');
 // Best-effort persistence warning without exposing journal content.
 try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browser storage unavailable. Your data may not persist.')}
 })();
