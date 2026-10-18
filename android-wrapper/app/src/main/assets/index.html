@@ -10,7 +10,7 @@
 <link rel="icon" type="image/svg+xml" href="./assets/urooj-logo.svg?v=1.0.7"/>
 <link rel="apple-touch-icon" href="./assets/urooj-logo.svg?v=1.0.7"/>
 <meta name="application-name" content="UROOJ"/>
-<meta name="app-version" content="1.0.7"/>
+<meta name="app-version" content="1.0.8"/>
 <!-- Offline-friendly: use local system fonts so the app does not wait for Google Fonts. -->
 <style>
 :root{--sand:#FDFBF7;--green:#1B4D3E;--gold:#C5A059;--sage:#E8F0EC;--ink:#2C3539;--muted:#77817e;--line:#e9e4da;--white:#fffefa;--shadow:0 10px 35px rgba(36,57,47,.07);color-scheme:light}
@@ -105,21 +105,24 @@ body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divid
 @keyframes uroojArrowPulse{from{transform:translateY(-50%) translateX(0)}to{transform:translateY(-50%) translateX(3px)}}
 
 /* First-time feature tour */
-#uroojTutorialModal{position:fixed;inset:0;z-index:9999;display:none;align-items:flex-end;justify-content:center;padding:10px 12px max(12px,env(safe-area-inset-bottom));background:rgba(19,35,28,.48)}
-#uroojTutorialModal.open{display:flex}
-#uroojTutorialModal .tour-card{width:min(100%,278px);max-height:42dvh;overflow:auto;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:13px;padding:10px;box-shadow:0 10px 28px rgba(0,0,0,.18)}
-#uroojTutorialModal .tour-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px}
-#uroojTutorialModal .tour-kicker{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:800}
-#uroojTutorialModal .tour-progress{height:3px;background:var(--sage);border-radius:99px;overflow:hidden;margin:4px 0 6px}
-#uroojTutorialModal .tour-progress span{display:block;height:100%;width:0;background:var(--green);transition:width .2s ease}
-#uroojTutorialModal h2{font:600 15px 'Cinzel',Georgia,serif;color:var(--green);line-height:1.2;margin:0 0 4px}
-#uroojTutorialModal .tour-body{font-size:11px;line-height:1.35;color:var(--muted);white-space:pre-line}
-#uroojTutorialModal .tour-tip{background:var(--sage);border-radius:7px;padding:5px 7px;font-size:10px;line-height:1.3;margin-top:5px;color:var(--ink)}
-#uroojTutorialModal .tour-actions{display:flex;align-items:center;gap:6px;margin-top:7px}
-#uroojTutorialModal .tour-actions .btn{flex:1;min-height:29px;padding:5px 7px;font-size:10px}
-#uroojTutorialModal .tour-step{font-size:9px;color:var(--muted)}
-body.dark #uroojTutorialModal .tour-card{background:var(--white);border-color:var(--line)}
-@media(max-width:380px){#uroojTutorialModal{padding:8px 10px max(10px,env(safe-area-inset-bottom))}#uroojTutorialModal .tour-card{width:min(100%,270px);max-height:40dvh;padding:9px;border-radius:12px}#uroojTutorialModal h2{font-size:14px}}
+#uroojTutorialModal{position:fixed;inset:0;z-index:9998;display:none;background:rgba(19,35,28,.58);pointer-events:auto}
+#uroojTutorialModal.open{display:block}
+#uroojTourCallout{position:fixed;z-index:10002;display:none;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100%,278px);max-height:38dvh;overflow:auto;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:13px;padding:10px;box-shadow:0 10px 28px rgba(0,0,0,.20);pointer-events:auto}
+#uroojTourCallout.open{display:block}
+#uroojTourCallout .tour-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px}
+#uroojTourCallout .tour-kicker{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:800}
+#uroojTourCallout .tour-progress{height:3px;background:var(--sage);border-radius:99px;overflow:hidden;margin:4px 0 6px}
+#uroojTourCallout .tour-progress span{display:block;height:100%;width:0;background:var(--green);transition:width .2s ease}
+#uroojTourCallout h2{font:600 15px 'Cinzel',Georgia,serif;color:var(--green);line-height:1.2;margin:0 0 4px}
+#uroojTourCallout .tour-body{font-size:11px;line-height:1.35;color:var(--muted);white-space:pre-line}
+#uroojTourCallout .tour-tip{background:var(--sage);border-radius:7px;padding:5px 7px;font-size:10px;line-height:1.3;margin-top:5px;color:var(--ink)}
+#uroojTourCallout .tour-actions{display:flex;align-items:center;gap:6px;margin-top:7px}
+#uroojTourCallout .tour-actions .btn{flex:1;min-height:29px;padding:5px 7px;font-size:10px}
+#uroojTourCallout .tour-step{font-size:9px;color:var(--muted)}
+.urooj-tour-focus{position:relative!important;z-index:9999!important;outline:2px solid var(--gold)!important;outline-offset:3px;box-shadow:0 0 0 4px #c5a05935!important;border-radius:10px}
+body.dark #uroojTourCallout{background:var(--white);border-color:var(--line)}
+@media(max-width:380px){#uroojTourCallout{width:min(100%,268px);max-height:35dvh;padding:9px;border-radius:12px}#uroojTourCallout h2{font-size:14px}}
+
 
 
 #uroojTermsConsent{position:fixed;inset:0;z-index:1000000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,25,20,.72);overflow-y:auto}
@@ -467,16 +470,15 @@ Not applicable" rows="8"></textarea><p class="muted" style="font-size:10px;margi
 <button aria-label="Settings" data-view="sanctuary"><svg viewbox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"></path><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.7-1.3-1.7-3-2 .8a7.8 7.8 0 0 0-2.6-1.5L14.5 3h-5l-.3 2.5a7.8 7.8 0 0 0-2.6 1.5l-2-.8-1.7 3 1.7 1.3a7.8 7.8 0 0 0 0 3l-1.7 1.3 1.7 3 2-.8a7.8 7.8 0 0 0 2.6 1.5l.3 2.5h5l.3-2.5a7.8 7.8 0 0 0 2.6-1.5l2 .8 1.7-3-1.7-1.3Z"></path></svg><span>Settings</span></button>
 </nav>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
-<div id="uroojTutorialModal" aria-modal="true" role="dialog" aria-labelledby="uroojTutorialTitle" aria-describedby="uroojTutorialBody">
-  <div class="tour-card">
-    <div class="tour-top"><div><div class="tour-kicker">UROOJ · QUICK START</div><div class="tour-step" id="uroojTutorialStep">Step 1 of 8</div></div><button type="button" class="btn ghost small" id="uroojTutorialClose" aria-label="Close tutorial">✕ Skip</button></div>
+<div id="uroojTutorialModal" aria-hidden="true"></div>
+<div id="uroojTourCallout" class="tour-card" role="dialog" aria-modal="true" aria-labelledby="uroojTutorialTitle" aria-describedby="uroojTutorialBody">
+    <div class="tour-top"><div><div class="tour-kicker">UROOJ · QUICK TOUR</div><div class="tour-step" id="uroojTutorialStep">Step 1 of 9</div></div><button type="button" class="btn ghost small" id="uroojTutorialClose" aria-label="Close tutorial">Skip ✕</button></div>
     <div class="tour-progress" aria-hidden="true"><span id="uroojTutorialProgress"></span></div>
     <h2 id="uroojTutorialTitle">Welcome to UROOJ</h2>
     <div class="tour-body" id="uroojTutorialBody">A simple guide to your app.</div>
     <div class="tour-tip" id="uroojTutorialTip"></div>
-     <label class="tour-dont-show" style="display:flex;align-items:center;gap:8px;margin-top:12px;font-size:11px;line-height:1.4;color:var(--muted);text-align:left"><input type="checkbox" id="uroojDontShowAgain" style="accent-color:var(--green);width:16px;height:16px;flex:0 0 auto"> Don’t show this tutorial again</label>
+    <label class="tour-dont-show" style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:10px;line-height:1.35;color:var(--muted);text-align:left"><input type="checkbox" id="uroojDontShowAgain" style="accent-color:var(--green);width:15px;height:15px;flex:0 0 auto"> Don’t show again</label>
     <div class="tour-actions"><button type="button" class="btn ghost" id="uroojTutorialBack">Back</button><button type="button" class="btn" id="uroojTutorialNext">Next</button></div>
-  </div>
 </div>
 <div aria-labelledby="activityEditTitle" aria-modal="true" class="modal-backdrop" id="activityEditModal" role="dialog"><div class="modal"><div class="modal-top"><h2 id="activityEditTitle">Edit Activity</h2><button aria-label="Close" class="close" id="closeActivityEdit">×</button></div><form id="activityEditForm"><input id="editActivityIndex" type="hidden"/><div class="field"><label for="editActivityName">NAME</label><input id="editActivityName" maxlength="140" required=""/></div><div class="field"><label for="editActivityCategory">CATEGORY</label><select id="editActivityCategory"><option>Prayer</option><option>Quran</option><option>Fitness</option><option>Reading</option><option>Dhikr</option><option>Learning</option><option>Personal</option><option>Good deeds</option></select></div><div class="field"><label for="editActivityType">TYPE</label><select id="editActivityType"><option value="standard">Standard activity</option><option value="prayer">Prayer (special statuses)</option><option value="quran">Qur’an / study</option><option value="fitness">Fitness / movement</option><option value="reading">Reading</option><option value="custom">Custom status options</option></select></div><div class="field"><label for="editActivityTime">SCHEDULED TIME (OPTIONAL)</label><input id="editActivityTime" type="time"/></div><div class="field editor-hidden"><label for="editActivityDefault">DEFAULT STATUS</label><select id="editActivityDefault"></select></div><div class="field"><label for="editActivityOptions">STATUS OPTIONS FOR THIS TASK <small>(up to 7 options total)</small></label><textarea id="editActivityOptions" placeholder="Not recorded&#10;Takbeer-e-Ula&#10;Jamaat&#10;Ada&#10;Qaza&#10;Missed / not completed" rows="4" maxlength="280" style="white-space:pre-wrap"></textarea><div class="btn-row" style="gap:7px;margin-top:8px"><input id="newActivityStatusOption" maxlength="40" placeholder="Add a status (e.g. 100 Tasbeeh)" aria-label="New status option" style="flex:1;min-width:150px"><button class="btn secondary small" id="addActivityStatusOption" type="button">＋ Add status</button></div></div><div class="field editor-hidden"><label for="editActivityOrder">ORDER</label><input id="editActivityOrder" min="1" step="1" type="number"/></div><div class="field editor-hidden"><label for="editActivityExtra">EXTRA FIELDS (OPTIONAL, COMMA-SEPARATED)</label><input id="editActivityExtra" placeholder="duration, distance, pages"/></div><label class="activity-enabled editor-hidden"><span>Enabled</span><input checked="" id="editActivityEnabled" type="checkbox"/></label><div class="btn-row"><button class="btn" type="submit">Save</button><button class="btn danger" id="deleteActivityFromModal" type="button">Delete Activity</button></div></form></div></div>
 <div aria-labelledby="resetTitle" aria-modal="true" class="modal-backdrop" id="resetModal" role="dialog"><div class="modal"><div class="modal-top"><h2 id="resetTitle">Reset tasbeeh?</h2><button aria-label="Close" class="close" id="closeModal">×</button></div><p class="muted">This will reset the current count to zero. This action cannot be undone.</p><div class="btn-row" style="justify-content:flex-end;margin-top:18px"><button class="btn ghost" id="cancelReset">Keep count</button><button class="btn danger" id="confirmReset">Reset count</button></div></div></div>
@@ -512,27 +514,37 @@ function getSyncTime(){try{return Number(localStorage.getItem(SYNC_KEY)||0)}catc
 
 const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';const UROOJ_AUTO_TOUR_KEY='urooj-auto-tutorial-after-login-v1';
 const UROOJ_TOUR_STEPS=[
- {title:'Welcome to UROOJ',body:'UROOJ is a personal space for building habits, dhikr, learning and honest self-reflection. You can use the main tabs along the bottom to move around.',tip:'Use Next to move through this guide. You can skip it and replay it from Settings at any time.',view:'today'},
- {title:'Home · Start your day',body:'Home contains Today’s Motive, Islamic/Sunnah reminders, your Digital Tasbeeh counter and quick links. Tap the green counter each time you complete a dhikr count.',tip:'Open Settings → Set a Dhikr to choose your preset and counting options.',view:'today'},
- {title:'Digital Tasbeeh · Customise it',body:'Choose a dhikr preset, read its Arabic and source note, edit the dhikr name and words, choose ascending or descending count, set a target, or choose Infinity mode.',tip:'Open Settings → Set a Dhikr, then choose a preset from its dropdown.',view:'today'},
- {title:'Schedule · Record your day',body:'Use the Schedule tab to record each activity with its own dropdown. The chart and progress figures summarise your entries. “Not recorded” means you have not entered a status yet.',tip:'To add, rename, reorder, change timings, status options or disable an activity, go to Settings → Edit your daily tasks.',view:'schedule'},
- {title:'Muhasabah · Reflect',body:'Use Muhasabah for Qur’an notes, translations/tafsir notes where available, daily reflections and meaningful experiences. Write what you learned and what you want to improve.',tip:'Your entries remain local on this device unless you choose to back them up. Export backups before changing devices or clearing app data.',view:'muhasabah'},
- {title:'Challenges · Build consistency',body:'Create your own challenge with a title, description, start date and duration. Record progress day by day, then review completion or missed days without treating a missed day as failure.',tip:'Open Settings → Make a Challenge to create and manage personal goals.',view:'challenges'},
- {title:'Settings · Google Account',body:'Connect Google to back up your progress to your private Drive file, review sync status, or sign out. Google backup is optional.',tip:'The arrow highlights Google Account. Check your connection and last-sync status here.',view:'sanctuary',targetId:'googleAccountCard'},
- {title:'Settings · Terms & Conditions',body:'Review the Terms & Conditions and check the consent record saved on this device. Read the full terms or export a copy of the acceptance record.',tip:'The arrow points to Terms & Conditions. Open this row to view the record and export proof of consent.',view:'sanctuary',target:'Terms & Conditions'},
- {title:'Settings · Tutorial / Settings guide',body:'Choose whether the tutorial appears after login, or replay the guided tour. Each Settings step highlights the exact option to open.',tip:'The arrow points to Tutorial / Settings guide. Open this row to change auto-show or replay the guide.',view:'sanctuary',target:'Tutorial / Settings guide'},
- {title:'Settings · Feedback & review history',body:'Send a suggestion, report a bug, request a feature, or review saved feedback. Feedback stays on this device; email requires a configured mail service or your email app.',tip:'The arrow points to Feedback & review history. Open this row to send feedback or review saved entries.',view:'sanctuary',target:'Feedback & review history'},
- {title:'Settings · Edit your daily tasks',body:'Tap Edit beside an activity to change its name, category, time, order, enabled state and status options. Add Activity creates a new routine item.',tip:'The arrow points to Edit your daily tasks. Open it to customise your routine.',view:'sanctuary',target:'Edit your daily tasks'},
- {title:'Settings · Make a Challenge',body:'Create a personal challenge with a title, commitment, start date and duration. Your created challenge appears in the Challenges tab.',tip:'The arrow points to Make a Challenge. Open it to create a measurable personal goal.',view:'sanctuary',target:'Make a Challenge'},
- {title:'Settings · Set a Dhikr',body:'Choose a dhikr preset, edit the words, set a target and select the counting direction for the Digital Tasbeeh.',tip:'The arrow points to Set a Dhikr. Open this row to customise the counter.',view:'sanctuary',target:'Set a Dhikr'},
- {title:'Settings · Good experiences history',body:'Review meaningful stories and experiences you saved earlier. Entries stay on this device unless included in a backup.',tip:'The arrow points to Good experiences history. Open it to review saved entries.',view:'sanctuary',target:'Good experiences history'},
- {title:'Settings · Backup, import & export',body:'Export a JSON backup, import a previous UROOJ backup, or download a copy of the webpage. Keep backups in a safe place.',tip:'The arrow points to Backup, import & export. Export before changing devices or restoring data.',view:'sanctuary',target:'Backup, import & export'},
- {title:'You’re ready to begin',body:'That is the essentials. Begin with one small habit today and use the app consistently. You can return to this guide whenever you need a reminder.',tip:'Replay from Settings → App tutorial → Show tutorial now.',view:'today'}
+ {title:'Welcome to UROOJ',body:'A calm place to track daily worship, habits and reflection.',tip:'Tap Next for a quick tour.',view:'today'},
+ {title:'Home · Daily focus',body:'See Today’s Motive and reminders to help you choose one small focus.',tip:'Home tab · your daily overview.',view:'today',targetSelector:'#view-today .quote'},
+ {title:'Daily tasks',body:'Choose a status for each activity. Your progress updates as you record your day.',tip:'Schedule tab · select a status beside each task.',view:'schedule',targetSelector:'#view-schedule .progress-card'},
+ {title:'Digital Tasbeeh',body:'Tap the counter for each dhikr. Undo counts and change the preset in Settings.',tip:'Zikr & Muhasaba tab · tap the round counter.',view:'muhasabah',targetId:'tasbeehTap'},
+ {title:'Daily reflection',body:'Write reflections and Qur’an or study notes to remember what you learned.',tip:'Zikr & Muhasaba tab · Journal section.',view:'muhasabah',targetId:'journalForm'},
+ {title:'Challenges',body:'Choose a challenge, record each day, and return after a missed day without losing all progress.',tip:'Challenges tab · accept or create a goal.',view:'challenges',targetSelector:'#view-challenges .challenge-hero'},
+ {title:'Customise Settings',body:'Edit task names, times, status choices, reminders and Dhikr presets in one place.',tip:'Settings · open Edit your daily tasks or Set a Dhikr.',view:'sanctuary',target:'Edit your daily tasks'},
+ {title:'Google login & backup',body:'Google login opens in your device browser. Browser sign-in is separate from this APK’s local data.',tip:'Settings → Google Account shows Drive connection and sync status.',view:'sanctuary',targetId:'googleAccountCard'},
+ {title:'Backup & replay',body:'Export a backup before changing devices or clearing app data. Replay this guide from Settings.',tip:'Settings → Backup, import & export.',view:'sanctuary',target:'Backup, import & export'}
 ];
 let uroojTourIndex=0;
+function positionTourCallout(){
+ const card=document.getElementById('uroojTourCallout');
+ if(!card)return;
+ card.style.left='50%';card.style.top='50%';card.style.transform='translate(-50%,-50%)';
+ const target=window.__uroojTourTarget;
+ if(!target)return;
+ requestAnimationFrame(()=>{
+  if(!document.getElementById('uroojTutorialModal')?.classList.contains('open'))return;
+  const rect=target.getBoundingClientRect();
+  const w=card.offsetWidth||278,h=card.offsetHeight||150,vw=window.innerWidth,vh=window.innerHeight;
+  const left=Math.max(10,Math.min(vw-w-10,rect.left+(rect.width-w)/2));
+  let top=rect.bottom+10;
+  if(top+h>vh-10)top=rect.top-h-10;
+  top=Math.max(10,Math.min(vh-h-10,top));
+  card.style.transform='none';card.style.left=left+'px';card.style.top=top+'px';
+ });
+}
 function renderUroojTour(){
- const s=UROOJ_TOUR_STEPS[uroojTourIndex],modal=document.getElementById('uroojTutorialModal');
- if(!s||!modal)return;
+ const s=UROOJ_TOUR_STEPS[uroojTourIndex],modal=document.getElementById('uroojTutorialModal'),card=document.getElementById('uroojTourCallout');
+ if(!s||!modal||!card)return;
  document.getElementById('uroojTutorialTitle').textContent=s.title;
  document.getElementById('uroojTutorialBody').textContent=s.body;
  document.getElementById('uroojTutorialTip').textContent=s.tip;
@@ -540,19 +552,27 @@ function renderUroojTour(){
  document.getElementById('uroojTutorialProgress').style.width=((uroojTourIndex+1)/UROOJ_TOUR_STEPS.length*100)+'%';
  document.getElementById('uroojTutorialBack').disabled=uroojTourIndex===0;
  document.getElementById('uroojTutorialNext').textContent=uroojTourIndex===UROOJ_TOUR_STEPS.length-1?'Finish':'Next';
+ positionTourCallout();
 }
 function shouldAutoShowUroojTutorial(){try{return localStorage.getItem(UROOJ_AUTO_TOUR_KEY)!=='off'}catch(e){return true}}
 function syncTutorialPreferenceControls(){const setting=document.getElementById('uroojAutoTutorialSetting');if(setting)setting.checked=shouldAutoShowUroojTutorial()}
 function openUroojTutorial(force){
- const modal=document.getElementById('uroojTutorialModal');if(!modal)return;
+ const modal=document.getElementById('uroojTutorialModal'),card=document.getElementById('uroojTourCallout');if(!modal||!card)return;
  if(!force&&!shouldAutoShowUroojTutorial())return;
- uroojTourIndex=0;renderUroojTour();const dont=document.getElementById('uroojDontShowAgain');if(dont)dont.checked=false;modal.classList.add('open');document.body.style.overflow='hidden';
+ window.__uroojTourTarget=null;
+ document.querySelectorAll('.urooj-tour-focus, #view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(el=>el.classList.remove('urooj-tour-focus','tour-target','tour-target-card'));
+ uroojTourIndex=0;renderUroojTour();const dont=document.getElementById('uroojDontShowAgain');if(dont)dont.checked=false;
+ modal.classList.add('open');card.classList.add('open');document.body.style.overflow='hidden';positionTourCallout();
  document.getElementById('uroojTutorialClose')?.focus({preventScroll:true});
 }
 function closeUroojTutorial(done){
- const modal=document.getElementById('uroojTutorialModal');if(!modal)return;
- const dont=document.getElementById('uroojDontShowAgain');if(dont&&dont.checked){try{localStorage.setItem(UROOJ_AUTO_TOUR_KEY,'off');localStorage.setItem(UROOJ_TOUR_KEY,'dont-show-again')}catch(e){}syncTutorialPreferenceControls()}
- modal.classList.remove('open');document.body.style.overflow='';document.querySelectorAll('#view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(d=>{d.classList.remove('tour-target');d.classList.remove('tour-target-card')});
+ const modal=document.getElementById('uroojTutorialModal'),card=document.getElementById('uroojTourCallout');
+ if(!modal)return;
+ const dont=document.getElementById('uroojDontShowAgain');
+ if(dont&&dont.checked){try{localStorage.setItem(UROOJ_AUTO_TOUR_KEY,'off');localStorage.setItem(UROOJ_TOUR_KEY,'dont-show-again')}catch(e){}syncTutorialPreferenceControls()}
+ modal.classList.remove('open');card?.classList.remove('open');document.body.style.overflow='';
+ document.querySelectorAll('.urooj-tour-focus, #view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(d=>{d.classList.remove('urooj-tour-focus','tour-target','tour-target-card')});
+ window.__uroojTourTarget=null;
  if(done){try{localStorage.setItem(UROOJ_TOUR_KEY,'done')}catch(e){}}
 }
 function navigateTourView(view){
@@ -560,23 +580,30 @@ function navigateTourView(view){
  if(tab)tab.click();
 }
 function navigateTourStep(step){
- document.querySelectorAll('#view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(el=>{el.classList.remove('tour-target');el.classList.remove('tour-target-card')});
+ document.querySelectorAll('.urooj-tour-focus, #view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(el=>el.classList.remove('urooj-tour-focus','tour-target','tour-target-card'));
+ window.__uroojTourTarget=null;
  navigateTourView(step.view);
- if(step.view==='sanctuary'&&(step.target||step.targetId)){
+ requestAnimationFrame(()=>{
   requestAnimationFrame(()=>{
    let targetElement=null;
-   if(step.targetId)targetElement=document.getElementById(step.targetId);
-   else{
+   if(step.targetSelector){try{targetElement=document.querySelector(step.targetSelector)}catch(e){}}
+   if(!targetElement&&step.targetId)targetElement=document.getElementById(step.targetId);
+   if(!targetElement&&step.target){
     const rows=[...document.querySelectorAll('#view-sanctuary details.settings-accordion')];
     const row=rows.find(d=>(d.querySelector('summary span')?.textContent||'').trim()===step.target);
-    if(row){row.open=true;row.classList.add('tour-target');targetElement=row}
+    if(row){rows.forEach(other=>{other.open=other===row});row.open=true;row.classList.add('tour-target');targetElement=row}
+   } else if(step.view==='sanctuary'&&targetElement){
+    document.querySelectorAll('#view-sanctuary details.settings-accordion').forEach(row=>row.open=false);
    }
    if(targetElement){
-    if(step.targetId)targetElement.classList.add('tour-target-card');
-    targetElement.scrollIntoView({behavior:'smooth',block:'center'});
+    targetElement.classList.add('urooj-tour-focus');
+    if(step.targetId==='googleAccountCard')targetElement.classList.add('tour-target-card');
+    targetElement.scrollIntoView({behavior:'auto',block:'center'});
+    window.__uroojTourTarget=targetElement;
    }
+   positionTourCallout();
   });
- }
+ });
 }
 function initUroojTutorial(){
  document.getElementById('uroojTutorialNext')?.addEventListener('click',()=>{
@@ -623,7 +650,15 @@ async function handleGoogleToken(resp){
  catch(e){console.error('Drive sync failed',e);setLoginError('Google sign-in worked, but Drive backup failed: '+driveErrorText(e));unlockApp();renderAccountStatus(true,driveErrorText(e));const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';renderViewOnDemand(activeView)}
 }
 function requestGoogleSignIn(){
- if(location.hostname==='appassets.androidplatform.net'){window.location.href='https://ideasbyhamza.github.io/UROOJ-Your-rise-begins./?from=urooj-android';return}
+ if(location.hostname==='appassets.androidplatform.net'){
+  setLoginError('Opening the secure UROOJ login in your browser…');
+  if(window.UROOJAndroid&&typeof window.UROOJAndroid.openLoginInBrowser==='function'){
+   try{window.UROOJAndroid.openLoginInBrowser()}catch(err){setLoginError('Could not open the browser. Please try again.')}
+  } else {
+   window.location.href='https://ideasbyhamza.github.io/UROOJ-Your-rise-begins./?from=urooj-android';
+  }
+  return;
+ }
  if(!gTokenClient&&window.google&&google.accounts&&google.accounts.oauth2){window.__uroojGoogleInitAttempts=0;initGoogleAuth()}
  if(!gTokenClient){setLoginBusy(false);setLoginError('Google sign-in is not ready. The Google sign-in library may be blocked or still loading. Refresh this page; if it continues, allow pop-ups and access to accounts.google.com, or share a screenshot of this message.');const notice=document.getElementById('googleConfigNotice');if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in is not ready</strong><br>Refresh the page and check that accounts.google.com is allowed by your browser or network.'}return}
  setLoginError('');setLoginBusy(true);
