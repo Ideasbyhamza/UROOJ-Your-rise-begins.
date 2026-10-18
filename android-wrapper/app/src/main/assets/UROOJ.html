@@ -639,42 +639,45 @@ function stableJsonForConflict(value){
  if(value&&typeof value==='object')return '{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+stableJsonForConflict(value[key])).join(',')+'}';
  return JSON.stringify(value);
 }
+function isValidUroojBackupState(s){return !!(s&&typeof s==='object'&&!Array.isArray(s)&&Array.isArray(s.schedule)&&s.activityLog&&typeof s.activityLog==='object'&&!Array.isArray(s.activityLog)&&s.tasbeeh&&typeof s.tasbeeh==='object');}
+function hasMeaningfulUroojData(s){
+ if(!isValidUroojBackupState(s))return false;
+ const nonEmpty=v=>v!==null&&v!==undefined&&String(v).trim()!=='';
+ if(Object.values(s.routine||{}).some(v=>v===true||(nonEmpty(v)&&v!==false&&v!==0)))return true;
+ if(Object.values(s.activityLog||{}).some(v=>v===true||(nonEmpty(v)&&v!==false&&v!==0)))return true;
+ if(Object.values(s.journals||{}).some(v=>nonEmpty(typeof v==='string'?v:JSON.stringify(v))&&v!=='{}'&&v!=='[]'))return true;
+ if(['customActivities','customChallenges','goodExperiences','quranEntries'].some(k=>Array.isArray(s[k])&&s[k].length>0))return true;
+ if(['social','focus'].some(k=>Array.isArray((s.challenges||{})[k])&&s.challenges[k].length>0))return true;
+ if((s.schedule||[]).some(x=>x&&x.status&&x.status!=='Not recorded'))return true;
+ if(Number(s.tasbeeh.count||0)!==0||Number(s.tasbeeh.rounds||0)!==0)return true;
+ if(Object.values(s.tasbeeh.modes||{}).some(m=>m&&(Number(m.count||0)!==0||Number(m.rounds||0)!==0)))return true;
+ if(s.dailyProgressFlags&&Object.keys(s.dailyProgressFlags).some(k=>k!=='date'&&s.dailyProgressFlags[k]===true))return true;
+ return false;
+}
+function applyDriveState(remoteState){if(!isValidUroojBackupState(remoteState))throw new Error('The Google Drive backup is missing required UROOJ data fields.');state={...defaultState(),...remoteState};try{localStorage.setItem(KEY,JSON.stringify(state));localStorage.setItem('urooj-last-valid-state-v1',JSON.stringify({savedAt:new Date().toISOString(),state:state}));}catch(e){}}
 async function driveLoadOrInit(){
  const existing=await driveFindFile();
  if(existing){
-  gDriveFileId=existing.id;
-  gDriveModifiedTime=existing.modifiedTime||null;
+  gDriveFileId=existing.id;gDriveModifiedTime=existing.modifiedTime||null;
   const remote=await driveDownload(existing.id);
-  if(!remote||!remote.state||typeof remote.state!=='object'){
-   throw new Error('The existing Google Drive backup does not contain valid UROOJ data. Export a local backup and review the Drive file before continuing.');
-  }
-  let localExists=false;
-  try{localExists=!!localStorage.getItem(KEY)}catch(e){}
+  if(!remote||!isValidUroojBackupState(remote.state))throw new Error('The existing Google Drive backup does not contain valid UROOJ data. Export a local backup and review the Drive file before continuing.');
+  let localExists=false;try{localExists=!!localStorage.getItem(KEY)}catch(e){}
+  const localMeaningful=hasMeaningfulUroojData(state),remoteMeaningful=hasMeaningfulUroojData(remote.state);
   const localDiffers=localExists&&stableJsonForConflict(state)!==stableJsonForConflict(remote.state);
-  if(localDiffers){
-   const useDrive=window.confirm('UROOJ found different progress on this device and in Google Drive.\n\nOK: restore the Google Drive copy and replace this device’s current app data.\nCancel: keep this device’s progress and upload it to Google Drive, replacing the Drive copy.\n\nExport a backup first if you need both copies.');
-   if(useDrive){
-    state={...defaultState(),...remote.state};
-    localStorage.setItem(KEY,JSON.stringify(state));
-   }else{
-    const saved=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state},existing.id);
-    gDriveFileId=saved.id||existing.id;
-    gDriveModifiedTime=saved.modifiedTime||gDriveModifiedTime;
-   }
-  }else{
-   state={...defaultState(),...remote.state};
-   localStorage.setItem(KEY,JSON.stringify(state));
-  }
- }else{
-  const created=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:state});
-  gDriveFileId=created.id;
-  gDriveModifiedTime=created.modifiedTime||null;
- }
- gLocalDirty=false;
- setSyncTime(Date.now());
+  if(remoteMeaningful&&!localMeaningful){applyDriveState(remote.state);if(localDiffers)toast('Your saved UROOJ data was restored from Google Drive.');}
+  else if(localMeaningful&&!remoteMeaningful){const saved=await driveUpload({app:'UROOJ',formatVersion:2,savedAt:new Date().toISOString(),state:state},existing.id);gDriveFileId=saved.id||existing.id;gDriveModifiedTime=saved.modifiedTime||gDriveModifiedTime;try{localStorage.setItem('urooj-last-valid-state-v1',JSON.stringify({savedAt:new Date().toISOString(),state:state}));}catch(e){}}
+  else if(localDiffers&&localMeaningful&&remoteMeaningful){const useDrive=window.confirm('UROOJ found different saved progress on this device and in Google Drive.\n\nOK: restore the Google Drive copy.\nCancel: keep this device’s progress and upload it to Google Drive.\n\nNeither copy will be replaced by an empty/reset state.');if(useDrive)applyDriveState(remote.state);else{const saved=await driveUpload({app:'UROOJ',formatVersion:2,savedAt:new Date().toISOString(),state:state},existing.id);gDriveFileId=saved.id||existing.id;gDriveModifiedTime=saved.modifiedTime||gDriveModifiedTime;}}
+  else applyDriveState(remote.state);
+ }else{const created=await driveUpload({app:'UROOJ',formatVersion:2,savedAt:new Date().toISOString(),state:state});gDriveFileId=created.id;gDriveModifiedTime=created.modifiedTime||null;try{localStorage.setItem('urooj-last-valid-state-v1',JSON.stringify({savedAt:new Date().toISOString(),state:state}));}catch(e){}}
+ gLocalDirty=false;setSyncTime(Date.now());
 }
 function queueDriveSync(){if(!gAccessToken||!gTokenClient)return;clearTimeout(gSyncTimer);gSyncTimer=setTimeout(function(){if(gSyncing){gSyncAgain=true;return}doDriveSync()},1800)}
-async function doDriveSync(){if(!gAccessToken)return;if(gSyncing){gSyncAgain=true;return}gSyncing=true;gSyncAgain=false;const versionAtStart=gLocalEditVersion;const snapshot=JSON.parse(JSON.stringify(state));try{const result=await driveUpload({app:'UROOJ',savedAt:new Date().toISOString(),state:snapshot},gDriveFileId);gDriveFileId=result.id||gDriveFileId;gDriveModifiedTime=result.modifiedTime||gDriveModifiedTime;if(versionAtStart===gLocalEditVersion)gLocalDirty=false;else gSyncAgain=true;setSyncTime(Date.now());renderAccountStatus()}catch(e){console.error('Drive sync error',e);renderAccountStatus(true,driveErrorText(e));/* Sync errors are shown in Settings → Google Account; avoid bottom popups. */}finally{gSyncing=false;if(gSyncAgain){gSyncAgain=false;setTimeout(doDriveSync,200)}}}
+async function doDriveSync(){if(!gAccessToken)return;if(gSyncing){gSyncAgain=true;return}gSyncing=true;gSyncAgain=false;const versionAtStart=gLocalEditVersion;const snapshot=JSON.parse(JSON.stringify(state));try{
+ if(!isValidUroojBackupState(snapshot))throw new Error('Local UROOJ data failed validation; backup was stopped to protect your Drive copy.');
+ if(!hasMeaningfulUroojData(snapshot)){const meta=gDriveFileId?{id:gDriveFileId}:await driveFindFile();if(meta&&meta.id){const remote=await driveDownload(meta.id);if(remote&&isValidUroojBackupState(remote.state)&&hasMeaningfulUroojData(remote.state)){applyDriveState(remote.state);gDriveFileId=meta.id;gLocalDirty=false;setSyncTime(Date.now());applyTheme();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');renderAccountStatus();toast('Your saved UROOJ data was restored from Google Drive.');return;}}}
+ const result=await driveUpload({app:'UROOJ',formatVersion:2,savedAt:new Date().toISOString(),state:snapshot},gDriveFileId);gDriveFileId=result.id||gDriveFileId;gDriveModifiedTime=result.modifiedTime||gDriveModifiedTime;if(hasMeaningfulUroojData(snapshot)){try{localStorage.setItem('urooj-last-valid-state-v1',JSON.stringify({savedAt:new Date().toISOString(),state:snapshot}));}catch(e){}}
+ if(versionAtStart===gLocalEditVersion)gLocalDirty=false;else gSyncAgain=true;setSyncTime(Date.now());renderAccountStatus()
+ }catch(e){console.error('Drive sync error',e);renderAccountStatus(true,driveErrorText(e));}finally{gSyncing=false;if(gSyncAgain){gSyncAgain=false;setTimeout(doDriveSync,200)}}}
 async function checkDriveForChanges(){
  if(!gAccessToken||!gDriveFileId||gSyncing||gLocalDirty||Date.now()-gLastLocalEdit<3500)return;
  const versionAtStart=gLocalEditVersion;
@@ -685,9 +688,9 @@ async function checkDriveForChanges(){
   if(gLocalDirty||versionAtStart!==gLocalEditVersion||gSyncing)return;
   const remote=await driveDownload(meta.id||gDriveFileId);
   if(gLocalDirty||versionAtStart!==gLocalEditVersion||gSyncing)return;
-  if(!remote||!remote.state||typeof remote.state!=='object')return;
-  state={...defaultState(),...remote.state};
-  localStorage.setItem(KEY,JSON.stringify(state));
+  if(!remote||!isValidUroojBackupState(remote.state))return;
+  if(hasMeaningfulUroojData(state)&&!hasMeaningfulUroojData(remote.state))return;
+  applyDriveState(remote.state);
   gDriveFileId=meta.id||gDriveFileId;
   gDriveModifiedTime=meta.modifiedTime;
   gLocalDirty=false;
