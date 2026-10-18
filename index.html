@@ -7,8 +7,8 @@
 <meta content="#FDFBF7" name="theme-color"/>
 <meta content="UROOJ — Your rise begins. A private space for intention, consistency, and reflection." name="description"/>
 <title>UROOJ</title>
-<link rel="icon" type="image/svg+xml" href="./assets/urooj-logo.svg?v=1.0.7"/>
-<link rel="apple-touch-icon" href="./assets/urooj-logo.svg?v=1.0.7"/>
+<link rel="icon" type="image/svg+xml" href="./assets/urooj-logo.svg?v=1.1.0"/>
+<link rel="apple-touch-icon" href="./assets/urooj-logo.svg?v=1.1.0"/>
 <meta name="application-name" content="UROOJ"/>
 <meta name="app-version" content="1.0.9"/>
 
@@ -332,7 +332,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px
 </script>
 <section id="jarvisLogin" aria-label="Login">
   <div class="login-card" id="jarvisLoginCard">
-    <img class="login-logo" src="./assets/urooj-logo.svg?v=1.0.8" alt="UROOJ logo" width="88" height="88"><div class="login-wordmark" aria-label="UROOJ">UROOJ</div>
+    <img class="login-logo" src="./assets/urooj-logo.svg?v=1.1.0" alt="UROOJ logo" width="88" height="88"><div class="login-wordmark" aria-label="UROOJ">UROOJ</div>
     <p>Your rise begins.<br>Sign in to sync your progress across devices.</p>
     <button type="button" class="google-btn" id="googleSignInBtn" aria-label="Sign in with Google">
       <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6 29.6 4 24 4c-7.5 0-14 4.2-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6C29.6 35 26.9 36 24 36c-5.3 0-9.7-3.4-11.3-8l-6.6 5.1C9.9 39.7 16.4 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.4l6.6 5.6C40.9 36.6 44 31 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
@@ -348,7 +348,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px
 </section>
 <div class="app">
 <header class="top">
-<div class="brand brand-with-logo"><img src="./assets/urooj-logo.svg?v=1.0.8" alt="" width="38" height="38"><span>UROOJ<small>Your rise begins.</small></span></div>
+<div class="brand brand-with-logo"><img src="./assets/urooj-logo.svg?v=1.1.0" alt="" width="38" height="38"><span>UROOJ<small>Your rise begins.</small></span></div>
 <div style="display:flex;align-items:center;gap:7px"><button aria-label="Toggle dark mode" class="btn ghost small" id="themeToggle" style="padding:8px" title="Toggle dark mode">☾</button><div class="date-badge"><strong id="dateText">Today</strong><span>A day to begin again</span></div></div>
 </header>
 <main>
@@ -648,10 +648,21 @@ async function handleGoogleToken(resp){
 }
 function requestGoogleSignIn(){
  if(location.hostname==='appassets.androidplatform.net'){if(window.UROOJAndroid&&typeof window.UROOJAndroid.openLoginInBrowser==='function'){window.UROOJAndroid.openLoginInBrowser();return}setLoginError('Open the hosted UROOJ login page in your browser to sign in securely.');return}
+ if(!googleConfigured()){setLoginBusy(false);setLoginError('Google sign-in is not configured. Continue without Google, or check the OAuth Client ID in Settings.');return}
  if(!gTokenClient&&window.google&&google.accounts&&google.accounts.oauth2){window.__uroojGoogleInitAttempts=0;initGoogleAuth()}
- if(!gTokenClient){setLoginBusy(false);setLoginError('Google sign-in is not ready. The Google sign-in library may be blocked or still loading. Refresh this page; if it continues, allow pop-ups and access to accounts.google.com, or share a screenshot of this message.');const notice=document.getElementById('googleConfigNotice');if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in is not ready</strong><br>Refresh the page and check that accounts.google.com is allowed by your browser or network.'}return}
+ if(!gTokenClient){
+   const btn=document.getElementById('googleSignInBtn');
+   if(btn){btn.disabled=true;const span=btn.querySelector('span');if(span)span.textContent='Loading Google sign-in…'}
+   setLoginError('Loading Google sign-in. If it does not open in a few seconds, refresh the page or continue without Google.');
+   let script=document.querySelector('script[src*="accounts.google.com/gsi/client"]');
+   if(!script){script=document.createElement('script');script.src='https://accounts.google.com/gsi/client';script.async=true;script.defer=true;document.head.appendChild(script)}
+   let tries=0;
+   const retry=()=>{tries++;if(window.google&&google.accounts&&google.accounts.oauth2){window.__uroojGoogleInitAttempts=0;initGoogleAuth();if(gTokenClient){setLoginError('');setLoginBusy(false);return} }if(tries<20){setTimeout(retry,350)}else{setLoginBusy(false);setLoginError('Google sign-in could not load. Check your internet connection and allow accounts.google.com, or use Continue without Google.')}};
+   setTimeout(retry,250);
+   return;
+ }
  setLoginError('');setLoginBusy(true);
- try{gTokenClient.requestAccessToken({prompt:''})}catch(err){console.error('Could not open Google sign-in',err);setLoginBusy(false);setLoginError('Google’s sign-in window could not open. Allow pop-ups for this site and try again. If the problem continues, check the OAuth client’s authorized JavaScript origin.');}
+ try{gTokenClient.requestAccessToken({prompt:''})}catch(err){console.error('Could not open Google sign-in',err);setLoginBusy(false);setLoginError('Google sign-in could not open. Allow pop-ups for this site and confirm that https://ideasbyhamza.github.io is an authorized JavaScript origin in Google Cloud.');}
  }
 function ensureFreshToken(){if(gAccessToken&&Date.now()<gTokenExpiry-60000)return Promise.resolve(gAccessToken);if(!gTokenClient)return Promise.reject(new Error('not signed in'));return new Promise(function(resolve,reject){const prevCb=gTokenClient.callback;gTokenClient.callback=function(resp){gTokenClient.callback=prevCb;if(!resp||resp.error){reject(new Error('token refresh failed'));return}gAccessToken=resp.access_token;gTokenExpiry=Date.now()+((Number(resp.expires_in)||3000)*1000);resolve(gAccessToken)};gTokenClient.requestAccessToken({prompt:''})})}
 async function throwDriveApiError(res,action){let data={};try{data=await res.json()}catch(e){}const api=data&&data.error||{},reasons=Array.isArray(api.errors)?api.errors.map(x=>x.reason||'').filter(Boolean).join(', '):'';throw new Error('DRIVE_API_ERROR|'+res.status+'|'+reasons+'|'+(api.message||action+' failed'));}
@@ -745,7 +756,7 @@ function renderAccountStatus(syncError,syncMessage){
 }
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
 document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'challenges')});
-document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
+document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Google OAuth is already configured in this build.');return}requestGoogleSignIn()}});
 resumeAppSession();
  initGoogleAuth();
 renderAccountStatus();
