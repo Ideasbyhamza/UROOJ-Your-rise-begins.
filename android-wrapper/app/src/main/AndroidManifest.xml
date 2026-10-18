@@ -5,8 +5,8 @@
         android:allowBackup="false"
         android:usesCleartextTraffic="false"
         android:label="UROOJ"
-        android:icon="@drawable/ic_urooj_launcher"
-        android:roundIcon="@drawable/ic_urooj_launcher"
+        android:icon="@drawable/urooj_launcher"
+        android:roundIcon="@drawable/urooj_launcher"
         android:theme="@android:style/Theme.Material.Light.NoActionBar"
         android:supportsRtl="true">
         <activity
