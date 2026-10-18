@@ -23,6 +23,88 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+      - name: Validate app scripts, defaults, and text contrast
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import subprocess, tempfile, sys, re
+
+          html_files = [
+              "index.html",
+              "UROOJ.html",
+              "android-wrapper/app/src/main/assets/index.html",
+              "android-wrapper/app/src/main/assets/UROOJ.html",
+          ]
+
+          class ScriptParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.scripts = []
+                  self.capture = False
+                  self.parts = []
+              def handle_starttag(self, tag, attrs):
+                  if tag != "script":
+                      return
+                  attrs = dict(attrs)
+                  kind = attrs.get("type", "text/javascript").lower()
+                  self.capture = "src" not in attrs and kind in ("text/javascript", "application/javascript", "module")
+                  self.parts = []
+              def handle_data(self, data):
+                  if self.capture:
+                      self.parts.append(data)
+              def handle_endtag(self, tag):
+                  if tag == "script" and self.capture:
+                      self.scripts.append("".join(self.parts))
+                      self.capture = False
+                      self.parts = []
+
+          for html_path in html_files:
+              source = Path(html_path).read_text(encoding="utf-8")
+              parser = ScriptParser()
+              parser.feed(source)
+              if not parser.scripts:
+                  raise SystemExit(f"No inline JavaScript found in {html_path}")
+              for index, script in enumerate(parser.scripts):
+                  if not script.strip():
+                      continue
+                  with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8") as temp:
+                      temp.write(script)
+                      temp.flush()
+                      result = subprocess.run(["node", "--check", temp.name], text=True, capture_output=True)
+                      if result.returncode:
+                          print(f"JavaScript syntax error in {html_path}, inline script {index + 1}:")
+                          print(result.stderr)
+                          raise SystemExit(result.returncode)
+              print(f"JavaScript syntax OK: {html_path} ({len(parser.scripts)} inline scripts)")
+              if "Understanding Yourself · 7-Day Quit Addiction Challenge" not in source:
+                  raise SystemExit(f"Missing 7-day new-user challenge in {html_path}")
+              if "id=\"socialCount\">0 / 7" not in source:
+                  raise SystemExit(f"Challenge initial count mismatch in {html_path}")
+              if 'id="deleteAccountBtn"' not in source or "isValidUroojBackupState(incoming)" not in source:
+                  raise SystemExit(f"Account reset or safe-import validation missing in {html_path}")
+
+          def luminance(hex_color):
+              rgb = [int(hex_color[i:i+2], 16) / 255 for i in (1, 3, 5)]
+              rgb = [v / 12.92 if v <= .04045 else ((v + .055) / 1.055) ** 2.4 for v in rgb]
+              return sum(v * weight for v, weight in zip(rgb, (.2126, .7152, .0722)))
+
+          def contrast(foreground, background):
+              values = sorted((luminance(foreground), luminance(background)), reverse=True)
+              return (values[0] + .05) / (values[1] + .05)
+
+          checks = [
+              ("light muted text", "#626B66", "#FDFBF7"),
+              ("light accent text", "#7B5B24", "#FDFBF7"),
+              ("dark muted text", "#A5B0A9", "#151D1A"),
+              ("dark accent text", "#D8B875", "#151D1A"),
+          ]
+          for label, foreground, background in checks:
+              ratio = contrast(foreground, background)
+              print(f"Contrast {label}: {ratio:.2f}:1")
+              if ratio < 4.5:
+                  raise SystemExit(f"Insufficient contrast for {label}: {ratio:.2f}:1")
+          PY
       - name: Configure GitHub Pages
         uses: actions/configure-pages@v5
         with:
