@@ -432,6 +432,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px
 <section class="view" id="view-sanctuary">
 <div class="section-head"><div><div class="eyebrow">Personalise your experience</div><h1>Settings</h1><p>Manage your daily schedule, reminders, and personal study tools.</p></div></div>
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div></div>
+<div class="card" id="googleOAuthClientInfo"><div class="card-title"><h3>Google OAuth Client ID</h3><span class="solar">Web configuration</span></div><p class="muted" style="font-size:11px">Client ID used for Google sign-in on this website. This is a public application identifier, not a client secret.</p><div class="field"><label for="googleClientIdDisplay">OAUTH CLIENT ID</label><input id="googleClientIdDisplay" type="text" readonly value="" autocomplete="off" spellcheck="false"></div></div>
 <p class="muted" style="font-size:10px;line-height:1.4">Sign in with Google from the login screen to back up your data to Google Drive.</p>
 <p class="settings-intro-cue"><span aria-hidden="true" class="cue-arrow">›</span> Tap a setting to open details. The tutorial arrow points to the relevant option.</p>
 
@@ -494,10 +495,12 @@ function persist(){try{localStorage.setItem(KEY,JSON.stringify(state));gLocalEdi
 // project, add this page's exact hosted URL under "Authorized JavaScript origins", then paste the
 // Client ID below. The app cannot work with real Google sign-in when opened as a local file.
 const GOOGLE_CLIENT_ID_STORAGE_KEY='urooj-google-client-id-v1';
+function showGoogleClientId(){const field=document.getElementById('googleClientIdDisplay');if(field)field.value=GOOGLE_CLIENT_ID;}
 const GOOGLE_CLIENT_ID_DEFAULT='516762713528-rcrqdujo8j5oh0jpp2ieuqqlmut8n7sb.apps.googleusercontent.com';
 let GOOGLE_CLIENT_ID=GOOGLE_CLIENT_ID_DEFAULT;
 try{GOOGLE_CLIENT_ID=localStorage.getItem(GOOGLE_CLIENT_ID_STORAGE_KEY)||GOOGLE_CLIENT_ID_DEFAULT}catch(e){}
 const DRIVE_FILE_NAME='urooj-data.json';
+showGoogleClientId();
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file openid email profile';
 const GAUTH_KEY='urooj-google-account-v1';
 const SYNC_KEY='urooj-last-sync-v1';
