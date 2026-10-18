@@ -623,7 +623,7 @@ async function handleGoogleToken(resp){
  catch(e){console.error('Drive sync failed',e);setLoginError('Google sign-in worked, but Drive backup failed: '+driveErrorText(e));unlockApp();renderAccountStatus(true,driveErrorText(e));const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';renderViewOnDemand(activeView)}
 }
 function requestGoogleSignIn(){
- if(location.hostname==='appassets.androidplatform.net'){window.location.href='https://ideasbyhamza.github.io/UROOJ-Your-rise-begins./';return}
+ if(location.hostname==='appassets.androidplatform.net'){window.location.href='https://ideasbyhamza.github.io/UROOJ-Your-rise-begins./UROOJ.html?from=urooj-android';return}
  if(!gTokenClient&&window.google&&google.accounts&&google.accounts.oauth2){window.__uroojGoogleInitAttempts=0;initGoogleAuth()}
  if(!gTokenClient){setLoginBusy(false);setLoginError('Google sign-in is not ready. The Google sign-in library may be blocked or still loading. Refresh this page; if it continues, allow pop-ups and access to accounts.google.com, or share a screenshot of this message.');const notice=document.getElementById('googleConfigNotice');if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in is not ready</strong><br>Refresh the page and check that accounts.google.com is allowed by your browser or network.'}return}
  setLoginError('');setLoginBusy(true);
