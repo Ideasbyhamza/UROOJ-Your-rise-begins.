@@ -687,17 +687,49 @@ function isValidUroojBackupState(s){
  const record=v=>!!v&&typeof v==='object'&&!Array.isArray(v);
  const textField=(v,max)=>v===undefined||v===null||(typeof v==='string'&&v.length<=max);
  if(!record(s)||!Array.isArray(s.schedule)||s.schedule.length>250||!record(s.activityLog)||Object.keys(s.activityLog).length>20000||!record(s.tasbeeh))return false;
- if(s.schedule.some(x=>!record(x)||!textField(x.id,120)||!textField(x.task,160)||!textField(x.category,100)||!textField(x.status,120)||(x.statusOptions!==undefined&&(!Array.isArray(x.statusOptions)||x.statusOptions.length>20||x.statusOptions.some(v=>!textField(v,100)) ))))return false;
+ for(const item of s.schedule){
+  if(!record(item)||!textField(item.id,120)||!textField(item.task,160)||!textField(item.category,100)||!textField(item.status,120))return false;
+  if(item.statusOptions!==undefined){
+   if(!Array.isArray(item.statusOptions)||item.statusOptions.length>20)return false;
+   for(const option of item.statusOptions)if(!textField(option,100))return false;
+  }
+ }
  for(const key of ['routine','progressCheckins','dailyProgressFlags','journals'])if(s[key]!==undefined&&!record(s[key]))return false;
- for(const [key,limit] of [['customActivities',300],['customChallenges',300],['goodExperiences',10000],['quranEntries',10000],['reminders',2000]])if(s[key]!==undefined&&(!Array.isArray(s[key])||s[key].length>limit))return false;
- if((s.customActivities||[]).some(x=>!record(x)||!textField(x.id,120)||!textField(x.name,160)||!textField(x.category,100)))return false;
- if((s.customChallenges||[]).some(x=>!record(x)||!textField(x.id,120)||!textField(x.title,300)||!textField(x.description,2000)||(x.done!==undefined&&(!Array.isArray(x.done)||x.done.length>365))||(x.total!==undefined&&(!Number.isFinite(Number(x.total))||Number(x.total)<1||Number(x.total)>365))))return false;
- if((s.goodExperiences||[]).some(x=>!record(x)||!textField(x.id,120)||!textField(x.date,40)||!textField(x.note,50000)))return false;
- if((s.quranEntries||[]).some(x=>!record(x)))return false;
- if((s.reminders||[]).some(x=>!record(x)||!textField(x.title,200)||!textField(x.date,200)||!textField(x.remaining,100)||!textField(x.sunnah,2000)))return false;
- if(s.challenges!==undefined&&(!record(s.challenges)||['social','focus'].some(k=>s.challenges[k]!==undefined&&(!Array.isArray(s.challenges[k])||s.challenges[k].length>365))))return false;
- if(s.challengeSettings!==undefined&&(!record(s.challengeSettings)||['social','focus'].some(k=>s.challengeSettings[k]!==undefined&&(!record(s.challengeSettings[k])||!textField(s.challengeSettings[k].title,200)||!textField(s.challengeSettings[k].description,2000)||(s.challengeSettings[k].total!==undefined&&(!Number.isFinite(Number(s.challengeSettings[k].total))||Number(s.challengeSettings[k].total)<1||Number(s.challengeSettings[k].total)>365))))))return false;
- if(s.tasbeeh.modes!==undefined&&(!record(s.tasbeeh.modes)||Object.values(s.tasbeeh.modes).some(v=>!record(v))))return false;
+ const arrayLimits={customActivities:300,customChallenges:300,goodExperiences:10000,quranEntries:10000,reminders:2000};
+ for(const [key,limit] of Object.entries(arrayLimits)){
+  if(s[key]!==undefined&&(!Array.isArray(s[key])||s[key].length>limit))return false;
+ }
+ for(const item of s.customActivities||[]){
+  if(!record(item)||!textField(item.id,120)||!textField(item.name,160)||!textField(item.category,100))return false;
+ }
+ for(const item of s.customChallenges||[]){
+  if(!record(item)||!textField(item.id,120)||!textField(item.title,300)||!textField(item.description,2000))return false;
+  if(item.done!==undefined&&(!Array.isArray(item.done)||item.done.length>365))return false;
+  if(item.total!==undefined){const total=Number(item.total);if(!Number.isFinite(total)||total<1||total>365)return false;}
+ }
+ for(const item of s.goodExperiences||[]){
+  if(!record(item)||!textField(item.id,120)||!textField(item.date,40)||!textField(item.note,50000))return false;
+ }
+ for(const item of s.quranEntries||[])if(!record(item))return false;
+ for(const item of s.reminders||[]){
+  if(!record(item)||!textField(item.title,200)||!textField(item.date,200)||!textField(item.remaining,100)||!textField(item.sunnah,2000))return false;
+ }
+ if(s.challenges!==undefined){
+  if(!record(s.challenges))return false;
+  for(const key of ['social','focus'])if(s.challenges[key]!==undefined&&(!Array.isArray(s.challenges[key])||s.challenges[key].length>365))return false;
+ }
+ if(s.challengeSettings!==undefined){
+  if(!record(s.challengeSettings))return false;
+  for(const key of ['social','focus']){
+   const config=s.challengeSettings[key];if(config===undefined)continue;
+   if(!record(config)||!textField(config.title,200)||!textField(config.description,2000))return false;
+   if(config.total!==undefined){const total=Number(config.total);if(!Number.isFinite(total)||total<1||total>365)return false;}
+  }
+ }
+ if(s.tasbeeh.modes!==undefined){
+  if(!record(s.tasbeeh.modes))return false;
+  for(const mode of Object.values(s.tasbeeh.modes))if(!record(mode))return false;
+ }
  if(s.theme!==undefined&&!textField(s.theme,40))return false;
  return true;
 }
