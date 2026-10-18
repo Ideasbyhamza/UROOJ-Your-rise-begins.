@@ -1,7 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
 <title id="title">UROOJ — Your Rise Begins</title>
-<desc id="desc">Minimal two-colour text logo containing only the app name and slogan.</desc>
-<rect width="512" height="512" rx="72" fill="#123D32"/>
-<text x="256" y="245" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-weight="700" font-size="100" letter-spacing="1" fill="#D9C17E">UROOJ</text>
-<text x="256" y="298" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="500" font-size="25" letter-spacing="1.8" fill="#D9C17E">YOUR RISE BEGINS</text>
+<desc id="desc">Black rounded square with a gold upward-trending graph and a small rising sun, representing growth and progress.</desc>
+<rect width="512" height="512" rx="104" fill="#07130F"/>
+<g fill="none" stroke="#D9C17E" stroke-linecap="round" stroke-linejoin="round">
+ <path d="M134 356H382" stroke-width="13"/>
+ <path d="M154 312L214 247L265 285L359 174" stroke-width="17"/>
+ <path d="M309 171L365 165L360 222" stroke-width="17"/>
+</g>
+<circle cx="166" cy="145" r="25" fill="#D9C17E"/>
+<g stroke="#D9C17E" stroke-width="9" stroke-linecap="round">
+ <path d="M166 98V83"/><path d="M166 207V192"/><path d="M119 145H104"/><path d="M228 145H213"/>
+ <path d="M133 112L122 101"/><path d="M199 178L210 189"/>
+</g>
 </svg>
