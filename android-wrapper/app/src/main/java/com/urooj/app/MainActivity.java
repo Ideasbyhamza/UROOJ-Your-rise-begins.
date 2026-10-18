@@ -8,6 +8,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -22,6 +23,7 @@ import androidx.webkit.WebViewAssetLoader;
 public class MainActivity extends Activity {
     private static final String LOCAL_URL = "https://appassets.androidplatform.net/assets/index.html";
     private static final String ASSET_HOST = "appassets.androidplatform.net";
+    private static final String BROWSER_LOGIN_URL = "https://ideasbyhamza.github.io/UROOJ-Your-rise-begins./?from=urooj-android";
     private WebView webView;
     private LinearLayout errorPanel;
     private WebViewAssetLoader assetLoader;
@@ -72,6 +74,7 @@ public class MainActivity extends Activity {
         s.setJavaScriptCanOpenWindowsAutomatically(false);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) s.setSafeBrowsingEnabled(true);
 
+        webView.addJavascriptInterface(new AndroidLoginBridge(), "UROOJAndroid");
         webView.setWebChromeClient(new WebChromeClient());
         webView.setWebViewClient(new WebViewClient() {
             @Override public android.webkit.WebResourceResponse shouldInterceptRequest(WebView view, WebResourceRequest request) {
@@ -109,6 +112,28 @@ public class MainActivity extends Activity {
         });
         if (savedInstanceState != null) webView.restoreState(savedInstanceState);
         else loadApp();
+    }
+
+
+    /**
+     * Exposes only one fixed, safe browser destination to the bundled local page.
+     * It does not accept arbitrary URLs from JavaScript.
+     */
+    private final class AndroidLoginBridge {
+        @JavascriptInterface
+        public void openLoginInBrowser() {
+            runOnUiThread(() -> {
+                try {
+                    Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(BROWSER_LOGIN_URL));
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    startActivity(intent);
+                } catch (Exception ignored) {
+                    android.widget.Toast.makeText(MainActivity.this,
+                        "Could not open the browser. Please install or enable a browser and try again.",
+                        android.widget.Toast.LENGTH_LONG).show();
+                }
+            });
+        }
     }
 
     private void loadApp() {
