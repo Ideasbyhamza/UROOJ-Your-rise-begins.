@@ -31,7 +31,7 @@ A Client ID identifies the browser app and is not a client secret. **Never put a
 - UROOJ asks Google for the `drive.file` scope and basic account identity. This is intended to limit the app to files it creates or files explicitly opened/shared with it.
 - The app stores its backup in a JSON file named `urooj-data.json` in the signed-in account's Drive.
 - When you make changes while signed in, UROOJ schedules a Drive sync. You can also use **Sync now** in Settings.
-- When signing into Google on another device, UROOJ can load the Drive backup if local data is empty. If both local and Drive data exist, it asks which version to use.
+- When signing into Google on another device, UROOJ validates the Drive backup before restoring it. If the local app is empty/reset but Drive contains meaningful saved progress, the Drive copy is restored automatically. A meaningful local state will not overwrite an empty Drive backup. If both copies contain different meaningful progress, UROOJ asks which copy to keep. Empty/reset local state is not allowed to overwrite meaningful cloud progress during automatic sync.
 - **Google Drive backup is not end-to-end encrypted by this app.** Your UROOJ data may include private journal/reflection text. Review the app's requested scopes and Google account carefully. Sign out on shared devices.
 
 ## 4. Important limitations
