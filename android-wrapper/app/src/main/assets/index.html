@@ -107,7 +107,7 @@ body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divid
 /* First-time feature tour */
 #uroojTutorialModal{position:fixed;inset:0;z-index:9998;display:none;background:rgba(19,35,28,.58);pointer-events:auto}
 #uroojTutorialModal.open{display:block}
-#uroojTourCallout{position:fixed;z-index:10002;display:none;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100%,278px);max-height:38dvh;overflow:auto;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:13px;padding:10px;box-shadow:0 10px 28px rgba(0,0,0,.20);pointer-events:auto}
+#uroojTourCallout{position:fixed;z-index:10002;display:none;left:50%;top:50%;transform:translate(-50%,-50%);width:min(88vw,260px);max-height:30dvh;overflow:auto;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:13px;padding:8px;box-shadow:0 10px 28px rgba(0,0,0,.20);pointer-events:auto}
 #uroojTourCallout.open{display:block}
 #uroojTourCallout .tour-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px}
 #uroojTourCallout .tour-kicker{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:800}
@@ -514,15 +514,12 @@ function getSyncTime(){try{return Number(localStorage.getItem(SYNC_KEY)||0)}catc
 
 const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';const UROOJ_AUTO_TOUR_KEY='urooj-auto-tutorial-after-login-v1';
 const UROOJ_TOUR_STEPS=[
- {title:'Welcome to UROOJ',body:'A calm place to track daily worship, habits and reflection.',tip:'Tap Next for a quick tour.',view:'today'},
- {title:'Home · Daily focus',body:'See Today’s Motive and reminders to help you choose one small focus.',tip:'Home tab · your daily overview.',view:'today',targetSelector:'#view-today .quote'},
- {title:'Daily tasks',body:'Choose a status for each activity. Your progress updates as you record your day.',tip:'Schedule tab · select a status beside each task.',view:'schedule',targetSelector:'#view-schedule .progress-card'},
- {title:'Digital Tasbeeh',body:'Tap the counter for each dhikr. Undo counts and change the preset in Settings.',tip:'Zikr & Muhasaba tab · tap the round counter.',view:'muhasabah',targetId:'tasbeehTap'},
- {title:'Daily reflection',body:'Write reflections and Qur’an or study notes to remember what you learned.',tip:'Zikr & Muhasaba tab · Journal section.',view:'muhasabah',targetId:'journalForm'},
- {title:'Challenges',body:'Choose a challenge, record each day, and return after a missed day without losing all progress.',tip:'Challenges tab · accept or create a goal.',view:'challenges',targetSelector:'#view-challenges .challenge-hero'},
- {title:'Customise Settings',body:'Edit task names, times, status choices, reminders and Dhikr presets in one place.',tip:'Settings · open Edit your daily tasks or Set a Dhikr.',view:'sanctuary',target:'Edit your daily tasks'},
- {title:'Google login & backup',body:'Google login opens in your device browser. Browser sign-in is separate from this APK’s local data.',tip:'Settings → Google Account shows Drive connection and sync status.',view:'sanctuary',targetId:'googleAccountCard'},
- {title:'Backup & replay',body:'Export a backup before changing devices or clearing app data. Replay this guide from Settings.',tip:'Settings → Backup, import & export.',view:'sanctuary',target:'Backup, import & export'}
+ {title:'Welcome to UROOJ',body:'Your simple space for daily worship, habits and reflection.',tip:'Tap Next to explore.',view:'today'},
+ {title:'Today · Your overview',body:'See your daily focus and a short reminder to begin well.',tip:'Home tab · daily overview.',view:'today',targetSelector:'#view-today .quote'},
+ {title:'Daily tasks',body:'Choose a status for each task. Your progress updates as you record it.',tip:'Schedule tab · tap a task status.',view:'schedule',targetSelector:'#view-schedule .progress-card'},
+ {title:'Dhikr & reflection',body:'Count tasbeeh and write a short daily reflection in one place.',tip:'Zikr & Muhasaba tab.',view:'muhasabah',targetId:'tasbeehTap'},
+ {title:'Challenges',body:'Pick a goal and record your progress one day at a time.',tip:'Challenges tab · choose a goal.',view:'challenges',targetSelector:'#view-challenges .challenge-hero'},
+ {title:'Settings & backup',body:'Customise tasks, reminders and Dhikr. Export a backup before changing devices. Google sign-in opens in your browser.',tip:'Settings · edit tasks or open Backup & Google Account.',view:'sanctuary',target:'Edit your daily tasks'}
 ];
 let uroojTourIndex=0;
 function positionTourCallout(){
