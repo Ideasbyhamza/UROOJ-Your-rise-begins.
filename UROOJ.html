@@ -758,7 +758,13 @@ function renderAccountStatus(syncError,syncMessage){
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
 document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand('today')});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
-resumeAppSession();
+const hadAppSession=resumeAppSession();
+ // Hosted web startup is local-first: Google sign-in is optional, never a gate to the app.
+ if(!hadAppSession && location.hostname!=='appassets.androidplatform.net'){
+  document.body.classList.add('jarvis-authenticated');
+  const login=document.getElementById('jarvisLogin');
+  if(login)login.style.display='none';
+ }
  initGoogleAuth();
 renderAccountStatus();
 /* ---------- end Google Sign-In + Drive sync ---------- */
@@ -1064,5 +1070,15 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 })();
 </script>
 
+
+<script>
+/* Independent hosted-web startup fail-safe: keep the app accessible if an earlier script fails. */
+(function(){
+  if(location.hostname==='appassets.androidplatform.net') return;
+  document.body.classList.add('jarvis-authenticated');
+  var loginGate=document.getElementById('jarvisLogin');
+  if(loginGate) loginGate.style.display='none';
+})();
+</script>
 </body>
 </html>
