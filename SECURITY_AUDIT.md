@@ -29,10 +29,15 @@ The frontend contains `PASTE_APPS_SCRIPT_WEB_APP_URL_HERE`. Feedback email deliv
 
 **Recommended fix:** Deploy the script deliberately, restrict and rate-limit submissions, validate all fields server-side, and do not treat client-side validation or a honeypot as authentication. Avoid returning internal exception details.
 
-### Low/Medium — No explicit Content Security Policy or Subresource Integrity found
-The main HTML did not include a Content Security Policy meta/header or SRI attributes in the inspected version. A restrictive policy can reduce XSS impact, but it must be designed around the app's inline JavaScript/styles and Google Identity Services.
+### Low/Medium — No explicit Content Security Policy or Subresource Integrity found — **Partially addressed 2026-10-19**
+A `Content-Security-Policy` `<meta>` tag has been added to `index.html`, `UROOJ.html`, and their Android-wrapper asset copies:
+`default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.googleusercontent.com; font-src 'self' data:; connect-src 'self' https://www.googleapis.com https://accounts.google.com https://script.google.com; frame-src https://accounts.google.com; base-uri 'self'; form-action 'self'; object-src 'none';`
 
-**Recommended fix:** Prefer a server-set CSP header where possible. Start in report-only mode, inventory required Google endpoints, remove unnecessary inline handlers, then enforce a tested policy. Add SRI only to stable third-party assets that support it.
+This restricts `connect-src`, `img-src`, `frame-src`, `base-uri`, `form-action`, and `object-src` to only the origins the app actually needs (Google Identity Services, Google APIs, and a deployed Apps Script feedback endpoint), which blocks a successful XSS payload from exfiltrating data to an attacker-controlled domain, loading an attacker script from an external host, or hijacking forms/frames on the page.
+
+**Residual gap:** `script-src` and `style-src` still include `'unsafe-inline'`, because the app is a single static HTML file with all JavaScript and CSS inline and no build/template step to generate per-request nonces (GitHub Pages serves static files only). This means a successful DOM-based XSS injection point (see the finding above) could still execute inline `<script>` content. Closing this fully requires extracting the inline `<script>`/`<style>` blocks into external `.js`/`.css` files and switching `script-src`/`style-src` to `'self'` only (no `'unsafe-inline'`) — a larger refactor not done in this pass. `frame-ancestors` and `report-uri`/`report-to` are not included because browsers ignore them when a CSP is delivered via `<meta>` rather than an HTTP header; GitHub Pages does not support custom response headers for this repo's deployment.
+
+**Recommended follow-up:** Extract inline scripts/styles to external files and drop `'unsafe-inline'` once that refactor is done. If moving to a host that supports custom headers, deliver the CSP as a real `Content-Security-Policy` header and add `frame-ancestors 'none'`.
 
 ### Low — External links and third-party dependency surface
 The app loads Google Identity Services from Google's domain and makes requests to Google APIs. This is expected for optional sign-in/backup, but users should understand that these features communicate with Google.
