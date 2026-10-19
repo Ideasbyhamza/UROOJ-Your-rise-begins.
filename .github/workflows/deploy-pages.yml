@@ -33,8 +33,6 @@ jobs:
           html_files = [
               "index.html",
               "UROOJ.html",
-              "android-wrapper/app/src/main/assets/index.html",
-              "android-wrapper/app/src/main/assets/UROOJ.html",
           ]
 
           class ScriptParser(HTMLParser):
