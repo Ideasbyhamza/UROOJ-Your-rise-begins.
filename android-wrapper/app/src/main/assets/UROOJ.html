@@ -500,7 +500,12 @@ const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file openid email profi
 const GAUTH_KEY='urooj-google-account-v1';
 const SYNC_KEY='urooj-last-sync-v1';
 const RESET_PENDING_KEY='urooj-reset-pending-v1';
-let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserInfo=null,gSyncTimer=null,gSyncing=false,gSyncAgain=false,gDrivePollTimer=null,gDriveModifiedTime=null,gLocalDirty=false,gLastLocalEdit=0,gLocalEditVersion=0,gSilentAuthAttempt=false;
+let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserInfo=null,gSyncTimer=null,gSyncing=false,gSyncAgain=false,gDrivePollTimer=null,gDriveModifiedTime=null,gLocalDirty=false,gLastLocalEdit=0,gLocalEditVersion=0,gSilentAuthAttempt=false,gSignInWatchdog=null;
+// If Google's popup never calls back (blocked silently, closed without a detectable event, or
+// the mobile browser/embedding context breaks the popup<->opener handshake), the button must
+// not stay stuck on "Signing in…" forever. This clears itself on any real callback.
+function clearSignInWatchdog(){if(gSignInWatchdog){clearTimeout(gSignInWatchdog);gSignInWatchdog=null}}
+function armSignInWatchdog(){clearSignInWatchdog();gSignInWatchdog=setTimeout(function(){gSignInWatchdog=null;setLoginBusy(false);setLoginError('Google sign-in did not respond. This can happen if the sign-in window was blocked or closed without Google reporting it back. Please try again, or use Continue without Google.');},12000)}
 function loadGoogleAccountCache(){try{return JSON.parse(localStorage.getItem(GAUTH_KEY)||'null')}catch(e){return null}}
 function saveGoogleAccountCache(data){try{localStorage.setItem(GAUTH_KEY,JSON.stringify(data))}catch(e){}}
 function clearGoogleAccountCache(){try{localStorage.removeItem(GAUTH_KEY)}catch(e){}}
@@ -630,10 +635,11 @@ function initGoogleAuth(){
   return;
  }
  window.__uroojGoogleInitAttempts=0;if(btn)btn.disabled=false;if(notice)notice.hidden=true;
- try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google’s sign-in window was blocked. Allow pop-ups for this site and try again.':type==='popup_closed'?'The Google sign-in window was closed before completing. Please try again.':'Google sign-in was cancelled or blocked. Check pop-up settings and try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID, authorized JavaScript origin, and Google Cloud OAuth settings.'}setLoginError('Google sign-in could not start. Check your Google Cloud OAuth settings.');return}
+ try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){clearSignInWatchdog();console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google’s sign-in window was blocked. Allow pop-ups for this site and try again.':type==='popup_closed'?'The Google sign-in window was closed before completing. Please try again.':'Google sign-in was cancelled or blocked. Check pop-up settings and try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID, authorized JavaScript origin, and Google Cloud OAuth settings.'}setLoginError('Google sign-in could not start. Check your Google Cloud OAuth settings.');return}
  const cached=loadGoogleAccountCache();if(cached&&cached.email){gUserInfo=cached;renderAccountStatus()}
 }
 async function handleGoogleToken(resp){
+ clearSignInWatchdog();
  setLoginBusy(false);
  if(!resp||resp.error){setLoginError('Google sign-in did not complete. Please try again.');return}
  gAccessToken=resp.access_token;gTokenExpiry=Date.now()+((Number(resp.expires_in)||3000)*1000);
@@ -672,7 +678,7 @@ function requestGoogleSignIn(){
  // Keep the token request inside the real button click. Browsers block OAuth popups
  // when requestAccessToken is delayed until a timer/script-load callback.
  if(!gTokenClient&&window.google&&google.accounts&&google.accounts.oauth2){
-  try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google sign-in popup was blocked. Allow pop-ups for this site and tap again.':type==='popup_closed'?'Google sign-in was closed before completing. Tap Sign in with Google to retry.':'Google sign-in was blocked or cancelled. Check Google Cloud authorized origins and try again.')}})}catch(err){console.error('Could not initialize Google auth',err)}
+  try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){clearSignInWatchdog();console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google sign-in popup was blocked. Allow pop-ups for this site and tap again.':type==='popup_closed'?'Google sign-in was closed before completing. Tap Sign in with Google to retry.':'Google sign-in was blocked or cancelled. Check Google Cloud authorized origins and try again.')}})}catch(err){console.error('Could not initialize Google auth',err)}
  }
  if(!gTokenClient){
   setLoginBusy(false);
@@ -683,8 +689,9 @@ function requestGoogleSignIn(){
  }
  setLoginError('');
  setLoginBusy(true);
+ armSignInWatchdog();
  try{gTokenClient.requestAccessToken({prompt:''})}
- catch(err){console.error('Could not open Google sign-in',err);setLoginBusy(false);setLoginError('Google sign-in could not open. Allow pop-ups and confirm the hosted website is an authorized JavaScript origin in Google Cloud.')}
+ catch(err){clearSignInWatchdog();console.error('Could not open Google sign-in',err);setLoginBusy(false);setLoginError('Google sign-in could not open. Allow pop-ups and confirm the hosted website is an authorized JavaScript origin in Google Cloud.')}
 }
 function ensureFreshToken(){if(gAccessToken&&Date.now()<gTokenExpiry-60000)return Promise.resolve(gAccessToken);if(!gTokenClient)return Promise.reject(new Error('not signed in'));return new Promise(function(resolve,reject){const prevCb=gTokenClient.callback;gTokenClient.callback=function(resp){gTokenClient.callback=prevCb;if(!resp||resp.error){reject(new Error('token refresh failed'));return}gAccessToken=resp.access_token;gTokenExpiry=Date.now()+((Number(resp.expires_in)||3000)*1000);resolve(gAccessToken)};gTokenClient.requestAccessToken({prompt:''})})}
 async function throwDriveApiError(res,action){let data={};try{data=await res.json()}catch(e){}const api=data&&data.error||{},reasons=Array.isArray(api.errors)?api.errors.map(x=>x.reason||'').filter(Boolean).join(', '):'';throw new Error('DRIVE_API_ERROR|'+res.status+'|'+reasons+'|'+(api.message||action+' failed'));}
