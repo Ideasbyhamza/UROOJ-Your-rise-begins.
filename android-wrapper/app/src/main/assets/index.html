@@ -642,9 +642,28 @@ async function handleGoogleToken(resp){
  setLoginBusy(false);
  if(!resp||resp.error){setLoginError('Google sign-in did not complete. Please try again.');return}
  gAccessToken=resp.access_token;gTokenExpiry=Date.now()+((Number(resp.expires_in)||3000)*1000);
- try{const info=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gAccessToken}}).then(r=>r.json());gUserInfo={email:info.email||'',name:info.name||info.email||'Google account',picture:info.picture||''};saveGoogleAccountCache(gUserInfo)}catch(e){console.error('Could not fetch Google profile',e)}
- try{await driveLoadOrInit();startDrivePolling();unlockApp();renderAccountStatus();const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';renderViewOnDemand(activeView);/* Drive sync runs quietly; status remains visible in Settings → Google Account. */}
- catch(e){console.error('Drive sync failed',e);setLoginError('Google sign-in worked, but Drive backup failed: '+driveErrorText(e));unlockApp();renderAccountStatus(true,driveErrorText(e));const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';renderViewOnDemand(activeView)}
+ // Authentication success must unlock the app immediately. Remote APIs are best-effort.
+ unlockApp();
+ renderAccountStatus();
+ const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';
+ renderViewOnDemand(activeView);
+ setLoginError('');
+ setLoginBusy(false);
+ const withTimeout=(promise,ms,label)=>Promise.race([promise,new Promise((_,reject)=>setTimeout(()=>reject(new Error(label+' timed out')),ms))]);
+ try{
+  const info=await withTimeout(fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gAccessToken}}).then(async r=>{if(!r.ok)throw new Error('Google profile HTTP '+r.status);return r.json()}),8000,'Google profile request');
+  gUserInfo={email:info.email||'',name:info.name||info.email||'Google account',picture:info.picture||''};saveGoogleAccountCache(gUserInfo);
+ }catch(e){console.warn('Google profile lookup did not finish; app remains unlocked.',e)}
+ renderAccountStatus();
+ try{
+  await withTimeout(driveLoadOrInit(),15000,'Google Drive sync');
+  startDrivePolling();
+  renderAccountStatus();
+ }catch(e){
+  console.error('Drive sync failed',e);
+  renderAccountStatus(true,driveErrorText(e));
+  setLoginError('You are signed in. Drive backup needs attention: '+driveErrorText(e));
+ }
 }
 function requestGoogleSignIn(){
  if(location.hostname==='appassets.androidplatform.net'){
