@@ -442,22 +442,14 @@ body.dark #islamicCalendarCard .islamic-calendar-item,body.dark #aboutHamzaJarvi
 @media(max-width:390px){.top{padding:15px 16px 13px}.top:after{left:16px}.brand-logo{width:42px;height:42px;flex-basis:42px}.brand{font-size:18px}.section-head h1,.section-head h2{font-size:22px}.card{padding:14px}}
 
 
-/* UROOJ 12-month journey + compact seven-day check-in */
+/* UROOJ compact seven-day check-in */
 .urooj-progress-card{margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--white)}
 .urooj-progress-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
 .urooj-progress-brand{display:flex;align-items:center;gap:7px;min-width:0}
 .urooj-progress-symbol{width:25px;height:25px;display:grid;place-items:center;flex:0 0 25px;border-radius:8px;background:var(--green);color:#f4e4bd;font-size:14px}
 .urooj-progress-brand strong{display:block;font:600 11px system-ui,sans-serif;letter-spacing:.08em;color:var(--ink)}
 .urooj-progress-brand small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
-.urooj-year-chip{font-size:9px;font-weight:700;white-space:nowrap;border:1px solid var(--line);border-radius:99px;padding:5px 7px;color:var(--muted)}
-.urooj-month-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
-.urooj-month-badge{min-width:0;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:5px 2px;border:1px solid var(--line);border-radius:10px;background:var(--sand);color:var(--muted);text-align:center}
-.urooj-month-badge .month-number{font-size:8px;line-height:1;font-weight:800;letter-spacing:.06em}
-.urooj-month-badge .month-title{font-size:9px;line-height:1.15;font-weight:700;overflow-wrap:anywhere}
-.urooj-month-badge.current{background:var(--green);border-color:var(--green);color:#fffaf0;box-shadow:0 0 0 2px #bda36b30}
-.urooj-month-badge.final-month{border-color:var(--gold);background:#f4ead1;color:var(--green)}
-.urooj-month-badge.final-month.current{background:var(--green);color:#fffaf0}
-.urooj-checkin{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.urooj-checkin{margin-top:0;padding-top:0;border-top:0}
 .urooj-checkin-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
 .urooj-checkin-head strong{font-size:11px;color:var(--ink)}
 .urooj-checkin-head small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
@@ -477,15 +469,12 @@ body.dark #islamicCalendarCard .islamic-calendar-item,body.dark #aboutHamzaJarvi
 .urooj-checkin-progress span{display:block;width:0;height:100%;border-radius:99px;background:var(--green);transition:width .3s ease}
 .nav button .nav-streak-badge,.nav button.active .nav-streak-badge{display:inline-flex;align-items:center;justify-content:center;min-width:14px;height:13px;padding:0 3px;margin:0;border-radius:99px;background:#efe5d0;color:#375b45;font-size:8px;line-height:1;font-weight:800}
 body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
-body.dark .urooj-month-badge{background:#202a24;border-color:var(--line);color:#c0c9c1}
-body.dark .urooj-month-badge.current{background:#2c5a46;border-color:#47765e;color:#fffaf0}
-body.dark .urooj-month-badge.final-month{background:#3a3425;color:#f0e2bd;border-color:#8e794b}
-body.dark .urooj-day-check{background:#202a24;border-color:var(--line);color:#c0c9c1}
+body.dark body.dark body.dark body.dark .urooj-day-check{background:#202a24;border-color:var(--line);color:#c0c9c1}
 body.dark .urooj-day-check.checked{background:#203c30;border-color:#47765e;color:#d8f0df}
 body.dark .urooj-day-check .day-square{background:#151d1a;border-color:#59665c}
 body.dark .urooj-day-check.checked .day-square{background:#2d8a4b;border-color:#2d8a4b;color:white}
 body.dark .urooj-streak-pill{background:#2c4938;color:#d8e8d9}
-@media(max-width:360px){.urooj-progress-card{padding:10px}.urooj-month-grid{gap:4px}.urooj-month-badge{min-height:45px}.urooj-month-badge .month-title{font-size:8px}.urooj-week-grid{gap:3px}}
+@media(max-width:360px){.urooj-progress-card{padding:10px}.urooj-week-grid{gap:3px}#uroojUpgradeJourney .upgrade-step{padding:9px}#uroojUpgradeJourney .upgrade-days{font-size:9px}}
 
 
 /* UROOJ unified two-colour system: platform blue + neutral surfaces */
@@ -564,8 +553,7 @@ body[data-palette] .tiny-track{background:var(--sage)}
 body[data-palette] .category-track i,
 body[data-palette] .chart-bar,
 body[data-palette] .tiny-track span{background:var(--green)}
-body[data-palette] .urooj-month-badge.current{background:var(--green);border-color:var(--green);color:var(--sand)}
-body[data-palette] .urooj-day-check.checked{background:var(--sage);border-color:var(--green);color:var(--green)}
+body[data-palette] body[data-palette] .urooj-day-check.checked{background:var(--sage);border-color:var(--green);color:var(--green)}
 body[data-palette] .urooj-day-check .day-square{background:var(--white);border-color:var(--line)}
 body[data-palette] .urooj-day-check.checked .day-square{background:var(--green);border-color:var(--green);color:var(--sand)}
 body[data-palette] .urooj-progress-symbol{color:var(--sand)}
@@ -694,14 +682,16 @@ body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;bor
 /* Six compact progression tiles: each stage adds to the cumulative rise. */
 #uroojUpgradeJourney{margin-top:18px}
 #uroojUpgradeJourney .upgrade-intro{font-size:11px;line-height:1.5;color:var(--muted);margin:0 0 12px}
-#uroojUpgradeJourney .upgrade-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
-#uroojUpgradeJourney .upgrade-step{display:flex;flex-direction:column;align-items:stretch;gap:7px;padding:10px;border:1px solid var(--line);border-radius:13px;background:var(--white);min-width:0;position:relative;overflow:hidden;box-shadow:0 3px 10px rgba(15,23,42,.035)}
-#uroojUpgradeJourney .upgrade-top{display:flex;align-items:center;gap:7px;min-width:0}
+#uroojUpgradeJourney .upgrade-list{display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+#uroojUpgradeJourney .upgrade-step{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px 12px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;background:var(--white);min-width:0;position:relative;overflow:visible;box-shadow:0 2px 7px rgba(15,23,42,.035)}
+#uroojUpgradeJourney .upgrade-top{display:flex;align-items:center;gap:7px;min-width:0;grid-column:1;grid-row:1}
 #uroojUpgradeJourney .upgrade-number{display:grid;place-items:center;width:25px;height:25px;flex:0 0 25px;border-radius:8px;background:var(--sage);color:var(--green);font-size:10px;font-weight:800}
 #uroojUpgradeJourney .upgrade-word{font-size:12px;line-height:1.2;color:var(--green);overflow-wrap:anywhere}
-#uroojUpgradeJourney .upgrade-copy{min-width:0;font-size:10px;line-height:1.4;color:var(--ink);min-height:28px}
-#uroojUpgradeJourney .upgrade-fill{height:5px;border-radius:99px;background:var(--sage);overflow:hidden;margin-top:auto}
-#uroojUpgradeJourney .upgrade-fill span{display:block;height:100%;border-radius:99px;background:var(--green);transition:width .25s ease}
+#uroojUpgradeJourney .upgrade-copy{min-width:0;font-size:10px;line-height:1.4;color:var(--ink)}
+ #uroojUpgradeJourney .upgrade-days{font-size:10px;line-height:1.2;font-weight:800;color:var(--muted);white-space:nowrap;grid-column:2;grid-row:1}
+ #uroojUpgradeJourney .upgrade-fill{grid-column:1/-1;position:relative;height:6px;border-radius:99px;background:var(--sage);overflow:visible;margin-top:0}
+ #uroojUpgradeJourney .upgrade-fill span{position:relative;display:block;height:100%;border-radius:99px;background:var(--green);transition:width .25s ease}
+ #uroojUpgradeJourney .upgrade-fill span:after{content:"";position:absolute;right:-1px;top:50%;width:8px;height:8px;border:2px solid var(--white);border-radius:50%;background:var(--green);transform:translate(50%,-50%);box-shadow:0 0 0 1px var(--line)}
 #uroojUpgradeJourney .stage-2,#uroojUpgradeJourney .stage-3,#uroojUpgradeJourney .stage-4,#uroojUpgradeJourney .stage-5{background:var(--white)}
 #uroojUpgradeJourney .stage-6{background:var(--ink);border-color:var(--ink);box-shadow:0 5px 14px rgba(15,23,42,.12)}
 #uroojUpgradeJourney .stage-6 .upgrade-number{background:var(--gold);color:var(--ink)}
@@ -906,30 +896,25 @@ body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;bor
 <div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
 <p class="muted">A marked day records your own check-in, not a judgement of your worth. Missed days do not erase the progress you have already made.</p>
 
-<section class="urooj-progress-card" aria-label="UROOJ annual journey and check-in">
-  <div class="urooj-progress-head">
-    <div class="urooj-progress-brand"><span class="urooj-progress-symbol" aria-hidden="true">✦</span><div><strong>UROOJ</strong><small>Your 12-month rise</small></div></div>
-    <span class="urooj-year-chip" id="uroojYearMonthLabel">Month 01 / 12</span>
-  </div>
-  <div class="urooj-month-grid" id="uroojMonthBadges" aria-label="Twelve monthly milestones"></div>
+<section class="urooj-progress-card" aria-label="Seven-day check-in">
   <div class="urooj-checkin">
-    <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick a day when you show up</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
+    <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick today when you show up</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
     <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
     <div class="urooj-checkin-progress" role="progressbar" aria-label="Weekly check-in progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span id="uroojCheckinProgressBar" style="width:0%"></span></div>
     <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
   </div>
 </section>
 
-<div class="card" id="uroojUpgradeJourney" aria-label="Six-step UROOJ progression">
+<div class="card" id="uroojUpgradeJourney" aria-label="Six-stage UROOJ progress">
  <div class="card-title"><h3>Your Rise · UROOJ</h3><span class="solar">6 stages</span></div>
- <p class="upgrade-intro">Each stage adds to the one before it—six steps, one complete rise.</p>
+ <p class="upgrade-intro">365 days, divided across six stages. Keep rising one step at a time.</p>
  <div class="upgrade-list">
-  <div class="upgrade-step stage-1"><div class="upgrade-top"><span class="upgrade-number">01</span><strong class="upgrade-word">Zawal</strong></div><div class="upgrade-copy">Decline — the low point before change.</div><div class="upgrade-fill"><span style="width:16.66%"></span></div></div>
-  <div class="upgrade-step stage-2"><div class="upgrade-top"><span class="upgrade-number">02</span><strong class="upgrade-word">Iftitah</strong></div><div class="upgrade-copy">Beginning — opening a new chapter.</div><div class="upgrade-fill"><span style="width:33.33%"></span></div></div>
-  <div class="upgrade-step stage-3"><div class="upgrade-top"><span class="upgrade-number">03</span><strong class="upgrade-word">Hadaf</strong></div><div class="upgrade-copy">Purpose — a clear goal to pursue.</div><div class="upgrade-fill"><span style="width:50%"></span></div></div>
-  <div class="upgrade-step stage-4"><div class="upgrade-top"><span class="upgrade-number">04</span><strong class="upgrade-word">Sabr</strong></div><div class="upgrade-copy">Patience — staying steady through difficulty.</div><div class="upgrade-fill"><span style="width:66.66%"></span></div></div>
-  <div class="upgrade-step stage-5"><div class="upgrade-top"><span class="upgrade-number">05</span><strong class="upgrade-word">Istiqamah</strong></div><div class="upgrade-copy">Steadfastness — continuing on the right path.</div><div class="upgrade-fill"><span style="width:83.33%"></span></div></div>
-  <div class="upgrade-step stage-6"><div class="upgrade-top"><span class="upgrade-number">06</span><strong class="upgrade-word">UROOJ</strong></div><div class="upgrade-copy">Ascent — rising to a higher level.</div><div class="upgrade-fill"><span style="width:100%"></span></div></div>
+  <div class="upgrade-step stage-1"><div class="upgrade-top"><span class="upgrade-number">01</span><strong class="upgrade-word">Zawal</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:16.66%"></span></div></div>
+  <div class="upgrade-step stage-2"><div class="upgrade-top"><span class="upgrade-number">02</span><strong class="upgrade-word">Iftitah</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:33.33%"></span></div></div>
+  <div class="upgrade-step stage-3"><div class="upgrade-top"><span class="upgrade-number">03</span><strong class="upgrade-word">Hadaf</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:50%"></span></div></div>
+  <div class="upgrade-step stage-4"><div class="upgrade-top"><span class="upgrade-number">04</span><strong class="upgrade-word">Sabr</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:66.66%"></span></div></div>
+  <div class="upgrade-step stage-5"><div class="upgrade-top"><span class="upgrade-number">05</span><strong class="upgrade-word">Istiqamah</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:83.33%"></span></div></div>
+  <div class="upgrade-step stage-6"><div class="upgrade-top"><span class="upgrade-number">06</span><strong class="upgrade-word">UROOJ</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:100%"></span></div></div>
  </div>
 </div>
 </section>
@@ -1610,11 +1595,10 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 </script>
 
 <script>
-/* Independent, local-only UROOJ yearly milestones and seven-day check-ins. */
+/* Independent, local-only UROOJ seven-day check-ins. */
 (function(){
  'use strict';
- var STORE='urooj-rise-checkins-v1',START_STORE='urooj-rise-start-date-v1';
- var months=['Intention','Consistency','Patience','Focus','Learning','Gratitude','Responsibility','Kindness','Excellence','Reflection','Steadfastness','UROOJ'];
+ var STORE='urooj-rise-checkins-v1';
  function localDateKey(date){
   var p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
   var o={};p.forEach(function(x){o[x.type]=x.value});
@@ -1627,34 +1611,15 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   try{var v=JSON.parse(localStorage.getItem(STORE)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch(e){return {}}
  }
  function write(v){try{localStorage.setItem(STORE,JSON.stringify(v));return true}catch(e){return false}}
- function journeyStart(today){
-  try{var saved=localStorage.getItem(START_STORE);if(saved&&/^\d{4}-\d{2}-\d{2}$/.test(saved))return saved;localStorage.setItem(START_STORE,today)}catch(e){}
-  return today;
- }
- function monthProgress(start,today){
-  var s=new Date(start+'T12:00:00Z'),t=new Date(today+'T12:00:00Z');
-  if(!isFinite(s.getTime())||!isFinite(t.getTime())||t<s)return 1;
-  var elapsed=(t.getUTCFullYear()-s.getUTCFullYear())*12+(t.getUTCMonth()-s.getUTCMonth());
-  var targetMonth=s.getUTCMonth()+elapsed,targetYear=s.getUTCFullYear()+Math.floor(targetMonth/12),monthIndex=((targetMonth%12)+12)%12;
-  var lastDay=new Date(Date.UTC(targetYear,monthIndex+1,0)).getUTCDate(),anniversaryDay=Math.min(s.getUTCDate(),lastDay);
-  if(t.getUTCDate()<anniversaryDay)elapsed--;
-  return Math.max(1,Math.min(12,elapsed+1));
- }
  function streak(log,today){
   var anchor=log[today]?today:shiftDay(today,-1),count=0;
   while(log[anchor]){count++;anchor=shiftDay(anchor,-1);if(count>400)break}
   return count;
  }
  function render(){
-  var monthBox=document.getElementById('uroojMonthBadges'),weekBox=document.getElementById('uroojWeekCheckins');
-  if(!monthBox||!weekBox)return;
-  var now=new Date(),today=localDateKey(now),start=journeyStart(today),month=monthProgress(start,today),log=read();
-  var yearLabel=document.getElementById('uroojYearMonthLabel');
-  if(yearLabel)yearLabel.textContent='Month '+String(month).padStart(2,'0')+' / 12';
-  monthBox.innerHTML=months.map(function(title,i){
-   var n=i+1,cls='urooj-month-badge'+(n===month?' current':'')+(n===12?' final-month':'');
-   return '<div class="'+cls+'"'+(n===month?' aria-current="date"':'')+'><span class="month-number">'+String(n).padStart(2,'0')+'</span><span class="month-title">'+title+'</span></div>';
-  }).join('');
+  var weekBox=document.getElementById('uroojWeekCheckins');
+  if(!weekBox)return;
+  var now=new Date(),today=localDateKey(now),log=read();
   var checked=0;
   var todayDate=new Date(today+'T12:00:00Z'),mondayOffset=(todayDate.getUTCDay()+6)%7,weekStart=shiftDay(today,-mondayOffset);
    weekBox.innerHTML=Array.from({length:7},function(_,i){
