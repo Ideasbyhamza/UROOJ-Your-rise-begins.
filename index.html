@@ -330,6 +330,59 @@ body.dark[data-palette="midnight"]{--sand:#151922;--green:#A9BDD9;--gold:#D7BF83
 #aboutHamzaJarvis>div[style*="display:flex"]>div[aria-label] span{font-size:18px!important}
 #aboutHamzaJarvis>div[style*="display:flex"] p{font-size:10px;line-height:1.4}
 #aboutHamzaJarvis>div[style*="background:var(--sage)"]{margin-top:10px!important;padding:10px 11px!important}
+
+/* Professional visual refinement — preserves existing copy, fonts, palette and app behaviour. */
+:root{--shadow:0 5px 22px rgba(36,57,47,.055);--line:#e6e2d8}
+body.dark{--shadow:0 6px 22px rgba(0,0,0,.16);--line:#34423a}
+html{background:#f0ede6}
+body{letter-spacing:.005em;-webkit-font-smoothing:antialiased}
+.app{border-inline:1px solid rgba(120,128,112,.08);box-shadow:0 12px 48px rgba(40,49,39,.055)}
+.top{padding-top:18px;padding-bottom:13px;border-bottom:1px solid var(--line);background:linear-gradient(180deg,rgba(232,240,236,.38),transparent)}
+.brand-logo{border:1px solid rgba(197,160,89,.2);background:var(--white);padding:3px;box-shadow:0 3px 10px rgba(27,77,62,.07)}
+.date-badge{background:var(--sage);border-color:var(--line);border-radius:12px;padding:8px 11px}
+main{padding-top:9px}
+.section-head{margin:15px 2px 13px}
+.section-head h1,.section-head h2{letter-spacing:-.025em;line-height:1.18}
+.eyebrow{letter-spacing:1.55px}
+.card{border-radius:16px;border-color:var(--line);box-shadow:var(--shadow);padding:16px;transition:border-color .18s ease,box-shadow .18s ease}
+.card-title{margin-bottom:11px}
+.card-title h3{letter-spacing:.01em;line-height:1.35}
+.progress-card,.routine-item,.journal-entry,.quran-entry,.reminder-today{box-shadow:0 2px 9px rgba(36,57,47,.025);border-color:var(--line)}
+.progress-card{border-radius:16px}
+.routine-list{gap:8px}
+.routine-item{border-radius:13px;padding:12px}
+.routine-item.done{border-color:#c8ddcf}
+.check{border-radius:8px}
+.btn{border-radius:10px;letter-spacing:.01em;box-shadow:0 2px 5px rgba(27,77,62,.08)}
+.btn.secondary,.btn.ghost{box-shadow:none}
+.btn:focus-visible,.nav button:focus-visible,.day-box:focus-visible{outline-offset:3px}
+.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.reminder-row input,.reminder-today input{border-color:var(--line);transition:border-color .16s ease,box-shadow .16s ease}
+.field input:focus,.field textarea:focus,.field select:focus,.slot input:focus,.slot select:focus,.tracker-row select:focus,.reminder-row input:focus,.reminder-today input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(197,160,89,.12);outline:none}
+.nav{border-top-color:var(--line);box-shadow:0 -5px 20px rgba(36,57,47,.035);padding-top:8px}
+.nav button{border-radius:11px;transition:background .16s ease,color .16s ease}
+.nav button.active{background:rgba(232,240,236,.72)}
+body.dark .nav button.active{background:var(--sage)}
+.challenge-hero{border-radius:17px;box-shadow:var(--shadow)}
+.day-box{border-radius:10px}
+.journal-entry,.quran-entry{border-radius:12px}
+#islamicCalendarCard .islamic-calendar-item{border-color:var(--line);box-shadow:0 2px 7px rgba(36,57,47,.025)}
+#aboutHamzaJarvis{border-color:var(--line)}
+body.dark .top{background:linear-gradient(180deg,rgba(35,55,46,.5),transparent)}
+body.dark .app{border-color:rgba(255,255,255,.035)}
+body.dark .progress-card,body.dark .routine-item,body.dark .journal-entry,body.dark .quran-entry,body.dark .reminder-today{box-shadow:none}
+@media(hover:hover){
+ .card:hover{border-color:#d9d7ca;box-shadow:0 7px 24px rgba(36,57,47,.065)}
+ .btn:hover{filter:brightness(1.035)}
+ .routine-item:hover{border-color:#d7ded6}
+ .nav button:hover{background:rgba(232,240,236,.5)}
+}
+@media(max-width:390px){
+ .top{padding:15px 16px 11px}
+ main{padding-left:14px;padding-right:14px}
+ .card{padding:14px;border-radius:14px}
+ .section-head h1,.section-head h2{font-size:21px}
+}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
