@@ -473,6 +473,8 @@ body.dark #islamicCalendarCard .islamic-calendar-item,body.dark #aboutHamzaJarvi
 .urooj-day-check:disabled{opacity:1;cursor:default}
 .urooj-day-check:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .urooj-checkin-foot{font-size:9px;color:var(--muted);margin-top:7px}
+.urooj-checkin-progress{height:6px;margin-top:8px;border-radius:99px;background:var(--sage);overflow:hidden;border:1px solid var(--line)}
+.urooj-checkin-progress span{display:block;width:0;height:100%;border-radius:99px;background:var(--green);transition:width .3s ease}
 .nav button .nav-streak-badge,.nav button.active .nav-streak-badge{display:inline-flex;align-items:center;justify-content:center;min-width:14px;height:13px;padding:0 3px;margin:0;border-radius:99px;background:#efe5d0;color:#375b45;font-size:8px;line-height:1;font-weight:800}
 body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 body.dark .urooj-month-badge{background:#202a24;border-color:var(--line);color:#c0c9c1}
@@ -891,18 +893,7 @@ body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;bor
 
 </article>
 
-<section class="urooj-progress-card" aria-label="UROOJ annual journey and check-in">
-  <div class="urooj-progress-head">
-    <div class="urooj-progress-brand"><span class="urooj-progress-symbol" aria-hidden="true">✦</span><div><strong>UROOJ</strong><small>Your 12-month rise</small></div></div>
-    <span class="urooj-year-chip" id="uroojYearMonthLabel">Month 01 / 12</span>
-  </div>
-  <div class="urooj-month-grid" id="uroojMonthBadges" aria-label="Twelve monthly milestones"></div>
-  <div class="urooj-checkin">
-    <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick a day when you show up</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
-    <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
-    <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
-  </div>
-</section>
+
 
 <div class="section-head"><div><div class="eyebrow">Train your attention</div><h1>Challenges</h1><p>Progress over punishment. Return to the path whenever you need.</p></div></div>
 
@@ -914,6 +905,20 @@ body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;bor
 <div class="card"><div class="card-title"><h3>60-day journey</h3><span class="muted">One day at a time</span></div><div class="day-grid" id="focusGrid"></div><div class="challenge-foot"><span id="focusStreak">0 days completed</span><button class="btn ghost small" id="focusClear">Clear marks</button></div></div></div>
 <div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
 <p class="muted">A marked day records your own check-in, not a judgement of your worth. Missed days do not erase the progress you have already made.</p>
+
+<section class="urooj-progress-card" aria-label="UROOJ annual journey and check-in">
+  <div class="urooj-progress-head">
+    <div class="urooj-progress-brand"><span class="urooj-progress-symbol" aria-hidden="true">✦</span><div><strong>UROOJ</strong><small>Your 12-month rise</small></div></div>
+    <span class="urooj-year-chip" id="uroojYearMonthLabel">Month 01 / 12</span>
+  </div>
+  <div class="urooj-month-grid" id="uroojMonthBadges" aria-label="Twelve monthly milestones"></div>
+  <div class="urooj-checkin">
+    <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick a day when you show up</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
+    <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
+    <div class="urooj-checkin-progress" role="progressbar" aria-label="Weekly check-in progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span id="uroojCheckinProgressBar" style="width:0%"></span></div>
+    <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
+  </div>
+</section>
 
 <div class="card" id="uroojUpgradeJourney" aria-label="Six-step UROOJ progression">
  <div class="card-title"><h3>Your Rise · UROOJ</h3><span class="solar">6 stages</span></div>
@@ -1662,6 +1667,9 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   var count=streak(log,today),streakEl=document.getElementById('uroojStreakCount'),summary=document.getElementById('uroojCheckinSummary');
   if(streakEl)streakEl.textContent='✦ '+count+'-day streak';
   if(summary)summary.textContent=checked+' of 7 days checked this week';
+  var progressTrack=document.querySelector('.urooj-checkin-progress'),progressBar=document.getElementById('uroojCheckinProgressBar');
+  if(progressBar)progressBar.style.width=(checked/7*100)+'%';
+  if(progressTrack)progressTrack.setAttribute('aria-valuenow',String(checked));
   document.querySelectorAll('.nav button[data-view]').forEach(function(button){
    var badge=button.querySelector('.nav-streak-badge');if(badge)badge.textContent=String(count);
   });
