@@ -630,6 +630,39 @@ body.dark .quote{background:var(--sage);color:var(--ink)}
 body.dark .nav{background:var(--white);border-color:var(--line)}
 body[data-palette="mono"] .btn,body.dark[data-palette="mono"] .btn{color:var(--green)}
 
+
+/* Final approved palette set: Black & White, Blue & White, Green & Beige.
+   Keep Challenge Levels' difficulty/status colours independent of the app theme. */
+body[data-palette="blue"]{--sand:#F8FAFC;--green:#1D4ED8;--gold:#1D4ED8;--sage:#EFF6FF;--ink:#172033;--muted:#475569;--line:#D8E2F0;--white:#FFFFFF;--shadow:0 8px 28px rgba(29,78,216,.08);color-scheme:light}
+body.dark[data-palette="blue"]{--sand:#0F172A;--green:#93C5FD;--gold:#93C5FD;--sage:#172554;--ink:#F8FAFC;--muted:#CBD5E1;--line:#334155;--white:#111C31;--shadow:0 8px 28px rgba(0,0,0,.24);color-scheme:dark}
+body[data-palette="evergreen"]{--sand:#F8F4E8;--green:#245C3A;--gold:#245C3A;--sage:#E8E0C9;--ink:#20291F;--muted:#50594D;--line:#D5CBB0;--white:#FFFDF6;--shadow:0 8px 28px rgba(36,92,58,.08);color-scheme:light}
+body.dark[data-palette="evergreen"]{--sand:#171C16;--green:#A7D7AE;--gold:#A7D7AE;--sage:#293629;--ink:#F4F4E9;--muted:#C1C8B8;--line:#435241;--white:#20291F;--shadow:0 8px 28px rgba(0,0,0,.24);color-scheme:dark}
+body[data-palette="mono"]{--sand:#FFFFFF;--green:#111827;--gold:#111827;--sage:#F3F4F6;--ink:#111827;--muted:#4B5563;--line:#D1D5DB;--white:#FFFFFF;--shadow:0 8px 24px rgba(0,0,0,.07);color-scheme:light}
+body.dark[data-palette="mono"]{--sand:#000000;--green:#FFFFFF;--gold:#FFFFFF;--sage:#202020;--ink:#FFFFFF;--muted:#D1D5DB;--line:#555555;--white:#111111;--shadow:0 8px 24px rgba(0,0,0,.3);color-scheme:dark}
+body[data-palette] :is(.top,.app,.view){color:var(--ink)}
+body[data-palette] :is(.date-badge,.progress-card,.card,.routine-item,.journal-entry,.quran-entry,.slot,.tracker-row,.reminder-today,.day-box,.nav,.settings-accordion,.empty,.privacy-note){background:var(--white);color:var(--ink);border-color:var(--line)}
+body[data-palette] :is(p,li,label,small,.muted,.section-head p,.routine-info span,.progress-copy span,.save-note,.journal-date,.tracker-label small,.field label,.nav button){color:var(--muted)}
+body[data-palette] :is(h1,h2,h3,.brand,.section-head h1,.section-head h2,.card-title h3,.journal-entry strong,.quran-entry strong,.chart-col strong,.category-row b){color:var(--green)}
+body[data-palette] :is(input,textarea,select,.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.reminder-row input,.reminder-today input){background:var(--white);color:var(--ink);border-color:var(--line)}
+body[data-palette] :is(input,textarea,select,button):focus-visible{outline:3px solid var(--green);outline-offset:2px}
+body[data-palette] .btn,body[data-palette] .primary,body[data-palette] .nav-streak-badge{background:var(--green);border-color:var(--green);color:#FFFFFF}
+body[data-palette] .btn.secondary,body[data-palette] .btn.ghost,body[data-palette] .nav button.active{background:var(--sage);color:var(--green);border-color:var(--line)}
+body[data-palette] .quote{background:var(--green);color:#FFFFFF}
+body[data-palette] .quote :is(blockquote,.attribution,.eyebrow,.text-btn){color:#FFFFFF}
+body[data-palette] .quote .eyebrow{opacity:.95}
+body[data-palette] .routine-item.done,body[data-palette] .schedule-task-tile.has-status,body[data-palette] .day-box.done{background:var(--sage);border-color:var(--line);color:var(--ink)}
+body[data-palette] .routine-item.done :is(strong,span),body[data-palette] .day-box.done{color:var(--green)}
+body.dark[data-palette="blue"] .btn,body.dark[data-palette="blue"] .primary,body.dark[data-palette="blue"] .nav-streak-badge{background:#1D4ED8;color:#FFFFFF}
+body.dark[data-palette="evergreen"] .btn,body.dark[data-palette="evergreen"] .primary,body.dark[data-palette="evergreen"] .nav-streak-badge,body.dark[data-palette="evergreen"] .quote{background:#245C3A;color:#FFFFFF}
+body.dark[data-palette="evergreen"] .quote :is(blockquote,.attribution,.eyebrow,.text-btn){color:#FFFFFF}
+body.dark[data-palette="mono"] .btn,body.dark[data-palette="mono"] .primary,body.dark[data-palette="mono"] .nav-streak-badge{background:#FFFFFF;color:#000000}
+body.dark[data-palette="mono"] .quote{background:#FFFFFF;color:#000000}
+body.dark[data-palette="mono"] .quote :is(blockquote,.attribution,.eyebrow,.text-btn){color:#000000}
+body.dark[data-palette] .date-badge,body.dark[data-palette] .routine-time,body.dark[data-palette] .day-box,body.dark[data-palette] .slot input,body.dark[data-palette] .field input,body.dark[data-palette] .field textarea,body.dark[data-palette] .field select{background:var(--white);color:var(--ink);border-color:var(--line)}
+body.dark[data-palette] .nav{background:var(--white);border-color:var(--line)}
+body[data-palette="mono"] .tasbeeh-orb{background:#111827;color:#FFFFFF;border-color:#D1D5DB}
+body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;border-color:#555555}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -853,7 +886,7 @@ body[data-palette="mono"] .btn,body.dark[data-palette="mono"] .btn{color:var(--g
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div></div>
 <p class="muted" style="font-size:10px;line-height:1.4">Sign in with Google from the login screen to back up your data to Google Drive.</p>
 <p class="settings-intro-cue"><span aria-hidden="true" class="cue-arrow">›</span> Tap a setting to open details. The tutorial arrow points to the relevant option.</p>
-<div class="card" id="appearanceSettings"><div class="card-title"><h3>Appearance</h3><span class="solar">Personalise</span></div><div class="field"><label for="uroojPaletteSetting">TWO-COLOUR THEME</label><select id="uroojPaletteSetting"><option value="blue">Blue &amp; White · modern platform</option><option value="evergreen">Emerald &amp; Ivory · calm</option><option value="violet">Violet &amp; White · creative</option><option value="rose">Rose &amp; Cream · warm</option><option value="slate">Slate &amp; Sky · minimal</option><option value="amber">Amber &amp; Ink · focused</option><option value="mono">Black &amp; White · classic</option></select><p class="muted">Choose one brand colour with neutral surfaces. Use the moon/sun button above to switch light and dark mode.</p></div></div>
+<div class="card" id="appearanceSettings"><div class="card-title"><h3>Appearance</h3><span class="solar">Personalise</span></div><div class="field"><label for="uroojPaletteSetting">TWO-COLOUR THEME</label><select id="uroojPaletteSetting"><option value="mono">Black &amp; White</option><option value="blue">Blue &amp; White</option><option value="evergreen">Green &amp; Beige</option></select><p class="muted">Choose one brand colour with neutral surfaces. Use the moon/sun button above to switch light and dark mode.</p></div></div>
 
 
 
@@ -1406,7 +1439,7 @@ $('#reminderEditor').addEventListener('click',e=>{const b=e.target.closest('[dat
 $('#addReminder').addEventListener('click',()=>{state.reminders.push({title:'New Islamic reminder',date:'Add Hijri date / recurrence',remaining:'',sunnah:''});persist();renderReminders();$('#reminderEditor').lastElementChild?.querySelector('input')?.focus()});
 $('#saveReminders').addEventListener('click',()=>{persist();renderReminders();toast('Reminders saved')});
 const quranFields=['quranReference','quranArabic','quranTranslation','quranTafsir','quranAction'];
-function applyTheme(){const palettes=['blue','evergreen','violet','rose','slate','amber','mono'];if(!palettes.includes(state.palette))state.palette='blue';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+function applyTheme(){const palettes=['mono','blue','evergreen'];if(!palettes.includes(state.palette))state.palette='blue';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
 $('#themeToggle').addEventListener('click',()=>{state.theme=state.theme==='dark'?'light':'dark';persist();applyTheme()});
 $('#uroojPaletteSetting')?.addEventListener('change',()=>{state.palette=$('#uroojPaletteSetting').value;persist();applyTheme();toast('Colour theme applied')});
 
