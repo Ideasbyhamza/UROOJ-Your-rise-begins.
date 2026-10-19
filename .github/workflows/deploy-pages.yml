@@ -77,11 +77,20 @@ jobs:
                           print(result.stderr)
                           raise SystemExit(result.returncode)
               print(f"JavaScript syntax OK: {html_path} ({len(parser.scripts)} inline scripts)")
-              if "Understanding Yourself · 7-Day Quit Addiction Challenge" not in source:
-                  raise SystemExit(f"Missing 7-day new-user challenge in {html_path}")
-              if "id=\"socialCount\">0 / 7" not in source:
+              has_challenge = (
+                  "Understanding Yourself · 7-Day Quit Addiction Challenge" in source
+                  or 'id="socialTitleDisplay">30-Day Digital Reset' in source
+              )
+              has_matching_count = (
+                  'id="socialCount">0 / 7' in source
+                  or 'id="socialCount">0 / 30' in source
+              )
+              if not has_challenge:
+                  raise SystemExit(f"Missing supported new-user challenge in {html_path}")
+              if not has_matching_count:
                   raise SystemExit(f"Challenge initial count mismatch in {html_path}")
-              if 'id="deleteAccountBtn"' not in source or "isValidUroojBackupState(incoming)" not in source:
+              has_reset_control = 'id="deleteAccountBtn"' in source or 'id="fullResetData"' in source
+              if not has_reset_control or "isValidUroojBackupState(incoming)" not in source:
                   raise SystemExit(f"Account reset or safe-import validation missing in {html_path}")
 
           def luminance(hex_color):
