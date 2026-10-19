@@ -635,6 +635,22 @@ body.dark :is(.btn,.btn.secondary,.btn.ghost,.nav button){text-shadow:none}
  *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
 
+
+/* Final readability pass: explicit text contrast in every palette and dark mode */
+body{color:var(--ink);background:var(--sand)}
+body :is(p,li,label,.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.urooj-progress-brand small,.urooj-checkin-head small,.urooj-checkin-foot,.urooj-year-chip,.empty,.privacy-note,.chart-col small,.reminder-today label){color:var(--muted)}
+body :is(h1,h2,h3,h4,strong,b,.card-title,.section-title,.routine-info,.tracker-label){color:var(--ink)}
+body :is(.btn,.nav button,.theme-toggle){color:var(--green)}
+body :is(.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.reminder-row input,.reminder-today input,input,textarea,select){background:var(--white);color:var(--ink);border-color:var(--line);caret-color:var(--green)}
+body :is(input,textarea,select)::placeholder{color:var(--muted);opacity:1}
+body.dark :is(.card,.progress-card,.routine-item,.journal-entry,.reminder-today,.quran-entry){background:var(--white);border-color:var(--line);color:var(--ink)}
+body.dark :is(h1,h2,h3,h4,strong,b,.card-title,.section-title,.routine-info,.tracker-label){color:var(--ink)}
+body.dark :is(p,li,label,.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.urooj-progress-brand small,.urooj-checkin-head small,.urooj-checkin-foot,.urooj-year-chip,.empty,.privacy-note,.chart-col small,.reminder-today label){color:var(--muted)}
+body.dark :is(.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.reminder-row input,.reminder-today input,input,textarea,select){background:var(--white);color:var(--ink);border-color:var(--line)}
+body.dark .quote{background:var(--sage);color:var(--ink)}
+body.dark .nav{background:var(--white);border-color:var(--line)}
+body[data-palette="mono"] .btn,body.dark[data-palette="mono"] .btn{color:var(--green)}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -858,7 +874,7 @@ body.dark :is(.btn,.btn.secondary,.btn.ghost,.nav button){text-shadow:none}
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div></div>
 <p class="muted" style="font-size:10px;line-height:1.4">Sign in with Google from the login screen to back up your data to Google Drive.</p>
 <p class="settings-intro-cue"><span aria-hidden="true" class="cue-arrow">›</span> Tap a setting to open details. The tutorial arrow points to the relevant option.</p>
-<div class="card" id="appearanceSettings"><div class="card-title"><h3>Appearance</h3><span class="solar">Personalise</span></div><div class="field"><label for="uroojPaletteSetting">TWO-COLOUR THEME</label><select id="uroojPaletteSetting"><option value="blue">Blue &amp; White · modern platform</option><option value="evergreen">Emerald &amp; Ivory · calm</option><option value="violet">Violet &amp; White · creative</option><option value="rose">Rose &amp; Cream · warm</option><option value="slate">Slate &amp; Sky · minimal</option><option value="amber">Amber &amp; Ink · focused</option><option value="mint">Mint Pop · fresh &amp; cheerful</option><option value="peach">Peach Pop · soft &amp; vibrant</option><option value="lilac">Lilac Glow · cute &amp; creative</option><option value="mono">Black &amp; White · classic</option></select><p class="muted">Choose one brand colour with neutral surfaces. Use the moon/sun button above to switch light and dark mode.</p></div></div>
+<div class="card" id="appearanceSettings"><div class="card-title"><h3>Appearance</h3><span class="solar">Personalise</span></div><div class="field"><label for="uroojPaletteSetting">TWO-COLOUR THEME</label><select id="uroojPaletteSetting"><option value="blue">Blue &amp; White · modern platform</option><option value="evergreen">Emerald &amp; Ivory · calm</option><option value="violet">Violet &amp; White · creative</option><option value="rose">Rose &amp; Cream · warm</option><option value="slate">Slate &amp; Sky · minimal</option><option value="amber">Amber &amp; Ink · focused</option><option value="mono">Black &amp; White · classic</option></select><p class="muted">Choose one brand colour with neutral surfaces. Use the moon/sun button above to switch light and dark mode.</p></div></div>
 
 
 
@@ -1414,7 +1430,7 @@ $('#reminderEditor').addEventListener('click',e=>{const b=e.target.closest('[dat
 $('#addReminder').addEventListener('click',()=>{state.reminders.push({title:'New Islamic reminder',date:'Add Hijri date / recurrence',remaining:'',sunnah:''});persist();renderReminders();$('#reminderEditor').lastElementChild?.querySelector('input')?.focus()});
 $('#saveReminders').addEventListener('click',()=>{persist();renderReminders();toast('Reminders saved')});
 const quranFields=['quranReference','quranArabic','quranTranslation','quranTafsir','quranAction'];
-function applyTheme(){const palettes=['blue','evergreen','violet','rose','slate','amber','mint','peach','lilac','mono'];if(!palettes.includes(state.palette))state.palette='blue';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+function applyTheme(){const palettes=['blue','evergreen','violet','rose','slate','amber','mono'];if(!palettes.includes(state.palette))state.palette='blue';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
 $('#themeToggle').addEventListener('click',()=>{state.theme=state.theme==='dark'?'light':'dark';persist();applyTheme()});
 $('#uroojPaletteSetting')?.addEventListener('change',()=>{state.palette=$('#uroojPaletteSetting').value;persist();applyTheme();toast('Colour theme applied')});
 $('#fullResetData')?.addEventListener('click',()=>{if(!confirm('FULL RESET: permanently erase all UROOJ data saved in this browser/app on this device, including progress, challenges, Tasbeeh, feedback, consent/tutorial settings, colour palette and theme? This does not delete a separate Google Drive backup. Export a backup first if needed.'))return;if(!confirm('Final confirmation: erase this device’s saved UROOJ data now? This cannot be undone.'))return;try{localStorage.clear()}catch(e){}try{sessionStorage.clear()}catch(e){}try{if('caches'in window)caches.keys().then(keys=>Promise.all(keys.map(key=>caches.delete(key)))).catch(()=>{})}catch(e){}location.reload()});
