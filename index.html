@@ -1295,6 +1295,29 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 })();
 </script>
 
+
+<div class="urooj-history-overlay" id="uroojHistoryOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="uroojHistoryTitle">
+  <div class="urooj-history-modal">
+    <button class="urooj-history-close" id="closeDailyCheckHistory" type="button" aria-label="Close Training History">×</button>
+    <h2 id="uroojHistoryTitle">Training History</h2>
+    <div class="urooj-streak-stats">
+      <div><strong><span aria-hidden="true">🔥</span> <b id="uroojCurrentStreak">0</b></strong><span>CURRENT STREAK</span></div>
+      <div><strong><b id="uroojLongestStreak">0</b></strong><span>LONGEST STREAK</span></div>
+    </div>
+    <div class="urooj-shields"><span style="color:#91a0ad;margin-right:8px" aria-hidden="true">ⓘ</span> STREAK SHIELDS: <span aria-label="streak shields">🪙 <b id="uroojShieldCount">0</b></span></div>
+    <div class="urooj-milestone">
+      <strong id="uroojMilestoneDays">7 more days</strong>
+      <div class="urooj-milestone-track" role="progressbar" aria-label="Progress to next streak milestone" aria-valuemin="0" aria-valuemax="100"><i id="uroojMilestoneProgress"></i></div>
+      <span>To your next streak milestone</span>
+      <div class="urooj-trophy" aria-hidden="true">🏆</div>
+    </div>
+    <div class="urooj-week-head" aria-hidden="true"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+    <div class="urooj-history-calendar" id="uroojHistoryCalendar" aria-label="Recent daily check-ins"></div>
+    <button class="urooj-stats-button" id="openHistoryStats" type="button">More in Stats →</button>
+    <button class="btn" id="uroojHistoryCheckin" type="button" style="display:none">Check in for today ✓</button>
+  </div>
+</div>
+
 </body>
 </html>
 
