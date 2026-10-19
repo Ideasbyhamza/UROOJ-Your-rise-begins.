@@ -678,6 +678,28 @@ body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;bor
 #uroojUpgradeJourney .stage-6 .upgrade-fill{background:#ffffff35}
 #uroojUpgradeJourney .stage-6 .upgrade-fill span{background:var(--gold)}
 @media(max-width:340px){#uroojUpgradeJourney .upgrade-list{gap:6px}#uroojUpgradeJourney .upgrade-step{padding:8px}#uroojUpgradeJourney .upgrade-copy{font-size:9px}}
+
+/* Unified check-in + cumulative 365-day UROOJ progress */
+.urooj-progress-card{margin-top:18px;padding:14px;border:1px solid var(--line);border-radius:16px;background:var(--white);box-shadow:var(--shadow)}
+.urooj-progress-card .urooj-checkin{margin:0;padding:0;border:0}
+.urooj-progress-card .upgrade-intro{font-size:11px;line-height:1.45;color:var(--muted);margin:14px 0 9px}
+#uroojUpgradeJourney .upgrade-list{display:grid;grid-template-columns:minmax(0,1fr);gap:7px}
+#uroojUpgradeJourney .upgrade-step{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px 10px;padding:10px;border:1px solid var(--line);border-radius:11px;background:var(--white);min-width:0;overflow:visible}
+#uroojUpgradeJourney .upgrade-top{display:flex;align-items:center;gap:7px;min-width:0;grid-column:1;grid-row:1}
+#uroojUpgradeJourney .upgrade-number{display:grid;place-items:center;width:24px;height:24px;flex:0 0 24px;border-radius:7px;background:var(--sage);color:var(--green);font-size:10px;font-weight:800}
+#uroojUpgradeJourney .upgrade-word{font-size:12px;line-height:1.2;color:var(--green);overflow-wrap:anywhere}
+#uroojUpgradeJourney .upgrade-days{font-size:10px;font-weight:800;color:var(--muted);white-space:nowrap;grid-column:2;grid-row:1}
+#uroojUpgradeJourney .urooj-stage-dots{grid-column:1/-1;display:grid;grid-template-columns:repeat(61,minmax(0,1fr));gap:2px;width:100%;margin-top:1px}
+#uroojUpgradeJourney .urooj-stage-dots i{display:block;height:5px;min-width:0;border-radius:99px;background:var(--sage);transition:background .2s ease,transform .2s ease}
+#uroojUpgradeJourney .urooj-stage-dots i.filled{background:var(--green)}
+#uroojUpgradeJourney .stage-6{background:var(--ink);border-color:var(--ink)}
+#uroojUpgradeJourney .stage-6 .upgrade-number{background:var(--gold);color:var(--ink)}
+#uroojUpgradeJourney .stage-6 .upgrade-word{color:var(--white)}
+#uroojUpgradeJourney .stage-6 .upgrade-days{color:var(--white)}
+#uroojUpgradeJourney .stage-6 .urooj-stage-dots i{background:#ffffff35}
+#uroojUpgradeJourney .stage-6 .urooj-stage-dots i.filled{background:var(--gold)}
+body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
+@media(max-width:360px){.urooj-progress-card{padding:10px}#uroojUpgradeJourney .upgrade-step{padding:8px}#uroojUpgradeJourney .urooj-stage-dots{gap:1px}#uroojUpgradeJourney .urooj-stage-dots i{height:4px}}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -875,27 +897,24 @@ body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;bor
 <div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
 <p class="muted">A marked day records your own check-in, not a judgement of your worth. Missed days do not erase the progress you have already made.</p>
 
-<section class="urooj-progress-card" aria-label="Seven-day check-in">
-  <div class="urooj-checkin">
-    <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick today when you show up</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
-    <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
-    <div class="urooj-checkin-progress" role="progressbar" aria-label="Weekly check-in progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span id="uroojCheckinProgressBar" style="width:0%"></span></div>
-    <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
-  </div>
-</section>
-
-<div class="card" id="uroojUpgradeJourney" aria-label="Six-stage UROOJ progress">
- <div class="card-title"><h3>Your Rise · UROOJ</h3><span class="solar">6 stages</span></div>
- <p class="upgrade-intro">365 days, divided across six stages. Keep rising one step at a time.</p>
- <div class="upgrade-list">
-  <div class="upgrade-step stage-1"><div class="upgrade-top"><span class="upgrade-number">01</span><strong class="upgrade-word">Zawal</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:16.66%"></span></div></div>
-  <div class="upgrade-step stage-2"><div class="upgrade-top"><span class="upgrade-number">02</span><strong class="upgrade-word">Iftitah</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:33.33%"></span></div></div>
-  <div class="upgrade-step stage-3"><div class="upgrade-top"><span class="upgrade-number">03</span><strong class="upgrade-word">Hadaf</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:50%"></span></div></div>
-  <div class="upgrade-step stage-4"><div class="upgrade-top"><span class="upgrade-number">04</span><strong class="upgrade-word">Sabr</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:66.66%"></span></div></div>
-  <div class="upgrade-step stage-5"><div class="upgrade-top"><span class="upgrade-number">05</span><strong class="upgrade-word">Istiqamah</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:83.33%"></span></div></div>
-  <div class="upgrade-step stage-6"><div class="upgrade-top"><span class="upgrade-number">06</span><strong class="upgrade-word">UROOJ</strong></div><span class="upgrade-days">365/6 ≈ 61 days</span><div class="upgrade-fill"><span style="width:100%"></span></div></div>
+<section class="card urooj-progress-card" id="uroojUpgradeJourney" aria-label="Your Rise UROOJ daily check-in and 365-day progression">
+ <div class="card-title"><h3>Your Rise · UROOJ</h3><span class="solar" id="uroojTotalDays">0 / 365 days</span></div>
+ <div class="urooj-checkin">
+  <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick today to add one dot to your rise</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
+  <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
+  <div class="urooj-checkin-progress" role="progressbar" aria-label="Weekly check-in progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span id="uroojCheckinProgressBar" style="width:0%"></span></div>
+  <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
  </div>
-</div>
+ <p class="upgrade-intro">Every successful daily tick lights the next dot. Six stages build toward 365 days.</p>
+ <div class="upgrade-list">
+  <div class="upgrade-step stage-1" data-stage="0" data-days="61"><div class="upgrade-top"><span class="upgrade-number">01</span><strong class="upgrade-word">Zawal</strong></div><span class="upgrade-days" data-stage-count>0 / 61 days</span><div class="urooj-stage-dots" data-stage-dots="61" aria-label="Zawal progress"></div></div>
+  <div class="upgrade-step stage-2" data-stage="1" data-days="61"><div class="upgrade-top"><span class="upgrade-number">02</span><strong class="upgrade-word">Iftitah</strong></div><span class="upgrade-days" data-stage-count>0 / 61 days</span><div class="urooj-stage-dots" data-stage-dots="61" aria-label="Iftitah progress"></div></div>
+  <div class="upgrade-step stage-3" data-stage="2" data-days="61"><div class="upgrade-top"><span class="upgrade-number">03</span><strong class="upgrade-word">Hadaf</strong></div><span class="upgrade-days" data-stage-count>0 / 61 days</span><div class="urooj-stage-dots" data-stage-dots="61" aria-label="Hadaf progress"></div></div>
+  <div class="upgrade-step stage-4" data-stage="3" data-days="61"><div class="upgrade-top"><span class="upgrade-number">04</span><strong class="upgrade-word">Sabr</strong></div><span class="upgrade-days" data-stage-count>0 / 61 days</span><div class="urooj-stage-dots" data-stage-dots="61" aria-label="Sabr progress"></div></div>
+  <div class="upgrade-step stage-5" data-stage="4" data-days="61"><div class="upgrade-top"><span class="upgrade-number">05</span><strong class="upgrade-word">Istiqamah</strong></div><span class="upgrade-days" data-stage-count>0 / 61 days</span><div class="urooj-stage-dots" data-stage-dots="61" aria-label="Istiqamah progress"></div></div>
+  <div class="upgrade-step stage-6" data-stage="5" data-days="60"><div class="upgrade-top"><span class="upgrade-number">06</span><strong class="upgrade-word">UROOJ</strong></div><span class="upgrade-days" data-stage-count>0 / 60 days</span><div class="urooj-stage-dots" data-stage-dots="60" aria-label="UROOJ progress"></div></div>
+ </div>
+</section>
 </section>
 <section class="view" id="view-muhasabah">
 <div class="section-head"><div><div class="eyebrow">Pause · Notice · Renew</div><h1>Tazkiyah</h1><p>Meet yourself honestly, and choose your next step with mercy.</p></div></div>
@@ -1609,6 +1628,16 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   var progressTrack=document.querySelector('.urooj-checkin-progress'),progressBar=document.getElementById('uroojCheckinProgressBar');
   if(progressBar)progressBar.style.width=(checked/7*100)+'%';
   if(progressTrack)progressTrack.setAttribute('aria-valuenow',String(checked));
+  var total=Object.keys(log).filter(function(k){return /^\\d{4}-\\d{2}-\\d{2}$/.test(k)&&log[k]===true&&k<=today}).length;
+  var totalLabel=document.getElementById('uroojTotalDays');if(totalLabel)totalLabel.textContent=Math.min(total,365)+' / 365 days';
+  var remaining=Math.min(total,365);
+  document.querySelectorAll('#uroojUpgradeJourney .upgrade-step[data-stage]').forEach(function(step){
+   var capacity=Number(step.getAttribute('data-days'))||61,stageDone=Math.min(capacity,remaining);
+   remaining=Math.max(0,remaining-stageDone);
+   var counter=step.querySelector('[data-stage-count]');if(counter)counter.textContent=stageDone+' / '+capacity+' days';
+   var dots=step.querySelector('[data-stage-dots]');
+   if(dots){var dotCount=Number(dots.getAttribute('data-stage-dots'))||capacity;dots.innerHTML=Array.from({length:dotCount},function(_,i){return '<i'+(i<stageDone?' class="filled"':'')+' aria-hidden="true"></i>'}).join('');dots.setAttribute('aria-label',stageDone+' of '+capacity+' days completed');}
+  });
   document.querySelectorAll('.nav button[data-view]').forEach(function(button){var badge=button.querySelector('.nav-streak-badge');if(badge)badge.textContent=String(count)});
  }
  document.addEventListener('click',function(e){
