@@ -8,8 +8,8 @@
 <meta content="UROOJ — Your rise begins. A private space for intention, consistency, and reflection." name="description"/>
 <title>UROOJ</title>
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://accounts.google.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://*.googleusercontent.com; font-src 'self' data:; connect-src 'self' https://www.googleapis.com https://accounts.google.com https://script.google.com; frame-src https://accounts.google.com; base-uri 'self'; form-action 'self'; object-src 'none';"/>
-<link rel="icon" type="image/svg+xml" href="./assets/urooj-logo.svg?v=1.1.0"/>
-<link rel="apple-touch-icon" href="./assets/urooj-logo.svg?v=1.1.0"/>
+<link rel="icon" type="image/svg+xml" href="./assets/urooj-logo.svg?v=1.1.1"/>
+<link rel="apple-touch-icon" href="./assets/urooj-logo.svg?v=1.1.1"/>
 <meta name="application-name" content="UROOJ"/>
 <meta name="app-version" content="1.1.1"/>
 
@@ -221,7 +221,16 @@ input,select,textarea{max-width:100%;min-width:0}
 #view-sanctuary details.settings-accordion>summary small{max-width:42%;white-space:normal;text-align:right;font:500 9px/1.3 system-ui,sans-serif}
 @media(max-width:390px){#view-sanctuary details.settings-accordion>summary{padding-left:11px;padding-right:38px;gap:6px}#view-sanctuary details.settings-accordion>summary>span{font-size:11px}#view-sanctuary details.settings-accordion>summary small{max-width:38%;font-size:8px}}
 
-.progress-streak-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}.progress-streak-tile{background:var(--sage);border-radius:12px;padding:12px;min-width:0}.progress-streak-tile strong{display:block;font-size:21px;color:var(--green);margin:4px 0}.progress-streak-tile small{display:block;color:var(--muted);font-size:11px;line-height:1.35}.progress-streak-tile .eyebrow{font-size:10px}#monthStatsChart .chart-bars{gap:3px;overflow-x:auto;padding-bottom:5px}#monthStatsChart .chart-col{min-width:16px;flex:1}#monthStatsChart .chart-col strong{font-size:9px}#monthStatsChart .chart-col small{font-size:9px}#progressDailyCheckin:disabled{opacity:.8;cursor:default}@media(min-width:560px){.progress-streak-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}.progress-streak-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}.progress-streak-tile{background:var(--sage);border-radius:12px;padding:12px;min-width:0}.progress-streak-tile strong{display:block;font-size:21px;color:var(--green);margin:4px 0}.progress-streak-tile small{display:block;color:var(--muted);font-size:11px;line-height:1.35}.progress-streak-tile .eyebrow{font-size:10px}#weeklyTrendChart .chart-bars,#yearTrendChart .chart-bars{gap:3px;overflow-x:auto;padding-bottom:5px}#weeklyTrendChart .chart-col,#yearTrendChart .chart-col{min-width:18px;flex:1}#weeklyTrendChart .chart-col strong,#yearTrendChart .chart-col strong{font-size:9px}#weeklyTrendChart .chart-col small,#yearTrendChart .chart-col small{font-size:9px}@media(min-width:560px){.progress-streak-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.progress-streak-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}.progress-streak-tile{background:var(--sage);border-radius:12px;padding:12px;min-width:0}.progress-streak-tile strong{display:block;font-size:21px;color:var(--green);margin:4px 0}.progress-streak-tile small{display:block;color:var(--muted);font-size:11px;line-height:1.35}.progress-streak-tile .eyebrow{font-size:10px}#taskMonthChart{overflow-x:auto;padding-bottom:4px}
+#taskMonthChart .chart-bars{display:flex;width:max-content;min-width:100%;gap:5px;height:126px}
+#taskMonthChart .chart-col{width:25px;flex:0 0 25px;min-width:25px}
+#taskMonthChart .chart-col strong{font-size:8px}
+#taskMonthChart .chart-col small{font-size:9px}
+#taskMonthTaskBreakdown .category-row{grid-template-columns:minmax(65px,1fr) minmax(60px,1.1fr) 42px}
+#taskMonthTaskBreakdown .category-row span{font-size:10px;overflow-wrap:anywhere}
+#taskMonthTaskBreakdown .category-row b{font-size:10px}
+#taskMonthSelect{color:var(--ink);background:var(--white);border:1px solid var(--line);border-radius:10px;padding:10px;font:inherit}
+#monthStatsChart .chart-bars{gap:3px;overflow-x:auto;padding-bottom:5px}#monthStatsChart .chart-col{min-width:16px;flex:1}#monthStatsChart .chart-col strong{font-size:9px}#monthStatsChart .chart-col small{font-size:9px}#progressDailyCheckin:disabled{opacity:.8;cursor:default}@media(min-width:560px){.progress-streak-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}.progress-streak-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}.progress-streak-tile{background:var(--sage);border-radius:12px;padding:12px;min-width:0}.progress-streak-tile strong{display:block;font-size:21px;color:var(--green);margin:4px 0}.progress-streak-tile small{display:block;color:var(--muted);font-size:11px;line-height:1.35}.progress-streak-tile .eyebrow{font-size:10px}#weeklyTrendChart .chart-bars,#yearTrendChart .chart-bars{gap:3px;overflow-x:auto;padding-bottom:5px}#weeklyTrendChart .chart-col,#yearTrendChart .chart-col{min-width:18px;flex:1}#weeklyTrendChart .chart-col strong,#yearTrendChart .chart-col strong{font-size:9px}#weeklyTrendChart .chart-col small,#yearTrendChart .chart-col small{font-size:9px}@media(min-width:560px){.progress-streak-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 /* Product polish: consistent controls, keyboard focus, safe mobile layout, and readable contrast. */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px}body{overflow-x:hidden}button,input,select,textarea{font-family:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}button:disabled{cursor:not-allowed;opacity:.65}.view,.card,.challenge-hero,.quote{min-width:0;overflow-wrap:anywhere}.btn.danger{background:#8b3028;color:#fff;border-color:#8b3028}body.dark .btn.danger{background:#b94d45;color:#fff;border-color:#b94d45}.nav button{min-width:0;flex:1}.nav button span{overflow-wrap:normal}@media(max-width:380px){.nav button{padding-left:3px;padding-right:3px}.nav button span{font-size:9px;letter-spacing:0}.section-head h1{font-size:clamp(23px,7vw,30px)}.card{padding:12px}}
 </style>
@@ -333,7 +342,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px
 </script>
 <section id="jarvisLogin" aria-label="Login">
   <div class="login-card" id="jarvisLoginCard">
-    <img class="login-logo" src="./assets/urooj-logo.svg?v=1.1.0" alt="UROOJ logo" width="88" height="88"><div class="login-wordmark" aria-label="UROOJ">UROOJ</div>
+    <img class="login-logo" src="./assets/urooj-logo.svg?v=1.1.1" alt="UROOJ logo" width="88" height="88"><div class="login-wordmark" aria-label="UROOJ">UROOJ</div>
     <p>Your rise begins.<br>Sign in to sync your progress across devices.</p>
     <button type="button" class="google-btn" id="googleSignInBtn" aria-label="Sign in with Google">
       <svg width="18" height="18" viewBox="0 0 48 48" aria-hidden="true"><path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3c-1.6 4.6-6 8-11.3 8-6.6 0-12-5.4-12-12s5.4-12 12-12c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6 29.6 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.7-.4-3.5z"/><path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.6 15.9 18.9 13 24 13c3.1 0 5.8 1.1 8 3l5.7-5.7C34.6 6 29.6 4 24 4c-7.5 0-14 4.2-17.7 10.7z"/><path fill="#4CAF50" d="M24 44c5.5 0 10.4-1.9 14.3-5.1l-6.6-5.6C29.6 35 26.9 36 24 36c-5.3 0-9.7-3.4-11.3-8l-6.6 5.1C9.9 39.7 16.4 44 24 44z"/><path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-.8 2.2-2.2 4.1-4.1 5.4l6.6 5.6C40.9 36.6 44 31 44 24c0-1.3-.1-2.7-.4-3.5z"/></svg>
@@ -349,7 +358,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px
 </section>
 <div class="app">
 <header class="top">
-<div class="brand brand-with-logo"><img src="./assets/urooj-logo.svg?v=1.1.0" alt="" width="38" height="38"><span>UROOJ<small>Your rise begins.</small></span></div>
+<div class="brand brand-with-logo"><img src="./assets/urooj-logo.svg?v=1.1.1" alt="" width="38" height="38"><span>UROOJ<small>Your rise begins.</small></span></div>
 <div style="display:flex;align-items:center;gap:7px"><button aria-label="Toggle dark mode" class="btn ghost small" id="themeToggle" style="padding:8px" title="Toggle dark mode">☾</button><div class="date-badge"><strong id="dateText">Today</strong><span>A day to begin again</span></div></div>
 </header>
 <main>
@@ -389,6 +398,22 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px
 <section class="view" id="view-schedule">
 <div class="section-head"><div><div class="eyebrow">Record what you actually did</div><h1>Today's Task</h1><p>Choose a status for each item. You can add your own activities below.</p></div><span class="solar" id="todayCount">0 recorded</span><span class="solar" id="todayTotalTasks">0 total tasks</span></div>
 <div class="progress-card"><div class="progress-ring" id="progressRing"><b id="progressPercent">0%</b></div><div class="progress-copy"><strong id="progressTitle">Begin with one good deed</strong><span id="progressSub">A log is a tool for reflection, not a judgement.</span><div class="tiny-track"><span id="progressBar"></span></div></div></div>
+<div class="card task-month-card" id="taskMonthStatsCard">
+<div class="card-title"><h3>Monthly task stats</h3><span class="solar">Your progress</span></div>
+<label for="taskMonthSelect" class="muted" style="display:block;margin:4px 0 8px">Choose a month</label>
+<select id="taskMonthSelect" aria-label="Choose month for task statistics" style="width:100%;margin-bottom:12px"></select>
+<div class="progress-streak-grid">
+ <div class="progress-streak-tile"><span class="eyebrow">Completion</span><strong id="taskMonthCompletion">0%</strong><small>Average per day</small></div>
+ <div class="progress-streak-tile"><span class="eyebrow">Active days</span><strong id="taskMonthActiveDays">0 / 0</strong><small>Days you recorded tasks</small></div>
+ <div class="progress-streak-tile"><span class="eyebrow">Tasks recorded</span><strong id="taskMonthRecorded">0</strong><small>Entries this month</small></div>
+ <div class="progress-streak-tile"><span class="eyebrow">Best day</span><strong id="taskMonthBestDay">—</strong><small id="taskMonthBestValue">No entries yet</small></div>
+</div>
+<div class="muted" style="margin:14px 0 7px">Daily completion · selected month</div>
+<div id="taskMonthChart"><div class="empty">Record your first task to see your graph.</div></div>
+<div class="muted" style="margin:14px 0 7px">Most consistent tasks</div>
+<div id="taskMonthTaskBreakdown" class="category-bars"><div class="empty">Your task breakdown appears here as you log activities.</div></div>
+<p class="muted" id="taskMonthInsight" style="font-size:11px;line-height:1.45;margin:12px 0 0">Your graph updates when you change a task status. Only saved records are counted.</p>
+</div>
 <div class="section-head"><div><h2>Today's schedule</h2><p>Use the dropdowns to record your scheduled activities.</p></div></div>
 <div class="card"><div class="card-title"><h3>Today's schedule</h3><span class="solar" id="scheduleDateLabel">Today</span></div><div class="slot-head" style="grid-template-columns:minmax(0,1fr) minmax(120px,45%)"><span>Task</span><span>Status</span></div><div id="scheduleSlots"></div><div class="save-note" id="scheduleStatus">Choose a status for each scheduled activity. Changes save automatically.</div><div class="btn-row" style="margin-top:12px"><button class="btn" id="scheduleAddChallenge" type="button">＋ Add task</button></div></div>
 <div class="card" id="progressInsightsCard"><div class="card-title"><h3>Consistency &amp; progress</h3><span class="solar">Your journey</span></div><div class="progress-streak-grid"><div class="progress-streak-tile"><span class="eyebrow">Current streak</span><strong id="progressCurrentStreak">0 days</strong><small id="progressStreakMessage">Start with today</small></div><div class="progress-streak-tile"><span class="eyebrow">Longest streak</span><strong id="progressBestStreak">0 days</strong><small>Keep showing up</small></div></div><div class="progress-streak-tile" style="margin-top:8px"><span class="eyebrow">365-day journey · 12 levels</span><strong id="progressLevelName">Level 1 · Beginner</strong><small id="progressLevelDetail">0 / 365 check-in days</small><div class="tiny-track" style="margin-top:8px"><span id="progressLevelBar" style="width:0%"></span></div></div><p class="muted" style="font-size:12px;margin:10px 0">A check-in is recorded only here on the Progress page. Your streak counts consecutive calendar days with a check-in.</p><div class="btn-row"><button class="btn" id="progressDailyCheckin" type="button">✓ Check in for today</button><span id="progressCheckinStatus" class="save-note" aria-live="polite"></span></div><div class="card-title" style="margin-top:18px"><h3>Month-wise overview</h3><label for="statsMonth" class="muted">Choose month</label></div><select id="statsMonth" aria-label="Choose month for progress graphs" style="width:100%;margin-bottom:12px"></select><div class="progress-streak-grid"><div class="progress-streak-tile"><span class="eyebrow">Consistency</span><strong id="monthConsistency">0%</strong><small>Days with activity recorded</small></div><div class="progress-streak-tile"><span class="eyebrow">Average completion</span><strong id="monthCompletion">0%</strong><small>Across selected month</small></div><div class="progress-streak-tile"><span class="eyebrow">Active days</span><strong id="monthActiveDays">0 / 0</strong><small>Days with saved activity</small></div><div class="progress-streak-tile"><span class="eyebrow">Returned days</span><strong id="monthReturnDays">0</strong><small>Activity after a gap</small></div></div><div class="muted" style="margin:12px 0 8px">Daily completion · selected month</div><div id="monthStatsChart"></div><div class="muted" style="margin:14px 0 8px">Week-by-week trend · last 12 weeks</div><div id="weeklyTrendChart"></div><div class="muted" style="margin:14px 0 8px">Month-by-month consistency · last 12 months</div><div id="yearTrendChart"></div></div><div class="card"><details class="compact-expand"><summary>Progress graphs<span class="muted">Daily, weekly, monthly and yearly progress trends</span></summary><div style="display:flex;gap:8px;margin-bottom:10px"><div style="flex:1;background:var(--sage);border-radius:12px;padding:11px"><div class="eyebrow">This week</div><strong id="weekDone" style="font-size:19px;color:var(--green)">0</strong><div class="muted">items recorded</div></div><div style="flex:1;background:#f2ead9;border-radius:12px;padding:11px"><div class="eyebrow">Daily average</div><strong id="weekRate" style="font-size:19px;color:#84652d">0%</strong><div class="muted">of tracked items</div></div></div><div class="muted" style="margin:8px 0">Daily completion</div><div id="statsChart"></div><div class="muted" style="margin:14px 0 8px">Activity categories · last 7 days</div><div id="categoryChart"></div><p class="muted">Graphs use only entries you record in this app. Tracking begins when you start using this version; earlier days are not reconstructed automatically.</p></details></div>
@@ -520,10 +545,9 @@ function getSyncTime(){try{return Number(localStorage.getItem(SYNC_KEY)||0)}catc
 
 const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';const UROOJ_AUTO_TOUR_KEY='urooj-auto-tutorial-after-login-v1';
 const UROOJ_TOUR_STEPS=[
- {title:'Welcome',body:'UROOJ helps you track daily tasks, habits and reflection.',tip:'Tap Next.',view:'today'},
- {title:'Today',body:'See your daily focus and reminders in one place.',tip:'Home tab · start here.',view:'today',targetSelector:'#view-today .quote'},
- {title:'Daily tasks & monthly stats',body:'Choose a status for each task. Open Month-wise overview to compare months, streaks and graphs.',tip:'Today’s Task · select a month below Consistency & progress.',view:'schedule',targetSelector:'#view-schedule .progress-card'},
- {title:'Settings & login',body:'Edit tasks and reminders in Settings. Google sign-in opens the hosted webpage in your browser; backup needs a working Google OAuth setup.',tip:'Settings · Edit your daily tasks / Google Account.',view:'sanctuary',target:'Edit your daily tasks'}
+ {title:'Home',body:'Your daily starting point: read the reminder and see what deserves attention today.',tip:'Home tab · begin with one small step.',view:'today',targetSelector:'#view-today .quote'},
+ {title:'Today’s tasks',body:'Choose a status for each task. Your daily progress ring updates as you record what you did.',tip:'Today’s Task tab · change a task status.',view:'schedule',targetSelector:'#view-schedule .progress-card'},
+ {title:'Monthly progress',body:'Choose a month to review daily completion, active days, task entries and the most consistent tasks.',tip:'Today’s Task tab · scroll to Monthly task stats.',view:'schedule',targetSelector:'#taskMonthStatsCard'}
 ];
 let uroojTourIndex=0;
 function positionTourCallout(){
@@ -951,8 +975,48 @@ function updateScheduleSummary(){
  if(title)title.textContent=pct===100?'Alhamdulillah, all tasks completed.':pct===0?'Begin with one good deed.':`${done} of ${total} tasks completed`;
  if(sub)sub.textContent='Progress is calculated only from the tasks listed below. Add or remove tasks to change the total.';
 }
+function renderTaskMonthStats(){
+ const select=$('#taskMonthSelect');if(!select)return;
+ const today=todayKey(),parts=today.split('-').map(Number),currentMonth=today.slice(0,7);
+ if(!select.options.length){
+  for(let i=0;i<18;i++){
+   const d=new Date(Date.UTC(parts[0],parts[1]-1-i,1)),key=`${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}`;
+   const option=document.createElement('option');option.value=key;option.textContent=new Intl.DateTimeFormat('en-IN',{month:'long',year:'numeric',timeZone:'UTC'}).format(d);select.appendChild(option);
+  }
+  select.value=currentMonth;
+ }
+ const chosen=select.value||currentMonth,split=chosen.split('-').map(Number),year=split[0],month=split[1];
+ const totalDays=new Date(Date.UTC(year,month,0)).getUTCDate(),daysToShow=chosen===currentMonth?parts[2]:totalDays;
+ const items=(state.schedule||[]).filter(x=>x.enabled!==false);
+ const monthDays=[];let totalRecorded=0;
+ function statusCredit(value){
+  const v=String(value||'').trim().toLowerCase();
+  if(!v||v==='not recorded'||v==='—')return null;
+  if(/\b(not done|not completed|missed|skipped|did not|incomplete|failed|no)\b/.test(v))return 0;
+  if(/\b(partly|partially|half done|in progress)\b/.test(v))return 0.5;
+  return 1;
+ }
+ for(let day=1;day<=daysToShow;day++){
+  const key=`${year}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`,log=(state.activityLog||{})[key]||{};
+  let recorded=0,credit=0;
+  items.forEach((item,index)=>{const id='schedule_'+(item.id||index),weight=statusCredit(log[id]);if(weight!==null){recorded++;credit+=weight;}});
+  const p=items.length?Math.round(credit/items.length*100):0;
+  monthDays.push({key,recorded,credit,total:items.length,p});totalRecorded+=recorded;
+ }
+ const active=monthDays.filter(d=>d.recorded>0).length,average=monthDays.length?Math.round(monthDays.reduce((n,d)=>n+d.p,0)/monthDays.length):0;
+ const best=monthDays.reduce((a,d)=>d.p>a.p?d:a,{p:-1,key:'',recorded:0,credit:0,total:0});
+ $('#taskMonthCompletion').textContent=average+'%';$('#taskMonthActiveDays').textContent=active+' / '+daysToShow;$('#taskMonthRecorded').textContent=String(totalRecorded);
+ $('#taskMonthBestDay').textContent=best.p>0?String(Number(best.key.slice(-2))):'—';$('#taskMonthBestValue').textContent=best.p>0?best.p+'% complete':'No completed tasks logged';
+ $('#taskMonthChart').innerHTML=monthDays.length?'<div class="chart-bars">'+monthDays.map(d=>`<div class="chart-col"><strong>${d.p}%</strong><div class="chart-bar-wrap" title="${d.key}: ${d.credit}/${d.total} task credits; ${d.recorded} recorded"><div class="chart-bar" style="height:${d.p}%"></div></div><small>${Number(d.key.slice(-2))}</small></div>`).join('')+'</div>':'<div class="empty">No days to chart.</div>';
+ const taskRows=items.map((item,index)=>{const id='schedule_'+(item.id||index);let recorded=0,credit=0;monthDays.forEach(d=>{const weight=statusCredit(((state.activityLog||{})[d.key]||{})[id]);if(weight!==null){recorded++;credit+=weight;}});return {...item,recorded,pct:recorded?Math.round(credit/recorded*100):0};}).sort((a,b)=>b.pct-a.pct||b.recorded-a.recorded).slice(0,8);
+ $('#taskMonthTaskBreakdown').innerHTML=taskRows.length?taskRows.map(item=>`<div class="category-row"><span title="${esc(item.task||'Task')}">${esc(item.task||'Task')}</span><div class="category-track"><i style="width:${item.pct}%"></i></div><b>${item.recorded?item.pct+'%':'—'}</b></div>`).join(''):'<div class="empty">Add tasks in Settings to see a breakdown.</div>';
+ const label=new Intl.DateTimeFormat('en-IN',{month:'long',year:'numeric',timeZone:'UTC'}).format(new Date(Date.UTC(year,month-1,1)));
+ $('#taskMonthInsight').textContent=totalRecorded?label+': '+totalRecorded+' task entries across '+active+' active '+(active===1?'day':'days')+'. Partial statuses count as half; missed/not-done statuses are recorded but not completed.':'Nothing recorded for '+label+' yet. Choose task statuses above; your monthly charts will fill automatically.';
+}
+document.addEventListener('change',e=>{if(e.target&&e.target.id==='taskMonthSelect')renderTaskMonthStats();});
+
 function markDailyProgressFlag(flag,value=true){const key=todayKey();if(!state.dailyProgressFlags||state.dailyProgressFlags.date!==key)state.dailyProgressFlags={date:key,challenge:false,tasbeeh:false,story:false,reflection:false};state.dailyProgressFlags[flag]=!!value;persist();updateScheduleSummary();}
-function renderSchedule(){const el=$('#scheduleSlots');if(!el)return;const log=logForToday();el.innerHTML=state.schedule.map((s,i)=>({...s,_index:i})).filter(s=>s.enabled!==false).map((s)=>{const i=s._index,key='schedule_'+(s.id||i),value=log[key]||'Not recorded',recorded=value!=='Not recorded';return `<div class="tracker-row schedule-task-tile ${recorded?'has-status':''}" data-slot="${i}"><div class="tracker-label"><strong>${esc(s.task||'Untitled task')}</strong><small>${recorded?'Status recorded':'Choose status'}</small></div><select aria-label="${esc(s.task)} status" data-field="status">${selectOptions(scheduleStatusOptions(s,value),value)}</select><div class="schedule-status-feedback">Recorded: ${esc(value)}</div></div>`}).join('')||'<div class="empty">No schedule items yet. Add tasks in Settings.</div>';updateScheduleSummary()}
+function renderSchedule(){const el=$('#scheduleSlots');if(!el)return;const log=logForToday();el.innerHTML=state.schedule.map((s,i)=>({...s,_index:i})).filter(s=>s.enabled!==false).map((s)=>{const i=s._index,key='schedule_'+(s.id||i),value=log[key]||'Not recorded',recorded=value!=='Not recorded';return `<div class="tracker-row schedule-task-tile ${recorded?'has-status':''}" data-slot="${i}"><div class="tracker-label"><strong>${esc(s.task||'Untitled task')}</strong><small>${recorded?'Status recorded':'Choose status'}</small></div><select aria-label="${esc(s.task)} status" data-field="status">${selectOptions(scheduleStatusOptions(s,value),value)}</select><div class="schedule-status-feedback">Recorded: ${esc(value)}</div></div>`}).join('')||'<div class="empty">No schedule items yet. Add tasks in Settings.</div>';updateScheduleSummary();renderTaskMonthStats()}
 function renderScheduleSettings(){const el=$('#scheduleSettingsSlots');if(!el)return;el.innerHTML=state.schedule.map((s,i)=>`<div class="activity-setting-item ${s.enabled===false?'disabled':''}"><div><strong>${esc(s.task||'Untitled activity')}</strong><small>${esc(s.category||inferActivityCategory(s.task))} · ${s.enabled===false?'Disabled':'Enabled'}</small></div><button type="button" data-edit-activity="${i}">Edit</button></div>`).join('')||'<div class="empty">No activities yet. Add an activity to begin.</div>'}
 function inferActivityCategory(task){const t=String(task||'').toLowerCase();if(/fajr|dhuhr|zuhr|asr|maghrib|isha|prayer|namaz/.test(t))return 'Prayer';if(/quran|qur’an|tafseer|tafsir/.test(t))return 'Quran';if(/walk|exercise|workout|mountain|fitness/.test(t))return 'Fitness';if(/book|read|blog|article/.test(t))return 'Reading';if(/dhikr|zikr|tasbeeh/.test(t))return 'Dhikr';return 'Personal'}
 function readActivityStatusOptions(){const raw=$('#editActivityOptions').value.split(/\n|,/).map(x=>x.trim()).filter(Boolean),unique=raw.filter((x,i,a)=>a.findIndex(y=>y.toLowerCase()===x.toLowerCase())===i);if(!unique.some(x=>x.toLowerCase()==='not recorded'))unique.unshift('Not recorded');return unique.slice(0,7)}
