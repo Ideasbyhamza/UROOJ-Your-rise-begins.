@@ -1,0 +1,129 @@
+name: Deploy UROOJ to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages-deploy-recovery
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Validate app scripts, defaults, and text contrast
+        run: |
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          import subprocess, tempfile, sys, re
+
+          html_files = [
+              "index.html",
+              "UROOJ.html",
+          ]
+
+          class ScriptParser(HTMLParser):
+              def __init__(self):
+                  super().__init__()
+                  self.scripts = []
+                  self.capture = False
+                  self.parts = []
+              def handle_starttag(self, tag, attrs):
+                  if tag != "script":
+                      return
+                  attrs = dict(attrs)
+                  kind = attrs.get("type", "text/javascript").lower()
+                  self.capture = "src" not in attrs and kind in ("text/javascript", "application/javascript", "module")
+                  self.parts = []
+              def handle_data(self, data):
+                  if self.capture:
+                      self.parts.append(data)
+              def handle_endtag(self, tag):
+                  if tag == "script" and self.capture:
+                      self.scripts.append("".join(self.parts))
+                      self.capture = False
+                      self.parts = []
+
+          for html_path in html_files:
+              source = Path(html_path).read_text(encoding="utf-8")
+              parser = ScriptParser()
+              parser.feed(source)
+              if not parser.scripts:
+                  raise SystemExit(f"No inline JavaScript found in {html_path}")
+              for index, script in enumerate(parser.scripts):
+                  if not script.strip():
+                      continue
+                  # Extracted inline scripts can have HTML-parser boundary artifacts;
+                  # syntax-check each full captured script and show actionable diagnostics.
+                  with tempfile.NamedTemporaryFile("w", suffix=".js", encoding="utf-8") as temp:
+                      temp.write(script)
+                      temp.flush()
+                      result = subprocess.run(["node", "--check", temp.name], text=True, capture_output=True)
+                      if result.returncode:
+                          print(f"JavaScript syntax error in {html_path}, inline script {index + 1}:")
+                          print(result.stderr)
+                          raise SystemExit(result.returncode)
+              print(f"JavaScript syntax OK: {html_path} ({len(parser.scripts)} inline scripts)")
+              has_challenge = (
+                  "Understanding Yourself · 7-Day Quit Addiction Challenge" in source
+                  or 'id="socialTitleDisplay">30-Day Digital Reset' in source
+              )
+              has_matching_count = (
+                  'id="socialCount">0 / 7' in source
+                  or 'id="socialCount">0 / 30' in source
+              )
+              if not has_challenge:
+                  raise SystemExit(f"Missing supported new-user challenge in {html_path}")
+              if not has_matching_count:
+                  raise SystemExit(f"Challenge initial count mismatch in {html_path}")
+              if "function isValidUroojBackupState" not in source:
+                  raise SystemExit(f"Safe-import validation missing in {html_path}")
+              if html_path == "index.html" and 'id="fullResetData"' not in source:
+                  raise SystemExit("Full reset control missing in the hosted page")
+
+          def luminance(hex_color):
+              rgb = [int(hex_color[i:i+2], 16) / 255 for i in (1, 3, 5)]
+              rgb = [v / 12.92 if v <= .04045 else ((v + .055) / 1.055) ** 2.4 for v in rgb]
+              return sum(v * weight for v, weight in zip(rgb, (.2126, .7152, .0722)))
+
+          def contrast(foreground, background):
+              values = sorted((luminance(foreground), luminance(background)), reverse=True)
+              return (values[0] + .05) / (values[1] + .05)
+
+          checks = [
+              ("light muted text", "#626B66", "#FDFBF7"),
+              ("light accent text", "#7B5B24", "#FDFBF7"),
+              ("dark muted text", "#A5B0A9", "#151D1A"),
+              ("dark accent text", "#D8B875", "#151D1A"),
+          ]
+          for label, foreground, background in checks:
+              ratio = contrast(foreground, background)
+              print(f"Contrast {label}: {ratio:.2f}:1")
+              if ratio < 4.5:
+                  raise SystemExit(f"Insufficient contrast for {label}: {ratio:.2f}:1")
+          PY
+      - name: Configure GitHub Pages
+        uses: actions/configure-pages@v5
+        with:
+          enablement: true
+      - name: Upload site files
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
