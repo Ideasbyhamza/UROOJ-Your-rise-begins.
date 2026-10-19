@@ -434,6 +434,7 @@ body.dark #islamicCalendarCard .islamic-calendar-item,body.dark #aboutHamzaJarvi
 .urooj-day-check.checked{background:#e5f2e7;border-color:#a9d6b2;color:#205c36}
 .urooj-day-check.checked .day-square{background:#2d8a4b;border-color:#2d8a4b;color:white}
 .urooj-day-check.today{border-color:var(--gold)}
+.urooj-day-check:disabled{opacity:1;cursor:default}
 .urooj-day-check:focus-visible{outline:2px solid var(--green);outline-offset:2px}
 .urooj-checkin-foot{font-size:9px;color:var(--muted);margin-top:7px}
 .nav button .nav-streak-badge,.nav button.active .nav-streak-badge{display:inline-flex;align-items:center;justify-content:center;min-width:14px;height:13px;padding:0 3px;margin:0;border-radius:99px;background:#efe5d0;color:#375b45;font-size:8px;line-height:1;font-weight:800}
@@ -1358,7 +1359,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
    var key=shiftDay(today,i-6),d=new Date(key+'T12:00:00Z'),done=!!log[key],isToday=key===today;
    if(done)checked++;
    var day=new Intl.DateTimeFormat('en',{timeZone:'UTC',weekday:'short'}).format(d),num=Number(key.slice(-2));
-   return '<button type="button" class="urooj-day-check'+(done?' checked':'')+(isToday?' today':'')+'" data-urooj-checkin="'+key+'" aria-pressed="'+done+'" aria-label="'+(done?'Uncheck':'Check in for')+' '+day+' '+num+(isToday?', today':'')+'"><span class="day-name">'+day+'</span><span class="day-square" aria-hidden="true">'+(done?'✓':'')+'</span><span class="day-number">'+num+'</span></button>';
+   return '<button type="button" class="urooj-day-check'+(done?' checked':'')+(isToday?' today':'')+'" data-urooj-checkin="'+key+'"'+(!isToday?' disabled aria-disabled="true"':'')+' aria-pressed="'+done+'" aria-label="'+(done?'Uncheck':'Check in for')+' '+day+' '+num+(isToday?', today':'')+'"><span class="day-name">'+day+'</span><span class="day-square" aria-hidden="true">'+(done?'✓':'')+'</span><span class="day-number">'+num+'</span></button>';
   }).join('');
   var count=streak(log,today),streakEl=document.getElementById('uroojStreakCount'),summary=document.getElementById('uroojCheckinSummary');
   if(streakEl)streakEl.textContent='✦ '+count+'-day streak';
@@ -1367,7 +1368,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  }
  document.addEventListener('click',function(e){
   var button=e.target.closest&&e.target.closest('[data-urooj-checkin]');if(!button)return;
-  var key=button.getAttribute('data-urooj-checkin'),today=localDateKey(new Date());if(key>today)return;
+  var key=button.getAttribute('data-urooj-checkin'),today=localDateKey(new Date());if(key!==today||button.disabled)return;
   var log=read();if(log[key])delete log[key];else log[key]=true;
   if(!write(log)){var summary=document.getElementById('uroojCheckinSummary');if(summary)summary.textContent='Could not save check-in. Enable browser storage and try again.';return}
   render();
