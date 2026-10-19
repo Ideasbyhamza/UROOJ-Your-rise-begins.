@@ -1169,3 +1169,11 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 </script>
 </body>
 </html>
+
+
+/* About help text: title on one line, helper text below. */
+#view-today details.settings-accordion>summary{display:grid!important;grid-template-columns:minmax(0,1fr) 26px;grid-template-rows:auto auto;column-gap:9px;row-gap:3px;align-items:center;min-width:0;padding:11px 12px!important}
+#view-today details.settings-accordion>summary>span{grid-column:1;grid-row:1;display:block;min-width:0;width:100%;font-size:12px!important;line-height:1.3!important;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#view-today details.settings-accordion>summary>small{grid-column:1;grid-row:2;display:block;min-width:0;width:100%;max-width:100%!important;margin:0!important;text-align:left!important;font-size:9px!important;line-height:1.35!important;white-space:nowrap!important;overflow:hidden;text-overflow:ellipsis}
+#view-today details.settings-accordion>summary:after{grid-column:2;grid-row:1 / span 2;position:static!important;transform:none!important;align-self:center;justify-self:center}
+@media(max-width:390px){#view-today details.settings-accordion>summary{padding:10px 10px!important;column-gap:7px}#view-today details.settings-accordion>summary>span{font-size:11px!important}#view-today details.settings-accordion>summary>small{font-size:8px!important}}
