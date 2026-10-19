@@ -56,7 +56,8 @@ html{scroll-behavior:auto!important}
 .settings-accordion{margin:10px 0;border:1px solid var(--line);border-radius:17px;background:var(--white);overflow:hidden}.settings-accordion>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 15px;color:var(--green);font:600 13px 'Cinzel',serif}.settings-accordion>summary::-webkit-details-marker{display:none}.settings-accordion>summary:after{content:'＋';font:700 16px system-ui;color:var(--gold);margin-left:auto}.settings-accordion[open]>summary:after{content:'−'}.settings-accordion>summary small{font:500 9px system-ui;color:var(--muted);white-space:nowrap}.settings-accordion[open]>.card{margin:0;border:0;border-top:1px solid var(--line);border-radius:0;padding:15px}.settings-accordion[open]>.card>.card-title{display:none}.settings-accordion[open]>summary{border-bottom:1px solid var(--line)}#tasbeehCurrentDhikr{max-width:100%;overflow-wrap:anywhere}.islamic-calendar-item a{font-size:10px;color:var(--green);font-weight:700;text-decoration:underline}
 .removed-overview,.removed-status-options{display:none!important}.editor-hidden{display:none!important}
 
-/* Prototype login gate */
+/* Authenticated-state CSS must also hide the gate when the fallback runs before the login node exists. */ body.jarvis-authenticated #jarvisLogin{display:none!important}
+  /* Prototype login gate */
 body:not(.jarvis-authenticated) .app{display:none!important}
 #jarvisLogin{min-height:100dvh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at top,#e8f0ec 0,#fdfbf7 54%,#eee7d8 100%);color:#2c3539}
 #jarvisLogin .login-card{width:100%;max-width:390px;background:#fffefa;border:1px solid #e9e4da;border-radius:26px;padding:28px 24px;box-shadow:0 20px 60px #1b4d3e16;text-align:center}
