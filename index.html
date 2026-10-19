@@ -600,6 +600,41 @@ body[data-palette="mint"] .challenge-hero.gold h3,body[data-palette="peach"] .ch
 body[data-palette="mint"] .challenge-hero.gold p,body[data-palette="peach"] .challenge-hero.gold p,body[data-palette="lilac"] .challenge-hero.gold p,body[data-palette="mono"] .challenge-hero.gold p{color:var(--muted)}
 body[data-palette="mint"] .challenge-hero.gold .btn,body[data-palette="peach"] .challenge-hero.gold .btn,body[data-palette="lilac"] .challenge-hero.gold .btn,body[data-palette="mono"] .challenge-hero.gold .btn{background:var(--green);border-color:var(--green);color:var(--sand)}
 
+
+/* Accessibility and mobile usability polish */
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{line-height:1.55}
+body :is(.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.urooj-progress-brand small,.urooj-checkin-head small,.urooj-checkin-foot,.urooj-year-chip,.empty,.privacy-note,.chart-col small,.reminder-today label){font-size:max(12px,1em);line-height:1.55}
+body :is(.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.reminder-row input,.reminder-today input,input,textarea,select){font-size:max(16px,1em)}
+body :is(button,[role="button"],input[type="checkbox"],input[type="radio"],select){touch-action:manipulation}
+body :is(button,.btn,.nav button,.reminder-row button,.custom-delete){min-height:44px}
+body :is(input[type="checkbox"],input[type="radio"]){width:20px;height:20px;accent-color:var(--green)}
+body :is(button,a,input,textarea,select,summary,[tabindex]):focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+body :is(input,textarea,select){color:var(--ink);border-color:var(--line)}
+body :is(.btn,.nav button){-webkit-tap-highlight-color:transparent}
+body .nav{padding-left:max(9px,env(safe-area-inset-left));padding-right:max(9px,env(safe-area-inset-right));padding-bottom:max(9px,env(safe-area-inset-bottom));gap:3px}
+body .nav button{min-width:0;min-height:56px;padding:7px 2px;gap:5px;font-size:12px;line-height:1.2;overflow-wrap:anywhere}
+body .nav button svg{width:22px;height:22px;flex-shrink:0}
+body .nav button .nav-streak-badge{font-size:11px;min-width:22px;min-height:22px;display:inline-flex;align-items:center;justify-content:center}
+body .card,body .progress-card,body .routine-item,body .challenge-hero{overflow-wrap:anywhere}
+body .day-grid button,body .day-box,body .urooj-day-check{min-height:44px}
+body .slot select{min-height:44px;padding:8px}
+body .reminder-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr) 44px}
+body .reminder-row button{min-height:44px;height:44px}
+body.dark :is(.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.urooj-progress-brand small,.urooj-checkin-head small,.urooj-checkin-foot,.urooj-year-chip,.empty,.privacy-note,.chart-col small,.reminder-today label){color:var(--muted)}
+body.dark :is(.btn,.btn.secondary,.btn.ghost,.nav button){text-shadow:none}
+@media(max-width:380px){
+ body .nav{padding-left:4px;padding-right:4px;gap:1px}
+ body .nav button{font-size:11px;padding-left:1px;padding-right:1px}
+ body .nav button svg{width:20px;height:20px}
+ body .nav button .nav-streak-badge{min-width:20px;min-height:20px}
+ body .card{padding:12px}
+}
+@media(prefers-reduced-motion:reduce){
+ html{scroll-behavior:auto}
+ *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
+}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
