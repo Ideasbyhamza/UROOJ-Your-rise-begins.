@@ -1295,6 +1295,81 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 })();
 </script>
 
+
+<div id="uroojHistoryOverlay" class="urooj-history-overlay" hidden role="dialog" aria-modal="true" aria-labelledby="uroojHistoryTitle">
+  <section class="urooj-history-modal">
+    <button class="urooj-history-close" id="uroojHistoryClose" type="button" aria-label="Close training history">×</button>
+    <h2 id="uroojHistoryTitle">Training History</h2>
+    <div class="urooj-streak-stats">
+      <div><strong>🔥 <b id="historyCurrentStreak">0</b></strong><span>CURRENT STREAK</span></div>
+      <div><strong><b id="historyLongestStreak">0</b></strong><span>LONGEST STREAK</span></div>
+    </div>
+    <div class="urooj-shields">ⓘ &nbsp; STREAK SHIELDS: <span>🟡 🟡</span></div>
+    <div class="urooj-milestone">
+      <strong id="historyMilestoneText">14-day milestone</strong>
+      <div class="urooj-milestone-track"><i id="historyMilestoneBar"></i></div>
+      <span>To your next streak milestone</span><div class="urooj-trophy" aria-hidden="true">🏆</div>
+    </div>
+    <div class="urooj-week-head"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+    <div id="uroojHistoryCalendar" class="urooj-history-calendar" aria-label="Recent daily check-ins"></div>
+    <button class="urooj-stats-button" id="historyMoreStats" type="button">More in Stats →</button>
+  </section>
+</div>
+<script>
+(function(){
+ const overlay=document.getElementById('uroojHistoryOverlay');
+ const open=document.getElementById('openDailyCheckHistory');
+ const close=document.getElementById('uroojHistoryClose');
+ if(!overlay||!open||!close)return;
+ const text=id=>(document.getElementById(id)?.textContent||'0').trim();
+ function buildHistory(){
+   const current=parseInt(text('progressCurrentStreak'),10)||0;
+   const longest=parseInt(text('progressBestStreak'),10)||0;
+   document.getElementById('historyCurrentStreak').textContent=current;
+   document.getElementById('historyLongestStreak').textContent=longest;
+   const milestones=[7,14,30,60,100,180,365];
+   const next=milestones.find(n=>n>current)||365;
+   const previous=[0,...milestones.filter(n=>n<next)].pop()||0;
+   const progress=Math.max(0,Math.min(100,((current-previous)/(next-previous))*100));
+   document.getElementById('historyMilestoneText').textContent=(next-current)+' more '+((next-current)===1?'day':'days');
+   document.getElementById('historyMilestoneBar').style.width=progress+'%';
+   const host=document.getElementById('uroojHistoryCalendar');
+   const today=new Date();today.setHours(12,0,0,0);
+   const offset=today.getDay();
+   const weekStart=new Date(today);weekStart.setDate(today.getDate()-offset-21);
+   const source=document.getElementById('weeklyCheckinCalendar');
+   const checked=new Set();
+   if(source){
+     source.querySelectorAll('.weekly-checkin-day.done').forEach(el=>{
+       const label=el.getAttribute('title')||el.getAttribute('aria-label')||'';
+       const match=label.match(/\d{4}-\d{2}-\d{2}/);
+       if(match)checked.add(match[0]);
+     });
+   }
+   host.innerHTML='';
+   for(let i=0;i<28;i++){
+     const d=new Date(weekStart);d.setDate(weekStart.getDate()+i);
+     const key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+     const cell=document.createElement('div');cell.className='urooj-history-day';
+     if(key===today.getFullYear()+'-'+String(today.getMonth()+1).padStart(2,'0')+'-'+String(today.getDate()).padStart(2,'0'))cell.classList.add('today');
+     if(key>today.toISOString().slice(0,10))cell.classList.add('future');
+     if(checked.has(key))cell.classList.add('done');
+     cell.textContent=checked.has(key)?'🔥':key>today.toISOString().slice(0,10)?'': '○';
+     cell.title=key+(checked.has(key)?' · Checked in':'');
+     host.appendChild(cell);
+   }
+ }
+ function show(){buildHistory();overlay.hidden=false;close.focus();}
+ function hide(){overlay.hidden=true;open.focus();}
+ open.addEventListener('click',show);
+ close.addEventListener('click',hide);
+ overlay.addEventListener('click',e=>{if(e.target===overlay)hide();});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!overlay.hidden)hide();});
+ document.getElementById('historyMoreStats')?.addEventListener('click',()=>{hide();document.querySelector('.nav button[data-view="schedule"]')?.click();});
+ document.getElementById('progressDailyCheckin')?.addEventListener('click',()=>{if(!overlay.hidden)setTimeout(buildHistory,80);});
+})();
+</script>
+
 </body>
 </html>
 
