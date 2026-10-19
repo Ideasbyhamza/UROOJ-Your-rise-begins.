@@ -7,10 +7,10 @@
 <meta content="#FDFBF7" name="theme-color"/>
 <meta content="UROOJ — Your rise begins. A private space for intention, consistency, and reflection." name="description"/>
 <title>UROOJ</title>
-<link rel="icon" type="image/svg+xml" href="./assets/urooj-logo.svg?v=1.1.2"/>
+<link rel="icon" type="image/svg+xml" href="./assets/urooj-logo.svg?v=1.1.3"/>
 <link rel="apple-touch-icon" href="./assets/urooj-logo.svg?v=1.1.2"/>
 <meta name="application-name" content="UROOJ"/>
-<meta name="app-version" content="1.1.2"/>
+<meta name="app-version" content="1.1.3"/>
 <!-- Offline-friendly: use local system fonts so the app does not wait for Google Fonts. -->
 <style>
 :root{--sand:#FDFBF7;--green:#1B4D3E;--gold:#C5A059;--sage:#E8F0EC;--ink:#2C3539;--muted:#77817e;--line:#e9e4da;--white:#fffefa;--shadow:0 10px 35px rgba(36,57,47,.07);color-scheme:light}
@@ -424,6 +424,49 @@ body.dark #islamicCalendarCard .islamic-calendar-item,body.dark #aboutHamzaJarvi
 @media(hover:hover){.card:hover{transform:translateY(-1px);box-shadow:0 9px 25px rgba(27,77,62,.09)}.btn:hover{transform:translateY(-1px);box-shadow:0 6px 14px rgba(27,77,62,.18)}}
 @media(max-width:390px){.top{padding:15px 16px 13px}.top:after{left:16px}.brand-logo{width:42px;height:42px;flex-basis:42px}.brand{font-size:18px}.section-head h1,.section-head h2{font-size:22px}.card{padding:14px}}
 
+
+/* UROOJ 12-month journey + compact seven-day check-in */
+.urooj-progress-card{margin:0 0 12px;padding:12px;border:1px solid var(--line);border-radius:16px;background:var(--white)}
+.urooj-progress-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:9px}
+.urooj-progress-brand{display:flex;align-items:center;gap:7px;min-width:0}
+.urooj-progress-symbol{width:25px;height:25px;display:grid;place-items:center;flex:0 0 25px;border-radius:8px;background:var(--green);color:#f4e4bd;font-size:14px}
+.urooj-progress-brand strong{display:block;font:600 11px system-ui,sans-serif;letter-spacing:.08em;color:var(--ink)}
+.urooj-progress-brand small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.urooj-year-chip{font-size:9px;font-weight:700;white-space:nowrap;border:1px solid var(--line);border-radius:99px;padding:5px 7px;color:var(--muted)}
+.urooj-month-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:6px}
+.urooj-month-badge{min-width:0;min-height:48px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:5px 2px;border:1px solid var(--line);border-radius:10px;background:var(--sand);color:var(--muted);text-align:center}
+.urooj-month-badge .month-number{font-size:8px;line-height:1;font-weight:800;letter-spacing:.06em}
+.urooj-month-badge .month-title{font-size:9px;line-height:1.15;font-weight:700;overflow-wrap:anywhere}
+.urooj-month-badge.current{background:var(--green);border-color:var(--green);color:#fffaf0;box-shadow:0 0 0 2px #bda36b30}
+.urooj-month-badge.final-month{border-color:var(--gold);background:#f4ead1;color:var(--green)}
+.urooj-month-badge.final-month.current{background:var(--green);color:#fffaf0}
+.urooj-checkin{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.urooj-checkin-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:8px}
+.urooj-checkin-head strong{font-size:11px;color:var(--ink)}
+.urooj-checkin-head small{display:block;font-size:9px;color:var(--muted);margin-top:2px}
+.urooj-streak-pill{font-size:9px;font-weight:800;white-space:nowrap;border-radius:99px;background:var(--sage);color:var(--green);padding:5px 8px}
+.urooj-week-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:5px}
+.urooj-day-check{min-width:0;border:1px solid var(--line);border-radius:9px;background:var(--sand);color:var(--muted);padding:6px 1px 5px;display:flex;flex-direction:column;align-items:center;gap:4px}
+.urooj-day-check .day-name{font-size:8px;font-weight:700}
+.urooj-day-check .day-square{width:17px;height:17px;border:1px solid #c8cfc7;border-radius:5px;display:grid;place-items:center;font-size:11px;line-height:1;color:transparent;background:var(--white)}
+.urooj-day-check .day-number{font-size:9px;font-weight:700}
+.urooj-day-check.checked{background:#e5f2e7;border-color:#a9d6b2;color:#205c36}
+.urooj-day-check.checked .day-square{background:#2d8a4b;border-color:#2d8a4b;color:white}
+.urooj-day-check.today{border-color:var(--gold)}
+.urooj-day-check:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.urooj-checkin-foot{font-size:9px;color:var(--muted);margin-top:7px}
+.nav button .nav-streak-badge,.nav button.active .nav-streak-badge{display:inline-flex;align-items:center;justify-content:center;min-width:14px;height:13px;padding:0 3px;margin:0;border-radius:99px;background:#efe5d0;color:#375b45;font-size:8px;line-height:1;font-weight:800}
+body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
+body.dark .urooj-month-badge{background:#202a24;border-color:var(--line);color:#c0c9c1}
+body.dark .urooj-month-badge.current{background:#2c5a46;border-color:#47765e;color:#fffaf0}
+body.dark .urooj-month-badge.final-month{background:#3a3425;color:#f0e2bd;border-color:#8e794b}
+body.dark .urooj-day-check{background:#202a24;border-color:var(--line);color:#c0c9c1}
+body.dark .urooj-day-check.checked{background:#203c30;border-color:#47765e;color:#d8f0df}
+body.dark .urooj-day-check .day-square{background:#151d1a;border-color:#59665c}
+body.dark .urooj-day-check.checked .day-square{background:#2d8a4b;border-color:#2d8a4b;color:white}
+body.dark .urooj-streak-pill{background:#2c4938;color:#d8e8d9}
+@media(max-width:360px){.urooj-progress-card{padding:10px}.urooj-month-grid{gap:4px}.urooj-month-badge{min-height:45px}.urooj-month-badge .month-title{font-size:8px}.urooj-week-grid{gap:3px}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -603,6 +646,19 @@ body.dark #islamicCalendarCard .islamic-calendar-item,body.dark #aboutHamzaJarvi
 
 </article>
 
+<section class="urooj-progress-card" aria-label="UROOJ annual journey and check-in">
+  <div class="urooj-progress-head">
+    <div class="urooj-progress-brand"><span class="urooj-progress-symbol" aria-hidden="true">✦</span><div><strong>UROOJ</strong><small>Your 12-month rise</small></div></div>
+    <span class="urooj-year-chip" id="uroojYearMonthLabel">Month 01 / 12</span>
+  </div>
+  <div class="urooj-month-grid" id="uroojMonthBadges" aria-label="Twelve monthly milestones"></div>
+  <div class="urooj-checkin">
+    <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick a day when you show up</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
+    <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
+    <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
+  </div>
+</section>
+
 <div class="section-head"><div><div class="eyebrow">Train your attention</div><h1>Challenges</h1><p>Progress over punishment. Return to the path whenever you need.</p></div></div>
 
 <div class="challenge-hero gold"><div class="challenge-top"><div><h3>Your next level starts with one promise.</h3><p>Choose a challenge that tests your discipline. Start small, show up honestly, and keep going when motivation fades.</p></div></div><div class="btn-row" style="margin-top:14px"><button class="btn" id="acceptChallengeGoSettings">＋ Accept a challenge</button></div></div>
@@ -659,11 +715,11 @@ Not applicable" rows="8"></textarea><p class="muted" style="font-size:10px;margi
 
 </main>
 <nav aria-label="Main navigation" class="nav">
-<button aria-label="Challenges" class="active" data-view="challenges"><svg viewbox="0 0 24 24"><path d="M12 3 14.8 8.7 21 9.6l-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg><span>Challenges</span></button>
-<button aria-label="Today's Task" data-view="schedule"><svg viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"></path></svg><span>Today's Task</span></button>
-<button aria-label="Zikr And Muhasaba" data-view="muhasabah"><svg viewbox="0 0 24 24"><path d="M12 20s-8-4.5-8-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 10-8 10Z"></path><path d="M8 12h2l1.2-2.5L13 15l1.2-3H16"></path></svg><span>Zikr And Muhasaba</span></button>
-<button aria-label="Settings" data-view="sanctuary"><svg viewbox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"></path><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.7-1.3-1.7-3-2 .8a7.8 7.8 0 0 0-2.6-1.5L14.5 3h-5l-.3 2.5a7.8 7.8 0 0 0-2.6 1.5l-2-.8-1.7 3 1.7 1.3a7.8 7.8 0 0 0 0 3l-1.7 1.3 1.7 3 2-.8a7.8 7.8 0 0 0 2.6 1.5l.3 2.5h5l.3-2.5a7.8 7.8 0 0 0 2.6-1.5l2 .8 1.7-3-1.7-1.3Z"></path></svg><span>Settings</span></button>
-<button aria-label="About" data-view="today"><svg viewbox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V21h13V9.5M9 21v-7h6v7"></path></svg><span>About</span></button>
+<button aria-label="Challenges" class="active" data-view="challenges"><svg viewbox="0 0 24 24"><path d="M12 3 14.8 8.7 21 9.6l-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg><span>Challenges</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
+<button aria-label="Today's Task" data-view="schedule"><svg viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"></path></svg><span>Today's Task</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
+<button aria-label="Zikr And Muhasaba" data-view="muhasabah"><svg viewbox="0 0 24 24"><path d="M12 20s-8-4.5-8-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 10-8 10Z"></path><path d="M8 12h2l1.2-2.5L13 15l1.2-3H16"></path></svg><span>Zikr And Muhasaba</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
+<button aria-label="Settings" data-view="sanctuary"><svg viewbox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"></path><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.7-1.3-1.7-3-2 .8a7.8 7.8 0 0 0-2.6-1.5L14.5 3h-5l-.3 2.5a7.8 7.8 0 0 0-2.6 1.5l-2-.8-1.7 3 1.7 1.3a7.8 7.8 0 0 0 0 3l-1.7 1.3 1.7 3 2-.8a7.8 7.8 0 0 0 2.6 1.5l.3 2.5h5l.3-2.5a7.8 7.8 0 0 0 2.6-1.5l2 .8 1.7-3-1.7-1.3Z"></path></svg><span>Settings</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
+<button aria-label="About" data-view="today"><svg viewbox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V21h13V9.5M9 21v-7h6v7"></path></svg><span>About</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
 </nav>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 <div id="uroojTutorialModal" aria-hidden="true"></div>
@@ -1287,5 +1343,68 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   if(loginGate) loginGate.style.display='none';
 })();
 </script>
+
+<script>
+/* Independent, local-only UROOJ yearly milestones and seven-day check-ins. */
+(function(){
+ 'use strict';
+ var STORE='urooj-rise-checkins-v1';
+ var months=['Intention','Consistency','Patience','Focus','Learning','Gratitude','Responsibility','Kindness','Excellence','Reflection','Steadfastness','UROOJ'];
+ function localDateKey(date){
+  var p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
+  var o={};p.forEach(function(x){o[x.type]=x.value});
+  return o.year+'-'+o.month+'-'+o.day;
+ }
+ function shiftDay(key,delta){
+  var d=new Date(key+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+delta);return d.toISOString().slice(0,10);
+ }
+ function read(){
+  try{var v=JSON.parse(localStorage.getItem(STORE)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch(e){return {}}
+ }
+ function write(v){try{localStorage.setItem(STORE,JSON.stringify(v));return true}catch(e){return false}}
+ function streak(log,today){
+  var anchor=log[today]?today:shiftDay(today,-1),count=0;
+  while(log[anchor]){count++;anchor=shiftDay(anchor,-1);if(count>400)break}
+  return count;
+ }
+ function render(){
+  var monthBox=document.getElementById('uroojMonthBadges'),weekBox=document.getElementById('uroojWeekCheckins');
+  if(!monthBox||!weekBox)return;
+  var now=new Date(),month=Number(new Intl.DateTimeFormat('en',{timeZone:'Asia/Kolkata',month:'numeric'}).format(now)),today=localDateKey(now),log=read();
+  var yearLabel=document.getElementById('uroojYearMonthLabel');
+  if(yearLabel)yearLabel.textContent='Month '+String(month).padStart(2,'0')+' / 12';
+  monthBox.innerHTML=months.map(function(title,i){
+   var n=i+1,cls='urooj-month-badge'+(n===month?' current':'')+(n===12?' final-month':'');
+   return '<div class="'+cls+'"'+(n===month?' aria-current="date"':'')+'><span class="month-number">'+String(n).padStart(2,'0')+'</span><span class="month-title">'+title+'</span></div>';
+  }).join('');
+  var checked=0;
+  weekBox.innerHTML=Array.from({length:7},function(_,i){
+   var key=shiftDay(today,i-6),d=new Date(key+'T12:00:00Z'),done=!!log[key],isToday=key===today;
+   if(done)checked++;
+   var day=new Intl.DateTimeFormat('en',{timeZone:'UTC',weekday:'short'}).format(d);
+   var num=Number(key.slice(-2));
+   return '<button type="button" class="urooj-day-check'+(done?' checked':'')+(isToday?' today':'')+'" data-urooj-checkin="'+key+'" aria-pressed="'+done+'" aria-label="'+(done?'Uncheck':'Check in for')+' '+day+' '+num+(isToday?', today':'')+'"><span class="day-name">'+day+'</span><span class="day-square" aria-hidden="true">'+(done?'✓':'')+'</span><span class="day-number">'+num+'</span></button>';
+  }).join('');
+  var count=streak(log,today),streakEl=document.getElementById('uroojStreakCount'),summary=document.getElementById('uroojCheckinSummary');
+  if(streakEl)streakEl.textContent='✦ '+count+'-day streak';
+  if(summary)summary.textContent=checked+' of 7 days checked this week';
+  document.querySelectorAll('.nav button[data-view]').forEach(function(button){
+   var badge=button.querySelector('.nav-streak-badge');if(badge)badge.textContent=String(count);
+  });
+ }
+ document.addEventListener('click',function(e){
+  var button=e.target.closest&&e.target.closest('[data-urooj-checkin]');if(!button)return;
+  var key=button.getAttribute('data-urooj-checkin'),today=localDateKey(new Date());
+  if(key>today)return;
+  var log=read();
+  if(log[key])delete log[key];else log[key]=true;
+  if(!write(log)){var summary=document.getElementById('uroojCheckinSummary');if(summary)summary.textContent='Could not save check-in. Enable browser storage and try again.';return}
+  render();
+ });
+ window.addEventListener('storage',render);
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render);else render();
+})();
+</script>
+
 </body>
 </html>
