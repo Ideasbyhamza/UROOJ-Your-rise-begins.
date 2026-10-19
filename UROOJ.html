@@ -1325,7 +1325,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 /* Independent, local-only UROOJ yearly milestones and seven-day check-ins. */
 (function(){
  'use strict';
- var STORE='urooj-rise-checkins-v1';
+ var STORE='urooj-rise-checkins-v1',START_STORE='urooj-rise-start-date-v1';
  var months=['Intention','Consistency','Patience','Focus','Learning','Gratitude','Responsibility','Kindness','Excellence','Reflection','Steadfastness','UROOJ'];
  function localDateKey(date){
   var p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
@@ -1339,6 +1339,19 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   try{var v=JSON.parse(localStorage.getItem(STORE)||'{}');return v&&typeof v==='object'&&!Array.isArray(v)?v:{}}catch(e){return {}}
  }
  function write(v){try{localStorage.setItem(STORE,JSON.stringify(v));return true}catch(e){return false}}
+ function journeyStart(today){
+  try{var saved=localStorage.getItem(START_STORE);if(saved&&/^\d{4}-\d{2}-\d{2}$/.test(saved))return saved;localStorage.setItem(START_STORE,today)}catch(e){}
+  return today;
+ }
+ function monthProgress(start,today){
+  var s=new Date(start+'T12:00:00Z'),t=new Date(today+'T12:00:00Z');
+  if(!isFinite(s.getTime())||!isFinite(t.getTime())||t<s)return 1;
+  var elapsed=(t.getUTCFullYear()-s.getUTCFullYear())*12+(t.getUTCMonth()-s.getUTCMonth());
+  var targetMonth=s.getUTCMonth()+elapsed,targetYear=s.getUTCFullYear()+Math.floor(targetMonth/12),monthIndex=((targetMonth%12)+12)%12;
+  var lastDay=new Date(Date.UTC(targetYear,monthIndex+1,0)).getUTCDate(),anniversaryDay=Math.min(s.getUTCDate(),lastDay);
+  if(t.getUTCDate()<anniversaryDay)elapsed--;
+  return Math.max(1,Math.min(12,elapsed+1));
+ }
  function streak(log,today){
   var anchor=log[today]?today:shiftDay(today,-1),count=0;
   while(log[anchor]){count++;anchor=shiftDay(anchor,-1);if(count>400)break}
@@ -1347,7 +1360,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  function render(){
   var monthBox=document.getElementById('uroojMonthBadges'),weekBox=document.getElementById('uroojWeekCheckins');
   if(!monthBox||!weekBox)return;
-  var now=new Date(),month=Number(new Intl.DateTimeFormat('en',{timeZone:'Asia/Kolkata',month:'numeric'}).format(now)),today=localDateKey(now),log=read();
+  var now=new Date(),today=localDateKey(now),start=journeyStart(today),month=monthProgress(start,today),log=read();
   var yearLabel=document.getElementById('uroojYearMonthLabel');
   if(yearLabel)yearLabel.textContent='Month '+String(month).padStart(2,'0')+' / 12';
   monthBox.innerHTML=months.map(function(title,i){
