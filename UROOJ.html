@@ -1617,10 +1617,10 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 </script>
 
 <script>
-/* Independent, local-only UROOJ seven-day check-ins. */
+/* Independent, local-only UROOJ check-ins with shared lives. */
 (function(){
  'use strict';
- var STORE='urooj-rise-checkins-v1';
+ var STORE='urooj-rise-checkins-v1', META='urooj-rise-lives-v1';
  function localDateKey(date){
   var p=new Intl.DateTimeFormat('en-CA',{timeZone:'Asia/Kolkata',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
   var o={};p.forEach(function(x){o[x.type]=x.value});
@@ -1629,18 +1629,36 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  function shiftDay(key,delta){
   var d=new Date(key+'T12:00:00Z');d.setUTCDate(d.getUTCDate()+delta);return d.toISOString().slice(0,10);
  }
+ function saveMeta(meta){try{localStorage.setItem(META,JSON.stringify(meta))}catch(e){}}
  function read(){
   try{
    var v=JSON.parse(localStorage.getItem(STORE)||'{}');
    if(!v||typeof v!=='object'||Array.isArray(v))v={};
    var keys=Object.keys(v).filter(function(k){return /^\\d{4}-\\d{2}-\\d{2}$/.test(k)&&v[k]===true}).sort();
-   if(keys.length){
-    var first=keys[0],today=localDateKey(new Date()),missed=0,cursor=first;
-    while(cursor<today){cursor=shiftDay(cursor,1);if(!v[cursor])missed++;if(missed>=3)break}
-    if(missed>=3){v={};try{localStorage.setItem(STORE,'{}')}catch(e){}}
+   var today=localDateKey(new Date()),yesterday=shiftDay(today,-1),meta=null;
+   try{meta=JSON.parse(localStorage.getItem(META)||'null')}catch(e){}
+   if(!meta||typeof meta!=='object'||!Number.isFinite(Number(meta.lives))||!meta.lastDate){
+    meta={lives:3,lastDate:keys.length?keys[0]:yesterday};
    }
+   meta.lives=Math.max(0,Math.min(3,Number(meta.lives)));
+   var cursor=meta.lastDate;
+   while(cursor<yesterday){
+    cursor=shiftDay(cursor,1);
+    if(!v[cursor]){
+     meta.lives=Math.max(0,meta.lives-1);
+     if(meta.lives===0){
+      v={};meta.lives=3;cursor=yesterday;
+      try{localStorage.setItem(STORE,'{}')}catch(e){}
+      break;
+     }
+    }
+   }
+   meta.lastDate=today;saveMeta(meta);
    return v;
   }catch(e){return {}}
+ }
+ function getLives(){
+  try{var m=JSON.parse(localStorage.getItem(META)||'null');return m&&Number.isFinite(Number(m.lives))?Math.max(0,Math.min(3,Number(m.lives))):3}catch(e){return 3}
  }
  function write(v){try{localStorage.setItem(STORE,JSON.stringify(v));return true}catch(e){return false}}
  function streak(log,today){
@@ -1651,10 +1669,9 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  function render(){
   var weekBox=document.getElementById('uroojWeekCheckins');
   if(!weekBox)return;
-  var now=new Date(),today=localDateKey(now),log=read();
-  var checked=0;
-  var todayDate=new Date(today+'T12:00:00Z'),mondayOffset=(todayDate.getUTCDay()+6)%7,weekStart=shiftDay(today,-mondayOffset);
-   weekBox.innerHTML=Array.from({length:7},function(_,i){
+  var now=new Date(),today=localDateKey(now),log=read(),lives=getLives();
+  var checked=0,todayDate=new Date(today+'T12:00:00Z'),mondayOffset=(todayDate.getUTCDay()+6)%7,weekStart=shiftDay(today,-mondayOffset);
+  weekBox.innerHTML=Array.from({length:7},function(_,i){
    var key=shiftDay(weekStart,i),d=new Date(key+'T12:00:00Z'),done=!!log[key],isToday=key===today;
    if(done)checked++;
    var day=new Intl.DateTimeFormat('en',{timeZone:'UTC',weekday:'short'}).format(d),num=Number(key.slice(-2));
@@ -1662,7 +1679,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   }).join('');
   var count=streak(log,today),streakEl=document.getElementById('uroojStreakCount'),summary=document.getElementById('uroojCheckinSummary');
   if(streakEl)streakEl.textContent='✦ '+count+'-day streak';
-  if(summary)summary.textContent=checked+' of 7 days checked this week';
+  if(summary)summary.textContent=checked+' of 7 days checked this week · '+lives+' of 3 lives left';
   var progressTrack=document.querySelector('.urooj-checkin-progress'),progressBar=document.getElementById('uroojCheckinProgressBar');
   if(progressBar)progressBar.style.width=(checked/7*100)+'%';
   if(progressTrack)progressTrack.setAttribute('aria-valuenow',String(checked));
@@ -1670,7 +1687,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   var totalLabel=document.getElementById('uroojTotalDays');if(totalLabel)totalLabel.textContent=Math.min(total,18)+' / 18 days';
   var remaining=Math.min(total,18);
   document.querySelectorAll('#uroojUpgradeJourney .upgrade-step[data-stage]').forEach(function(step){
-   var capacity=Number(step.getAttribute('data-days'))||61,stageDone=Math.min(capacity,remaining);
+   var capacity=Number(step.getAttribute('data-days'))||3,stageDone=Math.min(capacity,remaining);
    remaining=Math.max(0,remaining-stageDone);
    var counter=step.querySelector('[data-stage-count]');if(counter)counter.textContent=stageDone+' / '+capacity+' days';
    var dots=step.querySelector('[data-stage-dots]');
@@ -1678,21 +1695,22 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
    var fill=step.querySelector('[data-stage-progress-fill]');if(fill)fill.style.width=(stageDone/capacity*100)+'%';
    var track=step.querySelector('.urooj-stage-progress');if(track)track.setAttribute('aria-valuenow',String(stageDone));
    var progressLabel=step.querySelector('[data-stage-progress-label]');if(progressLabel)progressLabel.textContent=stageDone+' / '+capacity+' check-ins';
-   var lives=step.querySelector('[data-lives]');if(lives){lives.innerHTML=Array.from({length:3},function(_,i){return '<i'+(i>=Math.max(0,3-stageDone)?' class="lost"':'')+' aria-hidden="true"></i>'}).join('');lives.setAttribute('aria-label',Math.max(0,3-stageDone)+' lives remaining');}
+   var livesEl=step.querySelector('[data-lives]');if(livesEl){livesEl.innerHTML=Array.from({length:3},function(_,i){return '<i'+(i>=lives?' class="lost"':'')+' aria-hidden="true"></i>'}).join('');livesEl.setAttribute('aria-label',lives+' of 3 lives remaining');}
   });
   document.querySelectorAll('.nav button[data-view]').forEach(function(button){var badge=button.querySelector('.nav-streak-badge');if(badge)badge.textContent=String(count)});
  }
  document.addEventListener('click',function(e){
   var button=e.target.closest&&e.target.closest('[data-urooj-checkin]');if(!button)return;
-  var key=button.getAttribute('data-urooj-checkin'),today=localDateKey(new Date());if(key!==today||button.disabled)return;
-  var log=read();if(log[key])delete log[key];else log[key]=true;
+  var key=button.getAttribute('data-urooj-checkin'),today=localDateKey(new Date());
+  if(key!==today||button.disabled)return;
+  var log=read();
+  if(log[key])delete log[key];else log[key]=true;
   if(!write(log)){var summary=document.getElementById('uroojCheckinSummary');if(summary)summary.textContent='Could not save check-in. Enable browser storage and try again.';return}
   render();
  });
  window.addEventListener('storage',render);
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render);else render();
-})();
-</script>
+})();</script>
 
 </body>
 </html>
