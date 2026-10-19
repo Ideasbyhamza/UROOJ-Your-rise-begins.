@@ -639,9 +639,27 @@ async function handleGoogleToken(resp){
  clearSignInWatchdog();setLoginBusy(false);
  if(!resp||resp.error){setLoginError('Google sign-in did not complete. Please try again.');return}
  gAccessToken=resp.access_token;gTokenExpiry=Date.now()+((Number(resp.expires_in)||3000)*1000);
- try{const info=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gAccessToken}}).then(r=>r.json());gUserInfo={email:info.email||'',name:info.name||info.email||'Google account',picture:info.picture||''};saveGoogleAccountCache(gUserInfo)}catch(e){console.error('Could not fetch Google profile',e)}
- try{await driveLoadOrInit();startDrivePolling();unlockApp();renderAccountStatus();const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';renderViewOnDemand(activeView);/* Drive sync runs quietly; status remains visible in Settings → Google Account. */}
- catch(e){console.error('Drive sync failed',e);setLoginError('Google sign-in worked, but Drive backup failed: '+driveErrorText(e));unlockApp();renderAccountStatus(true,driveErrorText(e));const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';renderViewOnDemand(activeView)}
+ // Open the app as soon as Google grants a token. Profile and Drive requests must never hold the user on the login screen.
+ unlockApp();renderAccountStatus();
+ const activeView=document.querySelector('.nav button.active')?.dataset.view||'today';
+ renderViewOnDemand(activeView);
+ try{
+  const response=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gAccessToken}});
+  if(!response.ok)throw new Error('Google profile request failed ('+response.status+')');
+  const info=await response.json();
+  gUserInfo={email:info.email||'',name:info.name||info.email||'Google account',picture:info.picture||''};
+  saveGoogleAccountCache(gUserInfo);renderAccountStatus();
+ }catch(e){console.error('Could not fetch Google profile',e)}
+ try{
+  await driveLoadOrInit();startDrivePolling();renderAccountStatus();
+  // A successful Drive load can replace local state, so refresh the currently open view.
+  renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');
+ }catch(e){
+  console.error('Drive sync failed',e);
+  const message=driveErrorText(e);
+  renderAccountStatus(true,message);
+  toast('Google sign-in worked, but Drive backup failed: '+message);
+ }
 }
 function requestGoogleSignIn(){
  if(location.hostname==='appassets.androidplatform.net'){if(window.UROOJAndroid&&typeof window.UROOJAndroid.openLoginInBrowser==='function'){window.UROOJAndroid.openLoginInBrowser();return}setLoginError('Open the hosted UROOJ login page in your browser to sign in securely.');return}
