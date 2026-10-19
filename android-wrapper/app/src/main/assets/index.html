@@ -1165,8 +1165,6 @@ setDate();setInterval(setDate,60000);applyTheme();renderViewOnDemand(document.qu
 // Best-effort persistence warning without exposing journal content.
 try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browser storage unavailable. Your data may not persist.')}
 })();
-
-// About and Feedback remain available from the Home page.
 </script>
 <script>
 /* Emergency independent navigation fallback: runs even if an unrelated settings control errors. */
