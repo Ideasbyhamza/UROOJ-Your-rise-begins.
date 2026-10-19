@@ -440,6 +440,29 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px
 <div class="card"><div class="card-title"><h3>60-day journey</h3><span class="muted">One day at a time</span></div><div class="day-grid" id="focusGrid"></div><div class="challenge-foot"><span id="focusStreak">0 days completed</span><button class="btn ghost small" id="focusClear">Clear marks</button></div></div></div>
 <div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
 <p class="muted">A marked day records your own check-in, not a judgement of your worth. Missed days do not erase the progress you have already made.</p>
+
+<div class="urooj-history-overlay" id="uroojHistoryOverlay" hidden>
+  <section class="urooj-history-modal" role="dialog" aria-modal="true" aria-labelledby="uroojHistoryTitle" tabindex="-1">
+    <button class="urooj-history-close" id="closeDailyCheckHistory" type="button" aria-label="Close Training History">×</button>
+    <div class="eyebrow" style="text-align:center;color:#ffb18f">YOUR CONSISTENCY</div>
+    <h2 id="uroojHistoryTitle">Training History</h2>
+    <div class="urooj-streak-stats">
+      <div><strong id="uroojCurrentStreak">0</strong><span>CURRENT STREAK</span></div>
+      <div><strong id="uroojLongestStreak">0</strong><span>LONGEST STREAK</span></div>
+    </div>
+    <div class="urooj-shields">STREAK SHIELDS <span>♢</span> <strong id="uroojShieldCount">0</strong></div>
+    <div class="urooj-milestone">
+      <strong>Next milestone</strong>
+      <div class="urooj-milestone-track"><i id="uroojMilestoneProgress"></i></div>
+      <span><b id="uroojMilestoneDays">7 more days</b> to your next milestone</span>
+      <div class="urooj-trophy" aria-hidden="true">🏆</div>
+    </div>
+    <div class="urooj-week-head" aria-hidden="true"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
+    <div class="urooj-history-calendar" id="uroojHistoryCalendar" aria-label="Recent daily check-ins"></div>
+    <button class="urooj-stats-button" id="uroojHistoryCheckin" type="button">Check in for today ✓</button>
+    <p class="muted" style="text-align:center;color:#b8c0c9;font-size:10px;margin:12px 0 0">Small, sincere steps. Your progress is saved on this device.</p>
+  </section>
+</div>
 </section>
 <section class="view" id="view-muhasabah">
 <div class="section-head"><div><div class="eyebrow">Pause · Notice · Renew</div><h1>Zikr And Muhasaba</h1><p>Meet yourself honestly, and choose your next step with mercy.</p></div></div>
