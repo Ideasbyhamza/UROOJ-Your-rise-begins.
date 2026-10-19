@@ -233,9 +233,6 @@ input,select,textarea{max-width:100%;min-width:0}
 #monthStatsChart .chart-bars{gap:3px;overflow-x:auto;padding-bottom:5px}#monthStatsChart .chart-col{min-width:16px;flex:1}#monthStatsChart .chart-col strong{font-size:9px}#monthStatsChart .chart-col small{font-size:9px}#progressDailyCheckin:disabled{opacity:.8;cursor:default}@media(min-width:560px){.progress-streak-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}.progress-streak-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:10px 0}.progress-streak-tile{background:var(--sage);border-radius:12px;padding:12px;min-width:0}.progress-streak-tile strong{display:block;font-size:21px;color:var(--green);margin:4px 0}.progress-streak-tile small{display:block;color:var(--muted);font-size:11px;line-height:1.35}.progress-streak-tile .eyebrow{font-size:10px}#weeklyTrendChart .chart-bars,#yearTrendChart .chart-bars{gap:3px;overflow-x:auto;padding-bottom:5px}#weeklyTrendChart .chart-col,#yearTrendChart .chart-col{min-width:18px;flex:1}#weeklyTrendChart .chart-col strong,#yearTrendChart .chart-col strong{font-size:9px}#weeklyTrendChart .chart-col small,#yearTrendChart .chart-col small{font-size:9px}@media(min-width:560px){.progress-streak-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
 /* Product polish: consistent controls, keyboard focus, safe mobile layout, and readable contrast. */
 html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px}body{overflow-x:hidden}button,input,select,textarea{font-family:inherit}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--gold);outline-offset:2px}button:disabled{cursor:not-allowed;opacity:.65}.view,.card,.challenge-hero,.quote{min-width:0;overflow-wrap:anywhere}.btn.danger{background:#8b3028;color:#fff;border-color:#8b3028}body.dark .btn.danger{background:#b94d45;color:#fff;border-color:#b94d45}.nav button{min-width:0;flex:1}.nav button span{overflow-wrap:normal}@media(max-width:380px){.nav button{padding-left:3px;padding-right:3px}.nav button span{font-size:9px;letter-spacing:0}.section-head h1{font-size:clamp(23px,7vw,30px)}.card{padding:12px}}
-
-/* Keep the selected screen visible even if earlier JS left an inline display:none. */
-.view.active{display:block!important}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -365,7 +362,7 @@ html{-webkit-text-size-adjust:100%;text-size-adjust:100%;scroll-padding-top:12px
 <div style="display:flex;align-items:center;gap:7px"><button aria-label="Toggle dark mode" class="btn ghost small" id="themeToggle" style="padding:8px" title="Toggle dark mode">☾</button><div class="date-badge"><strong id="dateText">Today</strong><span>A day to begin again</span></div></div>
 </header>
 <main>
-<section class="view" id="view-today" aria-hidden="true">
+<section class="view" id="view-today">
 
 <div class="card" id="islamicCalendarCard"><div class="card-title"><h3>This Month · Sunnah Days</h3><span class="solar" style="font-size:10px;letter-spacing:.04em">Monthly</span></div><p class="muted" style="font-size:12px;line-height:1.45;margin:0 0 8px">Friday reminders, White Days (13–15 Hijri), and other established Sunnah practices. Hijri dates are estimates; confirm locally.</p><div class="islamic-calendar-list" id="islamicCalendarReminders"><div class="reminder-today">Loading upcoming reminders…</div></div></div>
 
@@ -1287,32 +1284,5 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 })();
 </script>
 
-<script>document.addEventListener("click",function(e){const b=e.target.closest("#toggleConsistencyDetails");if(!b)return;const d=document.getElementById("consistencyExtraDetails");if(!d)return;d.hidden=!d.hidden;b.setAttribute("aria-expanded",String(!d.hidden));b.textContent=d.hidden?"Levels ＋":"Hide levels −";});</script>
-<script>
-/* failsafeInitialView: recover the active screen if tab initialization is skipped or partially fails. */
-(function(){
-  function ensureInitialView(){
-    var selected=document.querySelector('.nav button.active[data-view]');
-    var name=selected&&selected.getAttribute('data-view');
-    var target=name&&document.getElementById('view-'+name);
-    if(!target){name='challenges';target=document.getElementById('view-challenges')||document.getElementById('view-today');}
-    if(!target)return;
-    document.querySelectorAll('.view').forEach(function(section){
-      var active=section===target;
-      section.classList.toggle('active',active);
-      section.style.setProperty('display',active?'block':'none','important');
-      section.setAttribute('aria-hidden',active?'false':'true');
-    });
-    document.querySelectorAll('.nav button[data-view]').forEach(function(button){
-      var active=button.getAttribute('data-view')===name;
-      button.classList.toggle('active',active);
-      if(active)button.setAttribute('aria-current','page');else button.removeAttribute('aria-current');
-    });
-  }
-  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',ensureInitialView,{once:true});
-  else ensureInitialView();
-  window.addEventListener('pageshow',function(){ensureInitialView();});
-  window.setTimeout(ensureInitialView,250);
-})();
-</script></body>
+<script>document.addEventListener("click",function(e){const b=e.target.closest("#toggleConsistencyDetails");if(!b)return;const d=document.getElementById("consistencyExtraDetails");if(!d)return;d.hidden=!d.hidden;b.setAttribute("aria-expanded",String(!d.hidden));b.textContent=d.hidden?"Levels ＋":"Hide levels −";});</script></body>
 </html>
