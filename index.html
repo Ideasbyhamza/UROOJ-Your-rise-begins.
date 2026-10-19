@@ -377,13 +377,8 @@ body.dark[data-palette="midnight"]{--sand:#151922;--green:#A9BDD9;--gold:#D7BF83
 <div style="display:flex;align-items:center;gap:7px"><button aria-label="Toggle dark mode" class="btn ghost small" id="themeToggle" style="padding:8px" title="Toggle dark mode">☾</button><div class="date-badge"><strong id="dateText">Today</strong><span>A day to begin again</span></div></div>
 </header>
 <main>
-<section class="view active" id="view-today">
-<div class="section-head" style="text-align:center;justify-content:center;align-items:center;flex-direction:column"><div style="text-align:center"><div class="eyebrow">Your daily return</div><h1>Assalamu Alaikum</h1><p>Small, sincere steps. One day at a time.</p></div><div class="solar" id="solarBadge" style="text-align:center;align-self:center">☼ Daytime</div></div>
-<article class="quote">
-<div class="eyebrow">Today’s Motive</div><blockquote id="quoteText">“The most beloved deeds to Allah are those that are most consistent, even if they are few.”</blockquote>
-<div class="attribution" id="quoteSource">— Sahih al-Bukhari 6464 · Sahih Muslim 783</div>
-
-</article>
+<section class="view" id="view-today">
+<div class="section-head" style="text-align:center;justify-content:center;align-items:center;flex-direction:column"><div style="text-align:center"><div class="eyebrow">UROOJ · YOUR DAILY PRACTICE</div><h1>About UROOJ</h1><p>A private space for intention, consistency, and reflection.</p></div><div class="solar" id="solarBadge" style="text-align:center;align-self:center">☼ Daytime</div></div>
 <div class="card" id="islamicCalendarCard"><div class="card-title"><h3>This Month · Sunnah Days</h3><span class="solar" style="font-size:10px;letter-spacing:.04em">Monthly</span></div><p class="muted" style="font-size:12px;line-height:1.45;margin:0 0 8px">Friday reminders, White Days (13–15 Hijri), and other established Sunnah practices. Hijri dates are estimates; confirm locally.</p><div class="islamic-calendar-list" id="islamicCalendarReminders"><div class="reminder-today">Loading upcoming reminders…</div></div></div>
 
 <div class="footer">Made for sincere progress, not perfection.</div>
@@ -406,7 +401,7 @@ body.dark[data-palette="midnight"]{--sand:#151922;--green:#A9BDD9;--gold:#D7BF83
   </div>
   <p class="muted" style="margin:14px 0 0;font-size:10px">Idea by Hamza · UROOJ — Your rise begins.</p>
 </div></section>
-<section class="view" id="view-schedule">
+<section class="view active" id="view-schedule">
 <div class="section-head"><div><div class="eyebrow">Record what you actually did</div><h1>Today's Task</h1><p>Choose a status for each item. You can add your own activities below.</p></div><span class="solar" id="todayCount">0 recorded</span><span class="solar" id="todayTotalTasks">0 total tasks</span></div>
 <div class="progress-card"><div class="progress-ring" id="progressRing"><b id="progressPercent">0%</b></div><div class="progress-copy"><strong id="progressTitle">Begin with one good deed</strong><span id="progressSub">A log is a tool for reflection, not a judgement.</span><div class="tiny-track"><span id="progressBar"></span></div></div></div>
 <div class="section-head"><div><h2>Today's schedule</h2><p>Use the dropdowns to record your scheduled activities.</p></div></div>
@@ -416,6 +411,12 @@ body.dark[data-palette="midnight"]{--sand:#151922;--green:#A9BDD9;--gold:#D7BF83
 <div class="privacy-note">Schedule definitions are editable only in Settings. Daily status selections and graph data are recorded here.</div>
 </section>
 <section class="view" id="view-challenges">
+<article class="quote">
+<div class="eyebrow">Today’s Motive</div><blockquote id="quoteText">“The most beloved deeds to Allah are those that are most consistent, even if they are few.”</blockquote>
+<div class="attribution" id="quoteSource">— Sahih al-Bukhari 6464 · Sahih Muslim 783</div>
+
+</article>
+
 <div class="section-head"><div><div class="eyebrow">Train your attention</div><h1>Challenges</h1><p>Progress over punishment. Return to the path whenever you need.</p></div></div>
 <div class="challenge-hero gold"><div class="challenge-top"><div><h3>Your next level starts with one promise.</h3><p>Choose a challenge that tests your discipline. Start small, show up honestly, and keep going when motivation fades.</p></div></div><div class="btn-row" style="margin-top:14px"><button class="btn" id="acceptChallengeGoSettings">＋ Accept a challenge</button></div></div>
 <div id="customChallengeList"></div>
@@ -478,11 +479,11 @@ Not applicable" rows="8"></textarea><p class="muted" style="font-size:10px;margi
 
 </main>
 <nav aria-label="Main navigation" class="nav">
-<button aria-label="Zikr And Muhasaba" data-view="muhasabah"><svg viewbox="0 0 24 24"><path d="M12 20s-8-4.5-8-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 10-8 10Z"></path><path d="M8 12h2l1.2-2.5L13 15l1.2-3H16"></path></svg><span>Zikr And Muhasaba</span></button>
-<button aria-label="Today's Task" data-view="schedule"><svg viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"></path></svg><span>Today's Task</span></button>
-<button aria-label="Home" class="active" data-view="today"><svg viewbox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V21h13V9.5M9 21v-7h6v7"></path></svg><span>Home</span></button>
+<button aria-label="Today's Task" class="active" data-view="schedule"><svg viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"></path></svg><span>Today's Task</span></button>
 <button aria-label="Challenges" data-view="challenges"><svg viewbox="0 0 24 24"><path d="M12 3 14.8 8.7 21 9.6l-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg><span>Challenges</span></button>
+<button aria-label="Zikr And Muhasaba" data-view="muhasabah"><svg viewbox="0 0 24 24"><path d="M12 20s-8-4.5-8-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 10-8 10Z"></path><path d="M8 12h2l1.2-2.5L13 15l1.2-3H16"></path></svg><span>Zikr And Muhasaba</span></button>
 <button aria-label="Settings" data-view="sanctuary"><svg viewbox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"></path><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.7-1.3-1.7-3-2 .8a7.8 7.8 0 0 0-2.6-1.5L14.5 3h-5l-.3 2.5a7.8 7.8 0 0 0-2.6 1.5l-2-.8-1.7 3 1.7 1.3a7.8 7.8 0 0 0 0 3l-1.7 1.3 1.7 3 2-.8a7.8 7.8 0 0 0 2.6 1.5l.3 2.5h5l.3-2.5a7.8 7.8 0 0 0 2.6-1.5l2 .8 1.7-3-1.7-1.3Z"></path></svg><span>Settings</span></button>
+<button aria-label="About" data-view="today"><svg viewbox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V21h13V9.5M9 21v-7h6v7"></path></svg><span>About</span></button>
 </nav>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
 <div id="uroojTutorialModal" aria-hidden="true"></div>
@@ -532,7 +533,7 @@ function getSyncTime(){try{return Number(localStorage.getItem(SYNC_KEY)||0)}catc
 const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';const UROOJ_AUTO_TOUR_KEY='urooj-auto-tutorial-after-login-v1';
 const UROOJ_TOUR_STEPS=[
  {title:'Welcome to UROOJ',body:'A calm place to track daily worship, habits and reflection.',tip:'Tap Next for a quick tour.',view:'today'},
- {title:'Home · Daily focus',body:'See Today’s Motive and reminders to help you choose one small focus.',tip:'Home tab · your daily overview.',view:'today',targetSelector:'#view-today .quote'},
+ {title:'About · UROOJ',body:'See Today’s Motive and reminders to help you choose one small focus.',tip:'About tab · learn about UROOJ and your daily practice.',view:'today',targetSelector:'#view-challenges .quote'},
  {title:'Daily tasks',body:'Choose a status for each activity. Your progress updates as you record your day.',tip:'Schedule tab · select a status beside each task.',view:'schedule',targetSelector:'#view-schedule .progress-card'},
  {title:'Digital Tasbeeh',body:'Tap the counter for each dhikr. Undo counts and change the preset in Settings.',tip:'Zikr & Muhasaba tab · tap the round counter.',view:'muhasabah',targetId:'tasbeehTap'},
  {title:'Daily reflection',body:'Write reflections and Qur’an or study notes to remember what you learned.',tip:'Zikr & Muhasaba tab · Journal section.',view:'muhasabah',targetId:'journalForm'},
@@ -779,7 +780,7 @@ function renderAccountStatus(syncError,syncMessage){
  }
 }
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
-document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand('today')});
+document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand('schedule')});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
 const hadAppSession=resumeAppSession();
  // Hosted web startup is local-first: Google sign-in is optional, never a gate to the app.
@@ -1017,7 +1018,7 @@ function renderStatusBreakdown(){const log=logForToday(),rows=[];for(const item 
 function saveStatusLabels(){const raw=$('#globalStatusLabels').value.split(/\n|,/).map(x=>x.trim()).filter(Boolean),unique=raw.filter((x,i,a)=>a.findIndex(y=>y.toLowerCase()===x.toLowerCase())===i).slice(0,8);if(!unique.length){toast('Enter at least one status label.');return}if(!unique.some(x=>x.toLowerCase()==='not recorded'))unique.unshift('Not recorded');state.statusLabels=unique.slice(0,8);persist();renderSchedule();renderStats();renderStatusBreakdown();$('#globalStatusNote').textContent=`Saved ${state.statusLabels.length} status options. Existing per-task custom options are unchanged.`;toast('Status options saved')}
 $('#statusPresetButtons')?.addEventListener('click',e=>{const b=e.target.closest('[data-status-preset]');if(!b)return;const field=$('#globalStatusLabels');if(!field)return;const label=b.dataset.statusPreset,labels=field.value.split(/\n|,/).map(x=>x.trim()).filter(Boolean);if(labels.some(x=>x.toLowerCase()===label.toLowerCase())){$('#globalStatusNote').textContent='That option is already in your list.';return}if(labels.length>=8){$('#globalStatusNote').textContent='You already have 8 options. Remove one before adding another.';return}labels.push(label);field.value=labels.join('\n');$('#globalStatusNote').textContent='Option added to the draft. Tap “Save my status options” to apply it.';});
 $('#saveGlobalStatusLabels').addEventListener('click',saveStatusLabels);$('#resetGlobalStatusLabels').addEventListener('click',()=>{state.statusLabels=defaultStatusLabels();persist();renderSchedule();renderStats();renderStatusBreakdown();$('#globalStatusNote').textContent='Default status options restored.';toast('Default statuses restored')});
-function renderViewOnDemand(view){try{if(view==='today'){renderQuote();renderTracker();renderTasbeeh();renderDhikrTiles();renderReminderSummary();updateScheduleSummary();}else if(view==='schedule'){renderSchedule();renderStats();renderStatusBreakdown();}else if(view==='challenges'){renderChallenges();}else if(view==='muhasabah'){loadTodayJournal();renderJournals();renderStats();}else if(view==='sanctuary'){renderScheduleSettings();renderReminders();renderGoodExperiences();}}catch(err){console.error('Could not render '+view,err);const target=document.getElementById('view-'+view);if(target){let notice=target.querySelector('[data-render-error]');if(!notice){notice=document.createElement('p');notice.dataset.renderError='1';notice.className='empty';target.prepend(notice)}notice.textContent='Some content could not load. Other tabs should remain available.';}}}
+function renderViewOnDemand(view){try{if(view==='today'){renderQuote();renderTracker();renderTasbeeh();renderDhikrTiles();renderReminderSummary();updateScheduleSummary();}else if(view==='schedule'){renderSchedule();renderStats();renderStatusBreakdown();}else if(view==='challenges'){renderQuote();renderChallenges();}else if(view==='muhasabah'){loadTodayJournal();renderJournals();renderStats();}else if(view==='sanctuary'){renderScheduleSettings();renderReminders();renderGoodExperiences();}}catch(err){console.error('Could not render '+view,err);const target=document.getElementById('view-'+view);if(target){let notice=target.querySelector('[data-render-error]');if(!notice){notice=document.createElement('p');notice.dataset.renderError='1';notice.className='empty';target.prepend(notice)}notice.textContent='Some content could not load. Other tabs should remain available.';}}}
 function go(view){const target=document.getElementById('view-'+view);if(!target)return false;document.querySelectorAll('.view').forEach(v=>{v.classList.toggle('active',v===target);});document.querySelectorAll('.nav button[data-view]').forEach(b=>{const active=b.dataset.view===view;b.classList.toggle('active',active);if(active)b.setAttribute('aria-current','page');else b.removeAttribute('aria-current');});renderViewOnDemand(view);document.documentElement.style.scrollBehavior="auto";window.scrollTo(0,0);return true}
 // Delegated navigation keeps every tab clickable even if other page controls are re-rendered.
 document.addEventListener('click',e=>{const navButton=e.target.closest('.nav button[data-view]');if(navButton){e.preventDefault();go(navButton.dataset.view);return;}const goButton=e.target.closest('[data-go]');if(goButton){e.preventDefault();go(goButton.dataset.go);}});
