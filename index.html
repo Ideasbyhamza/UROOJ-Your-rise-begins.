@@ -686,36 +686,7 @@ body[data-palette="mono"] .tasbeeh-orb{background:#111827;color:#FFFFFF;border-c
 body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;border-color:#555555}
 
 /* UROOJ app-wide text sizing, configured in Appearance. */.app *{font-size:calc(var(--urooj-base-font-size, 1em) * var(--urooj-text-scale, 1)) !important}
-/* Arabic-origin growth path */
-#uroojWordJourney{overflow:hidden}
-#uroojWordJourney .journey-intro{font-size:11px;line-height:1.55;color:var(--muted);margin:0 0 12px}
-#uroojWordJourney .journey-steps{display:grid;gap:7px;position:relative}
-#uroojWordJourney .journey-word{display:grid;grid-template-columns:30px minmax(0,1fr) 20px;align-items:center;gap:9px;width:100%;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--white);color:var(--ink);text-align:left;min-width:0}
-#uroojWordJourney .journey-number{width:28px;height:28px;border-radius:9px;display:grid;place-items:center;background:var(--sage);color:var(--green);font-size:10px;font-weight:800}
-#uroojWordJourney .journey-word-copy{min-width:0}
-#uroojWordJourney .journey-word-copy strong{display:block;font-size:12px;line-height:1.35;color:var(--green)}
-#uroojWordJourney .journey-word-copy small{display:block;font-size:10px;line-height:1.4;color:var(--muted);margin-top:2px}
-#uroojWordJourney .journey-chevron{color:var(--muted);font-size:17px;text-align:center}
-#uroojWordJourney .journey-word:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
-#uroojWordJourney .journey-word.final-stage{background:var(--ink);border-color:var(--ink)}
-#uroojWordJourney .journey-word.final-stage .journey-number{background:var(--gold);color:#111}
-#uroojWordJourney .journey-word.final-stage .journey-word-copy strong{color:var(--white)}
-#uroojWordJourney .journey-word.final-stage .journey-word-copy small,#uroojWordJourney .journey-word.final-stage .journey-chevron{color:var(--white)}
-#uroojWordJourney .journey-top-label{display:inline-block;margin-left:5px;padding:2px 6px;border-radius:99px;background:var(--gold);color:#191919;font-size:8px;font-weight:900;vertical-align:middle}
-#uroojWordMeaning{position:fixed;inset:0;z-index:10010;display:none;align-items:flex-end;justify-content:center;padding:14px;background:rgba(10,18,14,.56)}
-#uroojWordMeaning.open{display:flex}
-#uroojWordMeaning .journey-meaning-card{width:100%;max-width:440px;max-height:78dvh;overflow:auto;border:1px solid var(--line);border-radius:20px;background:var(--white);color:var(--ink);padding:19px;box-shadow:var(--shadow)}
-#uroojWordMeaning .journey-meaning-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
-#uroojWordMeaning .journey-meaning-kicker{font-size:9px;letter-spacing:1.3px;text-transform:uppercase;color:var(--muted);font-weight:800}
-#uroojWordMeaning h2{font:600 23px Georgia,serif;color:var(--green);margin:5px 0 3px}
-#uroojWordMeaning .journey-arabic{font-size:25px;line-height:1.8;color:var(--green);margin:4px 0;text-align:right}
-#uroojWordMeaning .journey-translit{font-size:11px;color:var(--muted);margin:0 0 12px}
-#uroojWordMeaning .journey-meaning-definition{font-size:14px;font-weight:800;line-height:1.5;margin:10px 0}
-#uroojWordMeaning .journey-meaning-note{font-size:12px;line-height:1.65;color:var(--muted);margin:0}
-#uroojWordMeaning .journey-meaning-close{width:34px;height:34px;flex:0 0 34px;border:1px solid var(--line);border-radius:50%;background:var(--sage);color:var(--ink);font-size:20px}
-#uroojWordMeaning .journey-meaning-footer{margin-top:16px;display:flex;justify-content:space-between;align-items:center;gap:10px}
-#uroojWordMeaning .journey-meaning-stage{font-size:10px;color:var(--muted)}
-@media(min-width:600px){#uroojWordMeaning{align-items:center}}
+
 
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
