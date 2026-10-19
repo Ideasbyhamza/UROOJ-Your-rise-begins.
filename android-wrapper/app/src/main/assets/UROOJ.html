@@ -1162,6 +1162,7 @@ renderSavedFeedback();
 setDate();setInterval(setDate,60000);applyTheme();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'challenges');
 // Best-effort persistence warning without exposing journal content.
 try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browser storage unavailable. Your data may not persist.')}
+})();
 </script>
 <script>
 /* Emergency independent navigation fallback: runs even if an unrelated settings control errors. */
