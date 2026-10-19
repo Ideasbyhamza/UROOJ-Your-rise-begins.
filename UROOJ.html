@@ -10,6 +10,22 @@
 <!-- Offline-friendly: use local system fonts so the app does not wait for Google Fonts. -->
 <style>
 :root{--sand:#F8FAFC;--green:#2563EB;--gold:#2563EB;--sage:#EFF6FF;--ink:#172033;--muted:#64748B;--line:#E2E8F0;--white:#FFFFFF;--shadow:0 10px 30px rgba(37,99,235,.07);color-scheme:light}
+body.dark{--sand:#0F172A;--green:#93C5FD;--gold:#93C5FD;--sage:#172554;--ink:#F1F5F9;--muted:#94A3B8;--line:#29364D;--white:#111C31;--shadow:0 10px 30px rgba(0,0,0,.22);color-scheme:dark}
+/* Two-colour design system: one brand colour plus neutral surfaces. */
+body[data-palette="blue"]{--green:#2563EB;--gold:#2563EB;--sage:#EFF6FF;--line:#DBE5F5;--shadow:0 10px 30px rgba(37,99,235,.08)}
+body[data-palette="evergreen"]{--green:#166534;--gold:#166534;--sage:#ECFDF3;--line:#D5E8DB;--shadow:0 10px 30px rgba(22,101,52,.08)}
+body[data-palette="violet"]{--green:#6D28D9;--gold:#6D28D9;--sage:#F3E8FF;--line:#E5D9F8;--shadow:0 10px 30px rgba(109,40,217,.08)}
+body[data-palette="rose"]{--green:#BE123C;--gold:#BE123C;--sage:#FFF1F2;--line:#F5D9DF;--shadow:0 10px 30px rgba(190,18,60,.08)}
+body[data-palette="slate"]{--green:#334155;--gold:#0EA5E9;--sage:#F1F5F9;--line:#D8E0E8;--shadow:0 10px 30px rgba(51,65,85,.08)}
+body[data-palette="amber"]{--green:#92400E;--gold:#D97706;--sage:#FFFBEB;--line:#F2E3C7;--shadow:0 10px 30px rgba(146,64,14,.08)}
+body.dark[data-palette="blue"]{--green:#93C5FD;--gold:#93C5FD;--sage:#172554;--line:#29364D}
+body.dark[data-palette="evergreen"]{--green:#86EFAC;--gold:#86EFAC;--sage:#14291F;--line:#294638}
+body.dark[data-palette="violet"]{--green:#C4B5FD;--gold:#C4B5FD;--sage:#2E1A4A;--line:#453260}
+body.dark[data-palette="rose"]{--green:#FDA4AF;--gold:#FDA4AF;--sage:#3A1D28;--line:#56303D}
+body.dark[data-palette="slate"]{--green:#CBD5E1;--gold:#7DD3FC;--sage:#1E293B;--line:#334155}
+body.dark[data-palette="amber"]{--green:#FCD34D;--gold:#FCD34D;--sage:#332713;--line:#514025}
+body.dark .date-badge,body.dark .routine-time,body.dark .target-pills button,body.dark .slot input,body.dark .field input,body.dark .field textarea,body.dark .field select,body.dark .day-box{background:var(--white);color:var(--ink);border-color:var(--line)}
+body.dark .quote{background:var(--green);color:#fff}body.dark .nav{background:#111827eb;border-color:var(--line)}body.dark .privacy-note{background:var(--sage)}
 body.dark{--sand:#0F172A;--green:#93C5FD;--gold:#93C5FD;--sage:#172554;--ink:#F1F5F9;--muted:#94A3B8;--line:#29364D;--white:#111C31;--shadow:0 10px 30px rgba(0,0,0,.22);color-scheme:dark;background:#0B1220}
 body.dark .date-badge,body.dark .routine-time,body.dark .target-pills button,body.dark .slot input,body.dark .field input,body.dark .field textarea,body.dark .field select,body.dark .day-box{background:#202c26;color:var(--ink);border-color:var(--line)}
 body.dark .quote{background:#203c30}body.dark .nav{background:#151d1aeb;border-color:var(--line)}body.dark .progress-ring:before{background:var(--white)}body.dark .progress-card,body.dark .routine-item,body.dark .card,body.dark .journal-entry{background:var(--white);border-color:var(--line)}body.dark .privacy-note{background:#202a24}body.dark .challenge-hero.gold{background:#3a3425;color:#f0e2bd}body.dark .modal{background:var(--sand)}body.dark .close{background:#2b3830;color:var(--ink)}
@@ -683,6 +699,7 @@ body.dark[data-palette="blue"] .quote,body.dark[data-palette="blue"] .privacy-no
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div></div>
 <p class="muted" style="font-size:10px;line-height:1.4">Sign in with Google from the login screen to back up your data to Google Drive.</p>
 <p class="settings-intro-cue"><span aria-hidden="true" class="cue-arrow">›</span> Tap a setting to open details. The tutorial arrow points to the relevant option.</p>
+<div class="card" id="appearanceSettings"><div class="card-title"><h3>Appearance</h3><span class="solar">Personalise</span></div><div class="field"><label for="uroojPaletteSetting">TWO-COLOUR THEME</label><select id="uroojPaletteSetting"><option value="blue">Blue &amp; White · modern platform</option><option value="evergreen">Emerald &amp; Ivory · calm</option><option value="violet">Violet &amp; White · creative</option><option value="rose">Rose &amp; Cream · warm</option><option value="slate">Slate &amp; Sky · minimal</option><option value="amber">Amber &amp; Ink · focused</option></select><p class="muted">Choose one brand colour with neutral surfaces. Use the moon/sun button above to switch light and dark mode.</p></div></div>
 
 
 
@@ -1235,8 +1252,9 @@ $('#reminderEditor').addEventListener('click',e=>{const b=e.target.closest('[dat
 $('#addReminder').addEventListener('click',()=>{state.reminders.push({title:'New Islamic reminder',date:'Add Hijri date / recurrence',remaining:'',sunnah:''});persist();renderReminders();$('#reminderEditor').lastElementChild?.querySelector('input')?.focus()});
 $('#saveReminders').addEventListener('click',()=>{persist();renderReminders();toast('Reminders saved')});
 const quranFields=['quranReference','quranArabic','quranTranslation','quranTafsir','quranAction'];
-function applyTheme(){document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette='blue';$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+function applyTheme(){const palettes=['blue','evergreen','violet','rose','slate','amber'];if(!palettes.includes(state.palette))state.palette='blue';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
 $('#themeToggle').addEventListener('click',()=>{state.theme=state.theme==='dark'?'light':'dark';persist();applyTheme()});
+$('#uroojPaletteSetting')?.addEventListener('change',()=>{state.palette=$('#uroojPaletteSetting').value;persist();applyTheme();toast('Colour theme applied')});
 
 window.__tazkiyaRenderView=renderViewOnDemand;
 function renderStatusBreakdown(){const log=logForToday(),rows=[];for(const item of activityOptions()){const value=log[item.id]||'Not recorded';rows.push({id:item.id,name:item.name,value,group:prayerItems.some(p=>p.id===item.id)?'Prayer':item.id==='quran'?'Qur’an':item.id==='workout'||item.id==='walking'?'Fitness':item.id==='dhikr'?'Dhikr':item.id==='reading'?'Reading':item.id==='learning'?'Learning':'Good deeds',done:isActivityComplete(item,value)});}for(const item of state.customActivities||[]){const value=log[item.id]||'Not recorded';rows.push({id:item.id,name:item.name,value,group:'Personal',done:isActivityComplete(item,value)});}for(const [i,item] of state.schedule.entries()){if(item.enabled===false)continue;const value=log['schedule_'+(item.id||i)]||'Not recorded';rows.push({id:'schedule_'+(item.id||i),name:item.task||'Untitled task',value,group:item.category||inferActivityCategory(item.task),done:isActivityComplete({id:'schedule_'+(item.id||i)},value)});}const host=$('#statusBreakdownChart');if(host){host.innerHTML=rows.map(r=>{const pct=r.value==='Not recorded'?0:r.done?100:/partly|progress|walking|running|minute|page|verse/i.test(r.value)?50:25;return `<div class="category-row" style="grid-template-columns:minmax(90px,1.15fr) minmax(50px,1fr) auto;gap:8px;align-items:center"><span title="${esc(r.name)} · ${esc(r.group)}" style="overflow-wrap:anywhere"><b style="display:block;font-size:11px;color:var(--ink)">${esc(r.name)}</b><small style="font-size:9px;color:var(--muted)">${esc(r.group)}</small></span><div class="category-track"><i style="width:${pct}%"></i></div><b style="font-size:10px;max-width:115px;text-align:right;overflow-wrap:anywhere">${esc(r.value)}</b></div>`}).join('')||'<p class="muted">Add tasks in Settings to see them here.</p>';}const field=$('#globalStatusLabels');if(field&&document.activeElement!==field)field.value=currentStatusLabels().join('\n')}
