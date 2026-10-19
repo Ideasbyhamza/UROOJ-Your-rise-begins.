@@ -563,7 +563,7 @@ let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserIn
 // the mobile browser/embedding context breaks the popup<->opener handshake), the button must
 // not stay stuck on "Signing in…" forever. This clears itself on any real callback.
 function clearSignInWatchdog(){if(gSignInWatchdog){clearTimeout(gSignInWatchdog);gSignInWatchdog=null}}
-function armSignInWatchdog(){clearSignInWatchdog();gSignInWatchdog=setTimeout(function(){gSignInWatchdog=null;setLoginBusy(false);setLoginError('Google sign-in did not respond. This can happen if the sign-in window was blocked or closed without Google reporting it back. Please try again, or use Continue without Google.');},12000)}
+function armSignInWatchdog(){clearSignInWatchdog();gSignInWatchdog=setTimeout(function(){gSignInWatchdog=null;setLoginBusy(false);unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'challenges');setLoginError('Google sign-in did not respond. UROOJ is open in local mode; your progress stays on this device. You can connect Google later in Settings.');toast('Google sign-in timed out. UROOJ opened in local mode; connect Google later in Settings if you want Drive backup.');},12000)}
 function loadGoogleAccountCache(){try{return JSON.parse(localStorage.getItem(GAUTH_KEY)||'null')}catch(e){return null}}
 function saveGoogleAccountCache(data){try{localStorage.setItem(GAUTH_KEY,JSON.stringify(data))}catch(e){}}
 function clearGoogleAccountCache(){try{localStorage.removeItem(GAUTH_KEY)}catch(e){}}
