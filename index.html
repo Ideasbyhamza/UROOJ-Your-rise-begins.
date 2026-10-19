@@ -497,6 +497,85 @@ body[data-palette="blue"] :is(input,textarea,select,.field input,.field textarea
 body.dark[data-palette="blue"] .nav{background:#0F172AEB;border-color:var(--line)}
 body.dark[data-palette="blue"] .quote,body.dark[data-palette="blue"] .privacy-note,body.dark[data-palette="blue"] .date-badge,body.dark[data-palette="blue"] .routine-time,body.dark[data-palette="blue"] .day-box{background:var(--sage);color:var(--ink);border-color:var(--line)}
 body.dark[data-palette="blue"] .schedule-task-tile.has-status{background:var(--sage);border-color:var(--line)}
+
+/* Theme consistency pass: shared tiles and typography follow the selected palette.
+   Challenge level cards and their day/status colours are intentionally excluded. */
+body[data-palette="blue"]{--sand:#F8FAFC;--green:#2563EB;--gold:#2563EB;--sage:#EFF6FF;--ink:#172033;--muted:#64748B;--line:#E2E8F0;--white:#FFFFFF;--shadow:0 8px 28px rgba(37,99,235,.07)}
+body[data-palette="evergreen"]{--sand:#F8FBF8;--green:#166534;--gold:#166534;--sage:#ECFDF3;--ink:#17251C;--muted:#647568;--line:#D5E8DB;--white:#FFFFFF;--shadow:0 8px 28px rgba(22,101,52,.07)}
+body[data-palette="violet"]{--sand:#FCFAFF;--green:#6D28D9;--gold:#6D28D9;--sage:#F3E8FF;--ink:#241A33;--muted:#756783;--line:#E5D9F8;--white:#FFFFFF;--shadow:0 8px 28px rgba(109,40,217,.07)}
+body[data-palette="rose"]{--sand:#FFFAFB;--green:#BE123C;--gold:#BE123C;--sage:#FFF1F2;--ink:#321923;--muted:#80616B;--line:#F5D9DF;--white:#FFFFFF;--shadow:0 8px 28px rgba(190,18,60,.07)}
+body[data-palette="slate"]{--sand:#F8FAFC;--green:#334155;--gold:#0EA5E9;--sage:#F1F5F9;--ink:#1E293B;--muted:#64748B;--line:#D8E0E8;--white:#FFFFFF;--shadow:0 8px 28px rgba(51,65,85,.07)}
+body[data-palette="amber"]{--sand:#FFFCF5;--green:#92400E;--gold:#D97706;--sage:#FFFBEB;--ink:#302315;--muted:#806B50;--line:#F2E3C7;--white:#FFFFFF;--shadow:0 8px 28px rgba(146,64,14,.07)}
+body.dark[data-palette="blue"]{--sand:#0F172A;--green:#93C5FD;--gold:#93C5FD;--sage:#172554;--ink:#F1F5F9;--muted:#94A3B8;--line:#29364D;--white:#111C31;--shadow:0 8px 28px rgba(0,0,0,.22)}
+body.dark[data-palette="evergreen"]{--sand:#0D1912;--green:#86EFAC;--gold:#86EFAC;--sage:#14291F;--ink:#EAF7EE;--muted:#A2B9A9;--line:#294638;--white:#142019;--shadow:0 8px 28px rgba(0,0,0,.22)}
+body.dark[data-palette="violet"]{--sand:#171021;--green:#C4B5FD;--gold:#C4B5FD;--sage:#2E1A4A;--ink:#F4EEFF;--muted:#B9A9CC;--line:#453260;--white:#21172D;--shadow:0 8px 28px rgba(0,0,0,.22)}
+body.dark[data-palette="rose"]{--sand:#1D1117;--green:#FDA4AF;--gold:#FDA4AF;--sage:#3A1D28;--ink:#FFF1F3;--muted:#C9A4AD;--line:#56303D;--white:#291720;--shadow:0 8px 28px rgba(0,0,0,.22)}
+body.dark[data-palette="slate"]{--sand:#0F172A;--green:#CBD5E1;--gold:#7DD3FC;--sage:#1E293B;--ink:#F1F5F9;--muted:#94A3B8;--line:#334155;--white:#172235;--shadow:0 8px 28px rgba(0,0,0,.22)}
+body.dark[data-palette="amber"]{--sand:#1C160B;--green:#FCD34D;--gold:#FCD34D;--sage:#332713;--ink:#FFF7E6;--muted:#C6B28F;--line:#514025;--white:#251D10;--shadow:0 8px 28px rgba(0,0,0,.22)}
+body[data-palette] .top{background:var(--sand);border-color:var(--line)}
+body[data-palette] .date-badge,
+body[data-palette] .progress-card,
+body[data-palette] .card,
+body[data-palette] .routine-item,
+body[data-palette] .tracker-row,
+body[data-palette] .slot,
+body[data-palette] .reminder-today,
+body[data-palette] .quran-entry,
+body[data-palette] .journal-entry,
+body[data-palette] .urooj-progress-card,
+body[data-palette] .experience-compact-item,
+body[data-palette] .islamic-calendar-item,
+body[data-palette] #aboutHamzaJarvis{background:var(--white)!important;border-color:var(--line)!important;color:var(--ink)}
+body[data-palette] .routine-item.done,
+body[data-palette] .schedule-task-tile.has-status,
+body[data-palette] .dhikr-mode-tile.active,
+body[data-palette] .urooj-streak-pill,
+body[data-palette] .privacy-note,
+body[data-palette] .solar{background:var(--sage)!important;border-color:var(--line)!important;color:var(--green)}
+body[data-palette] .routine-time,
+body[data-palette] .field input,
+body[data-palette] .field textarea,
+body[data-palette] .field select,
+body[data-palette] .slot input,
+body[data-palette] .slot select,
+body[data-palette] .tracker-row select,
+body[data-palette] .reminder-row input,
+body[data-palette] .reminder-today input,
+body[data-palette] .dhikr-mode-tile,
+body[data-palette] .day-box:not(.done):not(.missed),
+body[data-palette] .urooj-day-check:not(.checked){background:var(--sand);border-color:var(--line);color:var(--ink)}
+body[data-palette] .nav{background:var(--white);border-color:var(--line)}
+body[data-palette] .nav button.active{background:var(--sage);color:var(--green);box-shadow:inset 0 0 0 1px var(--line)}
+body[data-palette] .nav button .nav-streak-badge,
+body[data-palette] .nav button.active .nav-streak-badge{background:var(--sage);color:var(--green)}
+body[data-palette] .btn{background:var(--green);border-color:var(--green);color:#fff}
+body.dark[data-palette] .btn{color:#101827}
+body[data-palette] .btn.secondary{background:var(--sage);color:var(--green);border-color:var(--line)}
+body[data-palette] .btn.ghost{background:transparent;color:var(--green);border-color:var(--line)}
+body[data-palette] :is(.brand,.section-head h1,.section-head h2,.card-title h3,.quran-entry strong,.chart-col strong,.category-row b,.journal-entry strong,.urooj-progress-symbol,.urooj-streak-pill,.tracker-label strong,.routine-info strong,.progress-copy strong,.experience-copy strong,.urooj-progress-brand strong,.urooj-checkin-head strong,.dhikr-mode-tile strong,.dhikr-mode-actions button){color:var(--green)}
+body[data-palette] :is(.eyebrow,.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.urooj-progress-brand small,.urooj-checkin-head small,.urooj-checkin-foot,.urooj-year-chip,.urooj-day-check,.urooj-month-badge){color:var(--muted)}
+body[data-palette] :is(input,textarea,select,button){accent-color:var(--green)}
+body[data-palette] .category-track,
+body[data-palette] .chart-bar-wrap,
+body[data-palette] .tiny-track{background:var(--sage)}
+body[data-palette] .category-track i,
+body[data-palette] .chart-bar,
+body[data-palette] .tiny-track span{background:var(--green)}
+body[data-palette] .urooj-month-badge.current{background:var(--green);border-color:var(--green);color:var(--sand)}
+body[data-palette] .urooj-day-check.checked{background:var(--sage);border-color:var(--green);color:var(--green)}
+body[data-palette] .urooj-day-check .day-square{background:var(--white);border-color:var(--line)}
+body[data-palette] .urooj-day-check.checked .day-square{background:var(--green);border-color:var(--green);color:var(--sand)}
+body[data-palette] .quote{background:var(--green);border-color:var(--line)}
+body[data-palette] .quote .eyebrow,body[data-palette] .quote .attribution{color:var(--sand)}
+body[data-palette] .custom-delete,
+body[data-palette] .reminder-row button{background:var(--sage);color:var(--green);border:1px solid var(--line)}
+body[data-palette] .progress-ring:before{background:var(--white)}
+body[data-palette] .tasbeeh-orb{border-color:var(--gold)}
+body.dark[data-palette] .nav{background:var(--white);border-color:var(--line)}
+body.dark[data-palette] .top{background:var(--sand);border-color:var(--line)}
+body.dark[data-palette] .routine-item.done{background:var(--sage)!important}
+body.dark[data-palette] .schedule-task-tile.has-status{background:var(--sage)!important}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
