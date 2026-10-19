@@ -247,6 +247,57 @@ body.dark[data-palette="midnight"]{--sand:#151922;--green:#A9BDD9;--gold:#D7BF83
 #view-sanctuary details.settings-accordion#uroojTermsAccordion>summary>small,
 #view-sanctuary details.settings-accordion#uroojTutorialAccordion>summary>small{font-size:9px!important}
 @media(max-width:390px){#view-sanctuary details.settings-accordion>summary{padding:10px 10px 10px 12px!important;column-gap:8px}#view-sanctuary details.settings-accordion>summary>span{font-size:12px!important}#view-sanctuary details.settings-accordion>summary>small{font-size:9px!important}}
+
+/* Visual polish pass: align spacing, edges, and controls without changing fonts or copy. */
+:root{--ui-gap:12px;--ui-radius:16px}
+*{box-sizing:border-box}
+.app{width:min(100%,480px);margin-inline:auto}
+.view{min-width:0}
+.view.active{overflow-wrap:anywhere}
+.view>.section-head{align-items:center;gap:12px;margin:16px 2px 15px}
+.view>.section-head>div{min-width:0}
+.view>.section-head h1,.view>.section-head h2{line-height:1.22;letter-spacing:-.01em}
+.view>.section-head p{max-width:42ch}
+.view .card,.view .progress-card,.view .routine-item,.view .journal-entry{min-width:0}
+.view .card{border-radius:var(--ui-radius);padding:16px;margin:12px 0;box-shadow:0 3px 14px rgba(36,57,47,.035)}
+.view .card-title{align-items:center;gap:10px;margin-bottom:13px}
+.view .card-title h3{line-height:1.35;overflow-wrap:anywhere}
+.view p,.view li{line-height:1.65}
+.view .muted{line-height:1.6}
+.view .btn,.view button{touch-action:manipulation}
+.view .btn{min-height:38px;line-height:1.35;white-space:normal;overflow-wrap:anywhere}
+.view .btn-row{display:flex;flex-wrap:wrap;align-items:center;gap:8px}
+.view .btn-row>.btn{flex:1 1 120px;min-width:0}
+.view .field{min-width:0;gap:6px;margin:11px 0}
+.view .field label{line-height:1.45}
+.view .field input,.view .field textarea,.view .field select{box-sizing:border-box;max-width:100%;min-height:42px;line-height:1.45}
+.view .field textarea{min-height:84px}
+.view input[type="checkbox"],.view input[type="radio"]{accent-color:var(--green)}
+.view .routine-item{align-items:center;gap:11px;padding:13px;border-radius:14px}
+.view .routine-item>div,.view .routine-item>span{min-width:0}
+.view .progress-card{gap:13px;padding:15px;border-radius:16px}
+.view .progress-copy{min-width:0;overflow-wrap:anywhere}
+.view .quote{border-radius:18px;margin:14px 0 20px}
+.view .nav{gap:3px}
+.view .nav button{min-width:0;min-height:54px;line-height:1.2;padding:6px 2px;overflow-wrap:anywhere}
+.view .nav button span{max-width:100%;text-align:center}
+.view details>summary{cursor:pointer}
+.view a{overflow-wrap:anywhere}
+.view table{max-width:100%}
+.view img,.view svg{max-width:100%}
+@media(max-width:390px){
+ .view>.section-head{align-items:flex-start;gap:8px;margin:13px 1px 12px}
+ .view>.section-head h1,.view>.section-head h2{font-size:21px}
+ .view .card{padding:13px;border-radius:14px}
+ .view .card-title{gap:7px}
+ .view .btn-row>.btn{flex:1 1 100px}
+ .view .nav button{font-size:8px;gap:4px;padding-inline:1px}
+ .view .nav button svg{width:19px;height:19px}
+}
+@media(prefers-reduced-motion:reduce){
+ .view *, .view *::before, .view *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
