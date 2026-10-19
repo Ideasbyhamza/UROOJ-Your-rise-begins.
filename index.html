@@ -298,6 +298,14 @@ body.dark[data-palette="midnight"]{--sand:#151922;--green:#A9BDD9;--gold:#D7BF83
  .view *, .view *::before, .view *::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
 }
 
+
+/* Match the About-tab disclosure arrows to the Settings accordion controls. */
+#view-today details.settings-accordion>summary{position:relative;padding-right:42px}
+#view-today details.settings-accordion>summary::-webkit-details-marker{display:none}
+#view-today details.settings-accordion>summary:after{content:'›';position:absolute;right:12px;top:50%;transform:translateY(-50%);width:25px;height:25px;display:grid;place-items:center;border-radius:50%;background:var(--sage);color:var(--green);font:500 24px/1 system-ui,sans-serif;margin-left:0;transition:background .18s ease}
+#view-today details.settings-accordion[open]>summary:after{content:'⌄';font-size:18px;background:var(--green);color:white}
+@media(max-width:390px){#view-today details.settings-accordion>summary{padding-right:39px}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
