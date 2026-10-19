@@ -500,7 +500,9 @@ const DRIVE_FILE_NAME='urooj-data.json';
 const DRIVE_SCOPE='https://www.googleapis.com/auth/drive.file openid email profile';
 const GAUTH_KEY='urooj-google-account-v1';
 const SYNC_KEY='urooj-last-sync-v1';
-let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserInfo=null,gSyncTimer=null,gSyncing=false,gSyncAgain=false,gDrivePollTimer=null,gDriveModifiedTime=null,gLocalDirty=false,gLastLocalEdit=0,gLocalEditVersion=0,gSilentAuthAttempt=false;
+let gTokenClient=null,gAccessToken=null,gTokenExpiry=0,gDriveFileId=null,gUserInfo=null,gSyncTimer=null,gSyncing=false,gSyncAgain=false,gDrivePollTimer=null,gDriveModifiedTime=null,gLocalDirty=false,gLastLocalEdit=0,gLocalEditVersion=0,gSilentAuthAttempt=false,gSignInWatchdog=null;
+function clearSignInWatchdog(){if(gSignInWatchdog){clearTimeout(gSignInWatchdog);gSignInWatchdog=null}}
+function armSignInWatchdog(){clearSignInWatchdog();gSignInWatchdog=setTimeout(function(){gSignInWatchdog=null;setLoginBusy(false);unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');setLoginError('Google sign-in did not respond. UROOJ is open in local mode; your progress stays on this device. You can connect Google later in Settings.');toast('Google sign-in timed out. UROOJ opened in local mode; connect Google later in Settings if you want Drive backup.');},12000)}
 function loadGoogleAccountCache(){try{return JSON.parse(localStorage.getItem(GAUTH_KEY)||'null')}catch(e){return null}}
 function saveGoogleAccountCache(data){try{localStorage.setItem(GAUTH_KEY,JSON.stringify(data))}catch(e){}}
 function clearGoogleAccountCache(){try{localStorage.removeItem(GAUTH_KEY)}catch(e){}}
@@ -630,11 +632,11 @@ function initGoogleAuth(){
   return;
  }
  window.__uroojGoogleInitAttempts=0;if(btn)btn.disabled=false;if(notice)notice.hidden=true;
- try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google’s sign-in window was blocked. Allow pop-ups for this site and try again.':type==='popup_closed'?'The Google sign-in window was closed before completing. Please try again.':'Google sign-in was cancelled or blocked. Check pop-up settings and try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID, authorized JavaScript origin, and Google Cloud OAuth settings.'}setLoginError('Google sign-in could not start. Check your Google Cloud OAuth settings.');return}
+ try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){clearSignInWatchdog();console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google’s sign-in window was blocked. Allow pop-ups for this site and try again.':type==='popup_closed'?'The Google sign-in window was closed before completing. Please try again.':'Google sign-in was cancelled or blocked. Check pop-up settings and try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID, authorized JavaScript origin, and Google Cloud OAuth settings.'}setLoginError('Google sign-in could not start. Check your Google Cloud OAuth settings.');return}
  const cached=loadGoogleAccountCache();if(cached&&cached.email){gUserInfo=cached;renderAccountStatus()}
 }
 async function handleGoogleToken(resp){
- setLoginBusy(false);
+ clearSignInWatchdog();setLoginBusy(false);
  if(!resp||resp.error){setLoginError('Google sign-in did not complete. Please try again.');return}
  gAccessToken=resp.access_token;gTokenExpiry=Date.now()+((Number(resp.expires_in)||3000)*1000);
  try{const info=await fetch('https://www.googleapis.com/oauth2/v3/userinfo',{headers:{Authorization:'Bearer '+gAccessToken}}).then(r=>r.json());gUserInfo={email:info.email||'',name:info.name||info.email||'Google account',picture:info.picture||''};saveGoogleAccountCache(gUserInfo)}catch(e){console.error('Could not fetch Google profile',e)}
@@ -645,8 +647,8 @@ function requestGoogleSignIn(){
  if(location.hostname==='appassets.androidplatform.net'){if(window.UROOJAndroid&&typeof window.UROOJAndroid.openLoginInBrowser==='function'){window.UROOJAndroid.openLoginInBrowser();return}setLoginError('Open the hosted UROOJ login page in your browser to sign in securely.');return}
  if(!gTokenClient&&window.google&&google.accounts&&google.accounts.oauth2){window.__uroojGoogleInitAttempts=0;initGoogleAuth()}
  if(!gTokenClient){setLoginBusy(false);setLoginError('Google sign-in is not ready. The Google sign-in library may be blocked or still loading. Refresh this page; if it continues, allow pop-ups and access to accounts.google.com, or share a screenshot of this message.');const notice=document.getElementById('googleConfigNotice');if(notice){notice.hidden=false;notice.innerHTML='<strong>Google sign-in is not ready</strong><br>Refresh the page and check that accounts.google.com is allowed by your browser or network.'}return}
- setLoginError('');setLoginBusy(true);
- try{gTokenClient.requestAccessToken({prompt:''})}catch(err){console.error('Could not open Google sign-in',err);setLoginBusy(false);setLoginError('Google’s sign-in window could not open. Allow pop-ups for this site and try again. If the problem continues, check the OAuth client’s authorized JavaScript origin.');}
+ setLoginError('');setLoginBusy(true);armSignInWatchdog();
+ try{gTokenClient.requestAccessToken({prompt:''})}catch(err){clearSignInWatchdog();console.error('Could not open Google sign-in',err);setLoginBusy(false);setLoginError('Google’s sign-in window could not open. Allow pop-ups for this site and try again. If the problem continues, check the OAuth client’s authorized JavaScript origin.');}
  }
 function ensureFreshToken(){if(gAccessToken&&Date.now()<gTokenExpiry-60000)return Promise.resolve(gAccessToken);if(!gTokenClient)return Promise.reject(new Error('not signed in'));return new Promise(function(resolve,reject){const prevCb=gTokenClient.callback;gTokenClient.callback=function(resp){gTokenClient.callback=prevCb;if(!resp||resp.error){reject(new Error('token refresh failed'));return}gAccessToken=resp.access_token;gTokenExpiry=Date.now()+((Number(resp.expires_in)||3000)*1000);resolve(gAccessToken)};gTokenClient.requestAccessToken({prompt:''})})}
 async function throwDriveApiError(res,action){let data={};try{data=await res.json()}catch(e){}const api=data&&data.error||{},reasons=Array.isArray(api.errors)?api.errors.map(x=>x.reason||'').filter(Boolean).join(', '):'';throw new Error('DRIVE_API_ERROR|'+res.status+'|'+reasons+'|'+(api.message||action+' failed'));}
