@@ -667,6 +667,20 @@ body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;bor
 /* UROOJ app-wide text sizing, configured in Appearance. */.app *{font-size:calc(var(--urooj-base-font-size, 1em) * var(--urooj-text-scale, 1)) !important}
 
 
+
+/* Six-step UROOJ upgrade journey */
+#uroojUpgradeJourney{margin-top:18px}
+#uroojUpgradeJourney .upgrade-intro{font-size:11px;line-height:1.5;color:var(--muted);margin:0 0 12px}
+#uroojUpgradeJourney .upgrade-list{display:grid;gap:7px}
+#uroojUpgradeJourney .upgrade-step{display:grid;grid-template-columns:27px minmax(0,1fr);align-items:center;gap:9px;padding:10px 11px;border:1px solid var(--line);border-radius:12px;background:var(--white);min-width:0}
+#uroojUpgradeJourney .upgrade-number{display:grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--sage);color:var(--green);font-size:10px;font-weight:800}
+#uroojUpgradeJourney .upgrade-copy{min-width:0;font-size:11px;line-height:1.45;color:var(--ink)}
+#uroojUpgradeJourney .upgrade-copy strong{color:var(--green);font-weight:800}
+#uroojUpgradeJourney .upgrade-step:last-child{background:var(--ink);border-color:var(--ink)}
+#uroojUpgradeJourney .upgrade-step:last-child .upgrade-number{background:var(--gold);color:#171717}
+#uroojUpgradeJourney .upgrade-step:last-child .upgrade-copy,#uroojUpgradeJourney .upgrade-step:last-child .upgrade-copy strong{color:var(--white)}
+#uroojUpgradeJourney .upgrade-track{height:3px;border-radius:99px;background:var(--line);overflow:hidden;margin:0 12px}
+#uroojUpgradeJourney .upgrade-track span{display:block;height:100%;width:100%;background:var(--green)}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -874,6 +888,24 @@ body.dark[data-palette="mono"] .tasbeeh-orb{background:#111111;color:#FFFFFF;bor
 <div class="card"><div class="card-title"><h3>60-day journey</h3><span class="muted">One day at a time</span></div><div class="day-grid" id="focusGrid"></div><div class="challenge-foot"><span id="focusStreak">0 days completed</span><button class="btn ghost small" id="focusClear">Clear marks</button></div></div></div>
 <div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
 <p class="muted">A marked day records your own check-in, not a judgement of your worth. Missed days do not erase the progress you have already made.</p>
+
+<div class="card" id="uroojUpgradeJourney" aria-label="Six-step UROOJ progression">
+ <div class="card-title"><h3>The Rise · كلمة بكلمة</h3><span class="solar">6 upgrades</span></div>
+ <p class="upgrade-intro">One step builds on the next—from a clear intention to UROOJ, your rise.</p>
+ <div class="upgrade-list">
+  <div class="upgrade-step"><span class="upgrade-number">01</span><div class="upgrade-copy"><strong>Niyyah</strong> — Intention: the purpose behind your actions.</div></div>
+  <div class="upgrade-track" aria-hidden="true"><span></span></div>
+  <div class="upgrade-step"><span class="upgrade-number">02</span><div class="upgrade-copy"><strong>Simt</strong> — Direction: the course you choose to follow.</div></div>
+  <div class="upgrade-track" aria-hidden="true"><span></span></div>
+  <div class="upgrade-step"><span class="upgrade-number">03</span><div class="upgrade-copy"><strong>Hadaf</strong> — Goal: the clear target you work towards.</div></div>
+  <div class="upgrade-track" aria-hidden="true"><span></span></div>
+  <div class="upgrade-step"><span class="upgrade-number">04</span><div class="upgrade-copy"><strong>Himmah</strong> — Aspiration: the ambition and energy to aim higher.</div></div>
+  <div class="upgrade-track" aria-hidden="true"><span></span></div>
+  <div class="upgrade-step"><span class="upgrade-number">05</span><div class="upgrade-copy"><strong>Azm</strong> — Determination: firm resolve to keep moving forward.</div></div>
+  <div class="upgrade-track" aria-hidden="true"><span></span></div>
+  <div class="upgrade-step"><span class="upgrade-number">06</span><div class="upgrade-copy"><strong>UROOJ</strong> — Ascent: rising, elevation, and reaching a higher level.</div></div>
+ </div>
+</div>
 </section>
 <section class="view" id="view-muhasabah">
 <div class="section-head"><div><div class="eyebrow">Pause · Notice · Renew</div><h1>Tazkiyah</h1><p>Meet yourself honestly, and choose your next step with mercy.</p></div></div>
