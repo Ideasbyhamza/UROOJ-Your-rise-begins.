@@ -562,6 +562,23 @@ body.dark[data-palette] .top{background:var(--sand);border-color:var(--line)}
 body.dark[data-palette] .routine-item.done{background:var(--sage)!important}
 body.dark[data-palette] .schedule-task-tile.has-status{background:var(--sage)!important}
 
+
+/* Extra cheerful, high-contrast two-colour palettes */
+body[data-palette="mint"]{--sand:#F7FFFC;--green:#0F9D8A;--gold:#0F9D8A;--sage:#DDF8F0;--ink:#16332E;--muted:#55736D;--line:#BDE8DB;--white:#FFFFFF;--shadow:0 10px 28px rgba(15,157,138,.12)}
+body.dark[data-palette="mint"]{--sand:#0D211E;--green:#5EEAD4;--gold:#5EEAD4;--sage:#163B34;--ink:#E6FFFA;--muted:#A0C9BF;--line:#28594F;--white:#102A25}
+body[data-palette="peach"]{--sand:#FFFCF9;--green:#E85D4A;--gold:#E85D4A;--sage:#FFF0E8;--ink:#44251F;--muted:#89645C;--line:#F4D4C8;--white:#FFFFFF;--shadow:0 10px 28px rgba(232,93,74,.12)}
+body.dark[data-palette="peach"]{--sand:#251713;--green:#FF9B87;--gold:#FF9B87;--sage:#45251F;--ink:#FFF1ED;--muted:#D6AAA0;--line:#704039;--white:#321E19}
+body[data-palette="lilac"]{--sand:#FCFAFF;--green:#8B5CF6;--gold:#8B5CF6;--sage:#F0E9FF;--ink:#2E2148;--muted:#74658C;--line:#DED0FA;--white:#FFFFFF;--shadow:0 10px 28px rgba(139,92,246,.12)}
+body.dark[data-palette="lilac"]{--sand:#191329;--green:#C4B5FD;--gold:#C4B5FD;--sage:#30234B;--ink:#F5F0FF;--muted:#B7A9D1;--line:#51406E;--white:#211936}
+body[data-palette="mono"]{--sand:#FFFFFF;--green:#111111;--gold:#111111;--sage:#F3F4F6;--ink:#111827;--muted:#555B65;--line:#D1D5DB;--white:#FFFFFF;--shadow:0 8px 24px rgba(0,0,0,.07)}
+body.dark[data-palette="mono"]{--sand:#000000;--green:#FFFFFF;--gold:#FFFFFF;--sage:#202020;--ink:#FFFFFF;--muted:#C4C4C4;--line:#444444;--white:#111111;--shadow:0 8px 24px rgba(0,0,0,.3)}
+body[data-palette="mint"] .tasbeeh-orb,body[data-palette="peach"] .tasbeeh-orb,body[data-palette="lilac"] .tasbeeh-orb,body[data-palette="mono"] .tasbeeh-orb{background:radial-gradient(circle at 34% 25%,var(--gold),var(--green) 70%,var(--green));border-color:var(--line);color:var(--sand)}
+body[data-palette="mint"] .tasbeeh-orb span,body[data-palette="peach"] .tasbeeh-orb span,body[data-palette="lilac"] .tasbeeh-orb span,body[data-palette="mono"] .tasbeeh-orb span{color:var(--sand)}
+body[data-palette="mint"] .challenge-hero.gold,body[data-palette="peach"] .challenge-hero.gold,body[data-palette="lilac"] .challenge-hero.gold,body[data-palette="mono"] .challenge-hero.gold{background:var(--sage)!important;border-color:var(--line)!important;color:var(--ink)}
+body[data-palette="mint"] .challenge-hero.gold h3,body[data-palette="peach"] .challenge-hero.gold h3,body[data-palette="lilac"] .challenge-hero.gold h3,body[data-palette="mono"] .challenge-hero.gold h3{color:var(--green)}
+body[data-palette="mint"] .challenge-hero.gold p,body[data-palette="peach"] .challenge-hero.gold p,body[data-palette="lilac"] .challenge-hero.gold p,body[data-palette="mono"] .challenge-hero.gold p{color:var(--muted)}
+body[data-palette="mint"] .challenge-hero.gold .btn,body[data-palette="peach"] .challenge-hero.gold .btn,body[data-palette="lilac"] .challenge-hero.gold .btn,body[data-palette="mono"] .challenge-hero.gold .btn{background:var(--green);border-color:var(--green);color:var(--sand)}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -785,7 +802,7 @@ body.dark[data-palette] .schedule-task-tile.has-status{background:var(--sage)!im
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div></div>
 <p class="muted" style="font-size:10px;line-height:1.4">Sign in with Google from the login screen to back up your data to Google Drive.</p>
 <p class="settings-intro-cue"><span aria-hidden="true" class="cue-arrow">›</span> Tap a setting to open details. The tutorial arrow points to the relevant option.</p>
-<div class="card" id="appearanceSettings"><div class="card-title"><h3>Appearance</h3><span class="solar">Personalise</span></div><div class="field"><label for="uroojPaletteSetting">TWO-COLOUR THEME</label><select id="uroojPaletteSetting"><option value="blue">Blue &amp; White · modern platform</option><option value="evergreen">Emerald &amp; Ivory · calm</option><option value="violet">Violet &amp; White · creative</option><option value="rose">Rose &amp; Cream · warm</option><option value="slate">Slate &amp; Sky · minimal</option><option value="amber">Amber &amp; Ink · focused</option></select><p class="muted">Choose one brand colour with neutral surfaces. Use the moon/sun button above to switch light and dark mode.</p></div></div>
+<div class="card" id="appearanceSettings"><div class="card-title"><h3>Appearance</h3><span class="solar">Personalise</span></div><div class="field"><label for="uroojPaletteSetting">TWO-COLOUR THEME</label><select id="uroojPaletteSetting"><option value="blue">Blue &amp; White · modern platform</option><option value="evergreen">Emerald &amp; Ivory · calm</option><option value="violet">Violet &amp; White · creative</option><option value="rose">Rose &amp; Cream · warm</option><option value="slate">Slate &amp; Sky · minimal</option><option value="amber">Amber &amp; Ink · focused</option><option value="mint">Mint Pop · fresh &amp; cheerful</option><option value="peach">Peach Pop · soft &amp; vibrant</option><option value="lilac">Lilac Glow · cute &amp; creative</option><option value="mono">Black &amp; White · classic</option></select><p class="muted">Choose one brand colour with neutral surfaces. Use the moon/sun button above to switch light and dark mode.</p></div></div>
 
 
 
@@ -1338,7 +1355,7 @@ $('#reminderEditor').addEventListener('click',e=>{const b=e.target.closest('[dat
 $('#addReminder').addEventListener('click',()=>{state.reminders.push({title:'New Islamic reminder',date:'Add Hijri date / recurrence',remaining:'',sunnah:''});persist();renderReminders();$('#reminderEditor').lastElementChild?.querySelector('input')?.focus()});
 $('#saveReminders').addEventListener('click',()=>{persist();renderReminders();toast('Reminders saved')});
 const quranFields=['quranReference','quranArabic','quranTranslation','quranTafsir','quranAction'];
-function applyTheme(){const palettes=['blue','evergreen','violet','rose','slate','amber'];if(!palettes.includes(state.palette))state.palette='blue';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+function applyTheme(){const palettes=['blue','evergreen','violet','rose','slate','amber','mint','peach','lilac','mono'];if(!palettes.includes(state.palette))state.palette='blue';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
 $('#themeToggle').addEventListener('click',()=>{state.theme=state.theme==='dark'?'light':'dark';persist();applyTheme()});
 $('#uroojPaletteSetting')?.addEventListener('change',()=>{state.palette=$('#uroojPaletteSetting').value;persist();applyTheme();toast('Colour theme applied')});
 
