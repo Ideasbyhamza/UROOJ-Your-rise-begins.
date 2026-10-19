@@ -57,7 +57,7 @@ jobs:
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
-          name: UROOJ-Ideasoby-Hamza-v1.0.9
+          name: UROOJ-Ideasoby-Hamza-v1.1.0
           path: android-wrapper/app/build/outputs/apk/debug/UROOJ (Ideasoby Hamza).apk
           if-no-files-found: error
           retention-days: 14
