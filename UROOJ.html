@@ -1273,6 +1273,14 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 <script>
 /* Emergency independent navigation fallback: runs even if an unrelated settings control errors. */
 (function(){
+  // Browser fail-safe: keep the hosted web app usable if an earlier app script
+  // fails before its normal local-first startup can hide the login gate. The
+  // Android wrapper intentionally keeps its login screen for browser hand-off.
+  if(location.hostname!=='appassets.androidplatform.net'){
+    document.body.classList.add('jarvis-authenticated');
+    var loginGate=document.getElementById('jarvisLogin');
+    if(loginGate)loginGate.style.display='none';
+  }
   function switchTab(name){
     // Collapse expanded Settings tiles when leaving Settings, so returning
     // shows the full list of options without a tile taking up the screen.
