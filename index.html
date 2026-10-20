@@ -1197,6 +1197,29 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 }
 
 
+/* Keep tile text horizontal and inside its box: reduce type before allowing wrapping. */
+#uroojUpgradeJourney .upgrade-step{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 6px auto;gap:6px 8px;overflow:hidden}
+#uroojUpgradeJourney .upgrade-top{grid-column:1;grid-row:1;width:100%;gap:6px}
+#uroojUpgradeJourney .upgrade-heading{display:flex;flex-direction:row;align-items:baseline;gap:5px;min-width:0;max-width:100%;white-space:nowrap;overflow:hidden}
+#uroojUpgradeJourney .upgrade-tier-label{flex:0 1 auto;min-width:0;white-space:nowrap;letter-spacing:0;font-size:clamp(6px,1.7vw,8px)!important;overflow:hidden;text-overflow:clip}
+#uroojUpgradeJourney .upgrade-word{display:block;flex:1 1 auto;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:clip;overflow-wrap:normal;word-break:keep-all;font-size:clamp(9px,2.5vw,11px)!important;line-height:1.15}
+#uroojUpgradeJourney .upgrade-days{grid-column:1;grid-row:2;justify-self:start;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:clip;text-align:left;font-size:clamp(8px,2vw,9px)!important}
+#uroojUpgradeJourney .urooj-stage-status{grid-row:4;min-width:0;flex-wrap:nowrap;white-space:nowrap;overflow:hidden}
+#uroojUpgradeJourney .urooj-stage-status [data-stage-progress-label]{min-width:0;white-space:nowrap;overflow:hidden;text-overflow:clip;font-size:clamp(7px,1.8vw,9px)!important}
+#view-challenges .current-level-badge{max-width:46%;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:clip;font-size:clamp(8px,2.2vw,10px)!important;flex-shrink:1}
+#view-challenges .challenge-top{min-width:0;gap:7px}
+#view-challenges .challenge-top>div:first-child{min-width:0;flex:1}
+#view-challenges .challenge-top h3{font-size:clamp(11px,3vw,16px)!important;line-height:1.2;overflow-wrap:normal;word-break:normal}
+#view-challenges .count-pill{flex:0 0 auto;white-space:nowrap;font-size:clamp(8px,2vw,10px)!important;padding:6px 7px}
+@media(max-width:360px){
+ #uroojUpgradeJourney .upgrade-step{padding:8px}
+ #uroojUpgradeJourney .upgrade-number{width:21px;height:21px;flex-basis:21px}
+ #uroojUpgradeJourney .upgrade-tier-label{font-size:6px!important}
+ #uroojUpgradeJourney .upgrade-word{font-size:9px!important}
+ #uroojUpgradeJourney .upgrade-days{font-size:8px!important}
+ #view-challenges .current-level-badge{max-width:43%;font-size:7px!important}
+}
+
 /* Equal-size cards: consistent dashboard metrics and progression tiles. */
 .app .urooj-analytics-section .urooj-metric-grid{grid-auto-rows:minmax(94px,1fr);align-items:stretch}
 .app .urooj-analytics-section .urooj-metric{height:100%;min-height:94px;box-sizing:border-box}
