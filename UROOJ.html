@@ -922,6 +922,54 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
   .app .section-head.app-section-head .section-head-right>.current-level-badge{max-width:96px!important;font-size:8px!important}
 }
 </style>
+<style id="urooj-progress-analytics-responsive">
+/* Compact analytics; all chart elements use the app's shared two-colour tokens. */
+.app .urooj-analytics-card{min-width:0;overflow:hidden}
+.app .urooj-analytics-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:10px 0 12px}
+.app .urooj-analytics-controls label{font-size:12px;font-weight:650;color:var(--ink)}
+.app .urooj-analytics-controls select{width:auto;max-width:58%;min-width:0;font-size:12px;padding:8px 10px;border-radius:10px;background:var(--white);color:var(--ink);border:1px solid var(--line)}
+.app .urooj-metric-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:10px 0 16px}
+.app .urooj-metric{min-width:0;padding:10px;border-radius:12px;background:var(--sage);border:1px solid var(--line);display:flex;flex-direction:column;gap:3px}
+.app .urooj-metric span{font-size:10px;color:var(--muted)}
+.app .urooj-metric strong{font-size:clamp(16px,4vw,21px);line-height:1.1;color:var(--green);overflow-wrap:anywhere}
+.app .urooj-metric small{font-size:9px;line-height:1.35;color:var(--muted)}
+.app .urooj-chart-title{font-size:12px;font-weight:750;color:var(--ink);margin:15px 0 8px}
+.app .urooj-daily-chart{min-width:0;padding:8px 7px 4px;border:1px solid var(--line);border-radius:12px;background:var(--white)}
+.app .urooj-bars{display:grid;grid-template-columns:repeat(30,minmax(0,1fr));gap:3px;align-items:end}
+.app .urooj-day-col{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;min-width:0}
+.app .urooj-day-track{height:76px;width:100%;display:flex;align-items:flex-end;overflow:hidden;border-radius:4px;background:var(--sage)}
+.app .urooj-day-track i{display:block;width:100%;min-height:0;border-radius:4px 4px 2px 2px;background:var(--green)}
+.app .urooj-day-col small{font-size:8px;color:var(--muted)}
+.app .urooj-chart-legend{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-top:7px;font-size:9px;color:var(--muted)}
+.app .urooj-chart-legend i{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--green);margin-right:4px}
+.app .urooj-month-rows{display:flex;flex-direction:column;gap:9px}
+.app .urooj-month-row{display:grid;grid-template-columns:48px minmax(0,1fr) 36px;gap:7px;align-items:center}
+.app .urooj-month-label{font-size:10px;color:var(--ink);font-weight:650}
+.app .urooj-month-track,.app .urooj-category-track,.app .urooj-habit-track{height:7px;min-width:0;background:var(--sage);border:1px solid var(--line);border-radius:99px;overflow:hidden}
+.app .urooj-month-track i,.app .urooj-category-track i,.app .urooj-habit-track i{display:block;height:100%;background:var(--green);border-radius:99px}
+.app .urooj-month-row>strong,.app .urooj-category-row>strong,.app .urooj-habit-row>strong{font-size:10px;text-align:right;color:var(--green)}
+.app .urooj-month-row>small{grid-column:2/4;font-size:9px;color:var(--muted);margin-top:-5px}
+.app .urooj-category-chart,.app .urooj-habit-insights{display:flex;flex-direction:column;gap:9px}
+.app .urooj-category-row{display:grid;grid-template-columns:minmax(65px,.8fr) minmax(40px,1fr) 34px;gap:7px;align-items:center}
+.app .urooj-category-row>span{font-size:10px;overflow-wrap:anywhere;color:var(--ink)}
+.app .urooj-category-row>small{grid-column:2/4;font-size:9px;color:var(--muted);margin-top:-5px}
+.app .urooj-habit-row{display:grid;grid-template-columns:20px minmax(0,1.2fr) minmax(38px,.8fr) 34px;gap:7px;align-items:center}
+.app .urooj-habit-rank{width:19px;height:19px;border-radius:6px;background:var(--sage);color:var(--green);display:grid;place-items:center;font-size:10px;font-weight:750}
+.app .urooj-habit-name{font-size:10px;min-width:0;overflow-wrap:anywhere;color:var(--ink)}
+.app .urooj-habit-name small{display:block;font-size:8px;color:var(--muted);margin-top:2px}
+.app .urooj-analytics-note{font-size:10px;line-height:1.45;margin:12px 0 0}
+.app .urooj-analytics-card .compact-expand>summary{font-size:13px}
+.app .urooj-analytics-card .compact-expand>summary .muted{font-size:10px}
+.app .urooj-analytics-card .urooj-month-row,.app .urooj-analytics-card .urooj-category-row,.app .urooj-analytics-card .urooj-habit-row{min-width:0}
+@media(max-width:360px){.app .urooj-metric-grid{gap:5px}.app .urooj-metric{padding:8px}.app .urooj-day-track{height:60px}.app .urooj-bars{gap:2px}.app .urooj-month-row{grid-template-columns:40px minmax(0,1fr) 31px;gap:5px}.app .urooj-habit-row{grid-template-columns:18px minmax(0,1fr) 35px 30px;gap:4px}}
+/* Typography preference also scales controls, tiles and chart spacing together. */
+.app{--urooj-layout-scale:var(--urooj-text-scale,0.8)}
+.app .card,.app .progress-card,.app .routine-item,.app .journal-entry,.app .quran-entry,.app .urooj-progress-card{padding:calc(12px * var(--urooj-layout-scale,0.8));border-radius:calc(16px * var(--urooj-layout-scale,0.8))}
+.app .btn,.app button,.app select,.app input,.app textarea{font-size:calc(13px * var(--urooj-layout-scale,0.8))}
+.app .btn,.app button{min-height:calc(34px * var(--urooj-layout-scale,0.8));padding:calc(8px * var(--urooj-layout-scale,0.8)) calc(11px * var(--urooj-layout-scale,0.8))}
+.app select,.app input,.app textarea{padding:calc(8px * var(--urooj-layout-scale,0.8))}
+.app .urooj-metric-grid,.app .urooj-category-chart,.app .urooj-habit-insights{gap:calc(8px * var(--urooj-layout-scale,0.8))}
+</style>
 </head>
 <body>
 <section id="uroojTermsConsent" role="dialog" aria-modal="true" aria-labelledby="uroojTermsTitle">
@@ -1089,7 +1137,7 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 <div class="progress-card"><div class="progress-ring" id="progressRing"><b id="progressPercent">0%</b></div><div class="progress-copy"><strong id="progressTitle">Begin with one good deed</strong><span id="progressSub">A log is a tool for reflection, not a judgement.</span><div class="tiny-track"><span id="progressBar"></span></div></div></div>
 
 <div class="card"><div class="card-title"><h3>Today's Task</h3><span class="solar" id="scheduleDateLabel">Today</span></div><div class="slot-head" style="grid-template-columns:minmax(0,1fr) minmax(120px,45%)"><span>Task</span><span>Status</span></div><div id="scheduleSlots"></div><div class="save-note" id="scheduleStatus">Choose a status for each scheduled activity. Changes save automatically.</div><div class="btn-row" style="margin-top:12px"><button class="btn" id="scheduleAddChallenge" type="button">＋ Add task</button></div></div>
-<div class="card"><details class="compact-expand"><summary>Progress graphs<span class="muted">Weekly completion and activity category summaries</span></summary><div style="display:flex;gap:8px;margin-bottom:10px"><div style="flex:1;background:var(--sage);border-radius:12px;padding:11px"><div class="eyebrow">This week</div><strong id="weekDone" style="font-size:19px;color:var(--green)">0</strong><div class="muted">items recorded</div></div><div style="flex:1;background:#f2ead9;border-radius:12px;padding:11px"><div class="eyebrow">Daily average</div><strong id="weekRate" style="font-size:19px;color:#84652d">0%</strong><div class="muted">of tracked items</div></div></div><div class="muted" style="margin:8px 0">Daily completion</div><div id="statsChart"></div><div class="muted" style="margin:14px 0 8px">Activity categories · last 7 days</div><div id="categoryChart"></div><p class="muted">Graphs use only entries you record in this app. Tracking begins when you start using this version; earlier days are not reconstructed automatically.</p></details></div>
+<div class="card urooj-analytics-card"><details class="compact-expand" id="progressAnalyticsDetails" open><summary>Progress &amp; habit insights<span class="muted">Daily, weekly and monthly patterns</span></summary><div class="urooj-analytics-controls"><label for="progressMonthSelect">Monthly view</label><select id="progressMonthSelect" aria-label="Number of months in progress report"><option value="3">Last 3 months</option><option value="6" selected>Last 6 months</option><option value="12">Last 12 months</option></select></div><div class="urooj-metric-grid"><div class="urooj-metric"><span>This week</span><strong id="weekDone">0</strong><small>completed / recorded items</small></div><div class="urooj-metric"><span>Completion rate</span><strong id="weekRate">0%</strong><small>of recorded statuses</small></div><div class="urooj-metric"><span>Active days</span><strong id="monthActiveDays">0</strong><small>days with activity this month</small></div><div class="urooj-metric"><span>Best streak</span><strong id="habitBestStreak">0</strong><small>consecutive active days</small></div></div><div class="urooj-chart-title">Daily consistency · last 30 days</div><div id="statsChart" class="urooj-daily-chart" role="img" aria-label="Daily activity completion for the last 30 days"></div><div class="urooj-chart-title">Monthly progress</div><div id="monthlyProgressChart" class="urooj-monthly-chart" role="img" aria-label="Monthly recorded activity and completion rates"></div><div class="urooj-chart-title">Habit balance · current month</div><div id="categoryChart" class="urooj-category-chart"></div><div class="urooj-chart-title">Your strongest habits</div><div id="habitInsightsList" class="urooj-habit-insights"></div><p class="muted urooj-analytics-note">Only activity statuses saved on this device/account are counted. Missing days stay unfilled rather than being treated as failures; older activity is shown only when it exists in your saved log.</p></details></div>
 <div class="card removed-overview" id="statusBreakdownCard"><details class="compact-expand"><summary>Daily tasks &amp; status overview<span class="muted">One combined view of every task and its own status</span></summary><p class="muted">Each task keeps its own meaningful options—for example, prayer has Takbeer-e-Ula/Jamaat, while fitness can have Walking/Running. Edit any task in Settings → Edit your daily tasks.</p><div class="category-bars" id="statusBreakdownChart"></div></details></div>
 <div class="privacy-note">Schedule definitions are editable only in Settings. Daily status selections and graph data are recorded here.</div>
 </section>
@@ -1667,6 +1715,32 @@ $('#undoCount').addEventListener('click',()=>{const m=activeDhikr();if(Number(m.
 const modal=$('#resetModal');function closeModal(){modal.classList.remove('open')}$('#resetCounter').addEventListener('click',()=>modal.classList.add('open'));$('#closeModal').addEventListener('click',closeModal);$('#cancelReset').addEventListener('click',closeModal);modal.addEventListener('click',e=>{if(e.target===modal)closeModal()});$('#confirmReset').addEventListener('click',()=>{activeDhikr().count=0;activeDhikr().rounds=0;state.tasbeeh.count=0;persist();renderTasbeeh();closeModal();toast('Counter reset')});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
 $('#dhikrInfiniteSetting').addEventListener('change',()=>{const t=$('#dhikrTargetSetting');if(t)t.disabled=$('#dhikrInfiniteSetting').value==='infinity'});
 $('#saveDhikrSettings').addEventListener('click',()=>{const title=$('#dhikrTitleSetting').value.trim(),words=$('#dhikrWordsSetting').value.trim(),infinite=$('#dhikrInfiniteSetting').value==='infinity',raw=Number($('#dhikrTargetSetting').value),target=infinite?0:raw,direction=$('#dhikrDirectionSetting').value;if(!title||!words||(!infinite&&(!Number.isInteger(raw)||raw<1||raw>100000))){toast('Enter a name and zikr, and choose a whole-number target from 1 to 100,000 (or Infinity).');return}state.tasbeeh.title=title;state.tasbeeh.words=words;state.tasbeeh.target=target;state.tasbeeh.direction=(title==='Tasbeeh-e-Fatima'&&words==='SubhanAllah · 33\nAlhamdulillah · 33\nAllahu Akbar · 34')?'descending':(direction==='descending'?'descending':'ascending');if(target&&Number(state.tasbeeh.count)>=target){state.tasbeeh.rounds=(Number(state.tasbeeh.rounds)||0)+Math.floor(Number(state.tasbeeh.count)/target);state.tasbeeh.count=Number(state.tasbeeh.count)%target}if(!target)state.tasbeeh.direction='ascending';persist();renderTasbeeh();$('#dhikrSettingsStatus').textContent='Settings saved on this device. The counter now follows your selected direction and target.';toast('Digital Tasbeeh settings saved')});
+
+function renderProgressInsights(all){
+ const host=$('#statsChart');if(!host)return;
+ const log=state.activityLog||{},today=todayKey(),todayDate=new Date(today+'T00:00:00Z');
+ const dateKey=d=>d.toISOString().slice(0,10);
+ const activities=(all||[]).filter((x,i,a)=>x&&x.id&&a.findIndex(y=>y.id===x.id)===i);
+ const isRecorded=v=>v!==undefined&&v!==null&&String(v).trim()!==''&&String(v).trim().toLowerCase()!=='not recorded';
+ const isDone=v=>isRecorded(v)&&!/^(not done|missed|skipped|excused|not applicable|no)$/i.test(String(v).trim());
+ const category=item=>{const t=String(item.category||item.name||'').toLowerCase();if(/fajr|dhuhr|zuhr|asr|maghrib|isha|prayer|namaz/.test(t))return 'Prayer';if(/quran|qur’an|tafseer|tafsir/.test(t))return 'Qur’an';if(/walk|exercise|workout|fitness|running/.test(t))return 'Fitness';if(/read|book|learning|study/.test(t))return 'Learning';if(/dhikr|zikr|tasbeeh|tasbih/.test(t))return 'Dhikr';return 'Personal'};
+ const dayData=d=>{const key=dateKey(d),day=log[key]||{};const entries=activities.map(item=>({item,value:day[item.id]})).filter(x=>isRecorded(x.value));return {key,recorded:entries.length,done:entries.filter(x=>isDone(x.value)).length,entries}};
+ const week=[];for(let n=6;n>=0;n--){const d=new Date(todayDate);d.setUTCDate(d.getUTCDate()-n);week.push(dayData(d))}
+ const weekRecorded=week.reduce((n,d)=>n+d.recorded,0),weekDoneN=week.reduce((n,d)=>n+d.done,0);
+ $('#weekDone').textContent=weekDoneN+' / '+weekRecorded;
+ $('#weekRate').textContent=(weekRecorded?Math.round(weekDoneN/weekRecorded*100):0)+'%';
+ const days30=[];for(let n=29;n>=0;n--){const d=new Date(todayDate);d.setUTCDate(d.getUTCDate()-n);days30.push(dayData(d))}
+ const maxDaily=Math.max(1,...days30.map(d=>d.recorded?Math.round(d.done/d.recorded*100):0));
+ host.innerHTML='<div class="urooj-bars">'+days30.map(d=>{const pct=d.recorded?Math.round(d.done/d.recorded*100):0;const dt=new Date(d.key+'T00:00:00Z');const label=new Intl.DateTimeFormat('en',{day:'numeric',month:'short',timeZone:'UTC'}).format(dt);return '<div class="urooj-day-col" title="'+esc(label+': '+(d.recorded?d.done+'/'+d.recorded+' completed':'No entries'))+'"><div class="urooj-day-track"><i style="height:'+pct+'%"></i></div><small>'+dt.getUTCDate()+'</small></div>'}).join('')+'</div><div class="urooj-chart-legend"><span><i></i> Completed share of recorded statuses</span><span>0–100%</span></div>';
+ const select=$('#progressMonthSelect'),months=Math.max(3,Math.min(12,Number(select?.value)||6)),monthRows=[];
+ for(let n=months-1;n>=0;n--){const d=new Date(Date.UTC(todayDate.getUTCFullYear(),todayDate.getUTCMonth()-n,1)),key=d.toISOString().slice(0,7),last=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).getUTCDate();let recorded=0,done=0,active=0;for(let day=1;day<=last;day++){const dd=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),day));if(dd>todayDate)break;const data=dayData(dd);recorded+=data.recorded;done+=data.done;if(data.recorded)active++}monthRows.push({key,label:new Intl.DateTimeFormat('en',{month:'short',year:'2-digit',timeZone:'UTC'}).format(d),recorded,done,active,rate:recorded?Math.round(done/recorded*100):0})}
+ const monthly=$('#monthlyProgressChart');if(monthly)monthly.innerHTML='<div class="urooj-month-rows">'+monthRows.map(m=>'<div class="urooj-month-row"><div class="urooj-month-label">'+esc(m.label)+'</div><div class="urooj-month-track"><i style="width:'+m.rate+'%"></i></div><strong>'+m.rate+'%</strong><small>'+m.active+' active days · '+m.done+'/'+m.recorded+'</small></div>').join('')+'</div>';
+ const thisMonth=monthRows[monthRows.length-1];$('#monthActiveDays').textContent=thisMonth?.active||0;
+ let run=0,best=0;for(let n=days30.length-1;n>=0;n--){if(days30[n].recorded){run++;best=Math.max(best,run)}else run=0}$('#habitBestStreak').textContent=best+'d';
+ const cats={};const currentKey=today.slice(0,7);Object.entries(log).forEach(([key,values])=>{if(!key.startsWith(currentKey)||key>today||!values)return;activities.forEach(item=>{const v=values[item.id];if(isRecorded(v)){const name=category(item);cats[name] ||= {recorded:0,done:0};cats[name].recorded++;if(isDone(v))cats[name].done++}})});
+ const catHost=$('#categoryChart');if(catHost){const ordered=Object.entries(cats).sort((a,b)=>(b[1].done/Math.max(1,b[1].recorded))-(a[1].done/Math.max(1,a[1].recorded)));catHost.innerHTML=ordered.length?ordered.map(([name,v])=>{const pct=Math.round(v.done/Math.max(1,v.recorded)*100);return '<div class="urooj-category-row"><span>'+esc(name)+'</span><div class="urooj-category-track"><i style="width:'+pct+'%"></i></div><strong>'+pct+'%</strong><small>'+v.done+'/'+v.recorded+'</small></div>'}).join(''):'<p class="muted">Record a few habits to see your category balance.</p>'}
+ const habitHost=$('#habitInsightsList');if(habitHost){const habits=activities.map(item=>{let recorded=0,done=0,activeDays=0;days30.forEach(d=>{const v=(log[d.key]||{})[item.id];if(isRecorded(v)){recorded++;if(isDone(v))done++}});Object.entries(log).forEach(([key,values])=>{if(key.startsWith(currentKey)&&key<=today&&isRecorded(values?.[item.id]))activeDays++});return {name:item.name,recorded,done,rate:recorded?Math.round(done/recorded*100):0,activeDays}}).filter(x=>x.recorded).sort((a,b)=>b.rate-a.rate||b.recorded-a.recorded).slice(0,5);habitHost.innerHTML=habits.length?habits.map((h,i)=>'<div class="urooj-habit-row"><span class="urooj-habit-rank">'+(i+1)+'</span><span class="urooj-habit-name">'+esc(h.name)+'<small>'+h.activeDays+' logged days this month</small></span><span class="urooj-habit-track"><i style="width:'+h.rate+'%"></i></span><strong>'+h.rate+'%</strong></div>').join(''):'<p class="muted">Your top habits will appear after you record activity.</p>'}
+}
 
 function renderStats(){const all=[...activityOptions(),...(state.customActivities||[]),...state.schedule.map((x,i)=>({id:'schedule_'+(x.id||i),name:x.task,options:[]}))];renderProgressInsights(all);}
 function islamicCivilDate(date){const gy=date.getUTCFullYear(),gm=date.getUTCMonth()+1,gd=date.getUTCDate();let jd=Math.floor((1461*(gy+4800+Math.floor((gm-14)/12)))/4)+Math.floor((367*(gm-2-12*Math.floor((gm-14)/12)))/12)-Math.floor((3*Math.floor((gy+4900+Math.floor((gm-14)/12))/100))/4)+gd-32075;let l=jd-1948440+10632,n=Math.floor((l-1)/10631);l=l-10631*n+354;const j=Math.floor((10985-l)/5316)*Math.floor((50*l)/17719)+Math.floor(l/5670)*Math.floor((43*l)/15238);l=l-Math.floor((30-j)/15)*Math.floor((17719*j)/50)-Math.floor(j/16)*Math.floor((15238*j)/43)+29;const m=Math.floor((24*l)/709),d=l-Math.floor((709*m)/24),y=30*n+j-30;return {year:y,month:m,day:d}}
