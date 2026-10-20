@@ -1675,7 +1675,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   try{
    var v=JSON.parse(localStorage.getItem(STORE)||'{}');
    if(!v||typeof v!=='object'||Array.isArray(v))v={};
-   var keys=Object.keys(v).filter(function(k){return /^\\d{4}-\\d{2}-\\d{2}$/.test(k)&&v[k]===true}).sort();
+   var keys=Object.keys(v).filter(function(k){return /^\d{4}-\d{2}-\d{2}$/.test(k)&&v[k]===true}).sort();
    var today=localDateKey(new Date()),yesterday=shiftDay(today,-1),meta=null;
    try{meta=JSON.parse(localStorage.getItem(META)||'null')}catch(e){}
    if(!meta||typeof meta!=='object'||!Number.isFinite(Number(meta.lives))||!meta.lastDate){
@@ -1724,7 +1724,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   var progressTrack=document.querySelector('.urooj-checkin-progress'),progressBar=document.getElementById('uroojCheckinProgressBar');
   if(progressBar)progressBar.style.width=(checked/7*100)+'%';
   if(progressTrack)progressTrack.setAttribute('aria-valuenow',String(checked));
-  var total=Object.keys(log).filter(function(k){return /^\\d{4}-\\d{2}-\\d{2}$/.test(k)&&log[k]===true&&k<=today}).length;
+  var total=Object.keys(log).filter(function(k){return /^\d{4}-\d{2}-\d{2}$/.test(k)&&log[k]===true&&k<=today}).length;
   var totalDays=Math.min(total,365),totalLabel=document.getElementById('uroojTotalDays');if(totalLabel)totalLabel.textContent=totalDays+' / 365 days';
   var remaining=totalDays;
   document.querySelectorAll('#uroojUpgradeJourney .upgrade-step[data-stage]').forEach(function(step){
