@@ -1795,7 +1795,7 @@ function startDrivePolling(){
  if(gDrivePollTimer)clearInterval(gDrivePollTimer);
  gDrivePollTimer=setInterval(checkDriveForChanges,15000);
 }
-function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}/* Preserve the user's Google grant so the Drive consent screen is not needlessly triggered again. */if(gDrivePollTimerclearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('')}
+function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}/* Preserve the user's Google grant so the Drive consent screen is not needlessly triggered again. */if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('')}
 function renderAccountStatus(syncError,syncMessage){
  const host=document.getElementById('googleAccountCard');if(!host)return;
  if(gUserInfo&&gUserInfo.email){
