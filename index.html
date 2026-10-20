@@ -1629,7 +1629,20 @@ function renderProgressInsights(items){
  if(stats)stats.innerHTML=daily.map(d=>'<div class="category-row" style="grid-template-columns:38px minmax(0,1fr) 38px;gap:8px;align-items:center;margin:7px 0"><span class="muted">'+esc(d.label)+'</span><div class="category-track" role="img" aria-label="'+d.done+' completed of '+d.recorded+' recorded"><i style="width:'+d.pct+'%"></i></div><b style="font-size:10px;text-align:right">'+d.pct+'%</b></div>').join('');
  if(categories){const rows=Object.entries(byCategory).sort((a,b)=>b[1].recorded-a[1].recorded);categories.innerHTML=rows.length?rows.map(([name,v])=>{const pct=v.recorded?Math.round(v.done/v.recorded*100):0;return '<div class="category-row" style="grid-template-columns:minmax(75px,1fr) minmax(50px,1fr) 38px;gap:8px;align-items:center;margin:7px 0"><span style="font-size:11px;overflow-wrap:anywhere">'+esc(name)+'</span><div class="category-track"><i style="width:'+pct+'%"></i></div><b style="font-size:10px;text-align:right">'+pct+'%</b></div>'}).join(''):'<p class="muted">Record a few activities to see your weekly summary.</p>';}
 }
-function renderStats(){const all=[...activityOptions(),...(state.customActivities||[]),...state.schedule.map((x,i)=>({id:'schedule_'+(x.id||i),name:x.task,category:x.category||inferActivityCategory(x.task),options:[]}))];renderProgressInsights(all);}
+function renderStats(){
+ try{
+  const base=typeof activityOptions==='function'?activityOptions():[];
+  const custom=Array.isArray(state.customActivities)?state.customActivities:[];
+  const schedule=Array.isArray(state.schedule)?state.schedule:[];
+  const all=[...(Array.isArray(base)?base:[]),...custom,...schedule.map((x,i)=>({id:'schedule_'+(x?.id||i),name:x?.task||x?.name||'Activity',category:x?.category||(typeof inferActivityCategory==='function'?inferActivityCategory(x?.task||x?.name||'Activity'):'Other'),options:[]}))];
+  renderProgressInsights(all);
+ }catch(err){
+  console.error('Statistics could not be rendered',err);
+  const stats=document.getElementById('statsChart'),categories=document.getElementById('categoryChart');
+  if(stats)stats.innerHTML='<p class="muted">Weekly statistics will appear when activity data is available.</p>';
+  if(categories)categories.innerHTML='<p class="muted">Activity categories are temporarily unavailable. Other sections remain available.</p>';
+ }
+}
 function islamicCivilDate(date){const gy=date.getUTCFullYear(),gm=date.getUTCMonth()+1,gd=date.getUTCDate();let jd=Math.floor((1461*(gy+4800+Math.floor((gm-14)/12)))/4)+Math.floor((367*(gm-2-12*Math.floor((gm-14)/12)))/12)-Math.floor((3*Math.floor((gy+4900+Math.floor((gm-14)/12))/100))/4)+gd-32075;let l=jd-1948440+10632,n=Math.floor((l-1)/10631);l=l-10631*n+354;const j=Math.floor((10985-l)/5316)*Math.floor((50*l)/17719)+Math.floor(l/5670)*Math.floor((43*l)/15238);l=l-Math.floor((30-j)/15)*Math.floor((17719*j)/50)-Math.floor(j/16)*Math.floor((15238*j)/43)+29;const m=Math.floor((24*l)/709),d=l-Math.floor((709*m)/24),y=30*n+j-30;return {year:y,month:m,day:d}}
 function gregorianKey(d){return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`}
 
