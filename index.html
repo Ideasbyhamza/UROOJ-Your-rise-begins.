@@ -977,6 +977,16 @@ html[data-urooj-palette="blue"][data-urooj-theme="light"]{background:#F8FAFC;col
 html[data-urooj-palette="blue"][data-urooj-theme="dark"]{background:#0F172A;color-scheme:dark}
 html[data-urooj-palette="evergreen"][data-urooj-theme="light"]{background:#F8FBF8;color-scheme:light}
 html[data-urooj-palette="evergreen"][data-urooj-theme="dark"]{background:#0D1912;color-scheme:dark}
+
+/* Online-only access gate */
+#uroojOfflineGate{position:fixed;inset:0;z-index:2147483647;display:none;align-items:center;justify-content:center;padding:24px;background:var(--bg,#f8f8f8);color:var(--text,#171717);text-align:center}
+#uroojOfflineGate[aria-hidden="false"]{display:flex}
+#uroojOfflineGate .offline-panel{width:min(100%,420px);padding:28px 22px;border:1px solid var(--border,#888);border-radius:22px;background:var(--surface,#fff);box-shadow:0 16px 48px #0002}
+#uroojOfflineGate .offline-symbol{font-size:38px;margin-bottom:12px}
+#uroojOfflineGate h2{font-size:22px;margin:0 0 10px}
+#uroojOfflineGate p{font-size:14px;line-height:1.6;margin:0 0 16px}
+#uroojOfflineGate button{min-height:44px;padding:10px 18px;border:1px solid currentColor;border-radius:12px;background:transparent;color:inherit;font:inherit;font-weight:600}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 <style id="urooj-unified-tab-headers">
@@ -2411,6 +2421,23 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)finish()});
  window.uroojStartFocusedTutorial=start;
 
+})();
+</script>
+<div id="uroojOfflineGate" aria-hidden="true" role="alertdialog" aria-modal="true" aria-labelledby="uroojOfflineTitle"><div class="offline-panel"><div class="offline-symbol" aria-hidden="true">⌁</div><h2 id="uroojOfflineTitle">Internet connection required</h2><p>UROOJ works only while you are connected to the internet. Reconnect, then tap below to continue.</p><button id="uroojOfflineRetry" type="button">Retry connection</button></div></div>
+<script>
+(function(){
+ const gate=document.getElementById('uroojOfflineGate');
+ const retry=document.getElementById('uroojOfflineRetry');
+ function updateOnlineGate(){
+  const offline=!navigator.onLine;
+  gate.setAttribute('aria-hidden',offline?'false':'true');
+  document.documentElement.classList.toggle('urooj-offline',offline);
+  if(offline){try{gate.focus({preventScroll:true})}catch(e){}}
+ }
+ window.addEventListener('online',updateOnlineGate);
+ window.addEventListener('offline',updateOnlineGate);
+ retry.addEventListener('click',function(){updateOnlineGate();if(navigator.onLine)location.reload();});
+ updateOnlineGate();
 })();
 </script>
 </body>
