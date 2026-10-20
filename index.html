@@ -1682,7 +1682,7 @@ function initGoogleAuth(){
   return;
  }
  window.__uroojGoogleInitAttempts=0;if(btn)btn.disabled=false;if(notice)notice.hidden=true;
- try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,callback:handleGoogleToken,error_callback:function(err){clearSignInWatchdog();console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google’s sign-in window was blocked. Allow pop-ups for this site and try again.':type==='popup_closed'?'The Google sign-in window was closed before completing. Please try again.':'Google sign-in was cancelled or blocked. Check pop-up settings and try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID, authorized JavaScript origin, and Google Cloud OAuth settings.'}setLoginError('Google sign-in could not start. Check your Google Cloud OAuth settings.');return}
+ try{gTokenClient=google.accounts.oauth2.initTokenClient({client_id:GOOGLE_CLIENT_ID,scope:DRIVE_SCOPE,include_granted_scopes:true,callback:handleGoogleToken,error_callback:function(err){clearSignInWatchdog();console.error('Google auth error',err);setLoginBusy(false);const type=err&&err.type;setLoginError(type==='popup_failed_to_open'?'Google’s sign-in window was blocked. Allow pop-ups for this site and try again.':type==='popup_closed'?'The Google sign-in window was closed before completing. Please try again.':'Google sign-in was cancelled or blocked. Check pop-up settings and try again.')}})}catch(err){console.error('Could not init Google auth',err);if(notice){notice.hidden=false;notice.textContent='Google sign-in could not start. Check the Client ID, authorized JavaScript origin, and Google Cloud OAuth settings.'}setLoginError('Google sign-in could not start. Check your Google Cloud OAuth settings.');return}
  const cached=loadGoogleAccountCache();if(cached&&cached.email){gUserInfo=cached;renderAccountStatus()}
 }
 async function handleGoogleToken(resp){
@@ -1795,7 +1795,7 @@ function startDrivePolling(){
  if(gDrivePollTimer)clearInterval(gDrivePollTimer);
  gDrivePollTimer=setInterval(checkDriveForChanges,15000);
 }
-function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('')}
+function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}/* Preserve the user's Google grant so the Drive consent screen is not needlessly triggered again. */if(gDrivePollTimerclearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('')}
 function renderAccountStatus(syncError,syncMessage){
  const host=document.getElementById('googleAccountCard');if(!host)return;
  if(gUserInfo&&gUserInfo.email){
@@ -1806,16 +1806,14 @@ function renderAccountStatus(syncError,syncMessage){
  }
 }
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
-document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){unlockApp();renderAccountStatus();renderViewOnDemand('schedule')});
+document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){setLoginError('');unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');applyTheme();});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
 const hadAppSession=resumeAppSession();
- // Hosted web startup is local-first: Google sign-in is optional, never a gate to the app.
- if(!hadAppSession && location.hostname!=='appassets.androidplatform.net'){
-  document.body.classList.add('jarvis-authenticated');
+ // Show the login choices on a fresh/expired session; resume directly only when a valid session exists.
+ if(!hadAppSession){
+  document.body.classList.remove('jarvis-authenticated');
   const login=document.getElementById('jarvisLogin');
-  if(login)login.style.display='none';
-
-  ;
+  if(login)login.style.display='grid';
  }
  initGoogleAuth();
 renderAccountStatus();
