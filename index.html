@@ -923,6 +923,23 @@ button,input,textarea,select{min-width:0}
 #view-sanctuary .settings-accordion .field label{margin-bottom:1px}
 #view-sanctuary .settings-accordion .field input,#view-sanctuary .settings-accordion .field select,#view-sanctuary .settings-accordion .field textarea{min-height:32px;padding:5px 7px}
 
+
+/* Consistent compact tab headers and symmetric task layout. */
+.app .section-head.app-section-head,.app .section-head.challenge-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:0 0 12px;padding:0}
+.app .section-heading-copy{flex:1;min-width:0}
+.app .section-heading-copy h1{margin:0 0 3px;line-height:1.15}
+.app .section-heading-copy p{margin:4px 0 0;line-height:1.35;max-width:38em}
+.app .current-level-badge{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;max-width:48%;padding:6px 8px;border:1px solid var(--line);border-radius:9px;background:var(--sage);color:var(--green);font-size:10px;font-weight:750;line-height:1.2;text-align:center;white-space:normal}
+.app .section-head-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto;max-width:50%}
+.app .task-count-pills{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px}
+.app .task-count-pills .solar{margin:0;padding:4px 6px;font-size:9px;line-height:1.2}
+#view-schedule .slot-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:6px;align-items:center;padding:0 7px;margin:5px 0}
+#view-schedule .schedule-task-tile{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:5px 8px}
+#view-schedule .schedule-task-tile .schedule-status-feedback{grid-column:1/-1}
+#view-schedule .tracker-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:5px;padding:5px 7px;margin:3px 0;min-height:0}
+#view-schedule .tracker-row select{width:100%;min-width:0}
+@media(max-width:360px){.app .section-head.app-section-head,.app .section-head.challenge-section-head{gap:6px}.app .section-heading-copy p{font-size:10px}.app .current-level-badge{padding:5px 6px;font-size:9px}.app .section-head-right{max-width:45%}.app .task-count-pills{gap:3px}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -1102,7 +1119,7 @@ button,input,textarea,select{min-width:0}
 <div class="privacy-note">Schedule definitions are editable only in Settings. Daily status selections and graph data are recorded here.</div>
 </section>
 <section class="view active" id="view-challenges">
-<div class="section-head challenge-section-head"><div><h1>Challenges</h1><div class="eyebrow challenge-kicker">Train your attention</div><p>Progress over punishment. Return to the path whenever you need.</p></div></div>
+<div class="section-head challenge-section-head"><div class="section-heading-copy"><h1>Challenges</h1><div class="eyebrow challenge-kicker">Train your attention</div><p>Progress over punishment. Return to the path whenever you need.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
 
 <article class="quote challenge-motive">
 <div class="eyebrow">Today’s Motive</div><blockquote id="quoteText">“The most beloved deeds to Allah are those that are most consistent, even if they are few.”</blockquote>
@@ -1151,7 +1168,7 @@ button,input,textarea,select{min-width:0}
 <div class="privacy-note">Privacy note: entries are stored in browser localStorage, which is not encrypted by this app. Anyone with access to your unlocked device or browser profile may be able to read them. Use device security and avoid shared browsers.</div>
 </section>
 <section class="view" id="view-sanctuary">
-<div class="section-head"><div><div class="eyebrow">Personalise your experience</div><h1>Settings</h1><p>Manage your daily schedule, reminders, and personal study tools.</p></div></div>
+<div class="section-head app-section-head"><div class="section-heading-copy"><div class="eyebrow">Personalise your experience</div><h1>Settings</h1><p>Manage your daily schedule, reminders, and personal study tools.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div></div>
 <p class="muted" style="font-size:10px;line-height:1.4">Sign in with Google from the login screen to back up your data to Google Drive.</p>
 <p class="settings-intro-cue"><span aria-hidden="true" class="cue-arrow">›</span> Tap a setting to open details. The tutorial arrow points to the relevant option.</p>
@@ -1936,5 +1953,27 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render);else render();
 })();</script>
 
+<script>
+
+/* Keep the level chip in every tab synced with the 365-day journey. */
+(function(){
+ const names=['Zawal','Iftitah','Hadaf','Tarteeb','Istiqamah','UROOJ'];
+ function syncCurrentLevel(){
+  const total=document.getElementById('uroojTotalDays');
+  const raw=total?total.textContent:'0 / 365 days';
+  const done=Math.max(0,parseInt(raw,10)||0);
+  const starts=[0,60,120,180,240,300];
+  let idx=starts.findIndex((start,i)=>done>=start&&(i===starts.length-1||done<starts[i+1]));
+  if(idx<0)idx=done>=365?5:0;
+  const label='Level '+String(idx+1).padStart(2,'0')+' · '+names[idx];
+  document.querySelectorAll('[data-current-level]').forEach(el=>{el.textContent=label;el.setAttribute('aria-label','Current level: '+label);});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',syncCurrentLevel);else syncCurrentLevel();
+ const total=document.getElementById('uroojTotalDays');
+ if(total&&'MutationObserver'in window)new MutationObserver(syncCurrentLevel).observe(total,{childList:true,characterData:true,subtree:true});
+ setTimeout(syncCurrentLevel,300);
+})();
+
+</script>
 </body>
 </html>
