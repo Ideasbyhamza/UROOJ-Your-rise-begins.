@@ -466,6 +466,18 @@ body.dark .urooj-day-check.checked .day-square{background:#2d8a4b;border-color:#
 body.dark .urooj-streak-pill{background:#2c4938;color:#d8e8d9}
 @media(max-width:360px){.urooj-progress-card{padding:10px}.urooj-week-grid{gap:3px}#uroojUpgradeJourney .upgrade-step{padding:9px}#uroojUpgradeJourney .upgrade-days{font-size:9px}}
 
+/* Keep character titles contained and pin the lives indicator to each card's top-right corner. */
+#uroojUpgradeJourney .upgrade-step{min-width:0;overflow:hidden}
+#uroojUpgradeJourney .upgrade-top{min-width:0;max-width:100%;padding-right:0}
+#uroojUpgradeJourney .upgrade-heading{min-width:0;max-width:100%;overflow:hidden}
+#uroojUpgradeJourney .upgrade-word{display:block;max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:break-word}
+#uroojUpgradeJourney .upgrade-tier-label{max-width:100%;white-space:normal;overflow-wrap:anywhere}
+#uroojUpgradeJourney .upgrade-days{min-width:0;white-space:normal;overflow-wrap:anywhere;text-align:right}
+#uroojUpgradeJourney .urooj-stage-status{position:absolute;top:10px;right:10px;width:auto;display:flex;justify-content:flex-end;gap:4px;z-index:2}
+#uroojUpgradeJourney .urooj-stage-status [data-stage-progress-label]{display:none}
+#uroojUpgradeJourney .urooj-lives{gap:3px}
+#uroojUpgradeJourney .upgrade-top{padding-right:64px}
+
 /* UROOJ unified two-colour system: platform blue + neutral surfaces */
 body[data-palette="blue"]{--sand:#F8FAFC;--green:#2563EB;--gold:#2563EB;--sage:#EFF6FF;--ink:#172033;--muted:#64748B;--line:#E2E8F0;--white:#FFFFFF;--shadow:0 8px 28px rgba(37,99,235,.07)}
 body.dark[data-palette="blue"]{--sand:#0F172A;--green:#93C5FD;--gold:#93C5FD;--sage:#172554;--ink:#F1F5F9;--muted:#94A3B8;--line:#29364D;--white:#111C31;--shadow:0 8px 28px rgba(0,0,0,.22)}
