@@ -1319,6 +1319,20 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
  #uroojUpgradeJourney .urooj-stage-status{font-size:8px}
 }
 
+
+/* Slim level-title tiles: remove step numbers and give character names more emphasis. */
+#uroojUpgradeJourney .upgrade-step{padding:7px 10px;gap:4px 8px;grid-template-rows:auto auto 4px auto;border-radius:10px}
+#uroojUpgradeJourney .upgrade-number{display:none!important}
+#uroojUpgradeJourney .upgrade-top{grid-column:1/-1;grid-row:1;gap:0;min-height:0;padding-right:0;align-items:center}
+#uroojUpgradeJourney .upgrade-heading{gap:2px;justify-content:flex-start;overflow:visible}
+#uroojUpgradeJourney .upgrade-tier-label{font-size:10px;line-height:1.1;letter-spacing:.03em}
+#uroojUpgradeJourney .upgrade-word{font-size:16px;line-height:1.15;font-weight:800}
+#uroojUpgradeJourney .upgrade-days{font-size:10px;line-height:1.15}
+#uroojUpgradeJourney .urooj-stage-status{top:7px;right:8px;min-height:14px}
+#uroojUpgradeJourney .urooj-stage-progress{height:4px}
+#uroojUpgradeJourney .urooj-stage-dots{min-height:4px}
+@media(max-width:360px){#uroojUpgradeJourney .upgrade-step{padding:7px 9px}#uroojUpgradeJourney .upgrade-word{font-size:15px}#uroojUpgradeJourney .upgrade-tier-label{font-size:9px}}
+
 </style>
 </head>
 <body>
