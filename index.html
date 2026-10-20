@@ -1843,6 +1843,8 @@ const hadAppSession=resumeAppSession();
   document.body.classList.add('jarvis-authenticated');
   const login=document.getElementById('jarvisLogin');
   if(login)login.style.display='none';
+  // Hosted browser visits should also get the guided tour; unlockApp() handles later sign-ins.
+  setTimeout(()=>openUroojTutorial(false),650);
  }
  initGoogleAuth();
 renderAccountStatus();
