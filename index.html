@@ -1979,25 +1979,29 @@ function defaultScheduleStatusOptions(s={}){const text=String(s.task||s.name||''
 function scheduleStatusOptions(s,preserveValue=''){const custom=Array.isArray(s.statusOptions)?s.statusOptions.map(x=>String(x).trim()).filter(Boolean):[];const opts=custom.length?custom:defaultScheduleStatusOptions(s);if(!opts.includes('Not recorded'))opts.unshift('Not recorded');if(preserveValue&&!opts.includes(preserveValue))opts.push(preserveValue);return [...new Set(opts)]}
 function updateScheduleSummary(){
  const log=logForToday();
- // Task progress is based ONLY on the enabled tasks listed in this section.
- // Default denominator is the seven schedule tasks; adding/removing tasks changes it automatically.
+ // Use the same enabled tasks rendered as cards, so the denominator cannot drift from the UI.
  const items=(state.schedule||[]).filter(x=>x.enabled!==false);
  const tracked=items.map((item,i)=>{
   const id=item.id||i;
   const value=log['schedule_'+id]||'Not recorded';
-  return {item:{...item,id:'schedule_'+id},value};
+  const normalized=String(value).trim().toLowerCase();
+  const recorded=!!normalized&&normalized!=='not recorded';
+  // Recorded does not automatically mean completed; incomplete statuses must not inflate progress.
+  const incomplete=/\b(missed|not done|not completed|incomplete|skipped|excused|not applicable|partly done|partially done|in progress)\b/.test(normalized);
+  return {recorded,done:recorded&&!incomplete};
  });
- const recorded=tracked.filter(x=>x.value && String(x.value).trim().toLowerCase()!=='not recorded').length;
- const done=tracked.filter(x=>isActivityComplete(x.item,x.value)).length;
- const total=tracked.length;
+ const renderedCount=$$('#scheduleSlots .schedule-task-tile').length;
+ const total=renderedCount||items.length;
+ const recorded=tracked.filter(x=>x.recorded).length;
+ const done=tracked.filter(x=>x.done).length;
  const pct=total?Math.round((done/total)*100):0;
  const count=$('#todayCount'),totalTasks=$('#todayTotalTasks'),percent=$('#progressPercent'),ring=$('#progressRing'),bar=$('#progressBar'),title=$('#progressTitle'),sub=$('#progressSub');
- if(count)count.textContent=`${recorded} recorded`;
- if(totalTasks)totalTasks.textContent=`${total} total tasks`;
+ if(count)count.textContent=recorded+' recorded';
+ if(totalTasks)totalTasks.textContent=total+' total tasks';
  if(percent)percent.textContent=pct+'%';
  if(ring)ring.style.setProperty('--progress',pct+'%');
  if(bar)bar.style.width=pct+'%';
- if(title)title.textContent=pct===100?'Alhamdulillah, all tasks completed.':pct===0?'Start with one good deed.':`${done} of ${total} tasks completed`;
+ if(title)title.textContent=pct===100?'Alhamdulillah, all tasks completed.':pct===0?'Start with one good deed.':done+' of '+total+' tasks completed';
  if(sub)sub.textContent='Based on listed tasks only.';
 }
 function markDailyProgressFlag(flag,value=true){const key=todayKey();if(!state.dailyProgressFlags||state.dailyProgressFlags.date!==key)state.dailyProgressFlags={date:key,challenge:false,tasbeeh:false,story:false,reflection:false};state.dailyProgressFlags[flag]=!!value;persist();updateScheduleSummary();}
