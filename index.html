@@ -2128,19 +2128,21 @@ async function deleteUroojDriveBackup(){
  gDriveFileId=null;gDriveModifiedTime=null;gLocalDirty=false;
 }
 $('#fullResetData')?.addEventListener('click',async()=>{
+ if(gSyncing){alert('A Google Drive sync is still running. Wait for it to finish, then retry Full reset.');return;}
  const cloudBackupMayExist=getSyncTime()>0;
  if(cloudBackupMayExist&&!gAccessToken){alert('A previous Google Drive sync is recorded. Reconnect the same Google account first; the full reset is cancelled so your cloud backup is not left behind.');return;}
  const scope=gAccessToken?'this device and your UROOJ backup in Google Drive':'this device';
  if(!confirm('FULL RESET: permanently erase all UROOJ data on '+scope+', including progress, challenges, Tasbeeh, feedback, consent/tutorial settings, colour palette and theme? This cannot be undone. Export a backup first if needed.'))return;
  if(!confirm('Final confirmation: delete the saved UROOJ data'+(gAccessToken?' from Google Drive and this device':' from this device')+' now?'))return;
  const button=$('#fullResetData');if(button){button.disabled=true;button.textContent='Deleting saved data…';}
+ if(gSyncTimer){clearTimeout(gSyncTimer);gSyncTimer=null;}if(gDrivePollTimer){clearInterval(gDrivePollTimer);gDrivePollTimer=null;}
  try{
   if(gAccessToken)await deleteUroojDriveBackup();
   try{localStorage.clear()}catch(e){}
   try{sessionStorage.clear()}catch(e){}
   try{if('caches'in window)await Promise.all((await caches.keys()).map(key=>caches.delete(key)))}catch(e){}
   location.reload();
- }catch(error){console.error('Full reset stopped because Drive deletion failed',error);alert('UROOJ did not clear this device because it could not confirm deletion of the Google Drive backup. Check your connection, reconnect Google if needed, then try Full reset again. Your local data has been kept safe.');if(button){button.disabled=false;button.textContent='Full reset all app data';}}
+ }catch(error){console.error('Full reset stopped because Drive deletion failed',error);alert('UROOJ did not clear this device because it could not confirm deletion of the Google Drive backup. Check your connection, reconnect Google if needed, then try Full reset again. Your local data has been kept safe.');if(button){button.disabled=false;button.textContent='Full reset all app data';}if(gAccessToken)startDrivePolling();}
 });
 
 window.__tazkiyaRenderView=renderViewOnDemand;
