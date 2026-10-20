@@ -2304,7 +2304,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   if(key!==today||button.disabled)return;
   var log=read();
   if(log[key]){
-   var undo=window.confirm('Your check-in is already recorded. Why change it now? Allah is watching, even when no one else is. Keep your record honest. Do you still want to undo this check-in?');
+   var undo=window.confirm('Already checked in. Allah is watching—keep it honest. Undo your check-in?');
    if(!undo)return;
    delete log[key];
   }else{
