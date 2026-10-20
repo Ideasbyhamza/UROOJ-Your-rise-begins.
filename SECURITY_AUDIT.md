@@ -11,6 +11,13 @@ This is a **static code review, not a penetration test or security certification
 
 The main hosted page's **Full reset all app data** now attempts to delete the UROOJ Drive backup when Google is connected, before clearing local/session storage. It blocks reset when a previous successful sync is recorded but no Google token is active, asks the user to reconnect, and preserves local data if the Drive delete request fails. It also refuses to start while a Drive sync is in progress. This relies on the browser having a valid Google authorization and the Drive API being available; the deployed flow still needs real-account testing. Clearing browser data manually or signing out does not delete Drive data.
 
+
+
+### Change made 2026-10-20 — Reduce persistent app-session exposure
+The login-gate session marker in `index.html` and `UROOJ.html` now uses `sessionStorage` with a 12-hour expiry instead of `localStorage` (the hosted page previously retained it for up to one year). This reduces accidental re-entry after the browser tab/session is closed and removes the legacy persistent marker on startup.
+
+**Important limitation:** UROOJ is a static client-side app with local browser data. This gate is a convenience/privacy barrier, **not real authentication or an authorization boundary**: a person with access to the device, developer tools, or the browser profile can still access or modify local data. Do not store passwords, secret credentials, or highly sensitive records in this app. Real account-level security requires a trusted backend and server-enforced authorization.
+
 ## Findings
 
 ### Medium — User-generated content rendered with `innerHTML`
