@@ -1517,7 +1517,7 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
   <div class="urooj-tutorial-count" id="uroojTutorialCount">Step 1 of 7</div>
   <h2 id="uroojTutorialHeading">Add a challenge</h2>
   <p id="uroojTutorialCopy">Create a challenge to work toward one clear goal.</p>
-  <div class="urooj-tutorial-actions"><button type="button" class="urooj-tutorial-skip" id="uroojTutorialSkip">Skip</button><button type="button" class="urooj-tutorial-next" id="uroojTutorialNext">Next</button></div>
+  <div class="urooj-tutorial-actions"><label class="urooj-tutorial-dont-show" style="display:flex;align-items:center;gap:7px;margin-right:auto;font-size:12px;line-height:1.3"><input id="uroojTutorialDontShowAgain" type="checkbox" style="accent-color:currentColor;width:16px;height:16px">Don’t show again</label><button type="button" class="urooj-tutorial-skip" id="uroojTutorialSkip">Skip</button><button type="button" class="urooj-tutorial-next" id="uroojTutorialNext">Next</button></div>
  </div>
 </div>
 <div class="app">
@@ -2411,7 +2411,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   const m=modal();m.classList.add('is-open');m.setAttribute('aria-hidden','false');
  }
  const TUTORIAL_SEEN_KEY='urooj-focused-tutorial-seen-v1';let startedAuthenticated=false;
- function finish(){clearHighlight();const m=modal();m.classList.remove('is-open');m.setAttribute('aria-hidden','true');active=false;const gate=document.getElementById('jarvisLogin');if(startedAuthenticated){document.body.classList.add('jarvis-authenticated');if(gate)gate.style.display='none';}else if(startedFromLogin){document.body.classList.remove('jarvis-authenticated');if(gate)gate.style.display='grid';}startedFromLogin=false;startedAuthenticated=false;try{localStorage.setItem(TUTORIAL_SEEN_KEY,'1')}catch(e){}}
+ function finish(){clearHighlight();const m=modal();m.classList.remove('is-open');m.setAttribute('aria-hidden','true');active=false;const gate=document.getElementById('jarvisLogin');if(startedAuthenticated){document.body.classList.add('jarvis-authenticated');if(gate)gate.style.display='none';}else if(startedFromLogin){document.body.classList.remove('jarvis-authenticated');if(gate)gate.style.display='grid';}startedFromLogin=false;startedAuthenticated=false;const dontShow=document.getElementById('uroojTutorialDontShowAgain');try{if(dontShow&&dontShow.checked)localStorage.setItem(TUTORIAL_SEEN_KEY,'1');else localStorage.removeItem(TUTORIAL_SEEN_KEY)}catch(e){}}
  function start(mode){if(active)return;const gate=document.getElementById('jarvisLogin');if(mode==='postLogin'){try{if(localStorage.getItem(TUTORIAL_SEEN_KEY)==='1')return}catch(e){}}startedAuthenticated=document.body.classList.contains('jarvis-authenticated');startedFromLogin=!!(gate&&getComputedStyle(gate).display!=='none'&&!startedAuthenticated);activeSteps=mode==='postLogin'?steps.slice(0,-1):steps;if(startedFromLogin){document.body.classList.add('jarvis-authenticated');gate.style.display='none';}active=true;index=0;showStep()}
  document.getElementById('uroojTutorialNext').addEventListener('click',()=>{index++;if(index>=activeSteps.length)finish();else showStep()});
  document.getElementById('uroojTutorialSkip').addEventListener('click',finish);
