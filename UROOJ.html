@@ -5,9 +5,9 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
 <meta content="#FDFBF7" name="theme-color"/>
-<meta content="UROOJ 2.0 — Your rise begins. A private space for intention, consistency, and reflection." name="description"/>
+<meta content="UROOJ 20 — Your rise begins. A private space for intention, consistency, and reflection." name="description"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
-<title>UROOJ 2.0</title>
+<title>UROOJ 20</title>
 <!-- Offline-friendly: use local system fonts so the app does not wait for Google Fonts. -->
 <style>
 :root{--sand:#F8FAFC;--green:#2563EB;--gold:#2563EB;--sage:#EFF6FF;--ink:#172033;--muted:#64748B;--line:#E2E8F0;--white:#FFFFFF;--shadow:0 10px 30px rgba(37,99,235,.07);color-scheme:light}
@@ -794,14 +794,21 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 @media(max-width:360px){.app .section-head.app-section-head,.app .section-head.challenge-section-head{gap:6px}.app .section-heading-copy p{font-size:10px}.app .current-level-badge{padding:5px 6px;font-size:9px}.app .section-head-right{max-width:45%}.app .task-count-pills{gap:3px}}
 
 
-/* UROOJ 2.0 responsive density: controls and component geometry follow the font scale. */
-.app{--urooj-density:var(--urooj-text-scale,1)}
+/* UROOJ 20 responsive density: controls and component geometry follow the font scale. */
+.app{--urooj-density:clamp(.78,var(--urooj-text-scale,1),1.2)}
 .app .card,.app .progress-card,.app .routine-item,.app .journal-entry,.app .quran-entry,.app .reminder-today{padding:calc(14px * var(--urooj-density))!important;border-radius:calc(16px * var(--urooj-density))!important}
-.app :is(button,.btn,.primary,.solar,select,input,textarea,.count-pill,.current-level-badge,.nav button){min-height:calc(34px * var(--urooj-density))}
+.app :is(button,.btn,.primary,.solar,select,input,textarea,.count-pill,.current-level-badge,.nav button){min-height:calc(34px * var(--urooj-density));font-size:calc(13px * var(--urooj-density));line-height:1.25}
 .app :is(select,input,textarea){padding:calc(9px * var(--urooj-density)) calc(10px * var(--urooj-density))!important;min-width:0;max-width:100%;box-sizing:border-box}
 .app .card-title,.app .section-head,.app .btn-row,.app .urooj-metric-grid{gap:calc(8px * var(--urooj-density))}
 .app .urooj-metric{padding:calc(10px * var(--urooj-density))}
 .app .urooj-day-track{height:calc(76px * var(--urooj-density))}
+.app .urooj-analytics-card{min-width:0;overflow:hidden}
+.app .urooj-analytics-card .compact-expand>summary{font-size:calc(14px * var(--urooj-density));line-height:1.3}
+.app .urooj-analytics-card .urooj-chart-title{margin:calc(14px * var(--urooj-density)) 0 calc(7px * var(--urooj-density));font-size:calc(12px * var(--urooj-density));font-weight:700}
+.app .urooj-analytics-card .urooj-month-row{grid-template-columns:minmax(40px,.55fr) minmax(0,1.6fr) 38px;column-gap:calc(7px * var(--urooj-density));row-gap:3px}
+.app .urooj-analytics-card .urooj-month-row small{grid-column:2/4;min-width:0;overflow-wrap:anywhere}
+.app .urooj-analytics-card .urooj-day-col{min-width:0}
+.app .urooj-analytics-card .urooj-day-col small{font-size:calc(9px * var(--urooj-density))}
 .app .urooj-month-track,.app .urooj-category-track,.app .urooj-habit-track{height:calc(7px * var(--urooj-density))}
 .app .urooj-bars{gap:calc(3px * var(--urooj-density))}
 @media(max-width:420px){.app .urooj-metric-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.app .urooj-analytics-controls{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:8px}.app .urooj-analytics-controls select{width:100%}}
