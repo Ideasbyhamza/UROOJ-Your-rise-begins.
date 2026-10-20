@@ -943,52 +943,130 @@ button,input,textarea,select{min-width:0}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 <style id="urooj-unified-tab-headers">
-/* Compact, consistent tab headers: title first, subtitle second, sequence detail last. */
-.section-head.app-section-head,
-.section-head.challenge-section-head{
+/* Unified, responsive headers across every main tab. */
+.app .section-head.app-section-head,
+.app .section-head.challenge-section-head{
   display:grid!important;
   grid-template-columns:minmax(0,1fr) auto;
   grid-template-rows:auto auto auto;
+  column-gap:10px!important;
+  row-gap:3px!important;
   align-items:start!important;
   justify-content:initial!important;
-  gap:0 8px!important;
   width:100%;
-  margin:7px 0 10px!important;
+  box-sizing:border-box;
+  margin:8px 0 14px!important;
   padding:0!important;
   text-align:left!important;
 }
-.section-head.app-section-head .section-heading-copy,
-.section-head.challenge-section-head .section-heading-copy{display:contents}
-.section-head.app-section-head .section-heading-copy h1,
-.section-head.challenge-section-head .section-heading-copy h1{
-  grid-column:1;grid-row:1;align-self:start;
-  margin:0!important;font-size:27px;line-height:1.14;font-weight:650;text-align:left!important;
+.app .section-head.app-section-head .section-heading-copy,
+.app .section-head.challenge-section-head .section-heading-copy{
+  display:flex!important;
+  flex-direction:column;
+  grid-column:1;
+  grid-row:1/span 3;
+  min-width:0;
+  gap:0;
 }
-.section-head.app-section-head .section-heading-copy p,
-.section-head.challenge-section-head .section-heading-copy p{
-  grid-column:1/-1;grid-row:2;
-  margin:2px 0 0!important;font-size:11px;line-height:1.3;text-align:left!important;
+.app .section-head.app-section-head .section-heading-copy h1,
+.app .section-head.challenge-section-head .section-heading-copy h1{
+  order:1;
+  margin:0!important;
+  font-size:clamp(26px,6.5vw,30px)!important;
+  line-height:1.12!important;
+  font-weight:750!important;
+  letter-spacing:-.025em;
+  text-align:left!important;
+  overflow-wrap:anywhere;
 }
-.section-head.app-section-head .section-heading-copy .eyebrow,
-.section-head.challenge-section-head .section-heading-copy .eyebrow{
-  grid-column:1/-1;grid-row:3;
-  margin:2px 0 0!important;font-size:9px;line-height:1.15;
-  letter-spacing:.08em;text-transform:uppercase;text-align:left!important;opacity:.78;
+.app .section-head.app-section-head .section-heading-copy p,
+.app .section-head.challenge-section-head .section-heading-copy p{
+  order:2;
+  margin:4px 0 0!important;
+  font-size:12px!important;
+  line-height:1.4!important;
+  text-align:left!important;
+  max-width:38em;
 }
-.section-head.app-section-head>.current-level-badge,
-.section-head.challenge-section-head>.current-level-badge{
-  grid-column:2;grid-row:1;justify-self:end;align-self:start;margin:0!important;white-space:nowrap;
+.app .section-head.app-section-head .section-heading-copy .eyebrow,
+.app .section-head.challenge-section-head .section-heading-copy .eyebrow{
+  order:3;
+  margin:4px 0 0!important;
+  font-size:10px!important;
+  line-height:1.2!important;
+  letter-spacing:.075em;
+  text-transform:uppercase;
+  text-align:left!important;
+  opacity:.78;
 }
-.section-head.app-section-head .section-head-right{
-  display:flex;grid-column:2;grid-row:1/span 3;flex-direction:column;
-  align-items:flex-end;justify-content:flex-start;gap:4px;margin:0!important;
+.app .section-head.app-section-head>.current-level-badge,
+.app .section-head.challenge-section-head>.current-level-badge,
+.app .section-head.app-section-head .section-head-right>.current-level-badge{
+  grid-column:2!important;
+  grid-row:1!important;
+  align-self:start!important;
+  justify-self:end!important;
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  box-sizing:border-box;
+  width:auto;
+  max-width:124px!important;
+  min-width:0;
+  margin:0!important;
+  padding:6px 8px!important;
+  border:1px solid var(--line);
+  border-radius:10px;
+  background:var(--sage);
+  color:var(--green);
+  font-size:10px!important;
+  font-weight:750!important;
+  line-height:1.25!important;
+  text-align:center!important;
+  white-space:normal!important;
+  overflow-wrap:anywhere;
 }
-.section-head.app-section-head .task-count-pills{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:3px}
+.app .section-head.app-section-head .section-head-right{
+  display:contents!important;
+}
+.app .section-head.app-section-head .task-count-pills{
+  grid-column:2;
+  grid-row:2/span 2;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  justify-content:flex-start;
+  flex-wrap:wrap;
+  gap:4px;
+  min-width:0;
+  max-width:124px;
+}
+.app .section-head.app-section-head .task-count-pills .solar{
+  max-width:100%;
+  white-space:normal;
+  text-align:right;
+  font-size:10px;
+}
 @media(max-width:420px){
- .section-head.app-section-head,.section-head.challenge-section-head{column-gap:7px!important;margin:7px 0 10px!important}
- .section-head.app-section-head .section-heading-copy h1,.section-head.challenge-section-head .section-heading-copy h1{font-size:25px}
- .section-head.app-section-head>.current-level-badge,.section-head.challenge-section-head>.current-level-badge{font-size:9px;padding:5px 7px}
- .section-head.app-section-head .section-head-right{max-width:none}
+  .app .section-head.app-section-head,
+  .app .section-head.challenge-section-head{column-gap:7px!important;margin:7px 0 12px!important}
+  .app .section-head.app-section-head .section-heading-copy h1,
+  .app .section-head.challenge-section-head .section-heading-copy h1{font-size:26px!important}
+  .app .section-head.app-section-head .section-heading-copy p,
+  .app .section-head.challenge-section-head .section-heading-copy p{font-size:11px!important}
+  .app .section-head.app-section-head>.current-level-badge,
+  .app .section-head.challenge-section-head>.current-level-badge,
+  .app .section-head.app-section-head .section-head-right>.current-level-badge{max-width:105px!important;font-size:9px!important;padding:5px 6px!important}
+  .app .section-head.app-section-head .task-count-pills{max-width:105px}
+}
+@media(max-width:340px){
+  .app .section-head.app-section-head,
+  .app .section-head.challenge-section-head{grid-template-columns:minmax(0,1fr) 96px;column-gap:5px!important}
+  .app .section-head.app-section-head .section-heading-copy h1,
+  .app .section-head.challenge-section-head .section-heading-copy h1{font-size:24px!important}
+  .app .section-head.app-section-head>.current-level-badge,
+  .app .section-head.challenge-section-head>.current-level-badge,
+  .app .section-head.app-section-head .section-head-right>.current-level-badge{max-width:96px!important;font-size:8px!important}
 }
 </style>
 </head>
