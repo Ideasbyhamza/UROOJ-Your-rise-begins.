@@ -1497,6 +1497,7 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
     <div class="login-error" id="jarvisLoginError" role="alert" aria-live="polite"></div>
     <div class="login-divider"><span>or</span></div>
     <button type="button" class="btn ghost" id="offlineContinueBtn" style="width:100%">Continue without Google</button>
+    <button type="button" class="btn ghost" id="loginTutorialBtn" style="width:100%;margin-top:10px;border:1px solid #111;background:#fff;color:#111">View Tutorial</button>
     <div class="credential-hint" id="googleConfigNotice" hidden></div>
     <div class="login-sub">Signing in with Google saves a private backup of your UROOJ data to a file in your own Google Drive, so your progress follows you across devices. "Continue without Google" keeps everything only in this browser, on this device.</div>
     <div class="login-legal" style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:10px"><a href="./privacy.html" style="color:#53645c">Privacy Policy</a><a href="./terms.html" style="color:#53645c">Terms of Service</a><a href="mailto:hamzamadnipersonal@gmail.com" style="color:#53645c">Contact</a></div>
@@ -2371,7 +2372,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   {title:'Murāqabah',copy:'Use this reminder to pause, check your intention, and act with awareness of Allah.',selector:'#murakabaCard',view:'muhasabah'},
   {title:'Google login',copy:'Sign in with Google to back up your UROOJ progress to your own Drive. You can also continue without Google.',selector:'#googleSignInBtn',view:'login'}
  ];
- let index=0,active=false;
+ let index=0,active=false,startedFromLogin=false;
  const modal=()=>document.getElementById('uroojFocusedTutorial');
  function clearHighlight(){document.querySelectorAll('.urooj-tutorial-highlight').forEach(el=>el.classList.remove('urooj-tutorial-highlight'))}
  function navigate(view){
@@ -2396,10 +2397,11 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   document.getElementById('uroojTutorialNext').textContent=index===steps.length-1?'Finish':'Next';
   const m=modal();m.classList.add('is-open');m.setAttribute('aria-hidden','false');
  }
- function finish(){clearHighlight();const m=modal();m.classList.remove('is-open');m.setAttribute('aria-hidden','true');active=false;try{localStorage.setItem(KEY,'1')}catch(e){}}
- function start(){if(active)return;active=true;index=0;showStep()}
+ function finish(){clearHighlight();const m=modal();m.classList.remove('is-open');m.setAttribute('aria-hidden','true');active=false;if(startedFromLogin){document.body.classList.remove('jarvis-authenticated');const gate=document.getElementById('jarvisLogin');if(gate)gate.style.display='grid';startedFromLogin=false;}try{localStorage.setItem(KEY,'1')}catch(e){}}
+ function start(){if(active)return;const gate=document.getElementById('jarvisLogin');startedFromLogin=!!(gate&&getComputedStyle(gate).display!=='none'&&!document.body.classList.contains('jarvis-authenticated'));if(startedFromLogin){document.body.classList.add('jarvis-authenticated');gate.style.display='none';}active=true;index=0;showStep()}
  document.getElementById('uroojTutorialNext').addEventListener('click',()=>{index++;if(index>=steps.length)finish();else showStep()});
  document.getElementById('uroojTutorialSkip').addEventListener('click',finish);
+ const loginTutorialBtn=document.getElementById('loginTutorialBtn');if(loginTutorialBtn)loginTutorialBtn.addEventListener('click',start);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)finish()});
  window.uroojStartFocusedTutorial=start;
  document.addEventListener('DOMContentLoaded',()=>{
