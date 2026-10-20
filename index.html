@@ -472,7 +472,7 @@ body.dark #islamicCalendarCard .islamic-calendar-item,body.dark #aboutHamzaJarvi
 .urooj-checkin-progress span{display:block;width:0;height:100%;border-radius:99px;background:var(--green);transition:width .3s ease}
 .nav button .nav-streak-badge,.nav button.active .nav-streak-badge{display:inline-flex;align-items:center;justify-content:center;min-width:14px;height:13px;padding:0 3px;margin:0;border-radius:99px;background:#efe5d0;color:#375b45;font-size:8px;line-height:1;font-weight:800}
 body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
-body.dark body.dark body.dark body.dark .urooj-day-check{background:#202a24;border-color:var(--line);color:#c0c9c1}
+body.dark .urooj-day-check{background:#202a24;border-color:var(--line);color:#c0c9c1}
 body.dark .urooj-day-check.checked{background:#203c30;border-color:#47765e;color:#d8f0df}
 body.dark .urooj-day-check .day-square{background:#151d1a;border-color:#59665c}
 body.dark .urooj-day-check.checked .day-square{background:#2d8a4b;border-color:#2d8a4b;color:white}
@@ -599,7 +599,7 @@ body[data-palette] .tiny-track{background:var(--sage)}
 body[data-palette] .category-track i,
 body[data-palette] .chart-bar,
 body[data-palette] .tiny-track span{background:var(--green)}
-body[data-palette] body[data-palette] .urooj-day-check.checked{background:var(--sage);border-color:var(--green);color:var(--green)}
+body[data-palette] .urooj-day-check.checked{background:var(--sage);border-color:var(--green);color:var(--green)}
 body[data-palette] .urooj-day-check .day-square{background:var(--white);border-color:var(--line)}
 body[data-palette] .urooj-day-check.checked .day-square{background:var(--green);border-color:var(--green);color:var(--sand)}
 body[data-palette] .urooj-progress-symbol{color:var(--sand)}
@@ -1017,6 +1017,14 @@ body.dark .top .brand small{color:#ddd!important}
  #uroojUpgradeJourney .urooj-stage-status [data-stage-progress-label]{font-size:10px!important}
 }
 
+
+/* Match the browser canvas to the saved theme before the first paint. */
+html[data-urooj-palette="mono"][data-urooj-theme="light"]{background:#fff;color-scheme:light}
+html[data-urooj-palette="mono"][data-urooj-theme="dark"]{background:#000;color-scheme:dark}
+html[data-urooj-palette="blue"][data-urooj-theme="light"]{background:#F8FAFC;color-scheme:light}
+html[data-urooj-palette="blue"][data-urooj-theme="dark"]{background:#0F172A;color-scheme:dark}
+html[data-urooj-palette="evergreen"][data-urooj-theme="light"]{background:#F8FBF8;color-scheme:light}
+html[data-urooj-palette="evergreen"][data-urooj-theme="dark"]{background:#0D1912;color-scheme:dark}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 <style id="urooj-unified-tab-headers">
@@ -1410,6 +1418,22 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 
 </head>
 <body>
+<script id="urooj-theme-bootstrap">
+(function(){
+  var theme='light',palette='mono';
+  try{
+    var saved=JSON.parse(localStorage.getItem('tazkiya-insaan-prototype-clean-default-v3')||'{}');
+    theme=saved.theme==='dark'?'dark':'light';
+    palette=['mono','blue','evergreen'].includes(saved.palette)?saved.palette:'mono';
+  }catch(e){}
+  document.body.classList.toggle('dark',theme==='dark');
+  document.body.dataset.palette=palette;
+  document.documentElement.dataset.uroojTheme=theme;
+  document.documentElement.dataset.uroojPalette=palette;
+  var meta=document.querySelector('meta[name="theme-color"]');
+  if(meta)meta.content=theme==='dark'?(palette==='mono'?'#000000':palette==='blue'?'#0F172A':'#0D1912'):(palette==='mono'?'#FFFFFF':palette==='blue'?'#F8FAFC':'#F8FBF8');
+})();
+</script>
 <section id="uroojTermsConsent" role="dialog" aria-modal="true" aria-labelledby="uroojTermsTitle">
  <div class="consent-card">
   <div class="eyebrow">Before you begin</div><h2 id="uroojTermsTitle">Terms &amp; Conditions</h2>
@@ -2259,7 +2283,7 @@ $('#reminderEditor').addEventListener('click',e=>{const b=e.target.closest('[dat
 $('#addReminder').addEventListener('click',()=>{state.reminders.push({title:'New Islamic reminder',date:'Add Hijri date / recurrence',remaining:'',sunnah:''});persist();renderReminders();$('#reminderEditor').lastElementChild?.querySelector('input')?.focus()});
 $('#saveReminders').addEventListener('click',()=>{persist();renderReminders();toast('Reminders saved')});
 const quranFields=['quranReference','quranArabic','quranTranslation','quranTafsir','quranAction'];
-function applyTheme(){const palettes=['mono','blue','evergreen'];if(!palettes.includes(state.palette))state.palette='mono';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
+function applyTheme(){const palettes=['mono','blue','evergreen'];if(!palettes.includes(state.palette))state.palette='mono';document.body.classList.toggle('dark',state.theme==='dark');document.body.dataset.palette=state.palette;document.documentElement.dataset.uroojTheme=state.theme==='dark'?'dark':'light';document.documentElement.dataset.uroojPalette=state.palette;const meta=$('meta[name="theme-color"]');if(meta)meta.content=state.theme==='dark'?(state.palette==='mono'?'#000000':state.palette==='blue'?'#0F172A':'#0D1912'):(state.palette==='mono'?'#FFFFFF':state.palette==='blue'?'#F8FAFC':'#F8FBF8');const p=$('#uroojPaletteSetting');if(p)p.value=state.palette;$('#themeToggle').textContent=state.theme==='dark'?'☀':'☾';$('#themeToggle').setAttribute('aria-label',state.theme==='dark'?'Switch to light mode':'Switch to dark mode');$('#themeToggle').setAttribute('title',state.theme==='dark'?'Switch to light mode':'Switch to dark mode')}
 $('#themeToggle').addEventListener('click',()=>{state.theme=state.theme==='dark'?'light':'dark';persist();applyTheme()});
 $('#uroojPaletteSetting')?.addEventListener('change',()=>{state.palette=$('#uroojPaletteSetting').value;persist();applyTheme();toast('Colour theme applied')});
 async function deleteUroojDriveBackup(){
