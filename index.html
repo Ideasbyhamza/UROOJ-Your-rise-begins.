@@ -1885,7 +1885,7 @@ function renderProgressInsights(all){
  const dateKey=d=>d.toISOString().slice(0,10);
  const activities=(all||[]).filter((x,i,a)=>x&&x.id&&a.findIndex(y=>y.id===x.id)===i);
  const isRecorded=v=>v!==undefined&&v!==null&&String(v).trim()!==''&&String(v).trim().toLowerCase()!=='not recorded';
- const isDone=v=>isRecorded(v)&&!/^(not done|missed|skipped|excused|not applicable|no)$/i.test(String(v).trim());
+ const isDone=v=>isRecorded(v)&&!/^(not done|missed|skipped|excused|not applicable|no|in progress|partly done|partial)$/i.test(String(v).trim());
  const category=item=>{const t=String(item.category||item.name||'').toLowerCase();if(/fajr|dhuhr|zuhr|asr|maghrib|isha|prayer|namaz/.test(t))return 'Prayer';if(/quran|qur’an|tafseer|tafsir/.test(t))return 'Qur’an';if(/walk|exercise|workout|fitness|running/.test(t))return 'Fitness';if(/read|book|learning|study/.test(t))return 'Learning';if(/dhikr|zikr|tasbeeh|tasbih/.test(t))return 'Dhikr';return 'Personal'};
  const dayData=d=>{const key=dateKey(d),day=log[key]||{};const entries=activities.map(item=>({item,value:day[item.id]})).filter(x=>isRecorded(x.value));return {key,recorded:entries.length,done:entries.filter(x=>isDone(x.value)).length,entries}};
  const week=[];for(let n=6;n>=0;n--){const d=new Date(todayDate);d.setUTCDate(d.getUTCDate()-n);week.push(dayData(d))}
@@ -1919,6 +1919,7 @@ function renderStats(){
   if(categories)categories.innerHTML='<p class="muted">Activity categories are temporarily unavailable. Other sections remain available.</p>';
  }
 }
+$('#progressMonthSelect')?.addEventListener('change',renderStats);
 function islamicCivilDate(date){const gy=date.getUTCFullYear(),gm=date.getUTCMonth()+1,gd=date.getUTCDate();let jd=Math.floor((1461*(gy+4800+Math.floor((gm-14)/12)))/4)+Math.floor((367*(gm-2-12*Math.floor((gm-14)/12)))/12)-Math.floor((3*Math.floor((gy+4900+Math.floor((gm-14)/12))/100))/4)+gd-32075;let l=jd-1948440+10632,n=Math.floor((l-1)/10631);l=l-10631*n+354;const j=Math.floor((10985-l)/5316)*Math.floor((50*l)/17719)+Math.floor(l/5670)*Math.floor((43*l)/15238);l=l-Math.floor((30-j)/15)*Math.floor((17719*j)/50)-Math.floor(j/16)*Math.floor((15238*j)/43)+29;const m=Math.floor((24*l)/709),d=l-Math.floor((709*m)/24),y=30*n+j-30;return {year:y,month:m,day:d}}
 function gregorianKey(d){return `${d.getUTCFullYear()}-${String(d.getUTCMonth()+1).padStart(2,'0')}-${String(d.getUTCDate()).padStart(2,'0')}`}
 
