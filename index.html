@@ -1008,6 +1008,12 @@ html[data-urooj-palette="evergreen"][data-urooj-theme="dark"]{background:#0D1912
 .challenge-heading-card .urooj-checkin-head{margin-bottom:9px}
 .challenge-heading-card .urooj-week-grid{gap:6px}
 .challenge-heading-card .urooj-checkin-foot{margin-top:7px}
+/* Keep weekly check-in and the full level journey together at the very bottom of Challenges. */
+.challenge-bottom-progression{margin-top:18px}
+.challenge-bottom-progression .urooj-integrated-progression{margin:12px 0 0;padding:12px 0 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none}
+.challenge-bottom-progression .urooj-integrated-progression .card-title{margin-bottom:8px}
+.challenge-bottom-progression .urooj-integrated-progression .upgrade-intro{margin:0 0 10px}
+
 /* One unified Challenges card: weekly check-in above the level journey. */
 .challenge-heading-card .urooj-integrated-progression{margin:12px 0 0;padding:12px 0 0;border:0;border-top:1px solid var(--line);border-radius:0;background:transparent;box-shadow:none}
 .challenge-heading-card .urooj-integrated-progression .card-title{margin-bottom:8px}
@@ -1613,6 +1619,20 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 <section class="view" id="view-challenges">
 <section class="challenge-heading-card" aria-label="Challenges and 7-day check-in">
  <div class="section-head app-section-head"><div class="section-heading-copy"><div class="eyebrow challenge-kicker">Train your attention</div><h1>Challenges</h1><p>Progress over punishment. Return to the path whenever you need.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
+ 
+</section>
+<article class="quote challenge-motive">
+<div class="eyebrow">Today’s Motive</div><blockquote id="quoteText">“The most beloved deeds to Allah are those that are most consistent, even if they are few.”</blockquote>
+<div class="attribution" id="quoteSource">— Sahih al-Bukhari 6464 · Sahih Muslim 783</div>
+</article>
+<div id="customChallengeList"></div>
+<div id="socialChallengeBlock"><div class="challenge-hero"><div class="challenge-top"><div><h3 id="socialTitleDisplay">30-Day Digital Reset</h3><p>Reduce social media. Reclaim attention for learning, worship, and people.</p></div><div class="count-pill" id="socialCount">0 / 30</div></div><div class="challenge-progress"><span id="socialBar" style="width:0%"></span></div><div class="challenge-meta"><span id="socialPercent">0% complete</span><span>Tap a day to mark it</span></div></div>
+<div class="card"><div class="card-title"><h3>30-day journey</h3><span class="muted">Gentle accountability</span></div><div class="day-grid" id="socialGrid"></div><div class="challenge-foot"><span id="socialStreak">0 days completed</span><button class="btn ghost small" id="socialClear">Clear marks</button></div></div></div>
+<div id="focusChallengeBlock"><div class="challenge-hero gold"><div class="challenge-top"><div><h3 id="focusTitleDisplay">60-Day Self-Discipline</h3><p>Step away from a habit you want to leave behind. Build focus, healthier routines, and self-respect.</p></div><div class="count-pill" id="focusCount">0 / 60</div></div><div class="challenge-progress"><span id="focusBar" style="width:0%"></span></div><div class="challenge-meta"><span id="focusPercent">0% complete</span><span>Tap a day to mark it</span></div></div>
+<div class="card"><div class="card-title"><h3>60-day journey</h3><span class="muted">One day at a time</span></div><div class="day-grid" id="focusGrid"></div><div class="challenge-foot"><span id="focusStreak">0 days completed</span><button class="btn ghost small" id="focusClear">Clear marks</button></div></div></div>
+<div class="challenge-hero gold"><div class="challenge-top"><div><h3>Your next level starts with one promise.</h3><p>Choose a challenge that tests your discipline. Start small, show up honestly, and keep going when motivation fades.</p></div></div><div class="btn-row" style="margin-top:14px"><button class="btn" id="acceptChallengeGoSettings">＋ Accept a challenge</button></div></div> <div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
+
+<section class="challenge-heading-card challenge-bottom-progression" aria-label="7-day check-in and Your Rise levels">
  <div class="urooj-checkin">
   <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick today to add one dot to your rise</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
   <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
@@ -1634,17 +1654,6 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
  </div>
 </section>
 </section>
-<article class="quote challenge-motive">
-<div class="eyebrow">Today’s Motive</div><blockquote id="quoteText">“The most beloved deeds to Allah are those that are most consistent, even if they are few.”</blockquote>
-<div class="attribution" id="quoteSource">— Sahih al-Bukhari 6464 · Sahih Muslim 783</div>
-</article>
-<div id="customChallengeList"></div>
-<div id="socialChallengeBlock"><div class="challenge-hero"><div class="challenge-top"><div><h3 id="socialTitleDisplay">30-Day Digital Reset</h3><p>Reduce social media. Reclaim attention for learning, worship, and people.</p></div><div class="count-pill" id="socialCount">0 / 30</div></div><div class="challenge-progress"><span id="socialBar" style="width:0%"></span></div><div class="challenge-meta"><span id="socialPercent">0% complete</span><span>Tap a day to mark it</span></div></div>
-<div class="card"><div class="card-title"><h3>30-day journey</h3><span class="muted">Gentle accountability</span></div><div class="day-grid" id="socialGrid"></div><div class="challenge-foot"><span id="socialStreak">0 days completed</span><button class="btn ghost small" id="socialClear">Clear marks</button></div></div></div>
-<div id="focusChallengeBlock"><div class="challenge-hero gold"><div class="challenge-top"><div><h3 id="focusTitleDisplay">60-Day Self-Discipline</h3><p>Step away from a habit you want to leave behind. Build focus, healthier routines, and self-respect.</p></div><div class="count-pill" id="focusCount">0 / 60</div></div><div class="challenge-progress"><span id="focusBar" style="width:0%"></span></div><div class="challenge-meta"><span id="focusPercent">0% complete</span><span>Tap a day to mark it</span></div></div>
-<div class="card"><div class="card-title"><h3>60-day journey</h3><span class="muted">One day at a time</span></div><div class="day-grid" id="focusGrid"></div><div class="challenge-foot"><span id="focusStreak">0 days completed</span><button class="btn ghost small" id="focusClear">Clear marks</button></div></div></div>
-<div class="challenge-hero gold"><div class="challenge-top"><div><h3>Your next level starts with one promise.</h3><p>Choose a challenge that tests your discipline. Start small, show up honestly, and keep going when motivation fades.</p></div></div><div class="btn-row" style="margin-top:14px"><button class="btn" id="acceptChallengeGoSettings">＋ Accept a challenge</button></div></div> <div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
-
 </section>
 <section class="view" id="view-muhasabah">
 <div class="section-head app-section-head"><div class="section-heading-copy"><div class="eyebrow">Pause · Notice · Renew</div><h1>Tazkiyah</h1><p>Reflect with honesty, remember Allah, and renew your intention.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
