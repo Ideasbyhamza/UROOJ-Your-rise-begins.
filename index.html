@@ -942,6 +942,76 @@ button,input,textarea,select{min-width:0}
 
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
+<style id="urooj-unified-tab-headers">
+/* One shared header system for every primary tab. */
+.section-head.app-section-head,
+.section-head.challenge-section-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:12px;
+  width:100%;
+  margin:13px 0 16px;
+  padding:0;
+  text-align:left;
+}
+.section-head.app-section-head .section-heading-copy,
+.section-head.challenge-section-head .section-heading-copy{
+  flex:1 1 auto;
+  min-width:0;
+  text-align:left;
+}
+.section-head.app-section-head .section-heading-copy .eyebrow,
+.section-head.challenge-section-head .section-heading-copy .eyebrow{
+  margin:0 0 5px;
+  font-size:10px;
+  line-height:1.35;
+  letter-spacing:.11em;
+  text-transform:uppercase;
+}
+.section-head.app-section-head h1,
+.section-head.challenge-section-head h1{
+  margin:0;
+  font-size:23px;
+  line-height:1.2;
+  font-weight:600;
+  text-align:left;
+}
+.section-head.app-section-head p,
+.section-head.challenge-section-head p{
+  margin:6px 0 0;
+  font-size:11px;
+  line-height:1.6;
+  text-align:left;
+}
+.section-head.app-section-head .current-level-badge,
+.section-head.challenge-section-head .current-level-badge{
+  flex:0 0 auto;
+  margin-top:1px;
+  white-space:nowrap;
+}
+.section-head.app-section-head .section-head-right{
+  display:flex;
+  flex:0 0 auto;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+}
+.section-head.app-section-head .task-count-pills{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:flex-end;
+  gap:4px;
+}
+@media(max-width:420px){
+  .section-head.app-section-head,
+  .section-head.challenge-section-head{gap:8px}
+  .section-head.app-section-head h1,
+  .section-head.challenge-section-head h1{font-size:22px}
+  .section-head.app-section-head .current-level-badge,
+  .section-head.challenge-section-head .current-level-badge{font-size:9px;padding:5px 7px}
+}
+</style>
 </head>
 <body>
 <section id="uroojTermsConsent" role="dialog" aria-modal="true" aria-labelledby="uroojTermsTitle">
@@ -1119,7 +1189,7 @@ button,input,textarea,select{min-width:0}
 <div class="privacy-note">Schedule definitions are editable only in Settings. Daily status selections and graph data are recorded here.</div>
 </section>
 <section class="view active" id="view-challenges">
-<div class="section-head challenge-section-head"><div class="section-heading-copy"><h1>Challenges</h1><div class="eyebrow challenge-kicker">Train your attention</div><p>Progress over punishment. Return to the path whenever you need.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
+<div class="section-head app-section-head"><div class="section-heading-copy"><div class="eyebrow challenge-kicker">Train your attention</div><h1>Challenges</h1><p>Progress over punishment. Return to the path whenever you need.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
 
 <article class="quote challenge-motive">
 <div class="eyebrow">Today’s Motive</div><blockquote id="quoteText">“The most beloved deeds to Allah are those that are most consistent, even if they are few.”</blockquote>
