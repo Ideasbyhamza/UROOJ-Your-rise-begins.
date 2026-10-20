@@ -76,31 +76,31 @@ html{scroll-behavior:auto!important}
 /* Authenticated-state CSS must also hide the gate when the fallback runs before the login node exists. */ body.jarvis-authenticated #jarvisLogin{display:none!important}
   /* Prototype login gate */
 body:not(.jarvis-authenticated) .app{display:none!important}
-#jarvisLogin{min-height:100dvh;display:grid;place-items:center;padding:24px;background:radial-gradient(circle at top,#e8f0ec 0,#fdfbf7 54%,#eee7d8 100%);color:#2c3539}
-#jarvisLogin .login-card{width:100%;max-width:390px;background:#fffefa;border:1px solid #e9e4da;border-radius:26px;padding:28px 24px;box-shadow:0 20px 60px #1b4d3e16;text-align:center}
-#jarvisLogin .login-mark{width:72px;height:72px;margin:0 auto 15px;border-radius:22px;background:linear-gradient(145deg,#1b4d3e,#28644f);color:#e4d2a7;display:grid;place-items:center;box-shadow:0 8px 22px #1b4d3e25;border:1px solid #c9b77e55}
+#jarvisLogin{min-height:100dvh;display:grid;place-items:center;padding:24px;background:#f5f5f5;color:#111}
+#jarvisLogin .login-card{width:100%;max-width:390px;background:#fff;border:1px solid #d9d9d9;border-radius:24px;padding:30px 24px;box-shadow:0 14px 42px #0000000d;text-align:center}
+#jarvisLogin .login-mark{display:none!important}
 #jarvisLogin .login-mark svg{width:49px;height:49px;display:block}
 #jarvisLogin .credential-hint{margin-top:14px;padding:10px 12px;border:1px dashed #d8cfb6;border-radius:12px;background:#f8f5ed;color:#53645c;font-size:11px;line-height:1.8;text-align:left}
 #jarvisLogin .credential-hint strong{color:#1b4d3e}
 body.dark #jarvisLogin .credential-hint{background:#202c26;border-color:#46564a;color:#d5dfd6}body.dark #jarvisLogin .credential-hint strong{color:#e4d2a7}
-#jarvisLogin h1{font:600 26px Georgia,serif;color:#1b4d3e;margin:0 0 7px}
-#jarvisLogin p{font-size:12px;line-height:1.6;color:#77817e;margin:0 0 22px}
+#jarvisLogin h1{font:700 32px system-ui,-apple-system,Segoe UI,sans-serif;letter-spacing:1.5px;color:#111;margin:0 0 9px}
+#jarvisLogin p{font-size:13px;line-height:1.65;color:#555;margin:0 0 24px}
 #jarvisLogin label{display:block;text-align:left;font-size:10px;font-weight:800;letter-spacing:.6px;color:#53645c;margin:12px 0 6px}
 #jarvisLogin input{width:100%;padding:13px 14px;border:1px solid #dedfd5;border-radius:12px;background:#fdfbf7;color:#2c3539;font-size:14px}
-#jarvisLogin button{width:100%;border:0;border-radius:12px;padding:13px 16px;background:#1b4d3e;color:#fffaf0;font-weight:800;margin-top:18px}
+#jarvisLogin button{width:100%;border:0;border-radius:12px;padding:13px 16px;background:#111;color:#fff;font-weight:800;margin-top:18px}
 #jarvisLogin .login-error{min-height:18px;color:#a34338;font-size:11px;margin-top:10px}
 #jarvisLogin .login-note{font-size:9px;color:#9a9c93;margin-top:18px}
-body.dark #jarvisLogin{background:#101512;color:#e8ede8}body.dark #jarvisLogin .login-card{background:#1c2722;border-color:#34423a}body.dark #jarvisLogin input{background:#202c26;color:#e8ede8;border-color:#34423a}
+body.dark #jarvisLogin{background:#f5f5f5;color:#111}body.dark #jarvisLogin .login-card{background:#fff;border-color:#d9d9d9}body.dark #jarvisLogin input{background:#fff;color:#111;border-color:#bdbdbd}body.dark #jarvisLogin h1{color:#111}body.dark #jarvisLogin p,body.dark #jarvisLogin .login-note,body.dark #jarvisLogin .login-sub{color:#555}
 
 body.dark #jarvisLogin .login-note{color:#8a9188}
-#jarvisLogin .google-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid #dadce0;border-radius:12px;padding:13px 16px;background:#fff;color:#3c4043;font-weight:700;font-size:13px;margin-top:4px}
+#jarvisLogin .google-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;border:1px solid #bdbdbd;border-radius:12px;padding:13px 16px;background:#fff;color:#111;font-weight:700;font-size:13px;margin-top:4px}
 #jarvisLogin .google-btn:active{transform:scale(.98)}
 #jarvisLogin .google-btn:disabled{opacity:.55;cursor:not-allowed}
 #jarvisLogin .login-divider{display:flex;align-items:center;gap:10px;margin:16px 0;color:#9a9c93;font-size:9px;text-transform:uppercase;letter-spacing:.8px}
-#jarvisLogin .login-divider:before,#jarvisLogin .login-divider:after{content:'';flex:1;height:1px;background:#e9e4da}
-body.dark #jarvisLogin .google-btn{background:#202c26;color:#e8ede8;border-color:#34423a}
+#jarvisLogin .login-divider:before,#jarvisLogin .login-divider:after{content:'';flex:1;height:1px;background:#d9d9d9}
+body.dark #jarvisLogin .google-btn{background:#fff;color:#111;border-color:#bdbdbd}
 body.dark #jarvisLogin .login-divider{color:#a5b0a9}
-body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divider:after{background:#34423a}
+body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divider:after{background:#d9d9d9}
 #jarvisLogin .login-sub{font-size:10px;color:#9a9c93;margin-top:14px;line-height:1.6}
 
 /* Compact Settings rows: short copy, consistent arrow gutter, and responsive wrapping. */
@@ -1475,7 +1475,6 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 </script>
 <section id="jarvisLogin" aria-label="Login">
   <div class="login-card" id="jarvisLoginCard">
-    <div class="login-mark"><img src="./assets/urooj-logo.svg?v=1.1.2" alt="UROOJ logo" style="width:86px;height:86px;object-fit:contain;border-radius:18px"/></div>
     <h1>UROOJ</h1>
     <p>Your rise begins.<br>Sign in to sync your progress across devices.</p>
     <button type="button" class="google-btn" id="googleSignInBtn" aria-label="Sign in with Google">
@@ -1808,13 +1807,11 @@ function renderAccountStatus(syncError,syncMessage){
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
 document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){setLoginError('');unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');applyTheme();});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
-const hadAppSession=resumeAppSession();
- // Show the login choices on a fresh/expired session; resume directly only when a valid session exists.
- if(!hadAppSession){
-  document.body.classList.remove('jarvis-authenticated');
-  const login=document.getElementById('jarvisLogin');
-  if(login)login.style.display='grid';
- }
+// Always start at the login gate; the user chooses Google sync or local-only access each visit.
+ try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}
+ document.body.classList.remove('jarvis-authenticated');
+ const loginGate=document.getElementById('jarvisLogin');
+ if(loginGate)loginGate.style.display='grid';
  initGoogleAuth();
 renderAccountStatus();
 /* ---------- end Google Sign-In + Drive sync ---------- */
