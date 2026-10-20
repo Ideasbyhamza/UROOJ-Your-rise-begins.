@@ -73,6 +73,19 @@ html{scroll-behavior:auto!important}
 .settings-accordion{margin:10px 0;border:1px solid var(--line);border-radius:17px;background:var(--white);overflow:hidden}.settings-accordion>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:8px;padding:14px 15px;color:var(--green);font:600 13px 'Cinzel',serif}.settings-accordion>summary::-webkit-details-marker{display:none}.settings-accordion>summary:after{content:'＋';font:700 16px system-ui;color:var(--gold);margin-left:auto}.settings-accordion[open]>summary:after{content:'−'}.settings-accordion>summary small{font:500 9px system-ui;color:var(--muted);white-space:nowrap}.settings-accordion[open]>.card{margin:0;border:0;border-top:1px solid var(--line);border-radius:0;padding:15px}.settings-accordion[open]>.card>.card-title{display:none}.settings-accordion[open]>summary{border-bottom:1px solid var(--line)}#tasbeehCurrentDhikr{max-width:100%;overflow-wrap:anywhere}.islamic-calendar-item a{font-size:10px;color:var(--green);font-weight:700;text-decoration:underline}
 .removed-overview,.removed-status-options{display:none!important}.editor-hidden{display:none!important}
 
+/* Focused seven-step first-run guide: only the requested controls are highlighted. */
+#uroojFocusedTutorial{position:fixed;inset:0;z-index:99999;display:none;align-items:flex-end;justify-content:center;padding:18px;background:rgba(0,0,0,.52)}
+#uroojFocusedTutorial.is-open{display:flex}
+#uroojFocusedTutorial .urooj-tutorial-panel{width:min(100%,420px);background:#fff;color:#111;border:1px solid #d5d5d5;border-radius:18px;padding:18px;box-shadow:0 18px 60px #0003}
+#uroojFocusedTutorial .urooj-tutorial-count{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:#666;font-weight:800}
+#uroojFocusedTutorial h2{font-size:19px;line-height:1.25;margin:7px 0}
+#uroojFocusedTutorial p{font-size:13px;line-height:1.55;color:#444;margin:0 0 14px}
+#uroojFocusedTutorial .urooj-tutorial-actions{display:flex;gap:8px;align-items:center}
+#uroojFocusedTutorial button{border:1px solid #111;border-radius:10px;padding:10px 14px;font-weight:750}
+#uroojFocusedTutorial .urooj-tutorial-next{background:#111;color:#fff;flex:1}
+#uroojFocusedTutorial .urooj-tutorial-skip{background:#fff;color:#111}
+.urooj-tutorial-highlight{position:relative!important;z-index:100000!important;outline:3px solid #111!important;outline-offset:4px!important;box-shadow:0 0 0 7px #fff!important;border-radius:10px!important;scroll-margin:100px}
+@media(prefers-reduced-motion:no-preference){.urooj-tutorial-highlight{transition:outline-offset .15s ease}}
 /* Authenticated-state CSS must also hide the gate when the fallback runs before the login node exists. */ body.jarvis-authenticated #jarvisLogin{display:none!important}
   /* Prototype login gate */
 body:not(.jarvis-authenticated) .app{display:none!important}
@@ -1489,6 +1502,14 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
     <div class="login-legal" style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:10px"><a href="./privacy.html" style="color:#53645c">Privacy Policy</a><a href="./terms.html" style="color:#53645c">Terms of Service</a><a href="mailto:hamzamadnipersonal@gmail.com" style="color:#53645c">Contact</a></div>
   </div>
 </section>
+<div id="uroojFocusedTutorial" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="uroojTutorialHeading">
+ <div class="urooj-tutorial-panel">
+  <div class="urooj-tutorial-count" id="uroojTutorialCount">Step 1 of 7</div>
+  <h2 id="uroojTutorialHeading">Add a challenge</h2>
+  <p id="uroojTutorialCopy">Create a challenge to work toward one clear goal.</p>
+  <div class="urooj-tutorial-actions"><button type="button" class="urooj-tutorial-skip" id="uroojTutorialSkip">Skip</button><button type="button" class="urooj-tutorial-next" id="uroojTutorialNext">Next</button></div>
+ </div>
+</div>
 <div class="app">
 <header class="top">
 <div class="brand" aria-label="UROOJ — Your rise begins."><span>UROOJ<small>Your rise begins.</small></span></div>
@@ -2332,6 +2353,55 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  setTimeout(syncCurrentLevel,300);
 })();
 
+</script>
+<script>
+(function(){
+ const KEY='urooj-focused-tutorial-seen-v1';
+ const steps=[
+  {title:'Add a challenge',copy:'Use “Accept a challenge” to add a focused challenge to your journey.',selector:'#acceptChallengeGoSettings',view:'challenges'},
+  {title:'Daily check-in · first day',copy:'Tap the first day tile in the 7-day check-in to record today.',selector:'#uroojWeekCheckins > :first-child',view:'challenges'},
+  {title:'Your streak badge',copy:'This badge at the top-right shows your current check-in streak.',selector:'#uroojStreakCount',view:'challenges'},
+  {title:'Your first task',copy:'Open Task to see your daily activities and record their status.',selector:'#scheduleSlots .schedule-task-tile:first-child',view:'schedule',fallback:'#scheduleAddChallenge'},
+  {title:'Tasbeeh counter',copy:'Tap the round counter to count your dhikr. Use Undo or Reset if needed.',selector:'#tasbeehTap',view:'muhasabah'},
+  {title:'Murāqabah',copy:'Use this reminder to pause, check your intention, and act with awareness of Allah.',selector:'#murakabaCard',view:'muhasabah'},
+  {title:'Google login',copy:'Sign in with Google to back up your UROOJ progress to your own Drive. You can also continue without Google.',selector:'#googleSignInBtn',view:'login'}
+ ];
+ let index=0,active=false;
+ const modal=()=>document.getElementById('uroojFocusedTutorial');
+ function clearHighlight(){document.querySelectorAll('.urooj-tutorial-highlight').forEach(el=>el.classList.remove('urooj-tutorial-highlight'))}
+ function navigate(view){
+  if(view==='login'){document.body.classList.remove('jarvis-authenticated');const gate=document.getElementById('jarvisLogin');if(gate)gate.style.display='grid';return}
+  const btn=document.querySelector('.nav button[data-view="'+view+'"]');
+  if(btn)btn.click();
+  else {document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id==='view-'+view));}
+ }
+ function showStep(){
+  clearHighlight();const step=steps[index];if(!step)return finish();
+  navigate(step.view);
+  const find=()=>document.querySelector(step.selector)|| (step.fallback&&document.querySelector(step.fallback));
+  let target=find();
+  if(!target&&step.view==='schedule'){const add=document.getElementById('scheduleAddChallenge');if(add)target=add}
+  if(!target&&step.view==='challenges'&&index===1){const box=document.getElementById('uroojWeekCheckins');if(box&&box.firstElementChild)target=box.firstElementChild}
+  const gate=document.getElementById('jarvisLogin');
+  if(step.view==='login'){if(gate)gate.style.display='grid';target=document.querySelector(step.selector)}
+  if(target){target.classList.add('urooj-tutorial-highlight');target.scrollIntoView({behavior:'auto',block:'center',inline:'nearest'})}
+  document.getElementById('uroojTutorialCount').textContent='Step '+(index+1)+' of '+steps.length;
+  document.getElementById('uroojTutorialHeading').textContent=step.title;
+  document.getElementById('uroojTutorialCopy').textContent=step.copy;
+  document.getElementById('uroojTutorialNext').textContent=index===steps.length-1?'Finish':'Next';
+  const m=modal();m.classList.add('is-open');m.setAttribute('aria-hidden','false');
+ }
+ function finish(){clearHighlight();const m=modal();m.classList.remove('is-open');m.setAttribute('aria-hidden','true');active=false;try{localStorage.setItem(KEY,'1')}catch(e){}}
+ function start(){if(active)return;active=true;index=0;showStep()}
+ document.getElementById('uroojTutorialNext').addEventListener('click',()=>{index++;if(index>=steps.length)finish();else showStep()});
+ document.getElementById('uroojTutorialSkip').addEventListener('click',finish);
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)finish()});
+ window.uroojStartFocusedTutorial=start;
+ document.addEventListener('DOMContentLoaded',()=>{
+  let seen=false;try{seen=localStorage.getItem(KEY)==='1'}catch(e){}
+  if(!seen)setTimeout(start,700);
+ });
+})();
 </script>
 </body>
 </html>
