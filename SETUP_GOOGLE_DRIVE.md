@@ -41,3 +41,17 @@ A Client ID identifies the browser app and is not a client secret. **Never put a
 - Data remains in browser storage when offline or before Google sign-in is configured.
 - A GitHub Pages deployment does not automatically create a Google OAuth client or enable the Drive API.
 - Test on the actual HTTPS Pages URL, not by opening the HTML from a local file.
+
+## 5. Connect Feedback & Complaints to Gmail
+
+The feedback form is prepared to email submissions to **hamzamadnipersonal@gmail.com** using Google Apps Script. The web app must be deployed once from your Google account; GitHub Pages cannot authorize Gmail sending on your behalf.
+
+1. Open [Google Apps Script](https://script.google.com/) while signed in to **hamzamadnipersonal@gmail.com** and create a new project named **UROOJ Feedback Mail**.
+2. In this repository, open [`feedback/Code.gs`](https://github.com/Ideasbyhamza/UROOJ-Your-rise-begins./blob/main/feedback/Code.gs), copy the complete code, and replace the contents of the Apps Script editor with it.
+3. Click **Save**. Select **Deploy → New deployment**.
+4. Click the type/gear control, choose **Web app**, set **Execute as** to **Me**, and set access to **Anyone** so app visitors can submit feedback without signing into your Google account. Deploy.
+5. Google will ask you to authorize the script to send email. Review and approve it. Copy the deployed Web app URL; it must end in `/exec`.
+6. Send that `/exec` URL to the UROOJ maintainer so it can be connected to the app's `feedbackEndpoint` and published. Until the URL is connected, the app will save feedback locally and offer an email-draft link instead of automatically sending it.
+7. Test by submitting a harmless test message and confirm it arrives in the Gmail inbox (also check Spam).
+
+The endpoint sends plain-text messages to the fixed recipient above, validates the category and message length, includes a hidden honeypot field, and limits sending to 30 messages per day. Because it is publicly accessible, these are basic safeguards rather than strong anti-spam protection. Do not use it to collect passwords or sensitive personal/medical information. The browser cannot independently confirm delivery, so verify the test email in Gmail.
