@@ -1,11 +1,15 @@
 # UROOJ Security Review
 
-**Review date:** 2026-10-17  
+**Review date:** 2026-10-20  
 **Scope:** Static inspection of `index.html`, `UROOJ.html`, `privacy.html`, `terms.html`, `SETUP_GOOGLE_DRIVE.md`, and `google-apps-script-feedback.gs`. This is not a penetration test, dynamic test, or formal security certification.
 
 ## Summary
 
-The first automated scan did not identify obvious private keys or GitHub access tokens embedded in the main HTML. The app is a client-side web app with local browser storage and optional Google OAuth/Drive access.
+This is a **static code review, not a penetration test or security certification**. The app is a client-side web app with local browser storage and optional Google OAuth/Drive access. A scan of the current main page found no uses of `eval()`, `new Function()`, `document.write()`, or `insertAdjacentHTML()`; it found 38 `.innerHTML` assignments that still require contextual review. The Google OAuth client ID is public configuration, not a client secret. No access-token storage in localStorage was found by the targeted scan.
+
+### Change made 2026-10-20 — Full reset and Drive backup
+
+The main hosted page's **Full reset all app data** now attempts to delete the UROOJ Drive backup when Google is connected, before clearing local/session storage. It blocks reset when a previous successful sync is recorded but no Google token is active, asks the user to reconnect, and preserves local data if the Drive delete request fails. It also refuses to start while a Drive sync is in progress. This relies on the browser having a valid Google authorization and the Drive API being available; the deployed flow still needs real-account testing. Clearing browser data manually or signing out does not delete Drive data.
 
 ## Findings
 
@@ -55,8 +59,8 @@ The wrapper is a network-dependent shell, not a fully offline native conversion.
 
 ## Before public release
 
-- [ ] Review every `innerHTML` assignment and escape or replace unsafe ones.
-- [ ] Test Google OAuth and Drive backup on the production domain.
+- [ ] Review every `innerHTML` assignment and escape or replace unsafe ones (38 assignments remain; targeted static scan is not proof that all are safe).
+- [ ] Test Google OAuth, Drive backup/restore, and Full reset cloud deletion on the production domain with a real test account.
 - [ ] Configure the feedback endpoint or remove/label the unavailable submission feature.
 - [ ] Add a tested CSP.
 - [ ] Test on Android: launch, offline/network errors, back navigation, external links, sign-in, and storage persistence.
