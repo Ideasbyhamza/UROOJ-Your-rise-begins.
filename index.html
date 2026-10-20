@@ -1096,6 +1096,16 @@ button,input,textarea,select{min-width:0}
 .app select,.app input,.app textarea{padding:calc(8px * var(--urooj-layout-scale,0.8))}
 .app .urooj-metric-grid,.app .urooj-category-chart,.app .urooj-habit-insights{gap:calc(8px * var(--urooj-layout-scale,0.8))}
 
+/* Clear, compact analytics: keep dates together and make upcoming months explicit. */
+.app .urooj-analytics-section .urooj-insights-heading p{display:none}
+.app .urooj-analytics-section .urooj-day-col small{font-size:8px;white-space:nowrap;display:block;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.2px}
+.app .urooj-analytics-section .urooj-daily-chart{overflow-x:auto;overscroll-behavior-x:contain}
+.app .urooj-analytics-section .urooj-bars{min-width:510px;gap:3px}
+.app .urooj-analytics-section .urooj-month-row.is-upcoming .urooj-month-track{opacity:.55}
+.app .urooj-analytics-section .urooj-month-row.is-upcoming>small{color:var(--muted)}
+.app .urooj-analytics-section .urooj-month-row{row-gap:6px}
+.app .urooj-analytics-section .urooj-month-row>small{line-height:1.25;white-space:normal}
+.app .urooj-analytics-section .urooj-metric small{line-height:1.25;min-height:1.25em}
 /* Minimal, independently expandable progress and habit insight panels. */
 .app .urooj-analytics-section{display:flex;flex-direction:column;gap:10px;margin:14px 0}
 .app .urooj-insights-heading h2{font-size:clamp(17px,4.5vw,21px);line-height:1.2;margin:3px 0 5px;color:var(--ink)}
@@ -1426,14 +1436,14 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 <div class="card"><div class="card-title"><h3>Today's Task</h3><span class="solar" id="scheduleDateLabel">Today</span></div><div class="slot-head" style="grid-template-columns:minmax(0,1fr) minmax(120px,45%)"><span>Task</span><span>Status</span></div><div id="scheduleSlots"></div><div class="save-note" id="scheduleStatus"></div><div class="btn-row" style="margin-top:12px"><button class="btn" id="scheduleAddChallenge" type="button">＋ Add task</button></div></div>
 <div class="progress-card task-progress-summary"><div class="progress-ring" id="progressRing"><b id="progressPercent">0%</b></div><div class="progress-copy"><strong id="progressTitle">Start with one good deed</strong><span id="progressSub">Based on listed tasks only.</span><div class="task-progress-counts"><span class="solar" id="todayCount">0 recorded</span><span class="solar" id="todayTotalTasks">0 total tasks</span></div><div class="tiny-track"><span id="progressBar"></span></div></div></div>
 <div class="urooj-analytics-section" aria-labelledby="progressInsightsHeading">
-<div class="urooj-insights-heading"><div><div class="eyebrow">Your patterns, at a glance</div><h2 id="progressInsightsHeading">Progress &amp; habit insights</h2><p class="muted">Open only the views you want. Each panel expands and closes independently.</p></div></div>
-<div class="urooj-analytics-controls"><label for="progressMonthSelect">Monthly range</label><select id="progressMonthSelect" aria-label="Number of months in progress report"><option value="3">Last 3 months</option><option value="6" selected>Last 6 months</option><option value="12">Last 12 months</option></select></div>
-<div class="urooj-metric-grid"><div class="urooj-metric"><span>This week</span><strong id="weekDone">0</strong><small>completed / recorded items</small></div><div class="urooj-metric"><span>Completion rate</span><strong id="weekRate">0%</strong><small>of recorded statuses</small></div><div class="urooj-metric"><span>Active days</span><strong id="monthActiveDays">0</strong><small>days with activity this month</small></div><div class="urooj-metric"><span>Best streak</span><strong id="habitBestStreak">0</strong><small>consecutive active days</small></div></div>
-<details class="urooj-insight-panel" open><summary><span><strong>Daily consistency</strong><small>Last 30 days · completed share by day</small></span></summary><div id="statsChart" class="urooj-daily-chart" role="img" aria-label="Daily activity completion for the last 30 days"></div></details>
-<details class="urooj-insight-panel"><summary><span><strong>Monthly progress</strong><small>Compare recorded activity over time</small></span></summary><div id="monthlyProgressChart" class="urooj-monthly-chart" role="img" aria-label="Monthly recorded activity and completion rates"></div></details>
-<details class="urooj-insight-panel"><summary><span><strong>Habit balance</strong><small>Category breakdown for the current month</small></span></summary><div id="categoryChart" class="urooj-category-chart"></div></details>
-<details class="urooj-insight-panel"><summary><span><strong>Your strongest habits</strong><small>Ranked from your recent recorded activity</small></span></summary><div id="habitInsightsList" class="urooj-habit-insights"></div></details>
-<p class="muted urooj-analytics-note">Only activity statuses saved on this device/account are counted. Missing days stay unfilled rather than being treated as failures; older activity is shown only when it exists in your saved log.</p>
+<div class="urooj-insights-heading"><div><div class="eyebrow">Your patterns, at a glance</div><h2 id="progressInsightsHeading">Progress &amp; habit insights</h2><p class="muted">Your activity over time.</p></div></div>
+<div class="urooj-analytics-controls"><label for="progressMonthSelect">Month range</label><select id="progressMonthSelect" aria-label="Months shown in progress report"><option value="3">Next 3 months</option><option value="6" selected>Oct–Mar · 6 months</option><option value="12">Next 12 months</option></select></div>
+<div class="urooj-metric-grid"><div class="urooj-metric"><span>This week</span><strong id="weekDone">0</strong><small>done / logged</small></div><div class="urooj-metric"><span>Completion rate</span><strong id="weekRate">0%</strong><small>of logged items</small></div><div class="urooj-metric"><span>Active days</span><strong id="monthActiveDays">0</strong><small>days logged this month</small></div><div class="urooj-metric"><span>Best streak</span><strong id="habitBestStreak">0</strong><small>active days in a row</small></div></div>
+<details class="urooj-insight-panel" open><summary><span><strong>Daily consistency</strong><small>30 days · daily completion</small></span></summary><div id="statsChart" class="urooj-daily-chart" role="img" aria-label="Daily activity completion for the last 30 days"></div></details>
+<details class="urooj-insight-panel"><summary><span><strong>Monthly progress</strong><small>Current month + upcoming months</small></span></summary><div id="monthlyProgressChart" class="urooj-monthly-chart" role="img" aria-label="Monthly recorded activity and completion rates"></div></details>
+<details class="urooj-insight-panel"><summary><span><strong>Habit balance</strong><small>Completion by habit category</small></span></summary><div id="categoryChart" class="urooj-category-chart"></div></details>
+<details class="urooj-insight-panel"><summary><span><strong>Your strongest habits</strong><small>Your top 5 by completion</small></span></summary><div id="habitInsightsList" class="urooj-habit-insights"></div></details>
+<p class="muted urooj-analytics-note">Only saved activity is counted. Blank days are not failures.</p>
 </div>
 <div class="card removed-overview" id="statusBreakdownCard"><details class="compact-expand"><summary>Daily tasks &amp; status overview<span class="muted">One combined view of every task and its own status</span></summary><p class="muted">Each task keeps its own meaningful options—for example, prayer has Takbeer-e-Ula/Jamaat, while fitness can have Walking/Running. Edit any task in Settings → Edit your daily tasks.</p><div class="category-bars" id="statusBreakdownChart"></div></details></div>
 <div class="privacy-note">Schedule definitions are editable only in Settings. Daily status selections and graph data are recorded here.</div>
@@ -1445,14 +1455,6 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 <div class="eyebrow">Today’s Motive</div><blockquote id="quoteText">“The most beloved deeds to Allah are those that are most consistent, even if they are few.”</blockquote>
 <div class="attribution" id="quoteSource">— Sahih al-Bukhari 6464 · Sahih Muslim 783</div>
 </article>
-<section class="card urooj-checkin-card" aria-label="7-day check-in">
- <div class="urooj-checkin">
-  <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick today to add one dot to your rise</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
-  <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
-  <div class="urooj-checkin-progress" role="progressbar" aria-label="Weekly check-in progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span id="uroojCheckinProgressBar" style="width:0%"></span></div>
-  <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
- </div>
-</section>
 <div id="customChallengeList"></div>
 <div id="socialChallengeBlock"><div class="challenge-hero"><div class="challenge-top"><div><h3 id="socialTitleDisplay">30-Day Digital Reset</h3><p>Reduce social media. Reclaim attention for learning, worship, and people.</p></div><div class="count-pill" id="socialCount">0 / 30</div></div><div class="challenge-progress"><span id="socialBar" style="width:0%"></span></div><div class="challenge-meta"><span id="socialPercent">0% complete</span><span>Tap a day to mark it</span></div></div>
 <div class="card"><div class="card-title"><h3>30-day journey</h3><span class="muted">Gentle accountability</span></div><div class="day-grid" id="socialGrid"></div><div class="challenge-foot"><span id="socialStreak">0 days completed</span><button class="btn ghost small" id="socialClear">Clear marks</button></div></div></div>
@@ -1463,6 +1465,14 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 
 <section class="card urooj-progress-card" id="uroojUpgradeJourney" aria-label="Your Rise UROOJ daily check-in and 365-day progression">
  <div class="card-title"><h3>Your Rise · UROOJ</h3><span class="solar" id="uroojTotalDays">0 / 365 days</span></div>
+<section class="card urooj-checkin-card" aria-label="7-day check-in">
+ <div class="urooj-checkin">
+  <div class="urooj-checkin-head"><div><strong>7-day check-in</strong><small>Tick today to add one dot to your rise</small></div><span class="urooj-streak-pill" id="uroojStreakCount">✦ 0-day streak</span></div>
+  <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
+  <div class="urooj-checkin-progress" role="progressbar" aria-label="Weekly check-in progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span id="uroojCheckinProgressBar" style="width:0%"></span></div>
+  <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
+ </div>
+</section>
 
  <p class="upgrade-intro">The first five levels take 60 check-ins each; UROOJ takes 65, completing 365 days.</p>
  <div class="upgrade-list">
@@ -2041,10 +2051,10 @@ function renderProgressInsights(all){
  $('#weekRate').textContent=(weekRecorded?Math.round(weekDoneN/weekRecorded*100):0)+'%';
  const days30=[];for(let n=29;n>=0;n--){const d=new Date(todayDate);d.setUTCDate(d.getUTCDate()-n);days30.push(dayData(d))}
  const maxDaily=Math.max(1,...days30.map(d=>d.recorded?Math.round(d.done/d.recorded*100):0));
- host.innerHTML='<div class="urooj-bars">'+days30.map(d=>{const pct=d.recorded?Math.round(d.done/d.recorded*100):0;const dt=new Date(d.key+'T00:00:00Z');const label=new Intl.DateTimeFormat('en',{day:'numeric',month:'short',timeZone:'UTC'}).format(dt);return '<div class="urooj-day-col" title="'+esc(label+': '+(d.recorded?d.done+'/'+d.recorded+' completed':'No entries'))+'"><div class="urooj-day-track"><i style="height:'+pct+'%"></i></div><small>'+dt.getUTCDate()+'</small></div>'}).join('')+'</div><div class="urooj-chart-legend"><span><i></i> Completed share of recorded statuses</span><span>0–100%</span></div>';
+ host.innerHTML='<div class="urooj-bars">'+days30.map(d=>{const pct=d.recorded?Math.round(d.done/d.recorded*100):0;const dt=new Date(d.key+'T00:00:00Z');const label=new Intl.DateTimeFormat('en',{day:'2-digit',month:'short',timeZone:'UTC'}).format(dt);return '<div class="urooj-day-col" title="'+esc(label+': '+(d.recorded?d.done+'/'+d.recorded+' done':'No entries'))+'"><div class="urooj-day-track"><i style="height:'+pct+'%"></i></div><small>'+String(dt.getUTCDate()).padStart(2,'0')+'</small></div>'}).join('')+'</div><div class="urooj-chart-legend"><span><i></i> Daily completion</span><span>0–100%</span></div>';
  const select=$('#progressMonthSelect'),months=Math.max(3,Math.min(12,Number(select?.value)||6)),monthRows=[];
- for(let n=months-1;n>=0;n--){const d=new Date(Date.UTC(todayDate.getUTCFullYear(),todayDate.getUTCMonth()-n,1)),key=d.toISOString().slice(0,7),last=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).getUTCDate();let recorded=0,done=0,active=0;for(let day=1;day<=last;day++){const dd=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),day));if(dd>todayDate)break;const data=dayData(dd);recorded+=data.recorded;done+=data.done;if(data.recorded)active++}monthRows.push({key,label:new Intl.DateTimeFormat('en',{month:'short',year:'2-digit',timeZone:'UTC'}).format(d),recorded,done,active,rate:recorded?Math.round(done/recorded*100):0})}
- const monthly=$('#monthlyProgressChart');if(monthly)monthly.innerHTML='<div class="urooj-month-rows">'+monthRows.map(m=>'<div class="urooj-month-row"><div class="urooj-month-label">'+esc(m.label)+'</div><div class="urooj-month-track"><i style="width:'+m.rate+'%"></i></div><strong>'+m.rate+'%</strong><small>'+m.active+' active days · '+m.done+'/'+m.recorded+'</small></div>').join('')+'</div>';
+ for(let n=0;n<months;n++){const d=new Date(Date.UTC(todayDate.getUTCFullYear(),todayDate.getUTCMonth()+n,1)),key=d.toISOString().slice(0,7),last=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).getUTCDate();let recorded=0,done=0,active=0;for(let day=1;day<=last;day++){const dd=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),day));if(dd>todayDate)break;const data=dayData(dd);recorded+=data.recorded;done+=data.done;if(data.recorded)active++}monthRows.push({key,label:new Intl.DateTimeFormat('en',{month:'short',year:'numeric',timeZone:'UTC'}).format(d),recorded,done,active,rate:recorded?Math.round(done/recorded*100):0,upcoming:key>today.slice(0,7)})}
+ const monthly=$('#monthlyProgressChart');if(monthly)monthly.innerHTML='<div class="urooj-month-rows">'+monthRows.map(m=>'<div class="urooj-month-row'+(m.upcoming?' is-upcoming':'')+'"><div class="urooj-month-label">'+esc(m.label)+'</div><div class="urooj-month-track"><i style="width:'+m.rate+'%"></i></div><strong>'+m.rate+'%</strong><small>'+(m.upcoming?'Upcoming · no entries yet':m.active+' active days · '+m.done+'/'+m.recorded+' done')+'</small></div>').join('')+'</div>';
  const thisMonth=monthRows[monthRows.length-1];$('#monthActiveDays').textContent=thisMonth?.active||0;
  let run=0,best=0;for(let n=days30.length-1;n>=0;n--){if(days30[n].recorded){run++;best=Math.max(best,run)}else run=0}$('#habitBestStreak').textContent=best+'d';
  const cats={};const currentKey=today.slice(0,7);Object.entries(log).forEach(([key,values])=>{if(!key.startsWith(currentKey)||key>today||!values)return;activities.forEach(item=>{const v=values[item.id];if(isRecorded(v)){const name=category(item);cats[name] ||= {recorded:0,done:0};cats[name].recorded++;if(isDone(v))cats[name].done++}})});
