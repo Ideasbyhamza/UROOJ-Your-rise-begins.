@@ -1722,7 +1722,7 @@ function renderProgressInsights(all){
  const dateKey=d=>d.toISOString().slice(0,10);
  const activities=(all||[]).filter((x,i,a)=>x&&x.id&&a.findIndex(y=>y.id===x.id)===i);
  const isRecorded=v=>v!==undefined&&v!==null&&String(v).trim()!==''&&String(v).trim().toLowerCase()!=='not recorded';
- const isDone=v=>isRecorded(v)&&!/^(not done|missed|skipped|excused|not applicable|no)$/i.test(String(v).trim());
+ const isDone=v=>isRecorded(v)&&!/^(not done|missed|skipped|excused|not applicable|no|in progress|partly done|partial)$/i.test(String(v).trim());
  const category=item=>{const t=String(item.category||item.name||'').toLowerCase();if(/fajr|dhuhr|zuhr|asr|maghrib|isha|prayer|namaz/.test(t))return 'Prayer';if(/quran|qur’an|tafseer|tafsir/.test(t))return 'Qur’an';if(/walk|exercise|workout|fitness|running/.test(t))return 'Fitness';if(/read|book|learning|study/.test(t))return 'Learning';if(/dhikr|zikr|tasbeeh|tasbih/.test(t))return 'Dhikr';return 'Personal'};
  const dayData=d=>{const key=dateKey(d),day=log[key]||{};const entries=activities.map(item=>({item,value:day[item.id]})).filter(x=>isRecorded(x.value));return {key,recorded:entries.length,done:entries.filter(x=>isDone(x.value)).length,entries}};
  const week=[];for(let n=6;n>=0;n--){const d=new Date(todayDate);d.setUTCDate(d.getUTCDate()-n);week.push(dayData(d))}
