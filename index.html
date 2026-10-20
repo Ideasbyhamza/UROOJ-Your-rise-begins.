@@ -856,6 +856,22 @@ button,input,textarea,select{min-width:0}
 .tazkiyah-head p{font-size:clamp(17px,4.4vw,20px);font-weight:500;line-height:1.55;max-width:32ch;margin:0 auto;text-align:center}
 #view-schedule>.section-head:first-child h1{font-size:clamp(26px,5vw,32px)}
 
+
+/* Challenges tab: clearer hierarchy, compact motive, legible day counters. */
+#view-challenges .challenge-section-head{display:block;text-align:center;align-items:initial;margin:8px 2px 12px}
+#view-challenges .challenge-section-head h1{font-size:29px;line-height:1.15;margin:0 0 5px}
+#view-challenges .challenge-kicker{font-size:12px;letter-spacing:1.3px;margin:0 0 5px}
+#view-challenges .challenge-section-head p{font-size:11px;line-height:1.45;margin:0 auto;max-width:290px;text-align:center}
+#view-challenges .challenge-motive{padding:13px 15px;border-radius:15px;margin:0 0 15px;box-shadow:none}
+#view-challenges .challenge-motive .eyebrow{font-size:9px;letter-spacing:1.3px}
+#view-challenges .challenge-motive blockquote{font-size:19px;line-height:1.45;margin:7px 0 8px;max-width:none}
+#view-challenges .challenge-motive .attribution{font-size:10px}
+#view-challenges .day-grid{gap:5px;margin:12px 0}
+#view-challenges .day-box{aspect-ratio:auto;min-height:48px;padding:5px 2px;gap:3px;border-radius:9px}
+#view-challenges .day-box strong{font-size:14px;line-height:1.1}
+#view-challenges .day-box span{font-size:9px;line-height:1.1}
+@media(max-width:420px){#view-challenges .day-grid{gap:4px}#view-challenges .day-box{min-height:46px;padding:4px 1px!important}#view-challenges .day-box strong{font-size:13px}#view-challenges .day-box span{font-size:9px}}
+@media(max-width:360px){#view-challenges .day-grid{gap:3px}#view-challenges .day-box{min-height:44px}#view-challenges .day-box strong{font-size:12px}#view-challenges .day-box span{font-size:8px}}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -1035,15 +1051,12 @@ button,input,textarea,select{min-width:0}
 <div class="privacy-note">Schedule definitions are editable only in Settings. Daily status selections and graph data are recorded here.</div>
 </section>
 <section class="view active" id="view-challenges">
-<article class="quote">
+<div class="section-head challenge-section-head"><div><h1>Challenges</h1><div class="eyebrow challenge-kicker">Train your attention</div><p>Progress over punishment. Return to the path whenever you need.</p></div></div>
+
+<article class="quote challenge-motive">
 <div class="eyebrow">Today’s Motive</div><blockquote id="quoteText">“The most beloved deeds to Allah are those that are most consistent, even if they are few.”</blockquote>
 <div class="attribution" id="quoteSource">— Sahih al-Bukhari 6464 · Sahih Muslim 783</div>
-
 </article>
-
-
-
-<div class="section-head"><div><div class="eyebrow">Train your attention</div><h1>Challenges</h1><p>Progress over punishment. Return to the path whenever you need.</p></div></div>
 
 <div class="challenge-hero gold"><div class="challenge-top"><div><h3>Your next level starts with one promise.</h3><p>Choose a challenge that tests your discipline. Start small, show up honestly, and keep going when motivation fades.</p></div></div><div class="btn-row" style="margin-top:14px"><button class="btn" id="acceptChallengeGoSettings">＋ Accept a challenge</button></div></div>
 <div id="customChallengeList"></div>
