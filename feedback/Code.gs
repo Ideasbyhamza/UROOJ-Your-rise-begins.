@@ -17,7 +17,7 @@ function doPost(e) {
       return json_({ ok: true });
     }
 
-    const allowedTypes = ['Feedback', 'Complaint', 'Suggestion', 'Bug report', 'Other'];
+    const allowedTypes = ['Suggestion', 'Complaint', 'Bug report / Glitch', 'Feature request', 'Other'];
     const type = String(p.type || '').trim();
     const message = String(p.message || '').trim();
     const date = String(p.date || '').trim();
