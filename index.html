@@ -1009,6 +1009,13 @@ html[data-urooj-palette="evergreen"][data-urooj-theme="dark"]{background:#0D1912
 .challenge-heading-card .urooj-week-grid{gap:6px}
 .challenge-heading-card .urooj-checkin-foot{margin-top:7px}
 @media(max-width:390px){.challenge-heading-card{padding:12px 10px}.challenge-heading-card .section-heading-copy h1{font-size:21px}.challenge-heading-card .current-level-badge{max-width:43%;font-size:8px}}
+
+.challenge-heading-card .urooj-week-grid{grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.challenge-heading-card .urooj-day-check{min-width:0;min-height:54px;padding:5px 1px;gap:3px}
+.challenge-heading-card .urooj-day-check .day-name{font-size:8px!important}
+.challenge-heading-card .urooj-day-check .day-square{width:14px;height:14px;flex-basis:14px}
+.challenge-heading-card .urooj-day-check .day-number{font-size:9px!important}
+.challenge-heading-card .urooj-day-check.today{border-color:var(--green);box-shadow:0 0 0 2px rgba(37,99,235,.16);background:var(--sage);color:var(--green);font-weight:800}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 <style id="urooj-unified-tab-headers">
@@ -1676,8 +1683,10 @@ Not applicable" rows="8"></textarea><p class="muted" style="font-size:10px;margi
 
 </main>
 <nav aria-label="Main navigation" class="nav">
-<button aria-label="Challenges" data-view="challenges"><svg viewbox="0 0 24 24"><path d="M12 3 14.8 8.7 21 9.6l-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg><span>Challenges</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
 <button aria-label="Task" class="active" data-view="schedule"><svg viewbox="0 0 24 24"><rect height="16" rx="2" width="18" x="3" y="5"></rect><path d="M16 3v4M8 3v4M3 10h18M8 14h3M8 17h6"></path></svg><span>Task</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
+<button aria-label="Challenges" data-view="challenges"><svg viewbox="0 0 24 24"><path d="M12 3 14.8 8.7 21 9.6l-4.5 4.4 1.1 6.2L12 17.3l-5.6 2.9 1.1-6.2L3 9.6l6.2-.9L12 3Z"></path></svg><span>Challenges</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
+
+
 <button aria-label="Tazkiyah" data-view="muhasabah"><svg viewbox="0 0 24 24"><path d="M12 20s-8-4.5-8-10a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.5-8 10-8 10Z"></path><path d="M8 12h2l1.2-2.5L13 15l1.2-3H16"></path></svg><span>Tazkiyah</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
 <button aria-label="Settings" data-view="sanctuary"><svg viewbox="0 0 24 24"><path d="M12 8.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"></path><path d="M19.4 13.5a7.8 7.8 0 0 0 0-3l1.7-1.3-1.7-3-2 .8a7.8 7.8 0 0 0-2.6-1.5L14.5 3h-5l-.3 2.5a7.8 7.8 0 0 0-2.6 1.5l-2-.8-1.7 3 1.7 1.3a7.8 7.8 0 0 0 0 3l-1.7 1.3 1.7 3 2-.8a7.8 7.8 0 0 0 2.6 1.5l.3 2.5h5l.3-2.5a7.8 7.8 0 0 0 2.6-1.5l2 .8 1.7-3-1.7-1.3Z"></path></svg><span>Settings</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
 <button aria-label="About" data-view="today"><svg viewbox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V21h13V9.5M9 21v-7h6v7"></path></svg><span>About</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
