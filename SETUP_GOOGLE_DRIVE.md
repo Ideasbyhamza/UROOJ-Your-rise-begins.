@@ -32,6 +32,7 @@ A Client ID identifies the browser app and is not a client secret. **Never put a
 - The app stores its backup in a JSON file named `urooj-data.json` in the signed-in account's Drive.
 - When you make changes while signed in, UROOJ schedules a Drive sync. You can also use **Sync now** in Settings.
 - When signing into Google on another device, UROOJ validates the Drive backup before restoring it. If the local app is empty/reset but Drive contains meaningful saved progress, the Drive copy is restored automatically. A meaningful local state will not overwrite an empty Drive backup. If both copies contain different meaningful progress, UROOJ asks which copy to keep. Empty/reset local state is not allowed to overwrite meaningful cloud progress during automatic sync.
+- **Full reset:** while Google is connected, the in-app Full reset attempts to delete the `urooj-data.json` Drive backup before clearing local data. If a previous sync is recorded but you are signed out, reconnect the same Google account first. If Drive deletion fails, the reset is cancelled and local data is kept. Manually clearing browser storage or signing out does not delete the Drive file.
 - **Google Drive backup is not end-to-end encrypted by this app.** Your UROOJ data may include private journal/reflection text. Review the app's requested scopes and Google account carefully. Sign out on shared devices.
 
 ## 4. Important limitations
