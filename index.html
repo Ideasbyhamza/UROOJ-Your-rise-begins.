@@ -943,59 +943,73 @@ button,input,textarea,select{min-width:0}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 <style id="urooj-unified-tab-headers">
-/* One shared header system for every primary tab. */
+/* Tab name anchors the top; level chip stays at the top-right. */
 .section-head.app-section-head,
 .section-head.challenge-section-head{
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:12px;
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto;
+  grid-template-rows:auto auto;
+  align-items:start!important;
+  justify-content:initial!important;
+  gap:0 10px!important;
   width:100%;
-  margin:13px 0 16px;
-  padding:0;
-  text-align:left;
+  margin:13px 0 16px!important;
+  padding:0!important;
+  text-align:left!important;
 }
 .section-head.app-section-head .section-heading-copy,
 .section-head.challenge-section-head .section-heading-copy{
-  flex:1 1 auto;
-  min-width:0;
-  text-align:left;
+  display:contents;
+}
+.section-head.app-section-head .section-heading-copy h1,
+.section-head.challenge-section-head .section-heading-copy h1{
+  grid-column:1;
+  grid-row:1;
+  align-self:start;
+  margin:0!important;
+  font-size:23px;
+  line-height:1.2;
+  font-weight:600;
+  text-align:left!important;
 }
 .section-head.app-section-head .section-heading-copy .eyebrow,
 .section-head.challenge-section-head .section-heading-copy .eyebrow{
-  margin:0 0 5px;
+  grid-column:1;
+  grid-row:2;
+  margin:5px 0 0!important;
   font-size:10px;
   line-height:1.35;
   letter-spacing:.11em;
   text-transform:uppercase;
+  text-align:left!important;
 }
-.section-head.app-section-head h1,
-.section-head.challenge-section-head h1{
-  margin:0;
-  font-size:23px;
-  line-height:1.2;
-  font-weight:600;
-  text-align:left;
-}
-.section-head.app-section-head p,
-.section-head.challenge-section-head p{
-  margin:6px 0 0;
+.section-head.app-section-head .section-heading-copy p,
+.section-head.challenge-section-head .section-heading-copy p{
+  grid-column:1/-1;
+  grid-row:3;
+  margin:7px 0 0!important;
   font-size:11px;
   line-height:1.6;
-  text-align:left;
+  text-align:left!important;
 }
-.section-head.app-section-head .current-level-badge,
-.section-head.challenge-section-head .current-level-badge{
-  flex:0 0 auto;
-  margin-top:1px;
+.section-head.app-section-head>.current-level-badge,
+.section-head.challenge-section-head>.current-level-badge{
+  grid-column:2;
+  grid-row:1;
+  justify-self:end;
+  align-self:start;
+  margin:0!important;
   white-space:nowrap;
 }
 .section-head.app-section-head .section-head-right{
   display:flex;
-  flex:0 0 auto;
+  grid-column:2;
+  grid-row:1/ span 2;
   flex-direction:column;
   align-items:flex-end;
+  justify-content:flex-start;
   gap:6px;
+  margin:0!important;
 }
 .section-head.app-section-head .task-count-pills{
   display:flex;
@@ -1005,11 +1019,12 @@ button,input,textarea,select{min-width:0}
 }
 @media(max-width:420px){
   .section-head.app-section-head,
-  .section-head.challenge-section-head{gap:8px}
-  .section-head.app-section-head h1,
-  .section-head.challenge-section-head h1{font-size:22px}
-  .section-head.app-section-head .current-level-badge,
-  .section-head.challenge-section-head .current-level-badge{font-size:9px;padding:5px 7px}
+  .section-head.challenge-section-head{column-gap:7px!important}
+  .section-head.app-section-head .section-heading-copy h1,
+  .section-head.challenge-section-head .section-heading-copy h1{font-size:22px}
+  .section-head.app-section-head>.current-level-badge,
+  .section-head.challenge-section-head>.current-level-badge{font-size:9px;padding:5px 7px}
+  .section-head.app-section-head .section-head-right{max-width:none}
 }
 </style>
 </head>
