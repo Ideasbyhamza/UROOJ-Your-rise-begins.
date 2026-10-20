@@ -727,6 +727,22 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 #uroojUpgradeJourney .urooj-stage-dots i{background:transparent;border:1px solid var(--green)}
 #uroojUpgradeJourney .urooj-stage-dots i.filled{background:var(--green)}
  .urooj-final-days{margin-top:12px;padding-top:10px;border-top:1px solid var(--line)}
+/* Larger tab labels and clearer, centered top headings. */
+.nav button>span:not(.nav-streak-badge){font-size:12px;font-weight:750;letter-spacing:.1px}
+#view-challenges>.section-head h1,
+#view-schedule>.section-head:first-child h1,
+#view-muhasabah>.section-head h1,
+#view-sanctuary>.section-head h1{font-size:clamp(32px,7.5vw,38px);line-height:1.12}
+#view-schedule>.section-head:first-child{margin-bottom:16px}
+#view-today>.section-head{gap:10px;margin:8px 2px 18px}
+#view-today>.section-head .eyebrow{font-size:clamp(13px,3.8vw,16px);letter-spacing:1.5px;line-height:1.4}
+#view-today>.section-head h1{font-size:clamp(30px,7.5vw,36px);line-height:1.12;margin:5px 0}
+#view-today>.section-head p{font-size:clamp(13px,3.5vw,15px);line-height:1.55;max-width:330px;margin:6px auto}
+#view-today #solarBadge{font-size:13px;padding:9px 14px;align-self:center;margin:2px auto 0}
+#view-challenges .challenge-hero.gold{margin-top:14px;margin-bottom:16px}
+#view-challenges .challenge-hero.gold h3{font-size:clamp(20px,5.2vw,24px);line-height:1.3}
+#view-challenges .challenge-hero.gold p{font-size:13px;line-height:1.55}
+#view-challenges .challenge-hero.gold .btn{font-size:13px;min-height:42px}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -898,7 +914,7 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 <section class="view" id="view-schedule">
 <div class="section-head"><div><div class="eyebrow">Record what you actually did</div><h1>Task</h1><p>Choose a status for each item. You can add your own activities below.</p></div><span class="solar" id="todayCount">0 recorded</span><span class="solar" id="todayTotalTasks">0 total tasks</span></div>
 <div class="progress-card"><div class="progress-ring" id="progressRing"><b id="progressPercent">0%</b></div><div class="progress-copy"><strong id="progressTitle">Begin with one good deed</strong><span id="progressSub">A log is a tool for reflection, not a judgement.</span><div class="tiny-track"><span id="progressBar"></span></div></div></div>
-<div class="section-head"><div><h2>Today's Task</h2><p>Use the dropdowns to record your scheduled activities.</p></div></div>
+
 <div class="card"><div class="card-title"><h3>Today's Task</h3><span class="solar" id="scheduleDateLabel">Today</span></div><div class="slot-head" style="grid-template-columns:minmax(0,1fr) minmax(120px,45%)"><span>Task</span><span>Status</span></div><div id="scheduleSlots"></div><div class="save-note" id="scheduleStatus">Choose a status for each scheduled activity. Changes save automatically.</div><div class="btn-row" style="margin-top:12px"><button class="btn" id="scheduleAddChallenge" type="button">＋ Add task</button></div></div>
 <div class="card"><details class="compact-expand"><summary>Progress graphs<span class="muted">Weekly completion and activity category summaries</span></summary><div style="display:flex;gap:8px;margin-bottom:10px"><div style="flex:1;background:var(--sage);border-radius:12px;padding:11px"><div class="eyebrow">This week</div><strong id="weekDone" style="font-size:19px;color:var(--green)">0</strong><div class="muted">items recorded</div></div><div style="flex:1;background:#f2ead9;border-radius:12px;padding:11px"><div class="eyebrow">Daily average</div><strong id="weekRate" style="font-size:19px;color:#84652d">0%</strong><div class="muted">of tracked items</div></div></div><div class="muted" style="margin:8px 0">Daily completion</div><div id="statsChart"></div><div class="muted" style="margin:14px 0 8px">Activity categories · last 7 days</div><div id="categoryChart"></div><p class="muted">Graphs use only entries you record in this app. Tracking begins when you start using this version; earlier days are not reconstructed automatically.</p></details></div>
 <div class="card removed-overview" id="statusBreakdownCard"><details class="compact-expand"><summary>Daily tasks &amp; status overview<span class="muted">One combined view of every task and its own status</span></summary><p class="muted">Each task keeps its own meaningful options—for example, prayer has Takbeer-e-Ula/Jamaat, while fitness can have Walking/Running. Edit any task in Settings → Edit your daily tasks.</p><div class="category-bars" id="statusBreakdownChart"></div></details></div>
@@ -915,13 +931,12 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 
 <div class="section-head challenge-section-head"><div><h1>Challenges</h1><div class="eyebrow challenge-kicker">Train your attention</div><p>Progress over punishment. Return to the path whenever you need.</p></div></div>
 
-<div class="challenge-hero gold"><div class="challenge-top"><div><h3>Your next level starts with one promise.</h3><p>Choose a challenge that tests your discipline. Start small, show up honestly, and keep going when motivation fades.</p></div></div><div class="btn-row" style="margin-top:14px"><button class="btn" id="acceptChallengeGoSettings">＋ Accept a challenge</button></div></div>
 <div id="customChallengeList"></div>
 <div id="socialChallengeBlock"><div class="challenge-hero"><div class="challenge-top"><div><h3 id="socialTitleDisplay">30-Day Digital Reset</h3><p>Reduce social media. Reclaim attention for learning, worship, and people.</p></div><div class="count-pill" id="socialCount">0 / 30</div></div><div class="challenge-progress"><span id="socialBar" style="width:0%"></span></div><div class="challenge-meta"><span id="socialPercent">0% complete</span><span>Tap a day to mark it</span></div></div>
 <div class="card"><div class="card-title"><h3>30-day journey</h3><span class="muted">Gentle accountability</span></div><div class="day-grid" id="socialGrid"></div><div class="challenge-foot"><span id="socialStreak">0 days completed</span><button class="btn ghost small" id="socialClear">Clear marks</button></div></div></div>
 <div id="focusChallengeBlock"><div class="challenge-hero gold"><div class="challenge-top"><div><h3 id="focusTitleDisplay">60-Day Self-Discipline</h3><p>Step away from a habit you want to leave behind. Build focus, healthier routines, and self-respect.</p></div><div class="count-pill" id="focusCount">0 / 60</div></div><div class="challenge-progress"><span id="focusBar" style="width:0%"></span></div><div class="challenge-meta"><span id="focusPercent">0% complete</span><span>Tap a day to mark it</span></div></div>
 <div class="card"><div class="card-title"><h3>60-day journey</h3><span class="muted">One day at a time</span></div><div class="day-grid" id="focusGrid"></div><div class="challenge-foot"><span id="focusStreak">0 days completed</span><button class="btn ghost small" id="focusClear">Clear marks</button></div></div></div>
-<div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
+<div class="challenge-hero gold"><div class="challenge-top"><div><h3>Your next level starts with one promise.</h3><p>Choose a challenge that tests your discipline. Start small, show up honestly, and keep going when motivation fades.</p></div></div><div class="btn-row" style="margin-top:14px"><button class="btn" id="acceptChallengeGoSettings">＋ Accept a challenge</button></div></div> <div class="card"><div class="card-title"><h3>Completed challenges</h3><span class="solar" id="completedChallengeCount">0 completed</span></div><div class="journal-list" id="completedChallengeList"><div class="empty">Finish every day of a challenge and it will appear here.</div></div></div>
 <p class="muted">A marked day records your own check-in, not a judgement of your worth. Missed days do not erase the progress you have already made.</p>
 
 <section class="card urooj-progress-card" id="uroojUpgradeJourney" aria-label="Your Rise UROOJ daily check-in and 365-day progression">
