@@ -1196,6 +1196,27 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
  #uroojUpgradeJourney .upgrade-number{width:23px;height:23px;flex-basis:23px}
 }
 
+
+/* Equal-size cards: consistent dashboard metrics and progression tiles. */
+.app .urooj-analytics-section .urooj-metric-grid{grid-auto-rows:minmax(94px,1fr);align-items:stretch}
+.app .urooj-analytics-section .urooj-metric{height:100%;min-height:94px;box-sizing:border-box}
+#uroojUpgradeJourney .upgrade-list{grid-template-columns:repeat(2,minmax(0,1fr));grid-auto-rows:1fr;align-items:stretch}
+#uroojUpgradeJourney .upgrade-step{height:100%;min-height:132px;box-sizing:border-box;grid-template-rows:auto auto 6px auto;align-content:space-between;gap:7px 8px;padding:10px}
+#uroojUpgradeJourney .upgrade-top{min-width:0;align-items:center}
+#uroojUpgradeJourney .upgrade-heading{min-width:0}
+#uroojUpgradeJourney .upgrade-word{font-size:11px;line-height:1.2;overflow-wrap:anywhere}
+#uroojUpgradeJourney .upgrade-days{font-size:9px;line-height:1.25;max-width:68px}
+#uroojUpgradeJourney .urooj-stage-status{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:5px;font-size:9px;min-height:16px}
+#uroojUpgradeJourney .urooj-stage-progress{grid-column:1/-1}
+#uroojUpgradeJourney .urooj-stage-dots{grid-column:1/-1;margin-top:0}
+@media(max-width:360px){
+ #uroojUpgradeJourney .upgrade-step{min-height:138px;padding:8px}
+ #uroojUpgradeJourney .upgrade-number{width:22px;height:22px;flex-basis:22px}
+ #uroojUpgradeJourney .upgrade-tier-label{font-size:7px}
+ #uroojUpgradeJourney .upgrade-days{max-width:58px;font-size:8px}
+ #uroojUpgradeJourney .urooj-stage-status{font-size:8px}
+}
+
 </style>
 </head>
 <body>
