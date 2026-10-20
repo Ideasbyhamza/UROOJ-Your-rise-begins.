@@ -104,8 +104,6 @@ body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divid
 #jarvisLogin .login-sub{font-size:10px;color:#9a9c93;margin-top:14px;line-height:1.6}
 
 /* Compact Settings rows: short copy, consistent arrow gutter, and responsive wrapping. */
-#view-sanctuary .settings-intro-cue{font-size:10px;line-height:1.35;margin:5px 2px 8px;color:var(--muted)}
-#view-sanctuary .settings-intro-cue .cue-arrow{font-size:16px;color:var(--green);font-weight:800;margin-right:4px}
 #view-sanctuary details.settings-accordion{margin:8px 0;border:1px solid var(--line);border-radius:17px;background:var(--white);overflow:hidden}
 #view-sanctuary details.settings-accordion>summary{position:relative;display:flex;align-items:center;gap:8px;padding:11px 42px 11px 13px;min-height:52px;border:0;background:var(--white);cursor:pointer;list-style:none;min-width:0}
 #view-sanctuary details.settings-accordion>summary::-webkit-details-marker{display:none}
@@ -117,41 +115,8 @@ body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divid
 #view-sanctuary details.settings-accordion[open]>summary{border-bottom:1px solid var(--line)}
 #view-sanctuary details.settings-accordion>summary:focus-visible{outline:3px solid #c5a05988;outline-offset:2px}
 @media(max-width:390px){#view-sanctuary details.settings-accordion>summary{gap:6px;padding:10px 39px 10px 11px}#view-sanctuary details.settings-accordion>summary>span{font-size:11px}#view-sanctuary details.settings-accordion>summary>small{font-size:9px;max-width:40%;flex-basis:40%}}
-#view-sanctuary details.settings-accordion.tour-target>summary{outline:2px solid var(--gold);outline-offset:2px;box-shadow:0 0 0 4px #c5a05922}
-#view-sanctuary details.settings-accordion.tour-target>summary:after{content:'➜';font-size:16px;background:var(--gold);color:#fff;animation:uroojArrowPulse 1s ease-in-out infinite alternate}
-@keyframes uroojArrowPulse{from{transform:translateY(-50%) translateX(0)}to{transform:translateY(-50%) translateX(3px)}}
 
-/* First-time feature tour */
-/* Make tutorial cards easier to read and use the empty space more efficiently. */
-#uroojTourCallout{width:min(calc(100vw - 24px),330px);max-height:52dvh;padding:14px;display:none;gap:0;border-radius:15px}
-#uroojTourCallout .tour-top{gap:10px;margin-bottom:8px}
-#uroojTourCallout .tour-kicker{font-size:10px;letter-spacing:1.1px}
-#uroojTourCallout .tour-progress{height:4px;margin:6px 0 10px}
-#uroojTourCallout h2{font-size:19px;line-height:1.25;margin:0 0 9px;letter-spacing:-.15px}
-#uroojTourCallout .tour-body{font-size:13px;line-height:1.55}
-#uroojTourCallout .tour-tip{padding:9px 10px;font-size:12px;line-height:1.45;margin-top:10px;border-radius:9px}
-#uroojTourCallout .tour-actions{gap:8px;margin-top:12px}
-#uroojTourCallout .tour-actions .btn{min-height:36px;padding:8px 10px;font-size:11px}
-#uroojTourCallout .tour-step{font-size:10px}
-@media(max-width:380px){#uroojTourCallout{width:calc(100vw - 20px);max-height:48dvh;padding:12px}#uroojTourCallout h2{font-size:18px}#uroojTourCallout .tour-body{font-size:12px;line-height:1.5}#uroojTourCallout .tour-tip{font-size:11px}}
 
-#uroojTutorialModal{position:fixed;inset:0;z-index:9998;display:none;background:rgba(19,35,28,.58);pointer-events:auto}
-#uroojTutorialModal.open{display:block}
-#uroojTourCallout{position:fixed;z-index:10002;display:none;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100%,278px);max-height:38dvh;overflow:auto;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:13px;padding:10px;box-shadow:0 10px 28px rgba(0,0,0,.20);pointer-events:auto}
-#uroojTourCallout.open{display:block}
-#uroojTourCallout .tour-top{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:4px}
-#uroojTourCallout .tour-kicker{font-size:9px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);font-weight:800}
-#uroojTourCallout .tour-progress{height:3px;background:var(--sage);border-radius:99px;overflow:hidden;margin:4px 0 6px}
-#uroojTourCallout .tour-progress span{display:block;height:100%;width:0;background:var(--green);transition:width .2s ease}
-#uroojTourCallout h2{font:600 15px 'Cinzel',Georgia,serif;color:var(--green);line-height:1.2;margin:0 0 4px}
-#uroojTourCallout .tour-body{font-size:11px;line-height:1.35;color:var(--muted);white-space:pre-line}
-#uroojTourCallout .tour-tip{background:var(--sage);border-radius:7px;padding:5px 7px;font-size:10px;line-height:1.3;margin-top:5px;color:var(--ink)}
-#uroojTourCallout .tour-actions{display:flex;align-items:center;gap:6px;margin-top:7px}
-#uroojTourCallout .tour-actions .btn{flex:1;min-height:29px;padding:5px 7px;font-size:10px}
-#uroojTourCallout .tour-step{font-size:9px;color:var(--muted)}
-.urooj-tour-focus{position:relative!important;z-index:9999!important;outline:2px solid var(--gold)!important;outline-offset:3px;box-shadow:0 0 0 4px #c5a05935!important;border-radius:10px}
-body.dark #uroojTourCallout{background:var(--white);border-color:var(--line)}
-@media(max-width:380px){#uroojTourCallout{width:min(100%,268px);max-height:35dvh;padding:9px;border-radius:12px}#uroojTourCallout h2{font-size:14px}}
 
 #uroojTermsConsent{position:fixed;inset:0;z-index:1000000;display:flex;align-items:center;justify-content:center;padding:16px;background:rgba(15,25,20,.72);overflow-y:auto}
 #uroojTermsConsent[hidden]{display:none!important}
@@ -163,9 +128,6 @@ body.dark #uroojTourCallout{background:var(--white);border-color:var(--line)}
 #uroojTermsConsent .consent-error{display:none;background:#f9e9e6;color:#8c3028;padding:10px;border-radius:10px;margin-top:10px;font-size:11px}
 #uroojTermsConsent .consent-error.show{display:block}
 
-#view-sanctuary details.settings-accordion.tour-target>summary{outline:2px solid var(--gold);outline-offset:2px;box-shadow:0 0 0 4px #c5a05922}
-#view-sanctuary details.settings-accordion.tour-target>summary:after{content:'➜';font-size:17px;background:var(--gold);color:#fff;animation:uroojArrowPulse 1s ease-in-out infinite alternate}
-@keyframes uroojArrowPulse{from{transform:translateY(-50%) translateX(0)}to{transform:translateY(-50%) translateX(3px)}}
 
 #uroojConsentReceipt{position:fixed;inset:0;z-index:1000002;display:flex;align-items:center;justify-content:center;padding:14px;background:rgba(15,25,20,.76)}
 #uroojConsentReceipt[hidden]{display:none!important}
@@ -197,7 +159,6 @@ main{min-width:0}
 .field{margin-block:10px}
 input,select,textarea{max-width:100%;min-width:0}
 .muted,.save-note,.privacy-note{overflow-wrap:anywhere}
-#view-sanctuary .settings-intro-cue{font-size:11px;line-height:1.4;margin:6px 2px 10px;color:var(--muted)}
 #view-sanctuary details.settings-accordion{margin:7px 0;border:1px solid var(--line);border-radius:15px;background:var(--white);overflow:hidden}
 #view-sanctuary details.settings-accordion>summary{position:relative;display:flex;align-items:center;gap:9px;padding:12px 43px 12px 14px;min-height:54px;list-style:none;cursor:pointer;background:var(--white)}
 #view-sanctuary details.settings-accordion>summary::-webkit-details-marker{display:none}
@@ -207,17 +168,6 @@ input,select,textarea{max-width:100%;min-width:0}
 #view-sanctuary details.settings-accordion>summary>small{flex:0 1 40%;font-size:10px;line-height:1.35;color:var(--muted);margin-left:auto;text-align:right;max-width:40%;white-space:normal;overflow-wrap:anywhere}
 #view-sanctuary details.settings-accordion[open]>.card{margin:0;border:0;border-top:1px solid var(--line);border-radius:0;padding:14px}
 #view-sanctuary details.settings-accordion[open]>summary{border-bottom:1px solid var(--line)}
-#view-sanctuary details.settings-accordion.tour-target>summary{outline:2px solid var(--gold);outline-offset:-2px}
-#view-sanctuary details.settings-accordion.tour-target>summary:after{content:'➜';font-size:15px;background:var(--gold);color:#fff;animation:uroojArrowPulse 1s ease-in-out infinite alternate}
-#uroojTutorialModal .tour-card{width:min(100%,300px);max-height:62dvh;padding:12px;border-radius:15px;overflow:auto}
-#uroojTutorialModal .tour-top{gap:6px;margin-bottom:6px}
-#uroojTutorialModal .tour-kicker,#uroojTutorialModal .tour-step{font-size:9px}
-#uroojTutorialModal h2{font-size:16px;line-height:1.25;margin:0 0 5px}
-#uroojTutorialModal .tour-body{font-size:11px;line-height:1.4}
-#uroojTutorialModal .tour-tip{padding:7px 8px;font-size:10px;line-height:1.35;margin-top:7px}
-#uroojTutorialModal .tour-dont-show{font-size:10px!important;line-height:1.35!important;margin-top:8px!important}
-#uroojTutorialModal .tour-actions{gap:7px;margin-top:9px;flex-wrap:wrap}
-#uroojTutorialModal .tour-actions .btn{min-height:32px;padding:7px 10px;font-size:11px}
 .login-sub{line-height:1.5}
 .login-legal a{padding:4px}
 .footer{line-height:1.5}
@@ -228,13 +178,10 @@ input,select,textarea{max-width:100%;min-width:0}
  #view-sanctuary details.settings-accordion>summary>span{font-size:12px}
  #view-sanctuary details.settings-accordion>summary>small{font-size:9px;flex-basis:39%;max-width:39%}
  .section-head p{font-size:11px}
- #uroojTutorialModal .tour-card{width:min(100%,280px);max-height:58dvh;padding:10px}
 }
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}#view-sanctuary details.settings-accordion.tour-target>summary:after{animation:none}*{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
-#view-sanctuary .tour-target-card{position:relative;outline:2px solid var(--gold);outline-offset:3px;box-shadow:0 0 0 5px #c5a05922}
-#view-sanctuary .tour-target-card:before{content:'➜ Google Account';position:absolute;right:12px;top:-8px;z-index:5;padding:3px 8px;border-radius:99px;background:var(--gold);color:#fff;font-size:9px;font-weight:800;line-height:1.2;box-shadow:0 2px 8px #0002}
-@media(prefers-reduced-motion:reduce){#view-sanctuary .tour-target-card:before{animation:none}}
+@media(prefers-reduced-motion:reduce){}
 
 /* Simpler Settings hierarchy: daily controls first, help and accountability last. */
 #view-sanctuary .settings-group-label{margin:22px 2px 6px;padding-top:12px;border-top:1px solid var(--line);font:700 9px system-ui,sans-serif;letter-spacing:.12em;color:var(--muted)}
@@ -264,12 +211,9 @@ body.dark[data-palette="midnight"]{--sand:#151922;--green:#A9BDD9;--gold:#D7BF83
 #view-sanctuary details.settings-accordion>summary>small{grid-column:1;grid-row:2;display:block;flex:none!important;width:auto;max-width:100%!important;margin:0!important;text-align:left!important;font-size:10px!important;line-height:1.35!important;white-space:normal!important;overflow-wrap:anywhere}
 #view-sanctuary details.settings-accordion>summary:after{grid-column:2;grid-row:1 / span 2;position:static!important;transform:none!important;align-self:center;justify-self:center;width:26px;height:26px;font-size:23px}
 #view-sanctuary details.settings-accordion[open]>summary:after{font-size:18px}
-#view-sanctuary details.settings-accordion#uroojTermsAccordion>summary,
-#view-sanctuary details.settings-accordion#uroojTutorialAccordion>summary{padding-top:10px!important;padding-bottom:10px!important}
-#view-sanctuary details.settings-accordion#uroojTermsAccordion>summary>span,
-#view-sanctuary details.settings-accordion#uroojTutorialAccordion>summary>span{font-size:12px!important}
-#view-sanctuary details.settings-accordion#uroojTermsAccordion>summary>small,
-#view-sanctuary details.settings-accordion#uroojTutorialAccordion>summary>small{font-size:9px!important}
+#view-sanctuary details.settings-accordion#uroojTermsAccordion>summary{padding-top:10px!important;padding-bottom:10px!important}
+#view-sanctuary details.settings-accordion#uroojTermsAccordion>summary>span{font-size:12px!important}
+#view-sanctuary details.settings-accordion#uroojTermsAccordion>summary>small{font-size:9px!important}
 @media(max-width:390px){#view-sanctuary details.settings-accordion>summary{padding:10px 10px 10px 12px!important;column-gap:8px}#view-sanctuary details.settings-accordion>summary>span{font-size:12px!important}#view-sanctuary details.settings-accordion>summary>small{font-size:9px!important}}
 
 /* Visual polish pass: align spacing, edges, and controls without changing fonts or copy. */
@@ -994,11 +938,6 @@ body.dark .top .brand small{color:#ddd!important}
 #uroojUpgradeJourney .urooj-stage-dots{min-height:3px!important}
 #view-muhasabah #murakabaCard{display:block!important;position:relative!important;float:none!important;clear:both!important;width:100%!important;margin:0 0 14px!important}
 #view-muhasabah .sanctuary-card{display:block!important;position:relative!important;float:none!important;clear:both!important;width:100%!important;margin:0 0 14px!important}
-.tour-preview{margin-top:8px;padding:8px;border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink)}
-.tour-preview[hidden]{display:none!important}
-.tour-preview-label{display:block;font-size:9px;font-weight:800;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
-.tour-preview-row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:10px;margin-bottom:7px}
-.tour-preview-black-button{background:#111!important;color:#fff!important;border-radius:7px;padding:9px 10px;text-align:center;font-size:12px;font-weight:800;line-height:1.2;white-space:nowrap}
 @media(max-width:380px){#uroojUpgradeJourney .upgrade-step{padding:5px 6px!important;gap:3px 4px!important}#uroojUpgradeJourney .upgrade-word{font-size:15px!important}#uroojUpgradeJourney .upgrade-tier-label{font-size:9px!important}#uroojUpgradeJourney .upgrade-days{font-size:9px!important}}
 
 
@@ -1396,9 +1335,6 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 /* Slightly larger level title while keeping the existing tile proportions. */
 #uroojUpgradeJourney .upgrade-word{font-size:17px!important;line-height:1.25!important}
 @media(max-width:380px){#uroojUpgradeJourney .upgrade-word{font-size:16px!important}}
-/* Keep tutorial content readable and scroll-safe on short mobile screens. */
-#uroojTourCallout{overflow-y:auto;overscroll-behavior:contain}
-#uroojTutorialPreview .tour-preview-black-button{font-size:13px;padding:10px 12px}
 </style>
 
 <style id="urooj-level-title-alignment">
@@ -1570,9 +1506,6 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 <details class="settings-accordion" id="uroojTermsAccordion"><summary><span>Terms &amp; Conditions</span><small>View terms and your consent record</small></summary>
 <div class="card" id="uroojTermsRecordCard"><div class="card-title"><h3>Terms &amp; Conditions</h3><span class="solar">Consent record</span></div><p class="muted">Current device consent status and record ID.</p><p id="uroojConsentRecordSummary" class="muted">Loading consent record…</p><div class="btn-row"><button class="btn secondary" type="button" onclick="window.uroojExportConsentRecord&&window.uroojExportConsentRecord()">Export consent record</button><a class="btn ghost" href="./terms.html" style="text-decoration:none">Read terms</a></div><p class="save-note">The record is stored locally. Email/central logging is not connected in this static build.</p></div>
 </details>
-<details class="settings-accordion" id="uroojTutorialAccordion"><summary><span>Tutorial &amp; Settings guide</span><small>Learn each setting · replay or change auto-show</small></summary>
-<div class="card" id="tutorialPreferenceCard"><div class="card-title"><h3>App tutorial &amp; Settings guide</h3><span class="solar">Help anytime</span></div><p class="muted">The quick tour appears after every login by default. Tick “Don’t show again” inside the tour to turn off automatic display; you can replay it here anytime.</p><button class="btn secondary" type="button" id="showTutorialFromSettings" style="margin-top:10px">▶ Show tutorial now</button></div>
-</details>
 <details class="settings-accordion" id="feedbackHistoryAccordion"><summary><span>Feedback &amp; review history</span><small>→ Send feedback and manage saved entries</small></summary><div class="card" id="appFeedbackCard"><div class="card-title"><h3>Feedback &amp; complaints</h3><span class="solar">Settings only</span></div><p class="muted">Share a suggestion, report a glitch, request a feature, or send a complaint. Entries stay in this device’s history and are emailed to the UROOJ maintainer when the mail service is connected.</p><form id="appFeedbackForm"><div aria-hidden="true" style="position:absolute;left:-10000px;width:1px;height:1px;overflow:hidden"><label for="appFeedbackWebsite">Leave this field empty</label><input id="appFeedbackWebsite" name="website" tabindex="-1" autocomplete="off"></div><div class="field"><label for="appFeedbackType">FEEDBACK TYPE</label><select id="appFeedbackType"><option>Suggestion</option><option>Complaint</option><option>Bug report / Glitch</option><option>Feature request</option><option>Other</option></select></div><div class="field"><label for="appFeedbackText">YOUR FEEDBACK</label><textarea id="appFeedbackText" maxlength="1500" placeholder="Describe the feedback or glitch…" required></textarea></div><button class="btn" type="submit">Save feedback</button><div class="save-note" id="appFeedbackStatus">Your feedback is saved locally. Email delivery requires the one-time Apps Script connection.</div></form><div class="journal-list" id="savedFeedbackList" style="margin-top:12px"></div></div></details>
 <div class="card" id="aboutHamzaJarvis">
   <div class="card-title"><h3>About UROOJ</h3><span class="solar">Idea by Hamza</span></div>
@@ -1670,7 +1603,6 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 <div class="section-head app-section-head"><div class="section-heading-copy"><div class="eyebrow">Personalise your experience</div><h1>Settings</h1><p>Shape your daily routine, reminders, and personal study tools.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div></div>
 <p class="muted" style="font-size:10px;line-height:1.4">Sign in with Google from the login screen to back up your data to Google Drive.</p>
-<p class="settings-intro-cue"><span aria-hidden="true" class="cue-arrow">›</span> Tap a setting to open details. The tutorial arrow points to the relevant option.</p>
 <details class="settings-accordion" id="appearanceAccordion"><summary><span>Appearance</span><small>Theme and text size</small></summary><div class="card" id="appearanceSettings"><div class="card-title"><h3>Appearance</h3><span class="solar">Personalise</span></div><div class="field"><label for="uroojPaletteSetting">TWO-COLOUR THEME</label><select id="uroojPaletteSetting"><option value="mono">Black &amp; White</option><option value="blue">Blue &amp; White</option><option value="evergreen">Green &amp; Beige</option></select></div><div class="field"><label for="uroojAppTextSize">APP TEXT SIZE</label><select id="uroojAppTextSize"><option value="0.6">Smallest</option><option value="0.7">Smaller</option><option value="0.8" selected>Medium</option><option value="0.9">Bigger</option><option value="1">Biggest</option></select><p class="muted">Five app-wide text sizes, from 60% to 100%. Medium is the default.</p></div></div></details>
 
 <details class="settings-accordion"><summary><span>Edit your daily tasks</span><small>→ Add, rename, reorder or remove tasks</small></summary><div class="card"><div class="card-title"><h3>Edit your daily tasks</h3><span class="solar">Settings only</span></div><p class="muted">Manage your activities here. Tap Edit to change the name, category, status dropdown options, timing, order, and whether the activity is enabled. The Schedule tab is for daily check-ins only.</p><div class="activity-settings-list" id="scheduleSettingsSlots"></div><div class="btn-row"><button class="btn" id="settingsAddSlot">＋ Add Activity</button><button class="btn secondary" id="settingsSaveSchedule">Save schedule</button></div><div class="save-note" id="settingsScheduleStatus">Changes save on this device automatically.</div></div></details>
@@ -1699,17 +1631,6 @@ Not applicable" rows="8"></textarea><p class="muted" style="font-size:10px;margi
 <button aria-label="About" data-view="today"><svg viewbox="0 0 24 24"><path d="M3 10.5 12 3l9 7.5"></path><path d="M5.5 9.5V21h13V9.5M9 21v-7h6v7"></path></svg><span>About</span><span class="nav-streak-badge" aria-label="Current streak">0</span></button>
 </nav>
 <div aria-live="polite" class="toast" id="toast" role="status"></div>
-<div id="uroojTutorialModal" aria-hidden="true"></div>
-<div id="uroojTourCallout" class="tour-card" role="dialog" aria-modal="true" aria-labelledby="uroojTutorialTitle" aria-describedby="uroojTutorialBody">
-    <div class="tour-top"><div><div class="tour-kicker">UROOJ · QUICK TOUR</div><div class="tour-step" id="uroojTutorialStep">Step 1 of 9</div></div><button type="button" class="btn ghost small" id="uroojTutorialClose" aria-label="Close tutorial">Skip ✕</button></div>
-    <div class="tour-progress" aria-hidden="true"><span id="uroojTutorialProgress"></span></div>
-    <h2 id="uroojTutorialTitle">Welcome to UROOJ</h2>
-    <div class="tour-body" id="uroojTutorialBody">A simple guide to your app.</div>
-    <div class="tour-tip" id="uroojTutorialTip"></div>
-    <div id="uroojTutorialPreview" class="tour-preview" hidden aria-label="Preview of the Add challenge button"><span class="tour-preview-label">CHALLENGES</span><div class="tour-preview-row"><span>Build a daily habit</span><span>Day 1</span></div><div class="tour-preview-black-button">＋ Add challenge</div></div>
-    
-    <label class="tour-dont-show" style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;line-height:1.35;color:var(--muted);text-align:left"><input type="checkbox" id="uroojDontShowAgain" style="accent-color:var(--green);width:16px;height:16px;flex:0 0 auto"> Don’t show again on future logins</label>\n    <div class="tour-actions"><button type="button" class="btn ghost" id="uroojTutorialBack">Back</button><button type="button" class="btn" id="uroojTutorialNext">Next</button></div>
-</div>
 <div aria-labelledby="activityEditTitle" aria-modal="true" class="modal-backdrop" id="activityEditModal" role="dialog"><div class="modal"><div class="modal-top"><h2 id="activityEditTitle">Edit Activity</h2><button aria-label="Close" class="close" id="closeActivityEdit">×</button></div><form id="activityEditForm"><input id="editActivityIndex" type="hidden"/><div class="field"><label for="editActivityName">NAME</label><input id="editActivityName" maxlength="140" required=""/></div><div class="field"><label for="editActivityCategory">CATEGORY</label><select id="editActivityCategory"><option>Prayer</option><option>Quran</option><option>Fitness</option><option>Reading</option><option>Dhikr</option><option>Learning</option><option>Personal</option><option>Good deeds</option></select></div><div class="field"><label for="editActivityType">TYPE</label><select id="editActivityType"><option value="standard">Standard activity</option><option value="prayer">Prayer (special statuses)</option><option value="quran">Qur’an / study</option><option value="fitness">Fitness / movement</option><option value="reading">Reading</option><option value="custom">Custom status options</option></select></div><div class="field"><label for="editActivityTime">SCHEDULED TIME (OPTIONAL)</label><input id="editActivityTime" type="time"/></div><div class="field editor-hidden"><label for="editActivityDefault">DEFAULT STATUS</label><select id="editActivityDefault"></select></div><div class="field"><label for="editActivityOptions">STATUS OPTIONS FOR THIS TASK <small>(up to 7 options total)</small></label><textarea id="editActivityOptions" placeholder="Not recorded&#10;Takbeer-e-Ula&#10;Jamaat&#10;Ada&#10;Qaza&#10;Missed / not completed" rows="4" maxlength="280" style="white-space:pre-wrap"></textarea><div class="btn-row" style="gap:7px;margin-top:8px"><input id="newActivityStatusOption" maxlength="40" placeholder="Add a status (e.g. 100 Tasbeeh)" aria-label="New status option" style="flex:1;min-width:150px"><button class="btn secondary small" id="addActivityStatusOption" type="button">＋ Add status</button></div></div><div class="field editor-hidden"><label for="editActivityOrder">ORDER</label><input id="editActivityOrder" min="1" step="1" type="number"/></div><div class="field editor-hidden"><label for="editActivityExtra">EXTRA FIELDS (OPTIONAL, COMMA-SEPARATED)</label><input id="editActivityExtra" placeholder="duration, distance, pages"/></div><label class="activity-enabled editor-hidden"><span>Enabled</span><input checked="" id="editActivityEnabled" type="checkbox"/></label><div class="btn-row"><button class="btn" type="submit">Save</button><button class="btn danger" id="deleteActivityFromModal" type="button">Delete Activity</button></div></form></div></div>
 <div aria-labelledby="resetTitle" aria-modal="true" class="modal-backdrop" id="resetModal" role="dialog"><div class="modal"><div class="modal-top"><h2 id="resetTitle">Reset tasbeeh?</h2><button aria-label="Close" class="close" id="closeModal">×</button></div><p class="muted">This will reset the current count to zero. This action cannot be undone.</p><div class="btn-row" style="justify-content:flex-end;margin-top:18px"><button class="btn ghost" id="cancelReset">Keep count</button><button class="btn danger" id="confirmReset">Reset count</button></div></div></div>
 </div>
@@ -1744,117 +1665,7 @@ function clearGoogleAccountCache(){try{localStorage.removeItem(GAUTH_KEY)}catch(
 function setSyncTime(ts){try{localStorage.setItem(SYNC_KEY,String(ts))}catch(e){}}
 function getSyncTime(){try{return Number(localStorage.getItem(SYNC_KEY)||0)}catch(e){return 0}}
 
-const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';const UROOJ_AUTO_TOUR_KEY='urooj-auto-tutorial-after-login-v1';
-const UROOJ_TOUR_STEPS=[
- {title:'Your first challenge',body:'Start with one personal-growth challenge. The first-day box shows where to begin; use the black “＋ Add challenge” button to create your own goal.',tip:'Choose one realistic goal and start with Day 1.',view:'challenges',targetSelector:'#view-challenges .challenge-motive'},
- {title:'Today’s experience',body:'Save one meaningful experience or lesson from today in this box. Keep it brief and save when you are ready.',tip:'Focus on today’s entry only.',view:'muhasabah',targetSelector:'#goodExperienceForm'},
- {title:'One check-in',body:'Use today’s highlighted check-in box to record your progress. The tour focuses on today only—not the full week.',tip:'One check-in for today.',view:'challenges',targetSelector:'#uroojWeekCheckins > :last-child'},
- {title:'Your level badge',body:'This top-right badge shows your current UROOJ level and title. Your title updates as you progress through the journey.',tip:'Check the badge immediately after your daily check-in.',view:'challenges',targetSelector:'#view-challenges .current-level-badge'},
- {title:'One task: tick, edit & record',body:'This is one task row. Tick or choose its status to record today’s result; edit a task when its details need changing. Use “＋ Add task” only when you need another task.',tip:'This is a focused example—not the whole task list.',view:'schedule',targetSelector:'#scheduleSlots > :first-child'},
- {title:'Murāqabah',body:'Murāqabah is mindful awareness that Allah sees you. Pause before choices, check your intention, and aim to act with sincerity—even when no one else is watching.',tip:'A daily reminder to act with sincerity.',view:'muhasabah',targetSelector:'#murakabaCard'},
- {title:'Muhasaba: evening reflection',body:'Use Evening reflection to review your day honestly, notice what went well, and choose one improvement for tomorrow.',tip:'A short reflection is enough to begin.',view:'muhasabah',targetSelector:'#journalForm'},
- {title:'Google Drive backup',body:'In Settings, the Google Account card explains where Google Drive backup is connected. Open Settings to find it; this tutorial does not connect an account for you.',tip:'You can replay this guide from Settings anytime.',view:'sanctuary',targetSelector:'#googleAccountCard'}
-];
-let uroojTourIndex=0;
-function positionTourCallout(){
- const card=document.getElementById('uroojTourCallout');
- if(!card)return;
- card.style.left='50%';card.style.top='50%';card.style.transform='translate(-50%,-50%)';
- const target=window.__uroojTourTarget;
- if(!target)return;
- requestAnimationFrame(()=>{
-  if(!document.getElementById('uroojTutorialModal')?.classList.contains('open'))return;
-  const rect=target.getBoundingClientRect();
-  const w=card.offsetWidth||278,h=card.offsetHeight||150,vw=window.innerWidth,vh=window.innerHeight;
-  const left=Math.max(10,Math.min(vw-w-10,rect.left+(rect.width-w)/2));
-  let top=rect.bottom+10;
-  if(top+h>vh-10)top=rect.top-h-10;
-  top=Math.max(10,Math.min(vh-h-10,top));
-  card.style.transform='none';card.style.left=left+'px';card.style.top=top+'px';
- });
-}
-function renderUroojTour(){
- const s=UROOJ_TOUR_STEPS[uroojTourIndex],modal=document.getElementById('uroojTutorialModal'),card=document.getElementById('uroojTourCallout');
- if(!s||!modal||!card)return;
- document.getElementById('uroojTutorialTitle').textContent=s.title;
- document.getElementById('uroojTutorialBody').textContent=s.body;
- document.getElementById('uroojTutorialTip').textContent=s.tip;
- const preview=document.getElementById('uroojTutorialPreview');if(preview)preview.hidden=uroojTourIndex!==0;
- document.getElementById('uroojTutorialStep').textContent='Step '+(uroojTourIndex+1)+' of '+UROOJ_TOUR_STEPS.length;
- document.getElementById('uroojTutorialProgress').style.width=((uroojTourIndex+1)/UROOJ_TOUR_STEPS.length*100)+'%';
- document.getElementById('uroojTutorialBack').disabled=uroojTourIndex===0;
- document.getElementById('uroojTutorialNext').textContent=uroojTourIndex===UROOJ_TOUR_STEPS.length-1?'Finish':'Next';
- positionTourCallout();
-}
-function shouldAutoShowUroojTutorial(){try{return localStorage.getItem(UROOJ_AUTO_TOUR_KEY)!=='off'}catch(e){return true}}
-function syncTutorialPreferenceControls(){const setting=document.getElementById('uroojAutoTutorialSetting');if(setting)setting.checked=shouldAutoShowUroojTutorial()}
-function openUroojTutorial(force){
- const modal=document.getElementById('uroojTutorialModal'),card=document.getElementById('uroojTourCallout');if(!modal||!card)return;
- if(!force&&!shouldAutoShowUroojTutorial())return;
- window.__uroojTourTarget=null;
- document.querySelectorAll('.urooj-tour-focus, #view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(el=>el.classList.remove('urooj-tour-focus','tour-target','tour-target-card'));
- uroojTourIndex=0;renderUroojTour();const dont=document.getElementById('uroojDontShowAgain');if(dont)dont.checked=false;
- modal.classList.add('open');card.classList.add('open');document.body.style.overflow='hidden';positionTourCallout();
- document.getElementById('uroojTutorialClose')?.focus({preventScroll:true});
-}
-function closeUroojTutorial(done){
- const modal=document.getElementById('uroojTutorialModal'),card=document.getElementById('uroojTourCallout');
- if(!modal)return;
- const dont=document.getElementById('uroojDontShowAgain');
- if(dont&&dont.checked){try{localStorage.setItem(UROOJ_AUTO_TOUR_KEY,'off');localStorage.setItem(UROOJ_TOUR_KEY,'dont-show-again')}catch(e){}syncTutorialPreferenceControls()}
- modal.classList.remove('open');card?.classList.remove('open');document.body.style.overflow='';
- document.querySelectorAll('.urooj-tour-focus, #view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(d=>{d.classList.remove('urooj-tour-focus','tour-target','tour-target-card')});
- window.__uroojTourTarget=null;
- if(done){try{localStorage.setItem(UROOJ_TOUR_KEY,'done')}catch(e){}}
-}
-function navigateTourView(view){
- const tab=document.querySelector('.nav button[data-view="'+view+'"]');
- if(tab)tab.click();
-}
-function navigateTourStep(step){
- document.querySelectorAll('.urooj-tour-focus, #view-sanctuary .tour-target, #view-sanctuary .tour-target-card').forEach(el=>el.classList.remove('urooj-tour-focus','tour-target','tour-target-card'));
- window.__uroojTourTarget=null;
- navigateTourView(step.view);
- requestAnimationFrame(()=>{
-  requestAnimationFrame(()=>{
-   let targetElement=null;
-   if(step.targetSelector){try{targetElement=document.querySelector(step.targetSelector)}catch(e){}}
-   if(!targetElement&&step.targetId)targetElement=document.getElementById(step.targetId);
-
-   if(!targetElement&&step.target){
-    const rows=[...document.querySelectorAll('#view-sanctuary details.settings-accordion')];
-    const row=rows.find(d=>(d.querySelector('summary span')?.textContent||'').trim()===step.target);
-    if(row){rows.forEach(other=>{other.open=other===row});row.open=true;row.classList.add('tour-target');targetElement=row}
-   } else if(step.view==='sanctuary'&&targetElement){
-    document.querySelectorAll('#view-sanctuary details.settings-accordion').forEach(row=>row.open=false);
-   }
-   if(targetElement){
-    targetElement.classList.add('urooj-tour-focus');
-    if(step.targetId==='googleAccountCard')targetElement.classList.add('tour-target-card');
-    targetElement.scrollIntoView({behavior:'auto',block:'center'});
-    window.__uroojTourTarget=targetElement;
-   }
-   positionTourCallout();
-  });
- });
-}
-function initUroojTutorial(){
- document.getElementById('uroojTutorialNext')?.addEventListener('click',()=>{
-  if(uroojTourIndex>=UROOJ_TOUR_STEPS.length-1){closeUroojTutorial(true);return}
-  uroojTourIndex++;navigateTourStep(UROOJ_TOUR_STEPS[uroojTourIndex]);renderUroojTour();
- });
- document.getElementById('uroojTutorialBack')?.addEventListener('click',()=>{
-  if(uroojTourIndex>0){uroojTourIndex--;navigateTourStep(UROOJ_TOUR_STEPS[uroojTourIndex]);renderUroojTour()}
- });
- document.getElementById('uroojTutorialClose')?.addEventListener('click',()=>closeUroojTutorial(true));
- document.getElementById('showTutorialAgain')?.addEventListener('click',()=>openUroojTutorial(true));
- document.getElementById('showTutorialFromSettings')?.addEventListener('click',()=>openUroojTutorial(true));
- const autoSetting=document.getElementById('uroojAutoTutorialSetting');if(autoSetting){syncTutorialPreferenceControls();autoSetting.addEventListener('change',()=>{try{localStorage.setItem(UROOJ_AUTO_TOUR_KEY,autoSetting.checked?'on':'off')}catch(e){}const dont=document.getElementById('uroojDontShowAgain');if(dont)dont.checked=false;toast(autoSetting.checked?'Tutorial will appear after login.':'Automatic tutorial is turned off. You can replay it from Settings.');});}
- document.getElementById('uroojTutorialModal')?.addEventListener('click',e=>{if(e.target.id==='uroojTutorialModal')closeUroojTutorial(true)});
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('uroojTutorialModal')?.classList.contains('open'))closeUroojTutorial(true)});
-}
-
-const APP_SESSION_KEY='urooj-app-session-until-v1';const APP_SESSION_MS=60*60*1000;function unlockApp(){try{localStorage.setItem(APP_SESSION_KEY,String(Date.now()+APP_SESSION_MS))}catch(e){}document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none';setTimeout(()=>openUroojTutorial(false),450)}function resumeAppSession(){try{const until=Number(localStorage.getItem(APP_SESSION_KEY)||0);if(until>Date.now()){document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none';return true}localStorage.removeItem(APP_SESSION_KEY)}catch(e){}return false}
+const APP_SESSION_KEY='urooj-app-session-until-v1';const APP_SESSION_MS=60*60*1000;function unlockApp(){try{localStorage.setItem(APP_SESSION_KEY,String(Date.now()+APP_SESSION_MS))}catch(e){}document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none';}function resumeAppSession(){try{const until=Number(localStorage.getItem(APP_SESSION_KEY)||0);if(until>Date.now()){document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none';return true}localStorage.removeItem(APP_SESSION_KEY)}catch(e){}return false}
 function setLoginError(msg){const el=document.getElementById('jarvisLoginError');if(el)el.textContent=msg||''}
 function setLoginBusy(busy){const b=document.getElementById('googleSignInBtn');if(b){b.disabled=busy;const s=b.querySelector('span');if(s)s.textContent=busy?'Signing in…':'Sign in with Google'}}
 function googleConfigured(){return typeof GOOGLE_CLIENT_ID==='string'&&GOOGLE_CLIENT_ID.endsWith('.apps.googleusercontent.com')&&!GOOGLE_CLIENT_ID.startsWith('PASTE_')}
@@ -2003,8 +1814,8 @@ const hadAppSession=resumeAppSession();
   document.body.classList.add('jarvis-authenticated');
   const login=document.getElementById('jarvisLogin');
   if(login)login.style.display='none';
-  // Hosted browser visits should also get the guided tour; unlockApp() handles later sign-ins.
-  setTimeout(()=>openUroojTutorial(false),650);
+
+  ;
  }
  initGoogleAuth();
 renderAccountStatus();
@@ -2297,7 +2108,7 @@ $('#fullResetData')?.addEventListener('click',async()=>{
  const cloudBackupMayExist=getSyncTime()>0;
  if(cloudBackupMayExist&&!gAccessToken){alert('A previous Google Drive sync is recorded. Reconnect the same Google account first; the full reset is cancelled so your cloud backup is not left behind.');return;}
  const scope=gAccessToken?'this device and your UROOJ backup in Google Drive':'this device';
- if(!confirm('FULL RESET: permanently erase all UROOJ data on '+scope+', including progress, challenges, Tasbeeh, feedback, consent/tutorial settings, colour palette and theme? This cannot be undone. Export a backup first if needed.'))return;
+ if(!confirm('FULL RESET: permanently erase all UROOJ data on '+scope+', including progress, challenges, Tasbeeh, feedback, consent and appearance settings, colour palette and theme? This cannot be undone. Export a backup first if needed.'))return;
  if(!confirm('Final confirmation: delete the saved UROOJ data'+(gAccessToken?' from Google Drive and this device':' from this device')+' now?'))return;
  const button=$('#fullResetData');if(button){button.disabled=true;button.textContent='Deleting saved data…';}
  if(gSyncTimer){clearTimeout(gSyncTimer);gSyncTimer=null;}if(gDrivePollTimer){clearInterval(gDrivePollTimer);gDrivePollTimer=null;}
@@ -2335,7 +2146,7 @@ document.getElementById('appFeedbackForm')?.addEventListener('submit',async e=>{
 if(feedbackEndpoint==='PASTE_APPS_SCRIPT_WEB_APP_URL_HERE'){status.textContent='Feedback saved on this device. Email service is not connected; ';const emailLink=document.createElement('a');emailLink.textContent='open an email draft';emailLink.href='mailto:hamzamadnipersonal@gmail.com?subject='+encodeURIComponent('[UROOJ Feedback] '+type)+'&body='+encodeURIComponent('Date: '+item.date+'\nType: '+type+'\n\nFeedback:\n'+text+'\n');emailLink.style.color='var(--green)';emailLink.style.fontWeight='700';status.appendChild(emailLink);document.getElementById('appFeedbackText').value='';toast('Feedback saved locally');return}
 status.textContent='Sending feedback…';const payload=new URLSearchParams({type,message:text,date:item.date,website:document.getElementById('appFeedbackWebsite')?.value||''});try{await fetch(feedbackEndpoint,{method:'POST',mode:'no-cors',body:payload});document.getElementById('appFeedbackText').value='';status.textContent='Feedback request submitted. The browser cannot verify Gmail delivery; check the configured inbox.';toast('Feedback submitted')}catch(err){status.textContent='Email request could not be sent. Your feedback remains saved locally.';document.getElementById('appFeedbackText').value=''}});
 document.getElementById('savedFeedbackList')?.addEventListener('click',e=>{const b=e.target.closest('[data-feedback-delete]');if(!b)return;let items=[];try{items=JSON.parse(localStorage.getItem(feedbackKey)||'[]')}catch(err){}items=items.filter(x=>x.id!==b.dataset.feedbackDelete);localStorage.setItem(feedbackKey,JSON.stringify(items));renderSavedFeedback()});
-initUroojTutorial();
+
 renderSavedFeedback();
 setDate();setInterval(setDate,60000);applyTheme();renderViewOnDemand('today');
 // Best-effort persistence warning without exposing journal content.
