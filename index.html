@@ -89,7 +89,7 @@ html{scroll-behavior:auto!important}
 /* Authenticated-state CSS must also hide the gate when the fallback runs before the login node exists. */ body.jarvis-authenticated #jarvisLogin{display:none!important}
   /* Prototype login gate */
 body:not(.jarvis-authenticated) .app{display:none!important}
-#jarvisLogin{min-height:100dvh;display:grid;place-items:center;padding:24px;background:#f5f5f5;color:#111}
+#jarvisLogin{min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:24px;background:#f5f5f5;color:#111}
 #jarvisLogin .login-card{width:100%;max-width:390px;background:#fff;border:1px solid #d9d9d9;border-radius:24px;padding:30px 24px;box-shadow:0 14px 42px #0000000d;text-align:center}
 #jarvisLogin .login-mark{display:none!important}
 #jarvisLogin .login-mark svg{width:49px;height:49px;display:block}
@@ -1487,6 +1487,7 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 })();
 </script>
 <section id="jarvisLogin" aria-label="Login">
+  <button type="button" id="loginTutorialBtn" style="width:min(100%,390px);padding:12px 18px;border:1px solid #111;border-radius:12px;background:#fff;color:#111;font-weight:750;font-size:14px">View Tutorial</button>
   <div class="login-card" id="jarvisLoginCard">
     <h1>UROOJ</h1>
     <p>Your rise begins.<br>Sign in to sync your progress across devices.</p>
@@ -1497,7 +1498,6 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
     <div class="login-error" id="jarvisLoginError" role="alert" aria-live="polite"></div>
     <div class="login-divider"><span>or</span></div>
     <button type="button" class="btn ghost" id="offlineContinueBtn" style="width:100%">Continue without Google</button>
-    <button type="button" class="btn ghost" id="loginTutorialBtn" style="width:100%;margin-top:10px;border:1px solid #111;background:#fff;color:#111">View Tutorial</button>
     <div class="credential-hint" id="googleConfigNotice" hidden></div>
     <div class="login-sub">Signing in with Google saves a private backup of your UROOJ data to a file in your own Google Drive, so your progress follows you across devices. "Continue without Google" keeps everything only in this browser, on this device.</div>
     <div class="login-legal" style="display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:12px;font-size:10px"><a href="./privacy.html" style="color:#53645c">Privacy Policy</a><a href="./terms.html" style="color:#53645c">Terms of Service</a><a href="mailto:hamzamadnipersonal@gmail.com" style="color:#53645c">Contact</a></div>
@@ -1731,6 +1731,7 @@ async function handleGoogleToken(resp){
   renderAccountStatus(true,message);
   toast('Google sign-in worked, but Drive backup failed: '+message);
  }
+ setTimeout(()=>window.uroojStartFocusedTutorial&&window.uroojStartFocusedTutorial('postLogin'),500);
 }
 function requestGoogleSignIn(){
  if(location.hostname==='appassets.androidplatform.net'){window.location.href='https://ideasbyhamza.github.io/UROOJ-Your-rise-begins./';return}
@@ -1827,7 +1828,7 @@ function renderAccountStatus(syncError,syncMessage){
  }
 }
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
-document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){setLoginError('');unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');applyTheme();});
+document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){setLoginError('');unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');applyTheme();setTimeout(()=>window.uroojStartFocusedTutorial&&window.uroojStartFocusedTutorial('postLogin'),350);});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
 // Keep the login gate visible unless a valid local/Google session exists. Preserve the session across reloads.
  const hasSession=resumeAppSession();
@@ -2372,7 +2373,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   {title:'Murāqabah',copy:'Use this reminder to pause, check your intention, and act with awareness of Allah.',selector:'#murakabaCard',view:'muhasabah'},
   {title:'Google login',copy:'Sign in with Google to back up your UROOJ progress to your own Drive. You can also continue without Google.',selector:'#googleSignInBtn',view:'login'}
  ];
- let index=0,active=false,startedFromLogin=false;
+ let index=0,active=false,startedFromLogin=false,activeSteps=steps;
  const modal=()=>document.getElementById('uroojFocusedTutorial');
  function clearHighlight(){document.querySelectorAll('.urooj-tutorial-highlight').forEach(el=>el.classList.remove('urooj-tutorial-highlight'))}
  function navigate(view){
@@ -2382,7 +2383,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   else {document.querySelectorAll('.view').forEach(el=>el.classList.toggle('active',el.id==='view-'+view));}
  }
  function showStep(){
-  clearHighlight();const step=steps[index];if(!step)return finish();
+  clearHighlight();const step=activeSteps[index];if(!step)return finish();
   navigate(step.view);
   const find=()=>document.querySelector(step.selector)|| (step.fallback&&document.querySelector(step.fallback));
   let target=find();
@@ -2391,23 +2392,20 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   const gate=document.getElementById('jarvisLogin');
   if(step.view==='login'){if(gate)gate.style.display='grid';target=document.querySelector(step.selector)}
   if(target){target.classList.add('urooj-tutorial-highlight');target.scrollIntoView({behavior:'auto',block:'center',inline:'nearest'})}
-  document.getElementById('uroojTutorialCount').textContent='Step '+(index+1)+' of '+steps.length;
+  document.getElementById('uroojTutorialCount').textContent='Step '+(index+1)+' of '+activeSteps.length;
   document.getElementById('uroojTutorialHeading').textContent=step.title;
   document.getElementById('uroojTutorialCopy').textContent=step.copy;
-  document.getElementById('uroojTutorialNext').textContent=index===steps.length-1?'Finish':'Next';
+  document.getElementById('uroojTutorialNext').textContent=index===activeSteps.length-1?'Finish':'Next';
   const m=modal();m.classList.add('is-open');m.setAttribute('aria-hidden','false');
  }
  function finish(){clearHighlight();const m=modal();m.classList.remove('is-open');m.setAttribute('aria-hidden','true');active=false;if(startedFromLogin){document.body.classList.remove('jarvis-authenticated');const gate=document.getElementById('jarvisLogin');if(gate)gate.style.display='grid';startedFromLogin=false;}try{localStorage.setItem(KEY,'1')}catch(e){}}
- function start(){if(active)return;const gate=document.getElementById('jarvisLogin');startedFromLogin=!!(gate&&getComputedStyle(gate).display!=='none'&&!document.body.classList.contains('jarvis-authenticated'));if(startedFromLogin){document.body.classList.add('jarvis-authenticated');gate.style.display='none';}active=true;index=0;showStep()}
- document.getElementById('uroojTutorialNext').addEventListener('click',()=>{index++;if(index>=steps.length)finish();else showStep()});
+ function start(mode){if(active)return;const gate=document.getElementById('jarvisLogin');startedFromLogin=!!(gate&&getComputedStyle(gate).display!=='none'&&!document.body.classList.contains('jarvis-authenticated'));activeSteps=mode==='postLogin'?steps.slice(0,-1):steps;if(startedFromLogin){document.body.classList.add('jarvis-authenticated');gate.style.display='none';}active=true;index=0;showStep()}
+ document.getElementById('uroojTutorialNext').addEventListener('click',()=>{index++;if(index>=activeSteps.length)finish();else showStep()});
  document.getElementById('uroojTutorialSkip').addEventListener('click',finish);
  const loginTutorialBtn=document.getElementById('loginTutorialBtn');if(loginTutorialBtn)loginTutorialBtn.addEventListener('click',start);
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&active)finish()});
  window.uroojStartFocusedTutorial=start;
- document.addEventListener('DOMContentLoaded',()=>{
-  let seen=false;try{seen=localStorage.getItem(KEY)==='1'}catch(e){}
-  if(!seen)setTimeout(start,700);
- });
+
 })();
 </script>
 </body>
