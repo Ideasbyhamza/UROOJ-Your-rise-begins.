@@ -122,6 +122,19 @@ body.dark #jarvisLogin .login-divider:before,body.dark #jarvisLogin .login-divid
 @keyframes uroojArrowPulse{from{transform:translateY(-50%) translateX(0)}to{transform:translateY(-50%) translateX(3px)}}
 
 /* First-time feature tour */
+/* Make tutorial cards easier to read and use the empty space more efficiently. */
+#uroojTourCallout{width:min(calc(100vw - 24px),330px);max-height:52dvh;padding:14px;display:none;gap:0;border-radius:15px}
+#uroojTourCallout .tour-top{gap:10px;margin-bottom:8px}
+#uroojTourCallout .tour-kicker{font-size:10px;letter-spacing:1.1px}
+#uroojTourCallout .tour-progress{height:4px;margin:6px 0 10px}
+#uroojTourCallout h2{font-size:19px;line-height:1.25;margin:0 0 9px;letter-spacing:-.15px}
+#uroojTourCallout .tour-body{font-size:13px;line-height:1.55}
+#uroojTourCallout .tour-tip{padding:9px 10px;font-size:12px;line-height:1.45;margin-top:10px;border-radius:9px}
+#uroojTourCallout .tour-actions{gap:8px;margin-top:12px}
+#uroojTourCallout .tour-actions .btn{min-height:36px;padding:8px 10px;font-size:11px}
+#uroojTourCallout .tour-step{font-size:10px}
+@media(max-width:380px){#uroojTourCallout{width:calc(100vw - 20px);max-height:48dvh;padding:12px}#uroojTourCallout h2{font-size:18px}#uroojTourCallout .tour-body{font-size:12px;line-height:1.5}#uroojTourCallout .tour-tip{font-size:11px}}
+
 #uroojTutorialModal{position:fixed;inset:0;z-index:9998;display:none;background:rgba(19,35,28,.58);pointer-events:auto}
 #uroojTutorialModal.open{display:block}
 #uroojTourCallout{position:fixed;z-index:10002;display:none;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100%,278px);max-height:38dvh;overflow:auto;background:var(--white);color:var(--ink);border:1px solid var(--line);border-radius:13px;padding:10px;box-shadow:0 10px 28px rgba(0,0,0,.20);pointer-events:auto}
