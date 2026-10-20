@@ -2016,5 +2016,24 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 })();
 
 </script>
+<script>
+/* Fail-safe: never leave the app as a blank screen if login/session UI state gets out of sync. */
+(function(){
+ function recoverBlankScreen(){
+  var app=document.querySelector('.app');
+  var gate=document.getElementById('jarvisLogin');
+  if(!app||!gate)return;
+  var appHidden=getComputedStyle(app).display==='none';
+  var gateHidden=getComputedStyle(gate).display==='none';
+  if(appHidden&&gateHidden){
+   document.body.classList.remove('jarvis-authenticated');
+   gate.style.display='grid';
+   gate.setAttribute('aria-hidden','false');
+  }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',recoverBlankScreen,{once:true});else recoverBlankScreen();
+ window.addEventListener('load',recoverBlankScreen,{once:true});
+})();
+</script>
 </body>
 </html>
