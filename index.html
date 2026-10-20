@@ -494,6 +494,22 @@ body.dark .urooj-streak-pill{background:#2c4938;color:#d8e8d9}
 #uroojUpgradeJourney .urooj-stage-dots{grid-column:1/-1;grid-row:4;min-width:0;max-width:100%;overflow:hidden}
 @media(min-width:520px){#uroojUpgradeJourney .upgrade-list{grid-template-columns:minmax(0,1fr)!important}}
 
+
+/* Compact, balanced progression rows: align content and reduce excess card height. */
+#uroojUpgradeJourney .upgrade-step{padding:9px 11px;gap:5px 10px;grid-template-rows:auto auto 5px auto;border-radius:10px}
+#uroojUpgradeJourney .upgrade-top{gap:8px;align-items:center}
+#uroojUpgradeJourney .upgrade-number{width:23px;height:23px;flex-basis:23px;border-radius:7px}
+#uroojUpgradeJourney .upgrade-heading{gap:3px;justify-content:center}
+#uroojUpgradeJourney .upgrade-tier-label{font-size:9px;line-height:1.15;letter-spacing:.025em}
+#uroojUpgradeJourney .upgrade-word{font-size:13px;line-height:1.2;font-weight:750}
+#uroojUpgradeJourney .upgrade-days{font-size:11px;line-height:1.25;align-self:center}
+#uroojUpgradeJourney .urooj-stage-status{min-height:18px;gap:5px;align-items:center}
+#uroojUpgradeJourney .urooj-stage-status [data-stage-progress-label]{font-size:10px;line-height:1.25}
+#uroojUpgradeJourney .urooj-lives{align-items:center}
+#uroojUpgradeJourney .urooj-stage-progress{height:5px;border-radius:99px}
+#uroojUpgradeJourney .urooj-stage-dots{min-height:5px;line-height:0;margin-top:0}
+#uroojUpgradeJourney .urooj-stage-dots i{margin-top:0}
+
 /* UROOJ unified two-colour system: platform blue + neutral surfaces */
 body[data-palette="blue"]{--sand:#F8FAFC;--green:#2563EB;--gold:#2563EB;--sage:#EFF6FF;--ink:#172033;--muted:#64748B;--line:#E2E8F0;--white:#FFFFFF;--shadow:0 8px 28px rgba(37,99,235,.07)}
 body.dark[data-palette="blue"]{--sand:#0F172A;--green:#93C5FD;--gold:#93C5FD;--sage:#172554;--ink:#F1F5F9;--muted:#94A3B8;--line:#29364D;--white:#111C31;--shadow:0 8px 28px rgba(0,0,0,.22)}
@@ -1617,10 +1633,10 @@ function getSyncTime(){try{return Number(localStorage.getItem(SYNC_KEY)||0)}catc
 const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';const UROOJ_AUTO_TOUR_KEY='urooj-auto-tutorial-after-login-v1';
 const UROOJ_TOUR_STEPS=[
  {title:'Challenges',body:'Challenges is where you build a habit step by step. Open a challenge to see it and mark the day you complete.',tip:'Start small; consistency matters more than perfection.',view:'challenges',targetSelector:'#view-challenges .challenge-motive'},
- {title:'Add a challenge',body:'Your personal challenges appear below the built-in challenge. Use the add/create control to make one for a habit you want to develop.',tip:'Give it a clear name and a realistic action.',view:'challenges',targetId:'customChallengeList'},
- {title:'Record a task',body:'In Task, choose the status beside a task to record how you did today. Your charts and progress update from your entries.',tip:'Record honestly—this is your personal progress tracker.',view:'schedule',targetSelector:'#scheduleSlots .slot-row'},
+ {title:'Your first challenge',body:'Here is the first built-in challenge. The highlighted first day is the starting point; tap a day to record completion.',tip:'Start with Day 1 and continue at a realistic pace.',view:'challenges',targetSelector:'#socialChallengeBlock .day-grid > :first-child'},
+ {title:'Your first task',body:'This is the first task in today’s list. Its full row is highlighted so you can see the task name and status control together.',tip:'Choose the status that best reflects today.',view:'schedule',targetSelector:'#scheduleSlots > :first-child'},
  {title:'Edit tasks',body:'Open Settings and choose “Edit your daily tasks” to add a task or change its name, category or status choices.',tip:'You can also edit a task name from its tile. To change a status already recorded today, type UNDO when asked.',view:'sanctuary',target:'Edit your daily tasks'},
- {title:'Today’s check-in',body:'This single box is your check-in for today. Tap it to mark that you showed up; only today’s box can be changed.',tip:'Your check-in streak updates automatically.',view:'challenges',targetSelector:'#view-challenges .urooj-week-grid > :last-child'},
+ {title:'Your first check-in day',body:'The first day box shows how the weekly check-in works. Only today’s box is editable; use it when it matches today’s date.',tip:'Your streak updates when you complete today’s check-in.',view:'challenges',targetSelector:'#uroojWeekCheckins > :first-child'},
  {title:'Your title & progress',body:'Your check-ins build progress toward your next character title. Each level takes 60 days and shows three lives to help you stay mindful of consistency.',tip:'Focus on your current title and today’s next step—no need to compare every level at once.',view:'challenges',targetSelector:'#view-challenges [data-current-level]'},
  {title:'Tasbeeh & reflection',body:'In Tazkiyah, tap the Tasbeeh counter for each dhikr. You can undo the last count and use reflection to review your intentions and actions.',tip:'Tazkiyah helps you remember and reflect.',view:'muhasabah',targetId:'tasbeehTap'},
  {title:'Save your progress',body:'Connect Google in Settings if you want to back up progress to Google Drive. Check the account card and wait for sync confirmation.',tip:'Without Drive sync, progress stays on this device.',view:'sanctuary',targetId:'googleAccountCard'}
