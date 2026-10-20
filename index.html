@@ -2360,7 +2360,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  const steps=[
   {title:'Add a challenge',copy:'Use “Accept a challenge” to add a focused challenge to your journey.',selector:'#acceptChallengeGoSettings',view:'challenges'},
   {title:'Daily check-in · first day',copy:'Tap the first day tile in the 7-day check-in to record today.',selector:'#uroojWeekCheckins > :first-child',view:'challenges'},
-  {title:'Your streak badge',copy:'This badge at the top-right shows your current check-in streak.',selector:'#uroojStreakCount',view:'challenges'},
+  {title:'Your level badge',copy:'This badge in the top-right shows your current UROOJ level.',selector:'#view-challenges .current-level-badge',view:'challenges'},
   {title:'Your first task',copy:'Open Task to see your daily activities and record their status.',selector:'#scheduleSlots .schedule-task-tile:first-child',view:'schedule',fallback:'#scheduleAddChallenge'},
   {title:'Tasbeeh counter',copy:'Tap the round counter to count your dhikr. Use Undo or Reset if needed.',selector:'#tasbeehTap',view:'muhasabah'},
   {title:'Murāqabah',copy:'Use this reminder to pause, check your intention, and act with awareness of Allah.',selector:'#murakabaCard',view:'muhasabah'},
