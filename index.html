@@ -1367,6 +1367,15 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 @media(max-width:360px){#uroojUpgradeJourney .upgrade-step{padding:7px 9px}#uroojUpgradeJourney .upgrade-word{font-size:15px}#uroojUpgradeJourney .upgrade-tier-label{font-size:9px}}
 
 </style>
+
+<style id="urooj-level-text-refinement">
+/* Slightly larger level title while keeping the existing tile proportions. */
+#uroojUpgradeJourney .upgrade-word{font-size:17px!important;line-height:1.25!important}
+@media(max-width:380px){#uroojUpgradeJourney .upgrade-word{font-size:16px!important}}
+/* Keep tutorial content readable and scroll-safe on short mobile screens. */
+#uroojTourCallout{overflow-y:auto;overscroll-behavior:contain}
+#uroojTutorialPreview .tour-preview-black-button{font-size:13px;padding:10px 12px}
+</style>
 </head>
 <body>
 <section id="uroojTermsConsent" role="dialog" aria-modal="true" aria-labelledby="uroojTermsTitle">
@@ -1683,7 +1692,7 @@ const UROOJ_TOUR_KEY='urooj-first-run-tour-v1';const UROOJ_AUTO_TOUR_KEY='urooj-
 const UROOJ_TOUR_STEPS=[
  {title:'Your first challenge',body:'Start with one personal-growth challenge. The first-day box shows where to begin; use the black “＋ Add challenge” button to create your own goal.',tip:'Choose one realistic goal and start with Day 1.',view:'challenges',targetSelector:'#view-challenges .challenge-motive'},
  {title:'Today’s experience',body:'Save one meaningful experience or lesson from today in this box. Keep it brief and save when you are ready.',tip:'Focus on today’s entry only.',view:'muhasabah',targetSelector:'#goodExperienceForm'},
- {title:'One check-in',body:'Use today’s highlighted check-in box to record your progress. The tour focuses on today only—not the full week.',tip:'One check-in for today.',view:'challenges',targetSelector:'#uroojWeekCheckins [data-today="true"]'},
+ {title:'One check-in',body:'Use today’s highlighted check-in box to record your progress. The tour focuses on today only—not the full week.',tip:'One check-in for today.',view:'challenges',targetSelector:'#uroojWeekCheckins > :last-child'},
  {title:'Your level badge',body:'This top-right badge shows your current UROOJ level and title. Your title updates as you progress through the journey.',tip:'Check the badge immediately after your daily check-in.',view:'challenges',targetSelector:'#view-challenges .current-level-badge'},
  {title:'One task: tick, edit & record',body:'This is one task row. Tick or choose its status to record today’s result; edit a task when its details need changing. Use “＋ Add task” only when you need another task.',tip:'This is a focused example—not the whole task list.',view:'schedule',targetSelector:'#scheduleSlots > :first-child'},
  {title:'Murāqabah',body:'Murāqabah is mindful awareness that Allah sees you. Pause before choices, check your intention, and aim to act with sincerity—even when no one else is watching.',tip:'A daily reminder to act with sincerity.',view:'muhasabah',targetSelector:'#murakabaCard'},
@@ -1755,7 +1764,7 @@ function navigateTourStep(step){
    let targetElement=null;
    if(step.targetSelector){try{targetElement=document.querySelector(step.targetSelector)}catch(e){}}
    if(!targetElement&&step.targetId)targetElement=document.getElementById(step.targetId);
-   if(!targetElement&&step.targetSelector==='#uroojWeekCheckins [data-today="true"]')targetElement=document.querySelector('#uroojWeekCheckins .today, #uroojWeekCheckins [aria-current="date"], #uroojWeekCheckins .is-today');
+
    if(!targetElement&&step.target){
     const rows=[...document.querySelectorAll('#view-sanctuary details.settings-accordion')];
     const row=rows.find(d=>(d.querySelector('summary span')?.textContent||'').trim()===step.target);
@@ -2464,12 +2473,3 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 </script>
 </body>
 </html>
-
-<style id="urooj-level-text-refinement">
-/* Slightly larger level title while keeping the existing tile proportions. */
-#uroojUpgradeJourney .upgrade-word{font-size:17px!important;line-height:1.25!important}
-@media(max-width:380px){#uroojUpgradeJourney .upgrade-word{font-size:16px!important}}
-/* Keep tutorial content readable and scroll-safe on short mobile screens. */
-#uroojTourCallout{overflow-y:auto;overscroll-behavior:contain}
-#uroojTutorialPreview .tour-preview-black-button{font-size:13px;padding:10px 12px}
-</style>
