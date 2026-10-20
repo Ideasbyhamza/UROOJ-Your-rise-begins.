@@ -1392,6 +1392,22 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 #uroojTourCallout{overflow-y:auto;overscroll-behavior:contain}
 #uroojTutorialPreview .tour-preview-black-button{font-size:13px;padding:10px 12px}
 </style>
+
+<style id="urooj-level-title-alignment">
+/* Equal-size tier and Arabic-origin level names, anchored to opposite ends of each tile. */
+#uroojUpgradeJourney .upgrade-top{width:100%;min-width:0;box-sizing:border-box}
+#uroojUpgradeJourney .upgrade-heading{display:flex!important;flex:1 1 100%;width:100%;min-width:0;max-width:100%;align-items:baseline;justify-content:space-between!important;gap:12px!important}
+#uroojUpgradeJourney .upgrade-tier-label,
+#uroojUpgradeJourney .upgrade-word{font-size:16px!important;line-height:1.25!important;letter-spacing:normal!important}
+#uroojUpgradeJourney .upgrade-tier-label{flex:0 1 auto;text-align:left;white-space:normal;overflow-wrap:anywhere}
+#uroojUpgradeJourney .upgrade-word{flex:0 1 auto;text-align:right;white-space:normal;overflow-wrap:anywhere}
+@media(max-width:380px){
+ #uroojUpgradeJourney .upgrade-heading{gap:8px!important}
+ #uroojUpgradeJourney .upgrade-tier-label,
+ #uroojUpgradeJourney .upgrade-word{font-size:14px!important;line-height:1.25!important}
+}
+</style>
+
 </head>
 <body>
 <section id="uroojTermsConsent" role="dialog" aria-modal="true" aria-labelledby="uroojTermsTitle">
