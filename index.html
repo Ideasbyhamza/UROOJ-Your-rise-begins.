@@ -981,6 +981,26 @@ button,input,textarea,select{min-width:0}
 .top .brand small{color:#555!important;font-weight:600;letter-spacing:1.1px}
 body.dark .top .brand{color:#fff!important}
 body.dark .top .brand small{color:#ddd!important}
+
+/* Compact level tiles: single-line labels, clear text and reduced gaps. */
+#uroojUpgradeJourney .upgrade-step{min-height:0!important;height:auto!important;padding:6px 8px!important;gap:4px 6px!important;grid-template-rows:auto auto 4px auto!important;align-content:start!important}
+#uroojUpgradeJourney .upgrade-top{min-width:0!important;padding-right:0!important;gap:4px!important}
+#uroojUpgradeJourney .upgrade-heading{min-width:0!important;max-width:100%!important;gap:2px!important;overflow:hidden!important}
+#uroojUpgradeJourney .upgrade-tier-label{font-size:10px!important;line-height:1.1!important;letter-spacing:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important;overflow-wrap:normal!important;word-break:normal!important}
+#uroojUpgradeJourney .upgrade-word{font-size:16px!important;line-height:1.15!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important;overflow-wrap:normal!important;word-break:normal!important}
+#uroojUpgradeJourney .upgrade-days{font-size:10px!important;line-height:1.1!important;white-space:nowrap!important;overflow-wrap:normal!important}
+#uroojUpgradeJourney .urooj-stage-status{gap:4px!important;min-width:0!important;flex-wrap:nowrap!important;font-size:10px!important}
+#uroojUpgradeJourney .urooj-stage-progress{height:4px!important}
+#uroojUpgradeJourney .urooj-stage-dots{min-height:3px!important}
+#view-muhasabah #murakabaCard{display:block!important;position:relative!important;float:none!important;clear:both!important;width:100%!important;margin:0 0 14px!important}
+#view-muhasabah .sanctuary-card{display:block!important;position:relative!important;float:none!important;clear:both!important;width:100%!important;margin:0 0 14px!important}
+.tour-preview{margin-top:8px;padding:8px;border:1px solid var(--line);border-radius:9px;background:var(--white);color:var(--ink)}
+.tour-preview[hidden]{display:none!important}
+.tour-preview-label{display:block;font-size:9px;font-weight:800;letter-spacing:1px;color:var(--muted);margin-bottom:6px}
+.tour-preview-row{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:10px;margin-bottom:7px}
+.tour-preview-black-button{background:#111!important;color:#fff!important;border-radius:7px;padding:9px 10px;text-align:center;font-size:12px;font-weight:800;line-height:1.2;white-space:nowrap}
+@media(max-width:380px){#uroojUpgradeJourney .upgrade-step{padding:5px 6px!important;gap:3px 4px!important}#uroojUpgradeJourney .upgrade-word{font-size:15px!important}#uroojUpgradeJourney .upgrade-tier-label{font-size:9px!important}#uroojUpgradeJourney .upgrade-days{font-size:9px!important}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 <style id="urooj-unified-tab-headers">
@@ -1621,6 +1641,7 @@ Not applicable" rows="8"></textarea><p class="muted" style="font-size:10px;margi
     <h2 id="uroojTutorialTitle">Welcome to UROOJ</h2>
     <div class="tour-body" id="uroojTutorialBody">A simple guide to your app.</div>
     <div class="tour-tip" id="uroojTutorialTip"></div>
+    <div id="uroojTutorialPreview" class="tour-preview" hidden aria-label="Preview of the Add challenge button"><span class="tour-preview-label">CHALLENGES</span><div class="tour-preview-row"><span>Build a daily habit</span><span>Day 1</span></div><div class="tour-preview-black-button">＋ Add challenge</div></div>
     
     <label class="tour-dont-show" style="display:flex;align-items:center;gap:8px;margin-top:8px;font-size:12px;line-height:1.35;color:var(--muted);text-align:left"><input type="checkbox" id="uroojDontShowAgain" style="accent-color:var(--green);width:16px;height:16px;flex:0 0 auto"> Don’t show again on future logins</label>\n    <div class="tour-actions"><button type="button" class="btn ghost" id="uroojTutorialBack">Back</button><button type="button" class="btn" id="uroojTutorialNext">Next</button></div>
 </div>
@@ -1692,6 +1713,7 @@ function renderUroojTour(){
  document.getElementById('uroojTutorialTitle').textContent=s.title;
  document.getElementById('uroojTutorialBody').textContent=s.body;
  document.getElementById('uroojTutorialTip').textContent=s.tip;
+ const preview=document.getElementById('uroojTutorialPreview');if(preview)preview.hidden=uroojTourIndex!==0;
  document.getElementById('uroojTutorialStep').textContent='Step '+(uroojTourIndex+1)+' of '+UROOJ_TOUR_STEPS.length;
  document.getElementById('uroojTutorialProgress').style.width=((uroojTourIndex+1)/UROOJ_TOUR_STEPS.length*100)+'%';
  document.getElementById('uroojTutorialBack').disabled=uroojTourIndex===0;
