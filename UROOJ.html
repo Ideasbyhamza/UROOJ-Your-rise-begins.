@@ -776,6 +776,23 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 #view-sanctuary .settings-accordion .field label{margin-bottom:1px}
 #view-sanctuary .settings-accordion .field input,#view-sanctuary .settings-accordion .field select,#view-sanctuary .settings-accordion .field textarea{min-height:32px;padding:5px 7px}
 
+
+/* Consistent compact tab headers and symmetric task layout. */
+.app .section-head.app-section-head,.app .section-head.challenge-section-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px;margin:0 0 12px;padding:0}
+.app .section-heading-copy{flex:1;min-width:0}
+.app .section-heading-copy h1{margin:0 0 3px;line-height:1.15}
+.app .section-heading-copy p{margin:4px 0 0;line-height:1.35;max-width:38em}
+.app .current-level-badge{display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto;max-width:48%;padding:6px 8px;border:1px solid var(--line);border-radius:9px;background:var(--sage);color:var(--green);font-size:10px;font-weight:750;line-height:1.2;text-align:center;white-space:normal}
+.app .section-head-right{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex:0 0 auto;max-width:50%}
+.app .task-count-pills{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:4px}
+.app .task-count-pills .solar{margin:0;padding:4px 6px;font-size:9px;line-height:1.2}
+#view-schedule .slot-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:6px;align-items:center;padding:0 7px;margin:5px 0}
+#view-schedule .schedule-task-tile{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);align-items:center;gap:5px 8px}
+#view-schedule .schedule-task-tile .schedule-status-feedback{grid-column:1/-1}
+#view-schedule .tracker-row{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:5px;padding:5px 7px;margin:3px 0;min-height:0}
+#view-schedule .tracker-row select{width:100%;min-width:0}
+@media(max-width:360px){.app .section-head.app-section-head,.app .section-head.challenge-section-head{gap:6px}.app .section-heading-copy p{font-size:10px}.app .current-level-badge{padding:5px 6px;font-size:9px}.app .section-head-right{max-width:45%}.app .task-count-pills{gap:3px}}
+
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -945,7 +962,7 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 </div>
 </section>
 <section class="view" id="view-schedule">
-<div class="section-head"><div><div class="eyebrow">Record what you actually did</div><h1>Task</h1><p>Choose a status for each item. You can add your own activities below.</p></div><span class="solar" id="todayCount">0 recorded</span><span class="solar" id="todayTotalTasks">0 total tasks</span></div>
+<div class="section-head app-section-head"><div class="section-heading-copy"><div class="eyebrow">Record what you actually did</div><h1>Task</h1><p>Choose a status for each item. You can add your own activities below.</p></div><div class="section-head-right"><span class="current-level-badge" data-current-level>Level 01 · Zawal</span><div class="task-count-pills"><span class="solar" id="todayCount">0 recorded</span><span class="solar" id="todayTotalTasks">0 total tasks</span></div></div></div>
 <div class="progress-card"><div class="progress-ring" id="progressRing"><b id="progressPercent">0%</b></div><div class="progress-copy"><strong id="progressTitle">Begin with one good deed</strong><span id="progressSub">A log is a tool for reflection, not a judgement.</span><div class="tiny-track"><span id="progressBar"></span></div></div></div>
 
 <div class="card"><div class="card-title"><h3>Today's Task</h3><span class="solar" id="scheduleDateLabel">Today</span></div><div class="slot-head" style="grid-template-columns:minmax(0,1fr) minmax(120px,45%)"><span>Task</span><span>Status</span></div><div id="scheduleSlots"></div><div class="save-note" id="scheduleStatus">Choose a status for each scheduled activity. Changes save automatically.</div><div class="btn-row" style="margin-top:12px"><button class="btn" id="scheduleAddChallenge" type="button">＋ Add task</button></div></div>
@@ -962,7 +979,7 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 
 
 
-<div class="section-head challenge-section-head"><div><h1>Challenges</h1><div class="eyebrow challenge-kicker">Train your attention</div><p>Progress over punishment. Return to the path whenever you need.</p></div></div>
+<div class="section-head challenge-section-head"><div class="section-heading-copy"><h1>Challenges</h1><div class="eyebrow challenge-kicker">Train your attention</div><p>Progress over punishment. Return to the path whenever you need.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
 
 <div id="customChallengeList"></div>
 <div id="socialChallengeBlock"><div class="challenge-hero"><div class="challenge-top"><div><h3 id="socialTitleDisplay">30-Day Digital Reset</h3><p>Reduce social media. Reclaim attention for learning, worship, and people.</p></div><div class="count-pill" id="socialCount">0 / 30</div></div><div class="challenge-progress"><span id="socialBar" style="width:0%"></span></div><div class="challenge-meta"><span id="socialPercent">0% complete</span><span>Tap a day to mark it</span></div></div>
@@ -992,7 +1009,7 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 </section>
 </section>
 <section class="view" id="view-muhasabah">
-<div class="section-head"><div><div class="eyebrow">Pause · Notice · Renew</div><h1>Tazkiyah</h1><p>Meet yourself honestly, and choose your next step with mercy.</p></div></div>
+<div class="section-head app-section-head"><div class="section-heading-copy"><div class="eyebrow">Pause · Notice · Renew</div><h1>Tazkiyah</h1><p>Meet yourself honestly, and choose your next step with mercy.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
 <div class="card sanctuary-card"><div class="card-title"><h3>Digital Tasbeeh</h3><span class="solar">Dhikr counter</span></div><h2 id="tasbeehModeTitle" style="font:600 18px 'Cinzel',serif;color:var(--green);margin:12px 0 12px">Dhikr</h2><p id="tasbeehArabic" hidden></p><p id="tasbeehWord" hidden></p><p id="tasbeehInstructions" hidden></p><button aria-label="Increment tasbeeh counter" class="tasbeeh-orb" id="tasbeehTap"><strong id="tasbeehNumber">100</strong><small id="tasbeehCurrentDhikr" style="font-size:11px;line-height:1.5;letter-spacing:.2px;color:#fffaf0;padding:0 14px;text-transform:none"><span id="tasbeehOrbArabic" lang="ar" dir="rtl" style="display:block;font-size:18px;line-height:1.8">سُبْحَانَ اللَّهِ</span><span id="tasbeehOrbEnglish" style="display:block">SubhanAllah</span></small><span id="tasbeehLabel">remaining · tap to count</span></button><p class="muted" id="lapText" style="margin:13px 0 8px">0 counts in this round</p><p class="muted" id="tasbeehHadith" style="font-size:11px;line-height:1.6;margin:12px auto 0;max-width:440px;text-align:left"><strong>Hadith reference:</strong> Select a dhikr to view its source.</p><div class="btn-row" style="justify-content:center"><button class="btn secondary" id="undoCount">↶ Undo</button><button class="btn ghost" id="resetCounter">Reset counter</button></div></div>
 <div class="card"><div class="card-title"><h3>Good experiences</h3><span class="solar">Today’s story</span></div><p class="muted">Record a meaningful moment, lesson, or experience from today. Today’s entries appear here; previous days move automatically to your history in Settings.</p><form id="goodExperienceForm"><div class="field"><label for="goodExperienceNote">UPLOAD A MEANINGFUL STORY</label><textarea id="goodExperienceNote" maxlength="2000" placeholder="Write about a meaningful experience, what happened, or what you learned. Keep other people’s private details confidential." required=""></textarea></div><button class="btn" type="submit">Save today’s story</button><div class="save-note" id="goodExperienceStatus">Saved privately on this device.</div></form><div class="save-note">Saved stories are available in Settings → Good experiences history.</div></div>
 <div class="card"><div class="card-title"><h3>Evening reflection</h3><span class="journal-date" id="journalDate"></span></div><form id="journalForm">
@@ -1007,7 +1024,7 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 <div class="privacy-note">Privacy note: entries are stored in browser localStorage, which is not encrypted by this app. Anyone with access to your unlocked device or browser profile may be able to read them. Use device security and avoid shared browsers.</div>
 </section>
 <section class="view" id="view-sanctuary">
-<div class="section-head"><div><div class="eyebrow">Personalise your experience</div><h1>Settings</h1><p>Manage your daily schedule, reminders, and personal study tools.</p></div></div>
+<div class="section-head app-section-head"><div class="section-heading-copy"><div class="eyebrow">Personalise your experience</div><h1>Settings</h1><p>Manage your daily schedule, reminders, and personal study tools.</p></div><span class="current-level-badge" data-current-level>Level 01 · Zawal</span></div>
 <div class="card" id="googleAccountCard"><div class="card-title"><h3>Google Account</h3><span class="solar">Not connected</span></div></div>
 <p class="muted" style="font-size:10px;line-height:1.4">Sign in with Google from the login screen to back up your data to Google Drive.</p>
 <p class="settings-intro-cue"><span aria-hidden="true" class="cue-arrow">›</span> Tap a setting to open details. The tutorial arrow points to the relevant option.</p>
@@ -1759,5 +1776,27 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',render);else render();
 })();</script>
 
+<script>
+
+/* Keep the level chip in every tab synced with the 365-day journey. */
+(function(){
+ const names=['Zawal','Iftitah','Hadaf','Tarteeb','Istiqamah','UROOJ'];
+ function syncCurrentLevel(){
+  const total=document.getElementById('uroojTotalDays');
+  const raw=total?total.textContent:'0 / 365 days';
+  const done=Math.max(0,parseInt(raw,10)||0);
+  const starts=[0,60,120,180,240,300];
+  let idx=starts.findIndex((start,i)=>done>=start&&(i===starts.length-1||done<starts[i+1]));
+  if(idx<0)idx=done>=365?5:0;
+  const label='Level '+String(idx+1).padStart(2,'0')+' · '+names[idx];
+  document.querySelectorAll('[data-current-level]').forEach(el=>{el.textContent=label;el.setAttribute('aria-label','Current level: '+label);});
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',syncCurrentLevel);else syncCurrentLevel();
+ const total=document.getElementById('uroojTotalDays');
+ if(total&&'MutationObserver'in window)new MutationObserver(syncCurrentLevel).observe(total,{childList:true,characterData:true,subtree:true});
+ setTimeout(syncCurrentLevel,300);
+})();
+
+</script>
 </body>
 </html>
