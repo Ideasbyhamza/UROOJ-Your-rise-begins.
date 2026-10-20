@@ -1197,6 +1197,19 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 }
 
 
+/* Weekly check-in: four compact boxes on row one, three on row two; keep labels legible. */
+.urooj-week-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:7px;align-items:stretch}
+.urooj-day-check{min-height:66px;padding:7px 4px 6px;gap:4px;justify-content:center}
+.urooj-day-check .day-name{font-size:10px!important;line-height:1.15;white-space:nowrap}
+.urooj-day-check .day-square{width:16px;height:16px;flex:0 0 16px}
+.urooj-day-check .day-number{font-size:10px!important;line-height:1.1;white-space:nowrap}
+@media(max-width:360px){
+ .urooj-week-grid{gap:5px}
+ .urooj-day-check{min-height:60px;padding:6px 2px}
+ .urooj-day-check .day-name{font-size:9px!important}
+ .urooj-day-check .day-number{font-size:9px!important}
+}
+
 /* Keep tile text horizontal and inside its box: reduce type before allowing wrapping. */
 #uroojUpgradeJourney .upgrade-step{grid-template-columns:minmax(0,1fr);grid-template-rows:auto auto 6px auto;gap:6px 8px;overflow:hidden}
 #uroojUpgradeJourney .upgrade-top{grid-column:1;grid-row:1;width:100%;gap:6px}
