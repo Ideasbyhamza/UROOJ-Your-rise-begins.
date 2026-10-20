@@ -1095,6 +1095,29 @@ button,input,textarea,select{min-width:0}
 .app .btn,.app button{min-height:calc(34px * var(--urooj-layout-scale,0.8));padding:calc(8px * var(--urooj-layout-scale,0.8)) calc(11px * var(--urooj-layout-scale,0.8))}
 .app select,.app input,.app textarea{padding:calc(8px * var(--urooj-layout-scale,0.8))}
 .app .urooj-metric-grid,.app .urooj-category-chart,.app .urooj-habit-insights{gap:calc(8px * var(--urooj-layout-scale,0.8))}
+
+/* Minimal, independently expandable progress and habit insight panels. */
+.app .urooj-analytics-section{display:flex;flex-direction:column;gap:10px;margin:14px 0}
+.app .urooj-insights-heading h2{font-size:clamp(17px,4.5vw,21px);line-height:1.2;margin:3px 0 5px;color:var(--ink)}
+.app .urooj-insights-heading p{font-size:11px;line-height:1.45;margin:0}
+.app .urooj-analytics-controls{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:2px 0}
+.app .urooj-analytics-controls label{font-size:11px;color:var(--muted);font-weight:600}
+.app .urooj-analytics-controls select{width:auto;max-width:58%;min-height:34px;border-radius:10px}
+.app .urooj-analytics-section .urooj-metric-grid{margin:0;gap:8px}
+.app .urooj-analytics-section .urooj-metric{border:1px solid var(--line);border-radius:12px;background:var(--surface,transparent);min-width:0}
+.app .urooj-insight-panel{min-width:0;border:1px solid var(--line);border-radius:13px;background:var(--card,transparent);overflow:hidden}
+.app .urooj-insight-panel>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:52px;padding:11px 13px;cursor:pointer;user-select:none}
+.app .urooj-insight-panel>summary::-webkit-details-marker{display:none}
+.app .urooj-insight-panel>summary::after{content:'＋';flex:0 0 auto;color:var(--muted);font-size:17px;font-weight:400;line-height:1}
+.app .urooj-insight-panel[open]>summary::after{content:'−'}
+.app .urooj-insight-panel>summary span{display:flex;flex-direction:column;gap:3px;min-width:0}
+.app .urooj-insight-panel>summary strong{font-size:12px;line-height:1.3;color:var(--ink);font-weight:700}
+.app .urooj-insight-panel>summary small{font-size:10px;line-height:1.35;color:var(--muted);font-weight:400}
+.app .urooj-insight-panel>[id]{padding:4px 12px 13px;min-width:0}
+.app .urooj-insight-panel .urooj-monthly-chart,.app .urooj-insight-panel .urooj-category-chart,.app .urooj-insight-panel .urooj-habit-insights{padding-top:4px}
+.app .urooj-insight-panel>summary:focus-visible{outline:2px solid var(--green);outline-offset:-3px}
+.app .urooj-analytics-note{font-size:10px;line-height:1.5;margin:1px 2px 0}
+@media(max-width:360px){.app .urooj-analytics-section{gap:8px}.app .urooj-insight-panel>summary{padding:10px}.app .urooj-insight-panel>[id]{padding-left:8px;padding-right:8px}}
 </style>
 </head>
 <body>
@@ -1263,7 +1286,16 @@ button,input,textarea,select{min-width:0}
 
 <div class="card"><div class="card-title"><h3>Today's Task</h3><span class="solar" id="scheduleDateLabel">Today</span></div><div class="slot-head" style="grid-template-columns:minmax(0,1fr) minmax(120px,45%)"><span>Task</span><span>Status</span></div><div id="scheduleSlots"></div><div class="save-note" id="scheduleStatus"></div><div class="btn-row" style="margin-top:12px"><button class="btn" id="scheduleAddChallenge" type="button">＋ Add task</button></div></div>
 <div class="progress-card task-progress-summary"><div class="progress-ring" id="progressRing"><b id="progressPercent">0%</b></div><div class="progress-copy"><strong id="progressTitle">Start with one good deed</strong><span id="progressSub">Based on listed tasks only.</span><div class="task-progress-counts"><span class="solar" id="todayCount">0 recorded</span><span class="solar" id="todayTotalTasks">0 total tasks</span></div><div class="tiny-track"><span id="progressBar"></span></div></div></div>
-<div class="card urooj-analytics-card"><details class="compact-expand" id="progressAnalyticsDetails" open><summary>Progress &amp; habit insights<span class="muted">Daily, weekly and monthly patterns</span></summary><div class="urooj-analytics-controls"><label for="progressMonthSelect">Monthly view</label><select id="progressMonthSelect" aria-label="Number of months in progress report"><option value="3">Last 3 months</option><option value="6" selected>Last 6 months</option><option value="12">Last 12 months</option></select></div><div class="urooj-metric-grid"><div class="urooj-metric"><span>This week</span><strong id="weekDone">0</strong><small>completed / recorded items</small></div><div class="urooj-metric"><span>Completion rate</span><strong id="weekRate">0%</strong><small>of recorded statuses</small></div><div class="urooj-metric"><span>Active days</span><strong id="monthActiveDays">0</strong><small>days with activity this month</small></div><div class="urooj-metric"><span>Best streak</span><strong id="habitBestStreak">0</strong><small>consecutive active days</small></div></div><div class="urooj-chart-title">Daily consistency · last 30 days</div><div id="statsChart" class="urooj-daily-chart" role="img" aria-label="Daily activity completion for the last 30 days"></div><div class="urooj-chart-title">Monthly progress</div><div id="monthlyProgressChart" class="urooj-monthly-chart" role="img" aria-label="Monthly recorded activity and completion rates"></div><div class="urooj-chart-title">Habit balance · current month</div><div id="categoryChart" class="urooj-category-chart"></div><div class="urooj-chart-title">Your strongest habits</div><div id="habitInsightsList" class="urooj-habit-insights"></div><p class="muted urooj-analytics-note">Only activity statuses saved on this device/account are counted. Missing days stay unfilled rather than being treated as failures; older activity is shown only when it exists in your saved log.</p></details></div>
+<div class="urooj-analytics-section" aria-labelledby="progressInsightsHeading">
+<div class="urooj-insights-heading"><div><div class="eyebrow">Your patterns, at a glance</div><h2 id="progressInsightsHeading">Progress &amp; habit insights</h2><p class="muted">Open only the views you want. Each panel expands and closes independently.</p></div></div>
+<div class="urooj-analytics-controls"><label for="progressMonthSelect">Monthly range</label><select id="progressMonthSelect" aria-label="Number of months in progress report"><option value="3">Last 3 months</option><option value="6" selected>Last 6 months</option><option value="12">Last 12 months</option></select></div>
+<div class="urooj-metric-grid"><div class="urooj-metric"><span>This week</span><strong id="weekDone">0</strong><small>completed / recorded items</small></div><div class="urooj-metric"><span>Completion rate</span><strong id="weekRate">0%</strong><small>of recorded statuses</small></div><div class="urooj-metric"><span>Active days</span><strong id="monthActiveDays">0</strong><small>days with activity this month</small></div><div class="urooj-metric"><span>Best streak</span><strong id="habitBestStreak">0</strong><small>consecutive active days</small></div></div>
+<details class="urooj-insight-panel" open><summary><span><strong>Daily consistency</strong><small>Last 30 days · completed share by day</small></span></summary><div id="statsChart" class="urooj-daily-chart" role="img" aria-label="Daily activity completion for the last 30 days"></div></details>
+<details class="urooj-insight-panel"><summary><span><strong>Monthly progress</strong><small>Compare recorded activity over time</small></span></summary><div id="monthlyProgressChart" class="urooj-monthly-chart" role="img" aria-label="Monthly recorded activity and completion rates"></div></details>
+<details class="urooj-insight-panel"><summary><span><strong>Habit balance</strong><small>Category breakdown for the current month</small></span></summary><div id="categoryChart" class="urooj-category-chart"></div></details>
+<details class="urooj-insight-panel"><summary><span><strong>Your strongest habits</strong><small>Ranked from your recent recorded activity</small></span></summary><div id="habitInsightsList" class="urooj-habit-insights"></div></details>
+<p class="muted urooj-analytics-note">Only activity statuses saved on this device/account are counted. Missing days stay unfilled rather than being treated as failures; older activity is shown only when it exists in your saved log.</p>
+</div>
 <div class="card removed-overview" id="statusBreakdownCard"><details class="compact-expand"><summary>Daily tasks &amp; status overview<span class="muted">One combined view of every task and its own status</span></summary><p class="muted">Each task keeps its own meaningful options—for example, prayer has Takbeer-e-Ula/Jamaat, while fitness can have Walking/Running. Edit any task in Settings → Edit your daily tasks.</p><div class="category-bars" id="statusBreakdownChart"></div></details></div>
 <div class="privacy-note">Schedule definitions are editable only in Settings. Daily status selections and graph data are recorded here.</div>
 </section>
