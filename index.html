@@ -919,6 +919,11 @@ button,input,textarea,select{min-width:0}
 #view-schedule .tracker-row select{width:100%;min-width:0}
 @media(max-width:360px){.app .section-head.app-section-head,.app .section-head.challenge-section-head{gap:6px}.app .section-heading-copy p{font-size:10px}.app .current-level-badge{padding:5px 6px;font-size:9px}.app .section-head-right{max-width:45%}.app .task-count-pills{gap:3px}}
 
+/* Minimal monochrome UROOJ wordmark in the top-left header */
+.top .brand{color:#111!important;font-family:Georgia,serif;font-weight:800;letter-spacing:.8px}
+.top .brand small{color:#555!important;font-weight:600;letter-spacing:1.1px}
+body.dark .top .brand{color:#fff!important}
+body.dark .top .brand small{color:#ddd!important}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 <style id="urooj-unified-tab-headers">
@@ -1395,7 +1400,7 @@ body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradi
 </section>
 <div class="app">
 <header class="top">
-<div class="brand"><img class="brand-logo" src="./assets/urooj-logo.svg?v=1.1.2" alt="UROOJ logo"/><span>UROOJ<small>Your rise begins.</small></span></div>
+<div class="brand" aria-label="UROOJ — Your rise begins."><span>UROOJ<small>Your rise begins.</small></span></div>
 <div style="display:flex;align-items:center;gap:7px"><button aria-label="Toggle dark mode" class="btn ghost small" id="themeToggle" style="padding:8px" title="Toggle dark mode">☾</button><div class="date-badge"><strong id="dateText">Today</strong><span>A day to begin again</span></div></div>
 </header>
 <main>
