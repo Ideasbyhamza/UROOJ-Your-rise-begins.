@@ -1097,6 +1097,9 @@ button,input,textarea,select{min-width:0}
 .app .urooj-metric-grid,.app .urooj-category-chart,.app .urooj-habit-insights{gap:calc(8px * var(--urooj-layout-scale,0.8))}
 
 /* Clear, compact analytics: keep dates together and make upcoming months explicit. */
+.app .urooj-analytics-section .urooj-month-row{grid-template-columns:66px minmax(0,1fr) 34px}
+@media(max-width:360px){.app .urooj-analytics-section .urooj-month-row{grid-template-columns:64px minmax(0,1fr) 32px}}
+
 .app .urooj-analytics-section .urooj-insights-heading p{display:none}
 .app .urooj-analytics-section .urooj-day-col small{font-size:8px;white-space:nowrap;display:block;line-height:1.1;font-variant-numeric:tabular-nums;letter-spacing:-.2px}
 .app .urooj-analytics-section .urooj-daily-chart{overflow-x:auto;overscroll-behavior-x:contain}
@@ -2055,7 +2058,7 @@ function renderProgressInsights(all){
  const select=$('#progressMonthSelect'),months=Math.max(3,Math.min(12,Number(select?.value)||6)),monthRows=[];
  for(let n=0;n<months;n++){const d=new Date(Date.UTC(todayDate.getUTCFullYear(),todayDate.getUTCMonth()+n,1)),key=d.toISOString().slice(0,7),last=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth()+1,0)).getUTCDate();let recorded=0,done=0,active=0;for(let day=1;day<=last;day++){const dd=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),day));if(dd>todayDate)break;const data=dayData(dd);recorded+=data.recorded;done+=data.done;if(data.recorded)active++}monthRows.push({key,label:new Intl.DateTimeFormat('en',{month:'short',year:'numeric',timeZone:'UTC'}).format(d),recorded,done,active,rate:recorded?Math.round(done/recorded*100):0,upcoming:key>today.slice(0,7)})}
  const monthly=$('#monthlyProgressChart');if(monthly)monthly.innerHTML='<div class="urooj-month-rows">'+monthRows.map(m=>'<div class="urooj-month-row'+(m.upcoming?' is-upcoming':'')+'"><div class="urooj-month-label">'+esc(m.label)+'</div><div class="urooj-month-track"><i style="width:'+m.rate+'%"></i></div><strong>'+m.rate+'%</strong><small>'+(m.upcoming?'Upcoming · no entries yet':m.active+' active days · '+m.done+'/'+m.recorded+' done')+'</small></div>').join('')+'</div>';
- const thisMonth=monthRows[monthRows.length-1];$('#monthActiveDays').textContent=thisMonth?.active||0;
+ const thisMonth=monthRows.find(m=>m.key===today.slice(0,7));$('#monthActiveDays').textContent=thisMonth?.active||0;
  let run=0,best=0;for(let n=days30.length-1;n>=0;n--){if(days30[n].recorded){run++;best=Math.max(best,run)}else run=0}$('#habitBestStreak').textContent=best+'d';
  const cats={};const currentKey=today.slice(0,7);Object.entries(log).forEach(([key,values])=>{if(!key.startsWith(currentKey)||key>today||!values)return;activities.forEach(item=>{const v=values[item.id];if(isRecorded(v)){const name=category(item);cats[name] ||= {recorded:0,done:0};cats[name].recorded++;if(isDone(v))cats[name].done++}})});
  const catHost=$('#categoryChart');if(catHost){const ordered=Object.entries(cats).sort((a,b)=>(b[1].done/Math.max(1,b[1].recorded))-(a[1].done/Math.max(1,a[1].recorded)));catHost.innerHTML=ordered.length?ordered.map(([name,v])=>{const pct=Math.round(v.done/Math.max(1,v.recorded)*100);return '<div class="urooj-category-row"><span>'+esc(name)+'</span><div class="urooj-category-track"><i style="width:'+pct+'%"></i></div><strong>'+pct+'%</strong><small>'+v.done+'/'+v.recorded+'</small></div>'}).join(''):'<p class="muted">Record a few habits to see your category balance.</p>'}
