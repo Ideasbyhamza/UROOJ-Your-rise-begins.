@@ -2303,7 +2303,13 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   var key=button.getAttribute('data-urooj-checkin'),today=localDateKey(new Date());
   if(key!==today||button.disabled)return;
   var log=read();
-  if(log[key])delete log[key];else log[key]=true;
+  if(log[key]){
+   var undo=window.confirm('Your check-in is already recorded. Why change it now? Allah is watching, even when no one else is. Keep your record honest. Do you still want to undo this check-in?');
+   if(!undo)return;
+   delete log[key];
+  }else{
+   log[key]=true;
+  }
   if(!write(log)){var summary=document.getElementById('uroojCheckinSummary');if(summary)summary.textContent='Could not save check-in. Enable browser storage and try again.';return}
   render();
  });
