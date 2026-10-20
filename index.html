@@ -857,21 +857,21 @@ button,input,textarea,select{min-width:0}
 #view-schedule>.section-head:first-child h1{font-size:clamp(26px,5vw,32px)}
 
 
-/* Challenges tab: clearer hierarchy, compact motive, legible day counters. */
-#view-challenges .challenge-section-head{display:block;text-align:center;align-items:initial;margin:8px 2px 12px}
-#view-challenges .challenge-section-head h1{font-size:29px;line-height:1.15;margin:0 0 5px}
+/* Challenges tab: strong title, centered supporting copy, minimal motive, readable day counters. */
+#view-challenges .challenge-section-head{display:block;text-align:center;align-items:initial;margin:8px 2px 10px}
+#view-challenges .challenge-section-head h1{font-size:clamp(32px,7.5vw,36px);line-height:1.12;margin:0 0 5px}
 #view-challenges .challenge-kicker{font-size:12px;letter-spacing:1.3px;margin:0 0 5px}
 #view-challenges .challenge-section-head p{font-size:11px;line-height:1.45;margin:0 auto;max-width:290px;text-align:center}
-#view-challenges .challenge-motive{padding:13px 15px;border-radius:15px;margin:0 0 15px;box-shadow:none}
-#view-challenges .challenge-motive .eyebrow{font-size:9px;letter-spacing:1.3px}
-#view-challenges .challenge-motive blockquote{font-size:19px;line-height:1.45;margin:7px 0 8px;max-width:none}
-#view-challenges .challenge-motive .attribution{font-size:10px}
-#view-challenges .day-grid{gap:5px;margin:12px 0}
-#view-challenges .day-box{aspect-ratio:auto;min-height:48px;padding:5px 2px;gap:3px;border-radius:9px}
-#view-challenges .day-box strong{font-size:14px;line-height:1.1}
-#view-challenges .day-box span{font-size:9px;line-height:1.1}
-@media(max-width:420px){#view-challenges .day-grid{gap:4px}#view-challenges .day-box{min-height:46px;padding:4px 1px!important}#view-challenges .day-box strong{font-size:13px}#view-challenges .day-box span{font-size:9px}}
-@media(max-width:360px){#view-challenges .day-grid{gap:3px}#view-challenges .day-box{min-height:44px}#view-challenges .day-box strong{font-size:12px}#view-challenges .day-box span{font-size:8px}}
+#view-challenges .challenge-motive{padding:12px 14px;border-radius:13px;margin:0 0 13px;box-shadow:none}
+#view-challenges .challenge-motive .eyebrow{font-size:12px;letter-spacing:1px;font-weight:800}
+#view-challenges .challenge-motive blockquote{font-size:clamp(21px,5.2vw,23px);line-height:1.4;margin:8px 0;max-width:none}
+#view-challenges .challenge-motive .attribution{font-size:10px;line-height:1.4}
+#view-challenges .day-grid{gap:5px;margin:11px 0}
+#view-challenges .day-box{aspect-ratio:auto;min-width:0;min-height:50px;padding:5px 2px;gap:4px;border-radius:9px}
+#view-challenges .day-box strong{font-size:15px;line-height:1.15;font-variant-numeric:tabular-nums}
+#view-challenges .day-box span{font-size:10px;line-height:1.15;white-space:nowrap}
+@media(max-width:420px){#view-challenges .day-grid{gap:4px}#view-challenges .day-box{min-height:48px;padding:4px 1px!important}#view-challenges .day-box strong{font-size:14px}#view-challenges .day-box span{font-size:9px}}
+@media(max-width:360px){#view-challenges .day-grid{gap:3px}#view-challenges .day-box{min-height:46px}#view-challenges .day-box strong{font-size:13px}#view-challenges .day-box span{font-size:8px}}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 </head>
@@ -1526,7 +1526,7 @@ const quotes=[
 ['“Make each day your masterpiece.”','John Wooden'],
 ['“Perseverance is not a long race; it is many short races one after another.”','Walter Elliot · commonly attributed']
 ];
-function renderQuote(){const now=new Date();const start=new Date(now.getFullYear(),0,0);const day=Math.floor((now-start)/86400000);const q=quotes[(day-1)%quotes.length];$('#quoteText').textContent=q[0];$('#quoteSource').textContent='— '+q[1]}
+function renderQuote(){const q=['“Discipline is choosing between what you want now and what you want most.”','Common modern maxim; author uncertain'];$('#quoteText').textContent=q[0];$('#quoteSource').textContent='— '+q[1]}
 function setDate(){const d=new Date();const opts={timeZone:'Asia/Kolkata'};$('#dateText').textContent=new Intl.DateTimeFormat('en-IN',{...opts,weekday:'short',month:'short',day:'numeric'}).format(d);$('#journalDate').textContent=new Intl.DateTimeFormat('en-IN',{...opts,month:'short',day:'numeric',year:'numeric'}).format(d);const h=Number(new Intl.DateTimeFormat('en-IN',{...opts,hour:'numeric',hour12:false}).format(d));$('#solarBadge').textContent=h<5?'☾ Night':h<11?'☼ Morning':h<16?'☀ Daytime':h<19?'☼ Evening':'☾ Night';const sl=$('#scheduleDateLabel');if(sl)sl.textContent=new Intl.DateTimeFormat('en-IN',{...opts,weekday:'short',month:'short',day:'numeric'}).format(d)}
 const prayerStatuses=['Not a prayer','Takbeer-e-Ula','Jamaat','Ada','Qaza','Sunnah','Nafl','Missed / not completed'];
 function defaultStatusLabels(){return ['Not recorded','Completed','Partly done','In progress','Missed','Excused / rest','Not applicable','Needs follow-up']}
