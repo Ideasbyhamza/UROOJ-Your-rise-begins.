@@ -1118,6 +1118,42 @@ button,input,textarea,select{min-width:0}
 .app .urooj-insight-panel>summary:focus-visible{outline:2px solid var(--green);outline-offset:-3px}
 .app .urooj-analytics-note{font-size:10px;line-height:1.5;margin:1px 2px 0}
 @media(max-width:360px){.app .urooj-analytics-section{gap:8px}.app .urooj-insight-panel>summary{padding:10px}.app .urooj-insight-panel>[id]{padding-left:8px;padding-right:8px}}
+
+/* Experimental progression palette: bronze, silver, platinum, gold, diamond, UROOJ. */
+.app [data-current-level][data-level-tier="0"]{background:linear-gradient(135deg,#f2e3d5,#d7b394)!important;border-color:#a8754c!important;color:#58371f!important;box-shadow:inset 0 1px 0 #fff9}
+.app [data-current-level][data-level-tier="1"]{background:linear-gradient(135deg,#f5f6f7,#c9ced4)!important;border-color:#a5adb6!important;color:#374151!important;box-shadow:inset 0 1px 0 #fff}
+.app [data-current-level][data-level-tier="2"]{background:linear-gradient(135deg,#eef3f8,#c5d5e4)!important;border-color:#91a9bf!important;color:#29445b!important;box-shadow:inset 0 1px 0 #fff}
+.app [data-current-level][data-level-tier="3"]{background:linear-gradient(135deg,#fff1c7,#e6bd62)!important;border-color:#c49a3d!important;color:#65470c!important;box-shadow:inset 0 1px 0 #fff9}
+.app [data-current-level][data-level-tier="4"]{background:linear-gradient(135deg,#e6f8ff,#a9dced)!important;border-color:#65b8d0!important;color:#14516a!important;box-shadow:inset 0 1px 0 #fff}
+.app [data-current-level][data-level-tier="5"]{background:linear-gradient(135deg,#d9eee4,#8fc5aa)!important;border-color:#4e9c79!important;color:#174d37!important;box-shadow:inset 0 1px 0 #fff9}
+#uroojUpgradeJourney .upgrade-step.stage-1{--tier-bg:#f5e9df;--tier-border:#b9865f;--tier-ink:#68452e;--tier-fill:#986440}
+#uroojUpgradeJourney .upgrade-step.stage-2{--tier-bg:#f0f1f3;--tier-border:#b5bbc3;--tier-ink:#48515d;--tier-fill:#89939f}
+#uroojUpgradeJourney .upgrade-step.stage-3{--tier-bg:#edf3f8;--tier-border:#a5b9cc;--tier-ink:#38536c;--tier-fill:#7c9ebc}
+#uroojUpgradeJourney .upgrade-step.stage-4{--tier-bg:#fff5d9;--tier-border:#d8b45c;--tier-ink:#745313;--tier-fill:#c69a32}
+#uroojUpgradeJourney .upgrade-step.stage-5{--tier-bg:#e9f8fc;--tier-border:#87cddd;--tier-ink:#1b6073;--tier-fill:#4caac1}
+#uroojUpgradeJourney .upgrade-step.stage-6{--tier-bg:#e5f3eb;--tier-border:#76b596;--tier-ink:#205b40;--tier-fill:#39845f}
+#uroojUpgradeJourney .upgrade-step{background:var(--tier-bg,var(--white))!important;border:1px solid var(--tier-border,var(--line))!important;border-radius:13px!important;box-shadow:0 2px 8px rgba(24,40,32,.045)!important;color:var(--tier-ink,var(--ink))!important;transition:transform .18s ease,border-color .18s ease,box-shadow .18s ease}
+#uroojUpgradeJourney .upgrade-step .upgrade-number{background:var(--tier-border)!important;color:white!important;border:1px solid var(--tier-border)!important}
+#uroojUpgradeJourney .upgrade-step .upgrade-word,#uroojUpgradeJourney .upgrade-step .upgrade-days,#uroojUpgradeJourney .upgrade-step .urooj-stage-status{color:var(--tier-ink)!important}
+#uroojUpgradeJourney .upgrade-step .urooj-stage-progress{background:var(--white)!important;border-color:var(--tier-border)!important}
+#uroojUpgradeJourney .upgrade-step .urooj-stage-progress span{background:var(--tier-fill)!important}
+#uroojUpgradeJourney .upgrade-step .urooj-stage-dots i{border-color:var(--tier-border)!important}
+#uroojUpgradeJourney .upgrade-step .urooj-stage-dots i.filled{background:var(--tier-fill)!important;border-color:var(--tier-fill)!important}
+#uroojUpgradeJourney .upgrade-step .urooj-lives i:not(.lost){border-color:var(--tier-fill)!important}
+#uroojUpgradeJourney .upgrade-step .urooj-lives i.lost{background:var(--tier-ink)!important;border-color:var(--tier-ink)!important}
+@media(hover:hover){#uroojUpgradeJourney .upgrade-step:hover{transform:translateY(-1px);box-shadow:0 5px 14px rgba(24,40,32,.1)!important}}
+body.dark #uroojUpgradeJourney .upgrade-step.stage-1{--tier-bg:#382b23;--tier-border:#8b674c;--tier-ink:#f2d8c3;--tier-fill:#c18a60}
+body.dark #uroojUpgradeJourney .upgrade-step.stage-2{--tier-bg:#292e35;--tier-border:#737d89;--tier-ink:#e1e5ea;--tier-fill:#aab4c0}
+body.dark #uroojUpgradeJourney .upgrade-step.stage-3{--tier-bg:#24313e;--tier-border:#607d98;--tier-ink:#d9e8f5;--tier-fill:#8cb4d7}
+body.dark #uroojUpgradeJourney .upgrade-step.stage-4{--tier-bg:#3b321e;--tier-border:#9f8039;--tier-ink:#f8e6b3;--tier-fill:#d4ac4f}
+body.dark #uroojUpgradeJourney .upgrade-step.stage-5{--tier-bg:#1d3540;--tier-border:#4f98ac;--tier-ink:#d4f4fb;--tier-fill:#72c8df}
+body.dark #uroojUpgradeJourney .upgrade-step.stage-6{--tier-bg:#20382d;--tier-border:#528d6d;--tier-ink:#d7f1e2;--tier-fill:#72b992}
+body.dark .app [data-current-level][data-level-tier="0"]{background:linear-gradient(135deg,#4a3528,#765039)!important;color:#fff0e2!important;border-color:#a67b5b!important}
+body.dark .app [data-current-level][data-level-tier="1"]{background:linear-gradient(135deg,#343a43,#59616c)!important;color:#f2f4f7!important;border-color:#858e9a!important}
+body.dark .app [data-current-level][data-level-tier="2"]{background:linear-gradient(135deg,#263b4d,#3c5b75)!important;color:#e5f3ff!important;border-color:#6687a4!important}
+body.dark .app [data-current-level][data-level-tier="3"]{background:linear-gradient(135deg,#493b20,#76602c)!important;color:#fff1c9!important;border-color:#b39348!important}
+body.dark .app [data-current-level][data-level-tier="4"]{background:linear-gradient(135deg,#203d47,#2e6575)!important;color:#e2faff!important;border-color:#65b8d0!important}
+body.dark .app [data-current-level][data-level-tier="5"]{background:linear-gradient(135deg,#204331,#2e6b4d)!important;color:#e4fff0!important;border-color:#64a783!important}
 </style>
 </head>
 <body>
@@ -2168,7 +2204,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   let idx=starts.findIndex((start,i)=>done>=start&&(i===starts.length-1||done<starts[i+1]));
   if(idx<0)idx=done>=365?5:0;
   const label='Level '+String(idx+1).padStart(2,'0')+' · '+names[idx];
-  document.querySelectorAll('[data-current-level]').forEach(el=>{el.textContent=label;el.setAttribute('aria-label','Current level: '+label);});
+  document.querySelectorAll('[data-current-level]').forEach(el=>{el.textContent=label;el.dataset.levelTier=String(idx);el.setAttribute('aria-label','Current level: '+label);});
  }
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',syncCurrentLevel);else syncCurrentLevel();
  const total=document.getElementById('uroojTotalDays');
