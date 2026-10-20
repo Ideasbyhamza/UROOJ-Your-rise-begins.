@@ -478,6 +478,22 @@ body.dark .urooj-streak-pill{background:#2c4938;color:#d8e8d9}
 #uroojUpgradeJourney .urooj-lives{gap:3px}
 #uroojUpgradeJourney .upgrade-top{padding-right:64px}
 
+
+/* Progression cards: one full-width level per row; keep every label and indicator visible. */
+#uroojUpgradeJourney .upgrade-list{grid-template-columns:minmax(0,1fr)!important}
+#uroojUpgradeJourney .upgrade-step{display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:auto auto auto auto;align-items:start;gap:8px 12px;min-width:0;width:100%;padding:12px;overflow:hidden}
+#uroojUpgradeJourney .upgrade-top{grid-column:1;grid-row:1;min-width:0;max-width:100%;padding-right:0;align-items:center}
+#uroojUpgradeJourney .upgrade-heading{min-width:0;max-width:100%;overflow:visible}
+#uroojUpgradeJourney .upgrade-word{display:block;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;word-break:normal;line-height:1.3}
+#uroojUpgradeJourney .upgrade-tier-label{display:block;max-width:100%;white-space:normal;overflow-wrap:anywhere;letter-spacing:.03em;line-height:1.25}
+#uroojUpgradeJourney .upgrade-days{grid-column:2;grid-row:1;align-self:center;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:right}
+#uroojUpgradeJourney .urooj-stage-status{position:static;grid-column:1/-1;grid-row:2;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:6px;min-width:0;width:100%;padding:0}
+#uroojUpgradeJourney .urooj-stage-status [data-stage-progress-label]{display:inline;min-width:0;max-width:100%;white-space:normal;overflow-wrap:anywhere;text-align:left}
+#uroojUpgradeJourney .urooj-lives{display:flex;flex:0 0 auto;gap:4px}
+#uroojUpgradeJourney .urooj-stage-progress{grid-column:1/-1;grid-row:3;min-width:0;width:100%}
+#uroojUpgradeJourney .urooj-stage-dots{grid-column:1/-1;grid-row:4;min-width:0;max-width:100%;overflow:hidden}
+@media(min-width:520px){#uroojUpgradeJourney .upgrade-list{grid-template-columns:minmax(0,1fr)!important}}
+
 /* UROOJ unified two-colour system: platform blue + neutral surfaces */
 body[data-palette="blue"]{--sand:#F8FAFC;--green:#2563EB;--gold:#2563EB;--sage:#EFF6FF;--ink:#172033;--muted:#64748B;--line:#E2E8F0;--white:#FFFFFF;--shadow:0 8px 28px rgba(37,99,235,.07)}
 body.dark[data-palette="blue"]{--sand:#0F172A;--green:#93C5FD;--gold:#93C5FD;--sage:#172554;--ink:#F1F5F9;--muted:#94A3B8;--line:#29364D;--white:#111C31;--shadow:0 8px 28px rgba(0,0,0,.22)}
