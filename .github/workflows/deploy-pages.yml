@@ -62,6 +62,24 @@ jobs:
               source = Path(html_path).read_text(encoding="utf-8")
               parser = ScriptParser()
               parser.feed(source)
+              # Guard against regressions that caused Tazkiyah cards to leak into Task
+              # and duplicate interactive controls with the same DOM IDs.
+              if html_path == "index.html":
+                  for required_id in (
+                      "view-muhasabah", "murakabaCard", "tasbeehTap",
+                      "tasbeehModeTitle", "goodExperienceForm", "journalForm",
+                      "journalList",
+                  ):
+                      count = len(re.findall(r'\\bid=["\\']' + re.escape(required_id) + r'["\\']', source))
+                      if count != 1:
+                          raise SystemExit(f"Expected exactly one id={required_id!r}, found {count}")
+                  tazkiyah_start = source.find('<section class="view" id="view-muhasabah">')
+                  settings_start = source.find('<section class="view" id="view-sanctuary">')
+                  if tazkiyah_start < 0 or settings_start <= tazkiyah_start:
+                      raise SystemExit("Tazkiyah view boundary is missing or misplaced")
+                  tazkiyah = source[tazkiyah_start:settings_start]
+                  if "id=\\"murakabaCard\\"" not in tazkiyah or "id=\\"tasbeehTap\\"" not in tazkiyah:
+                      raise SystemExit("Murāqabah or Tasbeeh has escaped the Tazkiyah view")
               if not parser.scripts:
                   raise SystemExit(f"No inline JavaScript found in {html_path}")
               for index, script in enumerate(parser.scripts):
