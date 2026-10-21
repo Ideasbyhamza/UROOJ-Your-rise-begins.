@@ -1031,6 +1031,40 @@ body.dark .app :is(button,a,input,select,textarea):focus-visible{outline-color:#
  body.dark .app :is(.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.empty,.chart-col small,.reminder-today label,.section-head p){color:var(--muted)}
 }
 </style>
+
+<style id="urooj-all-theme-text-contrast">
+/* Universal text-contrast guard: covers all tabs, dialogs, nested cards, and palette variants. */
+body{color:var(--ink)}
+body :is(.app,#app,main,[role="main"]){color:var(--ink)}
+body :is(.app,#app,main,[role="main"]) :is(h1,h2,h3,h4,h5,h6,strong,b,dt,dd,summary,legend,.title,.card-title,.section-title,.section-heading,.tracker-label,.routine-info,.progress-copy,.metric-value,.stat-value){color:var(--ink)}
+body :is(.app,#app,main,[role="main"]) :is(p,li,label,small,.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.empty,.chart-col small,.section-head p,.helper-text,.hint,.description,.caption,.subtitle,.eyebrow,.meta,.date-label,.form-note){color:var(--muted)}
+body :is(.app,#app,main,[role="main"]) :is(.card,.progress-card,.routine-item,.journal-entry,.quran-entry,.reminder-today,.reminder-row,.tracker-row,.slot,.date-badge,.day-box,.target-pills button,.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.modal,.modal-content,.settings-accordion,.settings-tile,.urooj-analytics-card,.urooj-metric,.urooj-progress-card,.urooj-checkin,.urooj-stage-card,.empty-state,.journal-card,.habit-card,.schedule-card,.challenge-card,.challenge-item,.calendar-card,.chart-card){color:var(--ink);border-color:var(--line)}
+body :is(.app,#app,main,[role="main"]) :is(input,textarea,select){color:var(--ink);background-color:var(--white);border-color:var(--line)}
+body :is(.app,#app,main,[role="main"]) :is(input,textarea,select)::placeholder{color:var(--muted);opacity:1}
+body :is(.app,#app,main,[role="main"]) select option{background:var(--white);color:var(--ink)}
+body :is(.app,#app,main,[role="main"]) :is(a,.text-btn,.link-btn){color:var(--green)}
+body :is(.app,#app,main,[role="main"]) :is(.btn,.primary,.btn.primary){color:#fff}
+body :is(.app,#app,main,[role="main"]) :is(.btn.secondary,.btn.ghost,.nav button,.target-pills button,.routine-time,.date-badge){color:var(--ink)}
+body.dark{color:var(--ink);color-scheme:dark}
+body.dark :is(.app,#app,main,[role="main"]){color:var(--ink)}
+body.dark :is(.app,#app,main,[role="main"]) :is(h1,h2,h3,h4,h5,h6,strong,b,dt,dd,summary,legend,.title,.card-title,.section-title,.section-heading,.tracker-label,.routine-info,.progress-copy,.metric-value,.stat-value){color:var(--ink)}
+body.dark :is(.app,#app,main,[role="main"]) :is(p,li,label,small,.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.empty,.chart-col small,.section-head p,.helper-text,.hint,.description,.caption,.subtitle,.eyebrow,.meta,.date-label,.form-note){color:var(--muted)}
+body.dark :is(.app,#app,main,[role="main"]) :is(.card,.progress-card,.routine-item,.journal-entry,.quran-entry,.reminder-today,.reminder-row,.tracker-row,.slot,.date-badge,.day-box,.target-pills button,.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.modal,.modal-content,.settings-accordion,.settings-tile,.urooj-analytics-card,.urooj-metric,.urooj-progress-card,.urooj-checkin,.urooj-stage-card,.empty-state,.journal-card,.habit-card,.schedule-card,.challenge-card,.challenge-item,.calendar-card,.chart-card){color:var(--ink);border-color:var(--line)}
+body.dark :is(.app,#app,main,[role="main"]) :is(input,textarea,select){color:var(--ink);background-color:var(--white);border-color:var(--line)}
+body.dark :is(.app,#app,main,[role="main"]) :is(input,textarea,select)::placeholder{color:var(--muted);opacity:1}
+body.dark :is(.app,#app,main,[role="main"]) select option{background:var(--white);color:var(--ink)}
+body.dark :is(.app,#app,main,[role="main"]) :is(a,.text-btn,.link-btn){color:var(--green)}
+body.dark :is(.app,#app,main,[role="main"]) :is(.btn,.primary,.btn.primary){color:#fff}
+body.dark :is(.app,#app,main,[role="main"]) :is(.btn.secondary,.btn.ghost,.nav button,.target-pills button,.routine-time,.date-badge){color:var(--ink)}
+/* Preserve intentional challenge status/difficulty palettes while ensuring readable text. */
+body.dark :is(.challenge-hero,.challenge-card,.challenge-level,.completed-challenge-tile,.failed-challenge-tile) :is(h1,h2,h3,h4,p,span,strong,small,label){color:inherit}
+body.dark :is(.challenge-hero.gold,.completed-challenge-tile,.failed-challenge-tile){text-shadow:none}
+body.dark :is(.app,#app,main,[role="main"]) :is(button,a,input,select,textarea,[tabindex]):focus-visible{outline:2px solid #60a5fa;outline-offset:2px}
+@media(prefers-contrast:more){
+ body{--muted:#4b5563}
+ body.dark{--muted:#d1d5db;--line:#64748b}
+}
+</style>
 </head>
 <body>
 <section id="uroojTermsConsent" role="dialog" aria-modal="true" aria-labelledby="uroojTermsTitle">
