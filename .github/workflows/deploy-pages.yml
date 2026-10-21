@@ -70,7 +70,7 @@ jobs:
                       "tasbeehModeTitle", "goodExperienceForm", "journalForm",
                       "journalList",
                   ):
-                      count = len(re.findall(r'\\bid=["\\']' + re.escape(required_id) + r'["\\']', source))
+                      count = len(re.findall(r'\\bid="' + re.escape(required_id) + r'"', source))
                       if count != 1:
                           raise SystemExit(f"Expected exactly one id={required_id!r}, found {count}")
                   tazkiyah_start = source.find('<section class="view" id="view-muhasabah">')
