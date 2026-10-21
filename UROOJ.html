@@ -993,6 +993,44 @@ body.dark .urooj-progress-card{background:var(--white);border-color:var(--line)}
 .app .urooj-metric-grid,.app .urooj-category-chart,.app .urooj-habit-insights{gap:calc(8px * var(--urooj-layout-scale,0.8))}
 </style>
 
+
+<style id="urooj-dark-readability-fix">
+/* Dark-mode contrast pass: use the active theme tokens instead of light-mode hard-coded colours. */
+body.dark{background:#080d16;color:var(--ink);color-scheme:dark}
+body.dark .app{background:var(--sand);color:var(--ink)}
+body.dark .app :is(.card,.progress-card,.routine-item,.journal-entry,.quran-entry,.reminder-today,.reminder-row,.tracker-row,.slot,.date-badge,.day-box,.target-pills button,.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.reminder-row input,.reminder-today input,.modal,.modal-content,.settings-accordion,.settings-tile,.urooj-analytics-card,.urooj-metric,.urooj-progress-card,.urooj-checkin,.urooj-stage-card,.empty-state,.journal-card,.habit-card,.schedule-card){background-color:var(--white);color:var(--ink);border-color:var(--line)}
+body.dark .app :is(.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.empty,.chart-col small,.reminder-today label,.section-head p,.card p,.card small,.card label,.card li,.journal-entry p,.quran-entry p,.urooj-analytics-note,.urooj-metric small,.urooj-checkin-foot,.urooj-checkin-head small,.urooj-year-chip){color:var(--muted)}
+body.dark .app :is(h1,h2,h3,h4,p,span,small,label,strong,em,li,summary,dt,dd,.tracker-label,.tracker-label strong,.routine-info strong,.progress-copy strong,.card-title h3,.section-heading-copy h1,.section-heading-copy p,.category-row span,.category-row b,.urooj-habit-name,.urooj-analytics-card .compact-expand>summary){text-shadow:none}
+body.dark .app :is(.field input,.field textarea,.field select,.slot input,.slot select,.tracker-row select,.reminder-row input,.reminder-today input){background:var(--sand);color:var(--ink);border-color:var(--line)}
+body.dark .app :is(input,textarea,select)::placeholder{color:var(--muted);opacity:1}
+body.dark .app select option{background:var(--white);color:var(--ink)}
+body.dark .app :is(.btn.secondary,.btn.ghost,.solar,.routine-time,.target-pills button,.nav button.active,.day-grid-toggle){background:var(--sage);color:var(--green);border-color:var(--line)}
+body.dark .app :is(.btn,.primary){color:#07111f}
+body.dark .app .quote{background:var(--sage);color:var(--ink);border:1px solid var(--line)}
+body.dark .app .quote :is(.eyebrow,.attribution,.quote-controls,.quote blockquote,.text-btn){color:var(--ink)}
+body.dark .app .quote .dots i{background:var(--muted)}
+body.dark .app .quote .dots i.on{background:var(--green)}
+body.dark .app .progress-ring:before{background:var(--white)}
+body.dark .app .tiny-track,body.dark .app .chart-bar-wrap,body.dark .app .category-track{background:var(--sage)}
+body.dark .app .nav{background:#0b1220f2;border-color:var(--line)}
+body.dark .app .nav button{color:var(--muted)}
+body.dark .app .nav button.active{color:var(--green)}
+body.dark .app :is(.date-badge span,.schedule-task-name){color:var(--ink)}
+body.dark .app .schedule-task-tile.has-status{background:var(--sage);border-color:var(--line)}
+body.dark .app .schedule-task-tile.has-status .tracker-label small{color:var(--green)}
+body.dark .app :is(.day-box,.urooj-day-check){background:var(--white);color:var(--ink);border-color:var(--line)}
+body.dark .app :is(.day-box.done,.urooj-day-check.checked){background:var(--sage);color:var(--green);border-color:var(--green)}
+body.dark .app :is(.day-box.future){color:var(--muted)}
+body.dark .app :is(.challenge-hero.duration-easy,.challenge-hero.duration-light,.challenge-hero.duration-moderate,.challenge-hero.duration-hard,.challenge-hero.duration-very-hard,.completed-challenge-tile,.failed-challenge-tile){filter:brightness(.88) saturate(.9)}
+body.dark .app :is(.challenge-hero.duration-easy,.challenge-hero.duration-light,.challenge-hero.duration-moderate,.challenge-hero.duration-hard,.challenge-hero.duration-very-hard) :is(h3,p,span,strong,small){color:inherit}
+body.dark .app :is(.close,.custom-delete,.delete,.reminder-row button){background:#3b2528;color:#ffd9d7;border-color:#694047}
+body.dark .app :is(.progress-card,.routine-item,.card,.journal-entry,.quran-entry,.reminder-today,.urooj-analytics-card,.urooj-metric,.urooj-progress-card){box-shadow:0 8px 22px rgba(0,0,0,.16)}
+body.dark .app :is(button,a,input,select,textarea):focus-visible{outline-color:#93c5fd}
+@media(prefers-contrast:more){
+ body.dark .app{--muted:#cbd5e1;--line:#526078}
+ body.dark .app :is(.muted,.save-note,.journal-date,.tracker-label small,.routine-info span,.progress-copy span,.field label,.empty,.chart-col small,.reminder-today label,.section-head p){color:var(--muted)}
+}
+</style>
 </head>
 <body>
 <section id="uroojTermsConsent" role="dialog" aria-modal="true" aria-labelledby="uroojTermsTitle">
