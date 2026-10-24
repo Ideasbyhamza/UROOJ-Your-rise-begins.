@@ -2366,18 +2366,24 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 </script>
 
 <script>
-/* Hosted-web fail-safe must never bypass authentication. Restore only a valid local session. */
+/* Hosted-web fail-safe: preserve the persistent local session used by Continue without Google. */
 (function(){
   if(location.hostname==='appassets.androidplatform.net') return;
   try {
-    var until=Number(localStorage.getItem('urooj-app-session-until-v1')||0);
-    if(until>Date.now()) document.body.classList.add('jarvis-authenticated');
-    else {
+    var key='urooj-app-session-until-v1';
+    var saved=localStorage.getItem(key);
+    var until=Number(saved||0);
+    if(saved==='1'||until>Date.now()){
+      localStorage.setItem(key,'1');
+      document.body.classList.add('jarvis-authenticated');
+      var gate=document.getElementById('jarvisLogin');
+      if(gate){gate.style.display='none';gate.setAttribute('aria-hidden','true');}
+    } else {
       document.body.classList.remove('jarvis-authenticated');
-      localStorage.removeItem('urooj-app-session-until-v1');
+      localStorage.removeItem(key);
     }
   } catch(e) {
-    document.body.classList.remove('jarvis-authenticated');
+    /* Do not forcibly reveal the login gate on a storage read error. */
   }
 })();
 </script>
