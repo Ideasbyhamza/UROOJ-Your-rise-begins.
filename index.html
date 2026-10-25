@@ -1969,7 +1969,14 @@ async function checkDriveForChanges(){
 }
 function startDrivePolling(){
  if(gDrivePollTimer)clearInterval(gDrivePollTimer);
- gDrivePollTimer=setInterval(checkDriveForChanges,15000);
+ // Keep signed-in devices aligned, and refresh promptly when a device returns to the app.
+ gDrivePollTimer=setInterval(checkDriveForChanges,5000);
+ checkDriveForChanges();
+}
+if(!window.__uroojDriveRefreshHooks){
+ window.__uroojDriveRefreshHooks=true;
+ window.addEventListener('focus',function(){if(gAccessToken)checkDriveForChanges()});
+ document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&gAccessToken)checkDriveForChanges()});
 }
 function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}/* Preserve the user's Google grant so the Drive consent screen is not needlessly triggered again. */if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('')}
 function renderAccountStatus(syncError,syncMessage){
