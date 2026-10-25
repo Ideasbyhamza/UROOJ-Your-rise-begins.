@@ -2091,12 +2091,11 @@ function updateScheduleSummary(){
   const incomplete=/\b(missed|not done|not completed|incomplete|skipped|excused|not applicable|partly done|partially done|in progress)\b/.test(normalized);
   return {recorded,done:recorded&&!incomplete};
  });
- const renderedCount=$$('#scheduleSlots .schedule-task-tile').length;
- const total=renderedCount||items.length;
+ const total=items.length;
  const recorded=tracked.filter(x=>x.recorded).length;
  const done=tracked.filter(x=>x.done).length;
  // This ring tracks whether every listed task has a recorded status, including missed/skipped statuses.
- const pct=total?Math.round((recorded/total)*100):0;
+ const pct=total?Math.min(100,Math.round((recorded/total)*100)):0;
  const count=$('#todayCount'),totalTasks=$('#todayTotalTasks'),percent=$('#progressPercent'),ring=$('#progressRing'),bar=$('#progressBar'),title=$('#progressTitle'),sub=$('#progressSub');
  if(count)count.textContent=recorded+' recorded';
  if(totalTasks)totalTasks.textContent=total+' total tasks';
