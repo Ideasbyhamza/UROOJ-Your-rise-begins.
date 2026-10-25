@@ -1027,6 +1027,23 @@ html[data-urooj-palette="evergreen"][data-urooj-theme="dark"]{background:#0D1912
 .challenge-heading-card .urooj-day-check .day-square{width:14px;height:14px;flex-basis:14px}
 .challenge-heading-card .urooj-day-check .day-number{font-size:9px!important}
 .challenge-heading-card .urooj-day-check.today{border-color:var(--green);box-shadow:0 0 0 2px rgba(37,99,235,.16);background:var(--sage);color:var(--green);font-weight:800}
+
+/* Compact searchable task history and print-friendly exports. */
+.task-history-tools{display:grid;gap:7px;margin:10px 0 8px}
+.task-history-tools input,.task-history-tools select{min-width:0;width:100%;font-size:12px;padding:8px 9px}
+.task-history-filter-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.task-history-filter-row:has(input[type="date"]){grid-template-columns:repeat(2,minmax(0,1fr))}
+.task-history-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+.task-history-actions .btn{font-size:10px;line-height:1.2;padding:8px 5px;min-width:0;white-space:normal}
+.task-history-result{font-size:10px;color:var(--muted);padding:2px 1px}
+.task-history-day{padding:7px 0;border-bottom:1px solid var(--line)}
+.task-history-day:last-child{border-bottom:0}
+.task-history-day-head{display:flex;justify-content:space-between;gap:8px;font-size:11px;font-weight:700}
+.task-history-records{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 10px;margin-top:5px;font-size:11px}
+.task-history-records span{overflow-wrap:anywhere}
+.task-history-records .status{color:var(--muted);text-align:right}
+@media(max-width:360px){.task-history-filter-row{grid-template-columns:repeat(2,minmax(0,1fr))}.task-history-actions{grid-template-columns:1fr}.task-history-actions .btn{font-size:12px}}
+@media print{body *{visibility:hidden!important}#taskHistoryPanel,#taskHistoryPanel *{visibility:visible!important}#taskHistoryPanel{position:absolute;left:0;top:0;width:100%;border:0!important;box-shadow:none!important}#taskHistoryPanel summary,#taskHistoryPanel .task-history-tools{display:none!important}#taskHistoryList{display:block!important;color:#111!important;background:#fff!important}#taskHistoryList *{color:#111!important;background:#fff!important}}
 </style>
 <script src="https://accounts.google.com/gsi/client" async defer onerror="window.__uroojGoogleLibraryFailed=true"></script>
 <style id="urooj-unified-tab-headers">
@@ -1692,7 +1709,7 @@ body.dark :is(.app,#app,main,[role="main"]) :is(button,a,input,select,textarea,[
 <div class="urooj-metric-grid"><div class="urooj-metric"><span>This week</span><strong id="weekDone">0</strong><small>done / logged</small></div><div class="urooj-metric"><span>Completion rate</span><strong id="weekRate">0%</strong><small>of logged items</small></div><div class="urooj-metric"><span>Active days</span><strong id="monthActiveDays">0</strong><small>days logged this month</small></div><div class="urooj-metric"><span>Best streak</span><strong id="habitBestStreak">0</strong><small>active days in a row</small></div></div>
 <details class="urooj-insight-panel" open><summary><span><strong>Daily consistency</strong><small>30 days · daily completion</small></span></summary><div id="statsChart" class="urooj-daily-chart" role="img" aria-label="Daily consistency from Day 1 to Day 30, based on the last 30 days"></div></details>
 <details class="urooj-insight-panel"><summary><span><strong>Monthly progress</strong><small>Current month + upcoming months</small></span></summary><div id="monthlyProgressChart" class="urooj-monthly-chart" role="img" aria-label="Monthly recorded activity and completion rates"></div></details>
-<details class="urooj-insight-panel" id="taskHistoryPanel"><summary><span><strong>Month-by-month task records</strong><small>See which task was recorded and its status on each date</small></span></summary><div class="field" style="margin-top:10px"><label for="taskHistoryMonth">Choose month</label><select id="taskHistoryMonth" aria-label="Month for task history"></select></div><div id="taskHistoryList" class="urooj-habit-insights"><p class="muted">Your saved task records will appear here.</p></div></details>
+<details class="urooj-insight-panel" id="taskHistoryPanel"><summary><span><strong>Task history &amp; export</strong><small id="taskHistorySummary">Search records · export Excel/CSV or PDF</small></span></summary><div class="task-history-tools"><input id="taskHistorySearch" type="search" placeholder="Search task or status…" aria-label="Search task history"/><div class="task-history-filter-row"><select id="taskHistoryMonth" aria-label="Filter by month"><option value="all">All months</option></select><select id="taskHistoryTask" aria-label="Filter by task"><option value="all">All tasks</option></select><select id="taskHistoryStatus" aria-label="Filter by status"><option value="all">All statuses</option></select></div><div class="task-history-filter-row"><input id="taskHistoryFrom" type="date" aria-label="From date"/><input id="taskHistoryTo" type="date" aria-label="To date"/></div><div class="task-history-actions"><button type="button" class="btn secondary small" id="taskHistoryReset">Reset filters</button><button type="button" class="btn secondary small" id="taskHistoryCsv">Export CSV / Excel</button><button type="button" class="btn small" id="taskHistoryPdf">Export PDF / Print</button></div><div class="task-history-result" id="taskHistorySummaryCount" aria-live="polite"></div></div><div id="taskHistoryList" class="urooj-habit-insights"><p class="muted">Your saved task records will appear here.</p></div></details>
 <details class="urooj-insight-panel"><summary><span><strong>Habit balance</strong><small>Completion by habit category</small></span></summary><div id="categoryChart" class="urooj-category-chart"></div></details>
 <details class="urooj-insight-panel"><summary><span><strong>Your strongest habits</strong><small>Your top 5 by completion</small></span></summary><div id="habitInsightsList" class="urooj-habit-insights"></div></details>
 <p class="muted urooj-analytics-note">Only saved activity is counted. Blank days are not failures.</p>
@@ -2201,17 +2218,39 @@ function renderProgressInsights(all){
  const habitHost=$('#habitInsightsList');if(habitHost){const habits=activities.map(item=>{let recorded=0,done=0,activeDays=0;days30.forEach(d=>{const v=(log[d.key]||{})[item.id];if(isRecorded(v)){recorded++;if(isDone(v))done++}});Object.entries(log).forEach(([key,values])=>{if(key.startsWith(currentKey)&&key<=today&&isRecorded(values?.[item.id]))activeDays++});return {name:item.name,recorded,done,rate:recorded?Math.round(done/recorded*100):0,activeDays}}).filter(x=>x.recorded).sort((a,b)=>b.rate-a.rate||b.recorded-a.recorded).slice(0,5);habitHost.innerHTML=habits.length?habits.map((h,i)=>'<div class="urooj-habit-row"><span class="urooj-habit-rank">'+(i+1)+'</span><span class="urooj-habit-name">'+esc(h.name)+'<small>'+h.activeDays+' logged days this month</small></span><span class="urooj-habit-track"><i style="width:'+h.rate+'%"></i></span><strong>'+h.rate+'%</strong></div>').join(''):'<p class="muted">Your top habits will appear after you record activity.</p>'}
 }
 
-function renderTaskHistory(activities){
- const select=document.getElementById('taskHistoryMonth'),host=document.getElementById('taskHistoryList');if(!select||!host)return;
- const today=todayKey(),existing=select.value,options=[];
- for(let n=0;n<24;n++){const d=new Date(today+'T12:00:00+05:30');d.setDate(1);d.setMonth(d.getMonth()-n);const key=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');options.push({key,label:new Intl.DateTimeFormat('en',{month:'long',year:'numeric'}).format(d)});}
- select.innerHTML=options.map(m=>'<option value="'+m.key+'">'+esc(m.label)+'</option>').join('');
- select.value=options.some(m=>m.key===existing)?existing:today.slice(0,7);
- const month=select.value,logs=state.activityLog||{},items=(activities||[]).filter((x,i,a)=>x&&x.id&&a.findIndex(y=>y.id===x.id)===i),rows=[];
- Object.keys(logs).filter(k=>k.startsWith(month+'-')&&k<=today).sort().reverse().forEach(day=>{const values=logs[day]||{},entries=items.map(item=>({name:item.name||item.task||'Task',value:values[item.id]})).filter(x=>x.value!==undefined&&x.value!==null&&String(x.value).trim()!==''&&String(x.value).trim().toLowerCase()!=='not recorded');if(entries.length)rows.push({day,entries})});
- host.innerHTML=rows.length?rows.map(r=>'<div class="urooj-habit-row" style="grid-template-columns:minmax(76px,auto) minmax(0,1fr);align-items:start"><span class="urooj-habit-rank">'+esc(r.day.slice(8))+'</span><span class="urooj-habit-name">'+esc(new Intl.DateTimeFormat('en',{weekday:'short',day:'numeric',month:'short',timeZone:'UTC'}).format(new Date(r.day+'T12:00:00Z')))+'<small style="display:block;white-space:normal;line-height:1.5">'+r.entries.map(e=>'<span style="display:block"><b>'+esc(e.name)+'</b> — '+esc(String(e.value))+'</span>').join('')+'</small></span></div>').join(''):'<p class="muted">No task statuses were recorded for this month yet. When you mark Fajr or another task, its date and status will appear here.</p>';
+function getTaskHistoryRows(){
+ const today=todayKey(),logs=state.activityLog||{},schedule=Array.isArray(state.schedule)?state.schedule:[],base=typeof activityOptions==='function'?activityOptions():[],custom=Array.isArray(state.customActivities)?state.customActivities:[],items=[...(Array.isArray(base)?base:[]),...custom,...schedule.map((x,i)=>({id:'schedule_'+(x?.id||i),name:x?.task||x?.name||'Activity'}))].filter((x,i,a)=>x&&x.id&&a.findIndex(y=>y.id===x.id)===i),rows=[];
+ Object.keys(logs).filter(k=>/^\d{4}-\d{2}-\d{2}$/.test(k)&&k<=today).forEach(day=>{const values=logs[day]||{};items.forEach(item=>{const value=values[item.id];if(value!==undefined&&value!==null&&String(value).trim()!==''&&String(value).trim().toLowerCase()!=='not recorded')rows.push({date:day,task:String(item.name||item.task||'Task'),status:String(value)})})});
+ return rows.sort((a,b)=>b.date.localeCompare(a.date)||a.task.localeCompare(b.task));
 }
-document.getElementById('taskHistoryMonth')?.addEventListener('change',()=>renderStats());
+function renderTaskHistory(){
+ const select=document.getElementById('taskHistoryMonth'),taskSelect=document.getElementById('taskHistoryTask'),statusSelect=document.getElementById('taskHistoryStatus'),host=document.getElementById('taskHistoryList');if(!select||!host)return;
+ const priorMonth=select.value||'all',priorTask=taskSelect?.value||'all',priorStatus=statusSelect?.value||'all',rows=getTaskHistoryRows(),months=[...new Set(rows.map(r=>r.date.slice(0,7)))].sort().reverse(),tasks=[...new Set(rows.map(r=>r.task))].sort(),statuses=[...new Set(rows.map(r=>r.status))].sort();
+ const monthLabel=m=>{const d=new Date(m+'-01T12:00:00Z');return new Intl.DateTimeFormat('en',{month:'short',year:'numeric',timeZone:'UTC'}).format(d)};
+ select.innerHTML='<option value="all">All months</option>'+months.map(m=>'<option value="'+m+'">'+esc(monthLabel(m))+'</option>').join('');select.value=months.includes(priorMonth)?priorMonth:'all';
+ if(taskSelect){taskSelect.innerHTML='<option value="all">All tasks</option>'+tasks.map(t=>'<option value="'+esc(t)+'">'+esc(t)+'</option>').join('');taskSelect.value=tasks.includes(priorTask)?priorTask:'all'}
+ if(statusSelect){statusSelect.innerHTML='<option value="all">All statuses</option>'+statuses.map(t=>'<option value="'+esc(t)+'">'+esc(t)+'</option>').join('');statusSelect.value=statuses.includes(priorStatus)?priorStatus:'all'}
+ applyTaskHistoryFilters();
+}
+function getFilteredTaskHistoryRows(){
+ const search=(document.getElementById('taskHistorySearch')?.value||'').trim().toLowerCase(),month=document.getElementById('taskHistoryMonth')?.value||'all',task=document.getElementById('taskHistoryTask')?.value||'all',status=document.getElementById('taskHistoryStatus')?.value||'all',from=document.getElementById('taskHistoryFrom')?.value||'',to=document.getElementById('taskHistoryTo')?.value||'';
+ return getTaskHistoryRows().filter(r=>(!search||(r.task+' '+r.status+' '+r.date).toLowerCase().includes(search))&&(month==='all'||r.date.startsWith(month))&&(task==='all'||r.task===task)&&(status==='all'||r.status===status)&&(!from||r.date>=from)&&(!to||r.date<=to));
+}
+function applyTaskHistoryFilters(){
+ const host=document.getElementById('taskHistoryList');if(!host)return;const rows=getFilteredTaskHistoryRows(),count=document.getElementById('taskHistorySummaryCount'),summary=document.getElementById('taskHistorySummary');
+ if(count)count.textContent=rows.length+' records shown';if(summary)summary.textContent=rows.length+' matching records · filters and export';
+ const grouped={};rows.forEach(r=>(grouped[r.date]||=[]).push(r));
+ host.innerHTML=rows.length?Object.entries(grouped).map(([date,entries])=>'<div class="task-history-day"><div class="task-history-day-head"><span>'+esc(new Intl.DateTimeFormat('en',{weekday:'short',day:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(date+'T12:00:00Z')))+'</span><span>'+entries.length+' task'+(entries.length===1?'':'s')+'</span></div><div class="task-history-records">'+entries.map(e=>'<span>'+esc(e.task)+'</span><span class="status">'+esc(e.status)+'</span>').join('')+'</div></div>').join(''):'<p class="muted">No matching task records. Try widening the dates or resetting filters.</p>';
+}
+function exportTaskHistoryCsv(){
+ const rows=getFilteredTaskHistoryRows(),escapeCsv=v=>'"'+String(v??'').replace(/"/g,'""')+'"',csv=[['Date','Task','Status'],...rows.map(r=>[r.date,r.task,r.status])].map(r=>r.map(escapeCsv).join(',')).join('\r\n'),blob=new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8;'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='UROOJ-task-history-'+todayKey()+'.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url);
+}
+document.getElementById('taskHistorySearch')?.addEventListener('input',applyTaskHistoryFilters);
+['taskHistoryMonth','taskHistoryTask','taskHistoryStatus','taskHistoryFrom','taskHistoryTo'].forEach(id=>document.getElementById(id)?.addEventListener('change',applyTaskHistoryFilters));
+document.getElementById('taskHistoryReset')?.addEventListener('click',()=>{['taskHistorySearch','taskHistoryFrom','taskHistoryTo'].forEach(id=>{const el=document.getElementById(id);if(el)el.value=''});['taskHistoryMonth','taskHistoryTask','taskHistoryStatus'].forEach(id=>{const el=document.getElementById(id);if(el)el.value='all'});applyTaskHistoryFilters()});
+document.getElementById('taskHistoryCsv')?.addEventListener('click',exportTaskHistoryCsv);
+document.getElementById('taskHistoryPdf')?.addEventListener('click',()=>{const panel=document.getElementById('taskHistoryPanel');if(panel)panel.open=true;window.print()});
+
 function renderStats(){
  try{
   const base=typeof activityOptions==='function'?activityOptions():[];
@@ -2219,7 +2258,7 @@ function renderStats(){
   const schedule=Array.isArray(state.schedule)?state.schedule:[];
   const all=[...(Array.isArray(base)?base:[]),...custom,...schedule.map((x,i)=>({id:'schedule_'+(x?.id||i),name:x?.task||x?.name||'Activity',category:x?.category||(typeof inferActivityCategory==='function'?inferActivityCategory(x?.task||x?.name||'Activity'):'Other'),options:[]}))];
   renderProgressInsights(all);
-  renderTaskHistory(all);
+  renderTaskHistory();
  }catch(err){
   console.error('Statistics could not be rendered',err);
   const stats=document.getElementById('statsChart'),categories=document.getElementById('categoryChart');
