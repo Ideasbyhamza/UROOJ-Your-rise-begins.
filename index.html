@@ -1515,11 +1515,11 @@ body.dark :is(.app,#app,main,[role="main"]) :is(button,a,input,select,textarea,[
 .tazkiyah-reflection-card .save-note{font-size:10px;margin-top:4px}
 .tazkiyah-reflection-card .btn{padding:9px 12px}
 
-/* Task and status are separate, matching side-by-side boxes in the Schedule view. */
-#view-schedule .schedule-task-tile{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:stretch}
-#view-schedule .schedule-task-tile>.tracker-label{box-sizing:border-box;min-width:0;min-height:58px;padding:5px 7px;border:1px solid var(--line);border-radius:9px;background:var(--white);display:flex;flex-direction:column;justify-content:center}
-#view-schedule .schedule-task-tile>.tracker-label .schedule-task-name{box-sizing:border-box;min-height:28px;padding:4px 5px;border-color:transparent}
-#view-schedule .schedule-task-tile>select[data-field="status"]{box-sizing:border-box;align-self:stretch;min-height:58px;height:100%;padding:7px 8px;border:1px solid var(--line);border-radius:9px;background:var(--white)}
+/* Task and Status boxes: identical width and fixed identical height, directly opposite. */
+#view-schedule .schedule-task-tile{grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;align-items:start}
+#view-schedule .schedule-task-tile>.tracker-label{box-sizing:border-box;width:100%;height:64px;min-width:0;min-height:64px;padding:5px 7px;border:1px solid var(--line);border-radius:9px;background:var(--white);display:flex;flex-direction:column;justify-content:center;overflow:hidden}
+#view-schedule .schedule-task-tile>.tracker-label .schedule-task-name{box-sizing:border-box;width:100%;min-height:28px;height:34px;padding:4px 5px;border-color:transparent}
+#view-schedule .schedule-task-tile>select[data-field="status"]{box-sizing:border-box;width:100%;min-width:0;height:64px;min-height:64px;max-height:64px;align-self:start;padding:7px 8px;border:1px solid var(--line);border-radius:9px;background:var(--white)}
 #view-schedule .schedule-task-tile>.schedule-inline-status,#view-schedule .schedule-task-tile>.schedule-status-feedback{grid-column:1/-1}
 </style>
 </head>
