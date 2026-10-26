@@ -935,6 +935,19 @@ button,input,textarea,select{min-width:0}
 #view-schedule .tracker-row select{width:100%;min-width:0}
 @media(max-width:360px){.app .section-head.app-section-head,.app .section-head.challenge-section-head{gap:6px}.app .section-heading-copy p{font-size:10px}.app .current-level-badge{padding:5px 6px;font-size:9px}.app .section-head-right{max-width:45%}.app .task-count-pills{gap:3px}}
 
+/* Task tab: make the task list card and status/progress card exactly the same width and stack edge-to-edge. */
+#view-schedule > .card,
+#view-schedule > .progress-card {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  margin-left: 0;
+  margin-right: 0;
+}
+#view-schedule > .card { margin-top: 12px; margin-bottom: 12px; }
+#view-schedule > .progress-card { margin-top: 12px; margin-bottom: 12px; }
+
 /* Minimal monochrome UROOJ wordmark in the top-left header */
 .top .brand{color:#111!important;font-family:Georgia,serif;font-weight:800;letter-spacing:.8px}
 .top .brand small{color:#555!important;font-weight:600;letter-spacing:1.1px}
