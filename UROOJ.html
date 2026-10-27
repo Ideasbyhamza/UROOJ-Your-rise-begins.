@@ -1269,7 +1269,7 @@ body.dark :is(.app,#app,main,[role="main"]) :is(button,a,input,select,textarea,[
   <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
   <div class="urooj-checkin-progress" role="progressbar" aria-label="Weekly check-in progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span id="uroojCheckinProgressBar" style="width:0%"></span></div>
   <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
-  <div id="uroojYesterdayRecovery" style="display:none;margin-top:8px"><button type="button" data-urooj-restore-yesterday style="border:1px solid var(--green);border-radius:10px;background:var(--sage);color:var(--green);padding:8px 11px;font:700 12px system-ui;cursor:pointer">Restore yesterday’s check-in</button><div style="font-size:10px;color:var(--muted);margin-top:4px">Use only to recover the check-in lost from your recent progress.</div></div>
+  <div style="font-size:10px;color:var(--muted);margin-top:8px">If you return within 48 hours, UROOJ automatically recovers yesterday’s missed check-in.</div>
  </div>
  <p class="upgrade-intro">The first five levels take 60 check-ins each; UROOJ takes 65, completing 365 days.</p>
  <div class="upgrade-list">
@@ -2003,13 +2003,20 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   try{
    var v=JSON.parse(localStorage.getItem(STORE)||'{}');
    if(!v||typeof v!=='object'||Array.isArray(v))v={};
-   var keys=Object.keys(v).filter(function(k){return /^\d{4}-\d{2}-\d{2}$/.test(k)&&v[k]===true}).sort();
+   var keys=Object.keys(v).filter(function(k){return /^\\d{4}-\\d{2}-\\d{2}$/.test(k)&&v[k]===true}).sort();
    var today=localDateKey(new Date()),yesterday=shiftDay(today,-1),meta=null;
    try{meta=JSON.parse(localStorage.getItem(META)||'null')}catch(e){}
-   if(!meta||typeof meta!=='object'||!Number.isFinite(Number(meta.lives))||!meta.lastDate){
-    meta={lives:3,lastDate:keys.length?keys[0]:yesterday};
-   }
+   var hadValidMeta=!!(meta&&typeof meta==='object'&&Number.isFinite(Number(meta.lives))&&meta.lastDate);
+   if(!hadValidMeta)meta={lives:3,lastDate:keys.length?keys[0]:yesterday};
    meta.lives=Math.max(0,Math.min(3,Number(meta.lives)));
+   var nowMs=Date.now(),lastSeenAt=Number(meta.lastSeenAt)||0;
+   var within48Hours=lastSeenAt>0&&nowMs>=lastSeenAt&&nowMs-lastSeenAt<=48*60*60*1000;
+   /* Legacy metadata had no timestamp. If the previous visit was yesterday, its date itself safely bounds the recovery window. */
+   if(!lastSeenAt&&hadValidMeta&&meta.lastDate===yesterday)within48Hours=true;
+   var recoveredYesterday=false;
+   if(!v[yesterday]&&meta.lastDate<today&&within48Hours){
+    v[yesterday]=true;recoveredYesterday=true;
+   }
    var cursor=meta.lastDate;
    while(cursor<yesterday){
     cursor=shiftDay(cursor,1);
@@ -2022,7 +2029,8 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
      }
     }
    }
-   meta.lastDate=today;saveMeta(meta);
+   if(recoveredYesterday){try{localStorage.setItem(STORE,JSON.stringify(v))}catch(e){}}
+   meta.lastDate=today;meta.lastSeenAt=nowMs;saveMeta(meta);
    return v;
   }catch(e){return {}}
  }
@@ -2039,7 +2047,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   var weekBox=document.getElementById('uroojWeekCheckins');
   if(!weekBox)return;
   var now=new Date(),today=localDateKey(now),log=read(),lives=getLives();
-  var yesterdayKey=shiftDay(today,-1),recoveryUsed=false;try{recoveryUsed=localStorage.getItem('urooj-yesterday-checkin-recovered-v1')==='1'}catch(e){}var recovery=document.getElementById('uroojYesterdayRecovery');if(recovery)recovery.style.display=(!recoveryUsed&&!log[yesterdayKey])?'block':'none';
+
   var checked=0,todayDate=new Date(today+'T12:00:00Z'),mondayOffset=(todayDate.getUTCDay()+6)%7,weekStart=shiftDay(today,-mondayOffset);
   weekBox.innerHTML=Array.from({length:7},function(_,i){
    var key=shiftDay(weekStart,i),d=new Date(key+'T12:00:00Z'),done=!!log[key],isToday=key===today;
@@ -2070,19 +2078,6 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   document.querySelectorAll('.nav button[data-view]').forEach(function(button){var badge=button.querySelector('.nav-streak-badge');if(badge)badge.textContent=String(count)});
  }
  document.addEventListener('click',async function(e){
-  var restore=e.target.closest&&e.target.closest('[data-urooj-restore-yesterday]');
-  if(restore){
-   var todayKey=localDateKey(new Date()),yesterdayKey=shiftDay(todayKey,-1),currentLog=read();
-   if(currentLog[yesterdayKey]){render();return}
-   if(typeof verifyChallengeUndoCaptcha!=='function'||!await verifyChallengeUndoCaptcha('yesterday check-in recovery'))return;
-   if(!window.confirm('Restore the missing check-in for yesterday ('+yesterdayKey+')? This repair can be used only once on this browser.'))return;
-   currentLog[yesterdayKey]=true;
-   if(!write(currentLog)){alert('Could not save the restored check-in. Please check browser storage and try again.');return}
-   try{localStorage.setItem('urooj-yesterday-checkin-recovered-v1','1')}catch(e){}
-   render();
-   var summary=document.getElementById('uroojCheckinSummary');if(summary)summary.textContent='Yesterday’s check-in restored on this device. '+summary.textContent;
-   return;
-  }
   var button=e.target.closest&&e.target.closest('[data-urooj-checkin]');if(!button)return;
   var key=button.getAttribute('data-urooj-checkin'),today=localDateKey(new Date());
   if(key!==today||button.disabled)return;
