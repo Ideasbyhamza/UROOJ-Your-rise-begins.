@@ -1524,6 +1524,13 @@ body.dark :is(.app,#app,main,[role="main"]) :is(button,a,input,select,textarea,[
 </style>
 </head>
 <body>
+<script id="urooj-hosted-login-bootstrap">
+(function(){
+  if(location.hostname==='appassets.androidplatform.net') return;
+  /* GitHub Pages is static hosting: Google sign-in is for Drive sync, not an app access gate. */
+  document.body.classList.add('jarvis-authenticated');
+})();
+</script>
 <script id="urooj-theme-bootstrap">
 (function(){
   var theme='light',palette='mono';
@@ -1992,7 +1999,7 @@ if(!window.__uroojDriveRefreshHooks){
  window.addEventListener('focus',function(){if(gAccessToken)checkDriveForChanges()});
  document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible'&&gAccessToken)checkDriveForChanges()});
 }
-function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}/* Preserve the user's Google grant so the Drive consent screen is not needlessly triggered again. */if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('')}
+function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}/* Preserve the user's Google grant so the Drive consent screen is not needlessly triggered again. */if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();const login=document.getElementById('jarvisLogin');if(location.hostname==='appassets.androidplatform.net'){document.body.classList.remove('jarvis-authenticated');if(login)login.style.display='grid';}else{document.body.classList.add('jarvis-authenticated');if(login){login.style.display='none';login.setAttribute('aria-hidden','true');}}setLoginError('')}
 function renderAccountStatus(syncError,syncMessage){
  const host=document.getElementById('googleAccountCard');if(!host)return;
  if(gUserInfo&&gUserInfo.email){
@@ -2005,9 +2012,16 @@ function renderAccountStatus(syncError,syncMessage){
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
 document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){gAccessToken=null;gTokenExpiry=0;gUserInfo=null;gDriveFileId=null;gDriveModifiedTime=null;gLocalDirty=false;clearGoogleAccountCache();try{if(gDrivePollTimer)clearInterval(gDrivePollTimer)}catch(e){}gDrivePollTimer=null;setLoginError('');unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');applyTheme();setTimeout(()=>window.uroojStartFocusedTutorial&&window.uroojStartFocusedTutorial('postLogin'),350);});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
-// Keep the login gate visible unless a valid local/Google session exists. Preserve the session across reloads.
+// Google sign-in is optional for the hosted web app; keep the login gate only in the embedded Android container.
  const hasSession=resumeAppSession();
- if(!hasSession){document.body.classList.remove('jarvis-authenticated');const loginGate=document.getElementById('jarvisLogin');if(loginGate)loginGate.style.display='grid';}
+ const loginGate=document.getElementById('jarvisLogin');
+ if(hasSession || location.hostname!=='appassets.androidplatform.net'){
+  document.body.classList.add('jarvis-authenticated');
+  if(loginGate){loginGate.style.display='none';loginGate.setAttribute('aria-hidden','true');}
+ }else{
+  document.body.classList.remove('jarvis-authenticated');
+  if(loginGate){loginGate.style.display='grid';loginGate.setAttribute('aria-hidden','false');}
+ }
  initGoogleAuth();
  renderAccountStatus();
 /* ---------- end Google Sign-In + Drive sync ---------- */
@@ -2442,25 +2456,12 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
 </script>
 
 <script>
-/* Hosted-web fail-safe: preserve the persistent local session used by Continue without Google. */
+/* Hosted-web startup: do not show the login gate on static hosting. */
 (function(){
   if(location.hostname==='appassets.androidplatform.net') return;
-  try {
-    var key='urooj-app-session-until-v1';
-    var saved=localStorage.getItem(key);
-    var until=Number(saved||0);
-    if(saved==='1'||until>Date.now()){
-      localStorage.setItem(key,'1');
-      document.body.classList.add('jarvis-authenticated');
-      var gate=document.getElementById('jarvisLogin');
-      if(gate){gate.style.display='none';gate.setAttribute('aria-hidden','true');}
-    } else {
-      document.body.classList.remove('jarvis-authenticated');
-      localStorage.removeItem(key);
-    }
-  } catch(e) {
-    /* Do not forcibly reveal the login gate on a storage read error. */
-  }
+  document.body.classList.add('jarvis-authenticated');
+  var gate=document.getElementById('jarvisLogin');
+  if(gate){gate.style.display='none';gate.setAttribute('aria-hidden','true');}
 })();
 </script>
 
