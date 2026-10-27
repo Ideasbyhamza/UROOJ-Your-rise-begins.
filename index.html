@@ -1877,7 +1877,7 @@ function initGoogleAuth(){
  // Google may silently issue a token when its existing grant is still valid; if not, keep the local session open.
  if(resumeAppSession()&&cached&&cached.email&&!gSilentAuthAttempt){
   gSilentAuthAttempt=true;
-  try{gTokenClient.requestAccessToken({prompt:''})}catch(err){console.warn('Silent Google session restore unavailable',err);gSilentAuthAttempt=false}
+  try{gTokenClient.requestAccessToken({prompt:'none'})}catch(err){console.warn('Silent Google session restore unavailable',err);gSilentAuthAttempt=false}
  }
 }
 async function handleGoogleToken(resp){
