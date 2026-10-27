@@ -2013,10 +2013,11 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
    var within48Hours=lastSeenAt>0&&nowMs>=lastSeenAt&&nowMs-lastSeenAt<=48*60*60*1000;
    /* Legacy metadata had no timestamp. If the previous visit was yesterday, its date itself safely bounds the recovery window. */
    if(!lastSeenAt&&hadValidMeta&&meta.lastDate===yesterday)within48Hours=true;
-   var recoveredYesterday=false;
-   if(!v[yesterday]&&meta.lastDate<today&&within48Hours){
+   var recoveredYesterday=false,recoveryAlreadyChecked=meta.recoveryCheckedDate===today;
+   if(!recoveryAlreadyChecked&&!v[yesterday]&&meta.lastDate<=today&&within48Hours){
     v[yesterday]=true;recoveredYesterday=true;
    }
+   meta.recoveryCheckedDate=today;
    var cursor=meta.lastDate;
    while(cursor<yesterday){
     cursor=shiftDay(cursor,1);
