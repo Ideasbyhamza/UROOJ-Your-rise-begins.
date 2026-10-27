@@ -1958,7 +1958,7 @@ async function driveLoadOrInit(){
  }else{const created=await driveUpload({app:'UROOJ',formatVersion:2,savedAt:new Date().toISOString(),state:state});gDriveFileId=created.id;gDriveModifiedTime=created.modifiedTime||null;try{localStorage.setItem('urooj-last-valid-state-v1',JSON.stringify({savedAt:new Date().toISOString(),state:state}));}catch(e){}}
  gLocalDirty=false;setSyncTime(Date.now());
 }
-function queueDriveSync(){if(!gAccessToken||!gTokenClient)return;clearTimeout(gSyncTimer);gSyncTimer=setTimeout(function(){if(gSyncing){gSyncAgain=true;return}doDriveSync()},1800)}
+function queueDriveSync(){if(!gAccessToken||!gTokenClient)return;clearTimeout(gSyncTimer);gSyncTimer=setTimeout(function(){if(gSyncing){gSyncAgain=true;return}doDriveSync()},250)}
 async function doDriveSync(){if(!gAccessToken)return;if(gSyncing){gSyncAgain=true;return}gSyncing=true;gSyncAgain=false;const versionAtStart=gLocalEditVersion;const snapshot=JSON.parse(JSON.stringify(state));try{
  if(!isValidUroojBackupState(snapshot))throw new Error('Local UROOJ data failed validation; backup was stopped to protect your Drive copy.');
  if(!hasMeaningfulUroojData(snapshot)){const meta=gDriveFileId?{id:gDriveFileId}:await driveFindFile();if(meta&&meta.id){const remote=await driveDownload(meta.id);if(remote&&isValidUroojBackupState(remote.state)&&hasMeaningfulUroojData(remote.state)){applyDriveState(remote.state);gDriveFileId=meta.id;gLocalDirty=false;setSyncTime(Date.now());applyTheme();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');renderAccountStatus();toast('Progress recovered from Google Drive.');return;}}}
@@ -2012,16 +2012,11 @@ function renderAccountStatus(syncError,syncMessage){
 document.getElementById('googleSignInBtn')?.addEventListener('click',requestGoogleSignIn);
 document.getElementById('offlineContinueBtn')?.addEventListener('click',function(){gAccessToken=null;gTokenExpiry=0;gUserInfo=null;gDriveFileId=null;gDriveModifiedTime=null;gLocalDirty=false;clearGoogleAccountCache();try{if(gDrivePollTimer)clearInterval(gDrivePollTimer)}catch(e){}gDrivePollTimer=null;setLoginError('');unlockApp();renderAccountStatus();renderViewOnDemand(document.querySelector('.nav button.active')?.dataset.view||'today');applyTheme();setTimeout(()=>window.uroojStartFocusedTutorial&&window.uroojStartFocusedTutorial('postLogin'),350);});
 document.getElementById('googleAccountCard')?.addEventListener('click',function(e){if(e.target.closest('#googleSyncNowBtn')){doDriveSync();return}if(e.target.closest('#googleReconnectBtn')){gAccessToken=null;gTokenExpiry=0;requestGoogleSignIn();return}if(e.target.closest('#googleSignOutBtn')){signOutGoogle();return}if(e.target.closest('#saveGoogleClientIdBtn')){const input=document.getElementById('googleClientIdInput'),status=document.getElementById('googleSetupStatus'),value=(input?.value||'').trim();if(!value.endsWith('.apps.googleusercontent.com')||value.startsWith('PASTE_')){if(status)status.textContent='Enter a valid Google OAuth Client ID ending in .apps.googleusercontent.com. Do not use a client secret.';return}GOOGLE_CLIENT_ID=value;try{localStorage.setItem(GOOGLE_CLIENT_ID_STORAGE_KEY,value)}catch(err){if(status)status.textContent='Could not store the Client ID in this browser. Check browser storage settings.';return}initGoogleAuth();renderAccountStatus();const updated=document.getElementById('googleSetupStatus');if(updated)updated.textContent='Client ID saved in this browser. Confirm this site is an authorised JavaScript origin in Google Cloud, then press Connect Google.';toast('Google Client ID saved');return}if(e.target.closest('#connectGoogleFromSettingsBtn')){if(!googleConfigured()){toast('Save your Google OAuth Client ID first.');return}requestGoogleSignIn()}});
-// Google sign-in is optional for the hosted web app; keep the login gate only in the embedded Android container.
+// UROOJ must never block the user behind a login popup on open/reload. Google sign-in is optional and is only used to enable Drive backup.
  const hasSession=resumeAppSession();
  const loginGate=document.getElementById('jarvisLogin');
- if(hasSession || location.hostname!=='appassets.androidplatform.net'){
-  document.body.classList.add('jarvis-authenticated');
-  if(loginGate){loginGate.style.display='none';loginGate.setAttribute('aria-hidden','true');}
- }else{
-  document.body.classList.remove('jarvis-authenticated');
-  if(loginGate){loginGate.style.display='grid';loginGate.setAttribute('aria-hidden','false');}
- }
+ document.body.classList.add('jarvis-authenticated');
+ if(loginGate){loginGate.style.display='none';loginGate.setAttribute('aria-hidden','true');}
  initGoogleAuth();
  renderAccountStatus();
 /* ---------- end Google Sign-In + Drive sync ---------- */
