@@ -1067,6 +1067,13 @@ body.dark :is(.app,#app,main,[role="main"]) :is(button,a,input,select,textarea,[
 </style>
 </head>
 <body>
+<script id="urooj-hosted-login-bootstrap">
+(function(){
+  if(location.hostname==='appassets.androidplatform.net') return;
+  /* GitHub Pages is static hosting: Google sign-in is for Drive sync, not an app access gate. */
+  document.body.classList.add('jarvis-authenticated');
+})();
+</script>
 <section id="uroojTermsConsent" role="dialog" aria-modal="true" aria-labelledby="uroojTermsTitle">
  <div class="consent-card">
   <div class="eyebrow">Before you begin</div><h2 id="uroojTermsTitle">Terms &amp; Conditions</h2>
@@ -1607,7 +1614,7 @@ function startDrivePolling(){
  if(gDrivePollTimer)clearInterval(gDrivePollTimer);
  gDrivePollTimer=setInterval(checkDriveForChanges,15000);
 }
-function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();document.body.classList.remove('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='grid';setLoginError('')}
+function signOutGoogle(){try{localStorage.removeItem(APP_SESSION_KEY)}catch(e){}if(gAccessToken&&window.google&&google.accounts&&google.accounts.oauth2){try{google.accounts.oauth2.revoke(gAccessToken,function(){})}catch(e){}}if(gDrivePollTimer)clearInterval(gDrivePollTimer);gDrivePollTimer=null;gDriveModifiedTime=null;gLocalDirty=false;gAccessToken=null;gDriveFileId=null;gUserInfo=null;clearGoogleAccountCache();renderAccountStatus();const login=document.getElementById('jarvisLogin');if(location.hostname==='appassets.androidplatform.net'){document.body.classList.remove('jarvis-authenticated');if(login)login.style.display='grid';}else{document.body.classList.add('jarvis-authenticated');if(login){login.style.display='none';login.setAttribute('aria-hidden','true');}}setLoginError('')}
 function renderAccountStatus(syncError,syncMessage){
  const host=document.getElementById('googleAccountCard');if(!host)return;
  if(gUserInfo&&gUserInfo.email){
