@@ -1,0 +1,37 @@
+{
+  "id": "./",
+  "name": "UROOJ — Your Rise Begins",
+  "short_name": "UROOJ",
+  "description": "A private space for intention, consistency, reflection and daily growth.",
+  "start_url": "./?source=homescreen",
+  "scope": "./",
+  "display": "standalone",
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
+  "orientation": "any",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "launch_handler": {
+    "client_mode": "navigate-existing"
+  },
+  "categories": [
+    "lifestyle",
+    "productivity"
+  ],
+  "icons": [
+    {
+      "src": "./assets/urooj-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "./assets/urooj-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

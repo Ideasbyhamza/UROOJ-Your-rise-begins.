@@ -8,6 +8,14 @@
 <meta content="UROOJ 20 — Your rise begins. A private space for intention, consistency, and reflection." name="description"/>
 <meta name="referrer" content="strict-origin-when-cross-origin"/>
 <title>UROOJ 20</title>
+<link rel="manifest" href="./manifest.webmanifest?v=1.0.0"/>
+<link rel="icon" type="image/svg+xml" href="./assets/urooj-logo.svg?v=1.1.6"/>
+<link rel="apple-touch-icon" sizes="192x192" href="./assets/urooj-icon-192.png?v=1.0.0"/>
+<meta name="application-name" content="UROOJ"/>
+<meta name="mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="UROOJ"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
 <!-- Offline-friendly: use local system fonts so the app does not wait for Google Fonts. -->
 <style>
 :root{--sand:#F8FAFC;--green:#2563EB;--gold:#2563EB;--sage:#EFF6FF;--ink:#172033;--muted:#64748B;--line:#E2E8F0;--white:#FFFFFF;--shadow:0 10px 30px rgba(37,99,235,.07);color-scheme:light}
@@ -1486,6 +1494,10 @@ function initUroojTutorial(){
 }
 
 const APP_SESSION_KEY='urooj-app-session-until-v1';function unlockApp(){try{localStorage.setItem(APP_SESSION_KEY,'1');sessionStorage.removeItem(APP_SESSION_KEY)}catch(e){}document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none';setTimeout(()=>openUroojTutorial(false),450)}function resumeAppSession(){try{const persistent=localStorage.getItem(APP_SESSION_KEY)==='1';const legacyUntil=Number(sessionStorage.getItem(APP_SESSION_KEY)||0);if(persistent||legacyUntil>Date.now()){localStorage.setItem(APP_SESSION_KEY,'1');sessionStorage.removeItem(APP_SESSION_KEY);document.body.classList.add('jarvis-authenticated');const login=document.getElementById('jarvisLogin');if(login)login.style.display='none';return true}sessionStorage.removeItem(APP_SESSION_KEY)}catch(e){}return false}
+function isUroojStandalone(){try{return window.matchMedia('(display-mode: standalone)').matches||window.navigator.standalone===true}catch(e){return window.navigator.standalone===true}}
+function keepInstalledUroojInApp(){if(!isUroojStandalone()||!resumeAppSession())return;const login=document.getElementById('jarvisLogin');if(login){login.style.display='none';login.setAttribute('aria-hidden','true')}}
+window.addEventListener('pageshow',keepInstalledUroojInApp);
+document.addEventListener('visibilitychange',function(){if(document.visibilityState==='visible')keepInstalledUroojInApp()});
 function setLoginError(msg){const el=document.getElementById('jarvisLoginError');if(el)el.textContent=msg||''}
 function setLoginBusy(busy){const b=document.getElementById('googleSignInBtn');if(b){b.disabled=busy;const s=b.querySelector('span');if(s)s.textContent=busy?'Signing in…':'Sign in with Google'}}
 function googleConfigured(){return typeof GOOGLE_CLIENT_ID==='string'&&GOOGLE_CLIENT_ID.endsWith('.apps.googleusercontent.com')&&!GOOGLE_CLIENT_ID.startsWith('PASTE_')}
