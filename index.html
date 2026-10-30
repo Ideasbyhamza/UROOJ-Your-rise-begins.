@@ -2533,7 +2533,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   if(!weekBox)return;
   var now=new Date(),today=localDateKey(now),log=read(),lives=getLives();
 
-  var checked=0,todayDate=new Date(today+'T12:00:00Z'),mondayOffset=(todayDate.getUTCDay()+6)%7,weekStart=shiftDay(today,-mondayOffset);
+  var checked=0,weekStart=shiftDay(today,-6);
   weekBox.innerHTML=Array.from({length:7},function(_,i){
    var key=shiftDay(weekStart,i),d=new Date(key+'T12:00:00Z'),done=!!log[key],isToday=key===today;
    if(done)checked++;
@@ -2542,7 +2542,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
   }).join('');
   var count=streak(log,today),streakEl=document.getElementById('uroojStreakCount'),summary=document.getElementById('uroojCheckinSummary');
   if(streakEl)streakEl.textContent='✦ '+count+'-day streak';
-  if(summary)summary.textContent=checked+' of 7 days checked this week · '+lives+' of 3 lives left';
+  if(summary)summary.textContent=checked+' of the last 7 days checked · '+lives+' of 3 lives left';
   var progressTrack=document.querySelector('.urooj-checkin-progress'),progressBar=document.getElementById('uroojCheckinProgressBar');
   if(progressBar)progressBar.style.width=(checked/7*100)+'%';
   if(progressTrack)progressTrack.setAttribute('aria-valuenow',String(checked));
