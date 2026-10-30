@@ -1753,7 +1753,7 @@ body.dark :is(.app,#app,main,[role="main"]) :is(button,a,input,select,textarea,[
   <div class="urooj-week-grid" id="uroojWeekCheckins" aria-label="Last seven days"></div>
   <div class="urooj-checkin-progress" role="progressbar" aria-label="Weekly check-in progress" aria-valuemin="0" aria-valuemax="7" aria-valuenow="0"><span id="uroojCheckinProgressBar" style="width:0%"></span></div>
   <div class="urooj-checkin-foot" id="uroojCheckinSummary">0 of 7 days checked this week</div>
-  <div style="font-size:10px;color:var(--muted);margin-top:8px">If you return within 48 hours, UROOJ automatically recovers yesterday’s missed check-in.</div>
+  <div style="font-size:10px;color:var(--muted);margin-top:8px">You have a 48-hour grace window: check in for today or either of the previous two app-days.</div>
  </div>
  <section class="urooj-progress-card urooj-integrated-progression" id="uroojUpgradeJourney" aria-label="Your Rise UROOJ daily check-in and 365-day progression">
  <div class="card-title"><h3>Your Rise · UROOJ</h3><span class="solar" id="uroojTotalDays">0 / 365 days</span></div>
@@ -2538,7 +2538,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
    var key=shiftDay(weekStart,i),d=new Date(key+'T12:00:00Z'),done=!!log[key],isToday=key===today;
    if(done)checked++;
    var day=new Intl.DateTimeFormat('en',{timeZone:'UTC',weekday:'short'}).format(d),num=Number(key.slice(-2));
-   return '<button type="button" class="urooj-day-check'+(done?' checked':'')+(isToday?' today':'')+'" data-urooj-checkin="'+key+'"'+(!isToday?' disabled aria-disabled="true"':'')+' aria-pressed="'+done+'" aria-label="'+(done?'Uncheck':'Check in for')+' '+day+' '+num+(isToday?', today':'')+'"><span class="day-name">'+day+'</span><span class="day-square" aria-hidden="true">'+(done?'✓':'')+'</span><span class="day-number">'+num+'</span></button>';
+   return '<button type="button" class="urooj-day-check'+(done?' checked':'')+(isToday?' today':'')+'" data-urooj-checkin="'+key+'"'+(!(key<=today&&key>=shiftDay(today,-2))?' disabled aria-disabled="true"':'')+' aria-pressed="'+done+'" aria-label="'+(done?'Uncheck':'Check in for')+' '+day+' '+num+(isToday?', today':'')+'"><span class="day-name">'+day+'</span><span class="day-square" aria-hidden="true">'+(done?'✓':'')+'</span><span class="day-number">'+num+'</span></button>';
   }).join('');
   var count=streak(log,today),streakEl=document.getElementById('uroojStreakCount'),summary=document.getElementById('uroojCheckinSummary');
   if(streakEl)streakEl.textContent='✦ '+count+'-day streak';
@@ -2565,7 +2565,7 @@ try{if(!window.localStorage)throw new Error('no storage')}catch(e){toast('Browse
  document.addEventListener('click',async function(e){
   var button=e.target.closest&&e.target.closest('[data-urooj-checkin]');if(!button)return;
   var key=button.getAttribute('data-urooj-checkin'),today=localDateKey(new Date());
-  if(key!==today||button.disabled)return;
+  if(key>today||key<shiftDay(today,-2)||button.disabled)return;
   var log=read();
   if(log[key]){
    if(typeof verifyChallengeUndoCaptcha!=='function'||!await verifyChallengeUndoCaptcha('check-in'))return;
